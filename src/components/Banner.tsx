@@ -7,16 +7,16 @@ import 'swiper/css/scrollbar';
 import Image from 'next/image';
 const Banner = () => {
   return (
-    <div className={'h-[200px] z-0'}>
+    <div className={'h-[200px] z-0 '}>
       <Swiper
         spaceBetween={50}
-        slidesPerView={2}
+        slidesPerView={1}
         autoplay={true}
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
         className={'h-full rounded-xl'}
       >
-        <SwiperSlide>
+        <SwiperSlide className={'text-center'}>
           <Image
             src={'/Banner-1.jpg'}
             alt={''}

@@ -1,10 +1,17 @@
 'use client';
 import Banner from '@/components/Banner';
+import { Navigation } from '@/components';
+import { useEffect } from 'react';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className={''}>
-      <Banner />
+      <div className={'flex mt-[81px]'}>
+        <Navigation />
+        <main className={'max-w-[1280px] mx-auto py-5'}>
+          <Banner />
+        </main>
+      </div>
     </div>
   );
-}
+};

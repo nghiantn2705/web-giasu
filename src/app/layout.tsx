@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
-import { Header, Navigation } from '@/components';
+import { Header } from '@/components';
 
 const poppins = Poppins({ weight: ['500'], subsets: ['latin'] });
 const inter = Inter({ subsets: ['latin'] });
@@ -19,10 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <div className={'flex mt-[81px]'}>
-          <Navigation />
-          <main className={'max-w-[1280px] mx-auto py-5'}>{children}</main>
-        </div>
+        {children}
       </body>
     </html>
   );
