@@ -38,46 +38,46 @@ const Header = () => {
           />
         </div>
       </div>
-      <ul className={'flex gap-3'}>
-        <li className={'p-3 rounded-full bg-gray-200 hover:bg-amber-500'}>
-          <Link href={'/'} className={'flex gap-3 items-center'}>
+      <ul className={'flex gap-2'}>
+        <li className={'p-2 rounded-full bg-gray-200 hover:bg-amber-500'}>
+          <Link href={'/'} className={'flex gap-2 items-center'}>
             <GrHome className={'text-xl hover:border-sky-500'} />
             <span>Trang chủ</span>
           </Link>
         </li>
-        <li className={'p-3 rounded-full bg-gray-200 hover:bg-amber-500 ju'}>
-          <Link href={'/'} className={'flex gap-3 items-center'}>
+        <li className={'p-2 rounded-full bg-gray-200 hover:bg-amber-500 ju'}>
+          <Link href={'/'} className={'flex gap-2 items-center'}>
             <FiUsers className={'text-xl hover:border-sky-500'} />
             <span>Gia Sư </span>
           </Link>
         </li>
-        <li className={'p-3 rounded-full bg-gray-200 hover:bg-amber-500'}>
-          <Link href={'/'} className={'flex gap-3 items-center'}>
+        <li className={'p-2  rounded-full bg-gray-200 hover:bg-amber-500'}>
+          <Link href={'/'} className={'flex gap-2 items-center'}>
             <FiSearch className={'text-xl hover:border-sky-500'} />
             <span>Tìm gia sư </span>
           </Link>
         </li>
-        <li className={'p-3 rounded-full bg-gray-200 hover:bg-amber-500'}>
-          <Link href={'/'} className={'flex gap-3 items-center'}>
+        <li className={'p-2 rounded-full bg-gray-200 hover:bg-amber-500'}>
+          <Link href={'/'} className={'flex gap-2 items-center'}>
             <BsTelephone className={'text-xl hover:border-sky-500'} />
             <span>Liên Hệ </span>
           </Link>
         </li>
       </ul>
-      <div className={'flex gap-3 justify-center items-center'}>
-        <ul className={'flex gap-3'}>
+      <div className={'flex gap-2 justify-center items-center'}>
+        <ul className={'flex gap-2'}>
           <li className={'p-3 rounded-full bg-gray-200'}>
             <Link href={'/'}>
               <GrHome className={'text-xl hover:border-sky-500'} />
             </Link>
           </li>
-          <li className={'p-3 rounded-full bg-gray-200'}>
+          <li className={'p-2 rounded-full bg-gray-200'}>
             <Link href={'/'}>
               <GrHome className={'text-xl hover:border-sky-500'} />
             </Link>
           </li>
         </ul>
-        <button className={'border px-3 py-2 rounded-full'}>Đăng nhập</button>
+        <button className={'border px-2 py-2 rounded-full'}>Đăng nhập</button>
       </div>
     </div>
   );
