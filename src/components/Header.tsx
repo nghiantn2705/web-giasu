@@ -1,12 +1,15 @@
 'use client';
 import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { GrHome } from 'react-icons/gr';
 import { FiSearch, FiUsers } from 'react-icons/fi';
 import { BsTelephone } from 'react-icons/bs';
 import Link from 'next/link';
+import Signin from './auth/Signin';
 
 const Header = () => {
+  const [showSignin, setShowSignin] = useState(false);
   return (
     <div
       className={
@@ -77,7 +80,13 @@ const Header = () => {
             </Link>
           </li>
         </ul>
-        <button className={'border px-2 py-2 rounded-full'}>Đăng nhập</button>
+        <button
+          className={'border px-2 py-2 rounded-full'}
+          onClick={() => setShowSignin(true)}
+        >
+          Đăng nhập
+        </button>
+        <Signin isVisible={showSignin} onClose={() => setShowSignin(false)} />
       </div>
     </div>
   );
