@@ -4,8 +4,7 @@ import Image from 'next/image';
 
 import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
 import Link from 'next/link';
-import Login from '@/components/Auth/Login';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const navLink = [
   {
@@ -38,7 +37,7 @@ const Header = () => {
       }
     >
       <div className={'container flex justify-between items-center'}>
-        <div className={'flex gap-5 h-auto '}>
+        <div className={'flex gap-3 h-auto '}>
           <Image
             src={'/logo.png'}
             alt={''}
@@ -46,6 +45,10 @@ const Header = () => {
             height={100}
             className={'rounded-full'}
           />
+          <div className={'flex flex-col'}>
+            <span className={'text-xl'}>GS7</span>
+            <span className={'text-sm'}>Uy tín và chất lượng</span>
+          </div>
         </div>
         <ul className={'flex gap-2'}>
           {navLink.map(({ link, name, icon }) => (

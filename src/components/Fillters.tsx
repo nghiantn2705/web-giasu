@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LuListFilter } from 'react-icons/lu';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -11,6 +11,10 @@ import 'swiper/css/scrollbar';
 import { usePathname } from 'next/navigation';
 import SlideNextButton from '@/components/SwiperBtn/SliderNextbutton';
 import SlidePrevButton from '@/components/SwiperBtn/SliderPrevbutton';
+interface ILink {
+  name: string;
+  link: string;
+}
 
 const navLink = [
   {
@@ -34,10 +38,46 @@ const navLink = [
     link: '/4',
   },
 ];
+
+const navHour = [
+  {
+    name: 'Ngẫu Nhiên',
+    link: '/',
+  },
+  {
+    name: '7h - 9h',
+    link: '/2',
+  },
+  {
+    name: '9h30 - 12h30',
+    link: '/3',
+  },
+  {
+    name: '13h30 - 15h30',
+    link: '/4',
+  },
+  {
+    name: '16h30 - 18h30',
+    link: '/4',
+  },
+];
 const Fillters = () => {
   const router = usePathname();
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+  const [option, setOption] = useState(navLink);
+
+  const handlerChange = (e: any) => {
+    const renderText = e.target.value;
+    if (renderText == 'location') {
+      const show: ILink[] = navLink;
+      setOption(show);
+    }
+    if (renderText == 'classhour') {
+      const show: ILink[] = navHour;
+      setOption(show);
+    }
+  };
   return (
     <div className={'grid grid-cols-12'}>
       <div
@@ -49,11 +89,11 @@ const Fillters = () => {
           <LuListFilter className={'text-xl'} />
           Lọc theo
         </span>
-        <select className={'w-[145px]'}>
-          <option> Địa Điểm</option>
-          <option> Ca học</option>
-          <option> Môn Học</option>
-          <option> Kinh Nghiệm</option>
+        <select className={'w-[145px]'} onChange={handlerChange}>
+          <option value={'location'}> Địa Điểm</option>
+          <option value={'classhour'}> Ca học</option>
+          <option value={'subject'}> Môn Học</option>
+          <option value={'experience'}> Kinh Nghiệm</option>
         </select>
       </div>
       <div className={'col-start-5 col-span-7  h-[40px] relative px-5'}>
@@ -71,7 +111,7 @@ const Fillters = () => {
           className={'justify-center items-center '}
           spaceBetween={5}
         >
-          {navLink.map(({ link, name }) => (
+          {option.map(({ link, name }) => (
             <SwiperSlide key={name}>
               <button
                 className={`rounded-full py-2 border text-center w-full hover:border-blue-400 ${
