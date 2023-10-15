@@ -22,7 +22,7 @@ export default function RootLayout({
         <Header />
         <div
           className={
-            'container lg:border-x lg:shadow-md px-0  mt-[100px] md:mt-[59px]'
+            'container lg:border-x lg:shadow-x-md px-0  mt-[100px] md:mt-[59px]'
           }
         >
           {children}

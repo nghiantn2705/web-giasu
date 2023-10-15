@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Navigation = () => {
   return (
-    <div className={'pb-2 gap-3 pr-2 pt-4 flex flex-col border-r shadow-md'}>
+    <div className={'pb-3 gap-3 pr-2 pt-4 flex flex-col border-r shadow-x-md'}>
       <div className={'rounded-t-md font-bold'}>
         <div
           className={
