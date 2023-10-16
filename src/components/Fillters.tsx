@@ -9,8 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { usePathname } from 'next/navigation';
-import SlideNextButton from '@/components/SwiperBtn/SliderNextbutton';
-import SlidePrevButton from '@/components/SwiperBtn/SliderPrevbutton';
+import { GrFormPrevious } from 'react-icons/gr';
+import { MdNavigateNext } from 'react-icons/md';
 interface ILink {
   name: string;
   link: string;
@@ -82,21 +82,19 @@ const Fillters = () => {
     <div className={'grid grid-cols-12'}>
       <div
         className={
-          'col-span-3 flex items-center border p-2 rounded-md gap-2 shadow'
+          'col-span-4 flex items-center border p-2 rounded-md shadow gap-2'
         }
       >
-        <span className={'text-sm flex items-center gap-2 text-gray-500'}>
-          <LuListFilter className={'text-xl'} />
-          Lọc theo
-        </span>
-        <select className={'w-[145px]'} onChange={handlerChange}>
+        <LuListFilter className={'text-xl '} />
+        <span className={'text-sm gap-2 text-gray-500'}>Lọc theo</span>
+        <select className={'w-[70%]'} onChange={handlerChange}>
           <option value={'location'}> Địa Điểm</option>
           <option value={'classhour'}> Ca học</option>
           <option value={'subject'}> Môn Học</option>
           <option value={'experience'}> Kinh Nghiệm</option>
         </select>
       </div>
-      <div className={'col-start-5 col-span-7  h-[40px] relative px-5'}>
+      <div className={'col-start-6 col-span-6  h-[40px] relative'}>
         <Swiper
           navigation={{
             prevEl: navigationPrevRef.current,
@@ -123,18 +121,22 @@ const Fillters = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div
-          className={'buttonPrev absolute top-[2px] -left-8'}
+        <button
+          className={
+            'absolute top-[2px] -left-12 border border-blue-500 rounded-full p-2'
+          }
           ref={navigationPrevRef}
         >
-          <SlidePrevButton />
-        </div>
-        <div
-          className={'buttonNext absolute top-[2px] -right-8'}
+          <GrFormPrevious className={'text-xl'} />
+        </button>
+        <button
+          className={
+            'absolute top-[2px] -right-12 border border-blue-500 rounded-full p-2'
+          }
           ref={navigationNextRef}
         >
-          <SlideNextButton />
-        </div>
+          <MdNavigateNext className={'text-xl'} />
+        </button>
       </div>
     </div>
   );
