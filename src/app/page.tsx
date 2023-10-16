@@ -5,6 +5,7 @@ import { Navigation } from '@/components';
 import Link from 'next/link';
 import React from 'react';
 import Fillter from '@/components/Fillters';
+import Image from 'next/image';
 export default function Home() {
   return (
     <main
@@ -121,6 +122,19 @@ export default function Home() {
         </div>
         <div>
           <Fillter />
+        </div>
+        <div className={'grid grid-cols-3 gap-5'}>
+          <div className={'p-5'}>
+            <Image
+              src={'/avatar.jpg'}
+              alt={''}
+              width={50}
+              height={50}
+              className={'h-full w-auto rounded-md'}
+            />
+          </div>
+          <div>b</div>
+          <div>c</div>
         </div>
       </div>
     </main>

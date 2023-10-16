@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const Banner = () => {
   return (
-    <div className={'h-[200px] z-0 '}>
+    <div className={'h-[200px] z-0 border rounded-md'}>
       <Swiper
         modules={[Autoplay, Navigation]}
         loop={true}
@@ -17,7 +17,7 @@ const Banner = () => {
         speed={1500}
         spaceBetween={50}
         slidesPerView={1}
-        className={'h-full rounded-xl'}
+        className={'h-full'}
         pagination={{ clickable: true }}
         navigation={true}
       >
@@ -26,8 +26,8 @@ const Banner = () => {
             <Image
               src={'/banner-1.jpg'}
               alt={''}
-              width={1080}
-              height={200}
+              width={1320}
+              height={300}
               className={'h-full w-auto'}
             />
           </div>
@@ -37,8 +37,8 @@ const Banner = () => {
             <Image
               src={'/banner-2.jpg'}
               alt={''}
-              width={1080}
-              height={100}
+              width={1320}
+              height={300}
               className={'h-full w-auto'}
             />
           </div>
@@ -48,8 +48,8 @@ const Banner = () => {
             <Image
               src={'/banner-4.png'}
               alt={''}
-              width={1080}
-              height={100}
+              width={1320}
+              height={300}
               className={'h-full w-auto'}
             />
           </div>
