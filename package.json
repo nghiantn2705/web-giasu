@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "eslint-plugin-prettier": "^5.0.1",
     "json-server": "^0.17.4",
     "next": "13.5.4",
