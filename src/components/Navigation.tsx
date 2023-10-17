@@ -5,11 +5,7 @@ import Link from 'next/link';
 
 const Navigation = () => {
   return (
-    <div
-      className={
-        'w-[260px] pb-2 gap-3 px-2 flex flex-col border-r shadow-base overflow-y-auto  shadow-lg'
-      }
-    >
+    <div className={'py-3 gap-3 pr-2 flex flex-col border-r shadow-x-md'}>
       <div className={'rounded-t-md font-bold'}>
         <div
           className={

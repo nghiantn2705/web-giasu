@@ -1,8 +1,9 @@
+import { Header } from '@/components';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter, Poppins } from 'next/font/google';
-import { Header, Navigation } from '@/components';
-const poppins = Poppins({ weight: ['500'], subsets: ['latin'] });
+import { Inter } from 'next/font/google';
+import Footer from '@/components/Footer';
+
 const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Gia Sư Poly',
@@ -18,10 +19,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <div className={'flex mt-[81px]'}>
-          <Navigation />
-          <main className={'max-w-[1280px] mx-auto py-5'}>{children}</main>
-        </div>
+        <div className={'container mt-[100px] md:mt-[59px]'}>{children}</div>
+        <Footer />
       </body>
     </html>
   );
