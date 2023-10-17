@@ -65,11 +65,13 @@ const Header = () => {
           ))}
         </ul>
         <div className={'flex gap-2 justify-center items-center'}>
-          <button
-            className={'flex items-center rounded-lg gap-3 px-4 py-2 border'}
-          >
-            Đăng nhập
-          </button>
+          <Link href="/Auth/Login">
+            <button
+              className={'flex items-center rounded-lg gap-3 px-4 py-2 border'}
+            >
+              Đăng nhập
+            </button>
+          </Link>
         </div>
       </div>
     </div>

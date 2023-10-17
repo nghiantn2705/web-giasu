@@ -1,0 +1,23 @@
+.titleResgister{
+  position: relative;
+  color: black;
+  text-align: center;
+}
+.titleResgister::before,
+.titleResgister::after
+{
+    content: '';
+    position: absolute;
+    background-color: black;
+    width: 28%;
+    height: 1px;
+    top: 50%;
+    border-radius: 50%;
+}
+.titleResgister::before {
+    left: 0;
+}
+  
+.titleResgister::after {
+    right: 0;
+}
