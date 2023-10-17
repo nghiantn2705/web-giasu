@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
