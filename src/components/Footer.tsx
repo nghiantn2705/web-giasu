@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="text-center border-t   lg:text-left">
-      <div className="flex items-center justify-center border-b-2 border-neutral-200 p-6 border-neutral-500 lg:justify-between">
+      <div className="flex items-center justify-center border-b-2 border-neutral-200 px-6 py-3 lg:justify-between">
         <div className="mr-12 hidden lg:block">
           <span>Get connected with us on social networks:</span>
         </div>

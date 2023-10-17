@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import Fillter from '@/components/Fillters';
 import Image from 'next/image';
+import Teacher from '@/components/Teacher/Teacher';
 export default function Home() {
   return (
     <main
@@ -34,14 +35,14 @@ export default function Home() {
               </h3>
               <ul
                 className={
-                  'flex flex-col gap-6 px-4 bg-center bg-cover bg-no-repeat'
+                  'grid grid-cols-2 gap-y-6 px-4 bg-center bg-cover bg-no-repeat'
                 }
               >
                 <li>
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
                     Giới thiệu hoạt động
@@ -51,7 +52,17 @@ export default function Home() {
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
+                    }
+                  >
+                    Đăng nhập/ đăng ký
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={''}
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
                     Học phí tham khảo
@@ -61,7 +72,7 @@ export default function Home() {
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
                     Đăng ký tìm gia sư
@@ -83,14 +94,14 @@ export default function Home() {
               </h3>
               <ul
                 className={
-                  'flex flex-col gap-6 px-4 bg-center bg-cover bg-no-repeat'
+                  'grid grid-cols-2 gap-y-6 px-4 bg-center bg-cover bg-no-repeat'
                 }
               >
                 <li>
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
                     Những kĩ năng cần biết
@@ -100,17 +111,17 @@ export default function Home() {
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
-                    Người đang cần gia sư
+                    Đăng nhập/ đăng ký
                   </Link>
                 </li>
                 <li>
                   <Link
                     href={''}
                     className={
-                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-blue-500 hover:text-white'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                     }
                   >
                     Đăng ký làm gia sư
@@ -123,19 +134,7 @@ export default function Home() {
         <div>
           <Fillter />
         </div>
-        <div className={'grid grid-cols-3 gap-5'}>
-          <div className={'p-5'}>
-            <Image
-              src={'/avatar.jpg'}
-              alt={''}
-              width={50}
-              height={50}
-              className={'h-full w-auto rounded-md'}
-            />
-          </div>
-          <div>b</div>
-          <div>c</div>
-        </div>
+        <Teacher />
       </div>
     </main>
   );

@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 const Navigation = () => {
   return (
-    <div className={'py-3 gap-3 pr-2 flex flex-col border-r shadow-x-md'}>
+    <div className={'py-4 gap-3 pr-2 flex flex-col border-r shadow-x-md'}>
       <div className={'rounded-t-md font-bold'}>
         <div
           className={
-            'text-xl text-center py-2 bg-blue-500 rounded-t-md text-white'
+            'text-xl text-center py-2 bg-red-400 rounded-t-md text-white'
           }
         >
           <p>Tiểu học</p>
@@ -42,7 +42,7 @@ const Navigation = () => {
       <div className={'rounded-t-md font-bold'}>
         <div
           className={
-            'text-xl text-center py-2 bg-blue-500 rounded-t-md text-white'
+            'text-xl text-center py-2 bg-red-400 rounded-t-md text-white'
           }
         >
           <p>Trung học cơ sở</p>
@@ -75,7 +75,7 @@ const Navigation = () => {
       <div className={'rounded-t-md font-bold'}>
         <div
           className={
-            'text-xl text-center py-2 bg-blue-500 rounded-t-md text-white'
+            'text-xl text-center py-2 bg-red-400 rounded-t-md text-white'
           }
         >
           <p>Trung học phổ thông</p>
