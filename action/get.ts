@@ -1,5 +1,6 @@
+import { API_URL } from '../lib/Constants';
 async function getDistrict() {
-  const res = await fetch('http://127.0.0.1:8000/api/district');
+  const res = await fetch(API_URL + '/district');
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -7,7 +8,7 @@ async function getDistrict() {
   return res.json();
 }
 async function getTimeslot() {
-  const res = await fetch(`http://127.0.0.1:8000/api/timeslot`);
+  const res = await fetch(API_URL + `/timeslot`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -15,7 +16,7 @@ async function getTimeslot() {
   return res.json();
 }
 async function getTeachers() {
-  const res = await fetch('http://127.0.0.1:8000/api/teachers');
+  const res = await fetch(API_URL + '/teachers');
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
