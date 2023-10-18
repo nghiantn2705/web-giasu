@@ -1,11 +1,11 @@
 'use client';
-import React from 'react';
-import { useState } from 'react';
-import Image from 'next/image';
 
+import React from 'react';
+import Image from 'next/image';
 import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Loading from '@/components/Loading';
 
 const navLink = [
   {
@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <div
       className={
-        'fixed top-0 left-0 right-0  border-b shadow bg-white p-2 w-full z-50'
+        'fixed top-0 left-0 right-0  border-b shadow bg-white p-2 w-full z-10'
       }
     >
       <div className={'container grid grid-cols-12 items-center'}>

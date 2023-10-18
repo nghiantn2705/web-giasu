@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .animation-delay-plus-150 {
+        animation-delay: -150ms;
+    }
+
+    .animation-delay-plus-300 {
+        animation-delay: -300ms;
+    }
+
+    .animation-delay-plus-450 {
+        animation-delay: -450ms;
+    }
+
+}

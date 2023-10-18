@@ -4,5 +4,6 @@ export interface ITeachers {
   name: string;
   email: string;
   avatar: string;
-  address: string;
+  subject: string;
+  DistrictID: string;
 }
