@@ -1,4 +1,4 @@
-import { API_URL } from '../lib/Constants';
+import { API_URL } from '../src/lib/Constants';
 
 async function getTeachesDistrict(id: string) {
   const res = await fetch(API_URL + `/teachers/district/${id}`);

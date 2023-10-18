@@ -14,7 +14,6 @@ import { getDistrict, getTeachers, getTimeslot } from '../../action/get';
 import { getTeachesDistrict, getTeachesTimeSlot } from '../../action/getByID';
 import Teacher from '@/components/Teacher/Teacher';
 import Loading from '@/components/Loading';
-import classNames from 'classnames';
 
 const Fillters = () => {
   const navigationPrevRef = React.useRef(null);

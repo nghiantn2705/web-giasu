@@ -3,9 +3,7 @@
 import Banner from '@/components/Banner';
 import { Navigation } from '@/components';
 import React, { ReactNode } from 'react';
-import Fillter from '@/components/Fillters';
 import Link from 'next/link';
-import SigninUser from '@/components/Auth/Users/Signin';
 
 interface IHome {
   children: ReactNode;
@@ -54,13 +52,14 @@ export default function Home({ children }: IHome) {
                     </Link>
                   </li>
                   <li>
-                    <div
+                    <Link
                       className={
                         'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
                       }
+                      href={'/auth/user'}
                     >
-                      <SigninUser />
-                    </div>
+                      Đăng nhập/đăng ký
+                    </Link>
                   </li>
                   <li>
                     <Link

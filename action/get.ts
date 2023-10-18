@@ -1,6 +1,15 @@
-import { API_URL } from '../lib/Constants';
+import { API_URL } from '@/lib/Constants';
+
 async function getDistrict() {
-  const res = await fetch(API_URL + '/district');
+  const res = await fetch(API_URL + `/district`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+async function getTeachers() {
+  const res = await fetch(API_URL + `/teachers`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -15,12 +24,4 @@ async function getTimeslot() {
 
   return res.json();
 }
-async function getTeachers() {
-  const res = await fetch(API_URL + '/teachers');
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return res.json();
-}
-export { getDistrict, getTimeslot, getTeachers };
+export { getDistrict, getTeachers, getTimeslot };
