@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
-// import MyModal, { ModalTitle } from '@/components/Modal';
-// import Image from 'next/image';
-// import { Field, Form, Formik } from 'formik';
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
-// import RegisterUser from '@/components/Auth/Users/Register';
-
-const SigninUser = () => {
-  // let [isOpenLogin, setIsOpenLogin] = useState(false);
-  // let [isOpenRegister, setOpenRegister] = useState(false);
-  // function closeModal() {
-  //   setIsOpenLogin(false);
-  // }
-  // function openModal() {
-  //   setIsOpenLogin(true);
-  // }
-  // function closeModalRegister() {
-  //   setOpenRegister(false);
-  // }
-  // function openModalRegister() {
-  //   setOpenRegister(true);
-  // }
+import imageAsset from '/public/banner-login.png';
+const page = () => {
   return (
-    <div>
-      <Link href={'/auth/user'}>
-        <button type="button" className={'uppercase'}>
-          Đăng Nhập/Đăng ký
-        </button>
-      </Link>
-      {/* <MyModal visible={isOpenLogin} onClose={closeModal}>
-        <div className={'w-[400px]'}>
-          <ModalTitle>
+    <div className=" mt-40 mb-20 w-[1200px] m-auto shadow-xl ">
+      <div className="flex justify-between">
+        <Link href={'/'}>
+          <button
+            type={'button'}
+            className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-400 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            Quay Lại
+          </button>
+        </Link>
+        <Link href={''}>
+          <button
+            type={'button'}
+            className="text-white bg-red-400 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+          >
+            Đăng kí
+          </button>
+        </Link>
+      </div>
+      <div className="bg-red-400 w-full h-[13px]">{''}</div>
+      <div className=" flex justify-center ">
+        <div className="w-[600px] border-r-2 border-red-400 mb-10 mt-10">
+          <div className="w-[450px] h-full ml-[60px]">
+            <Image
+              src={imageAsset}
+              alt={''}
+              width={0}
+              height={0}
+              sizes="100vw"
+            />
+          </div>
+        </div>
+        <div className=" w-[600px] border-l-2 border-red-400 mb-10 mt-10 mr-12">
+          <div className="pl-[60px] ">
             <div
               className={'flex flex-col justify-center items-center mt-12 mb-5'}
             >
@@ -41,8 +51,6 @@ const SigninUser = () => {
                 Vui lòng đăng nhập tài khoản của phụ huynh
               </p>
             </div>
-          </ModalTitle>
-          <div className={'w-full'}>
             <Formik
               initialValues={{ email: '', password: '' }}
               onSubmit={(values) => console.log(values)}
@@ -82,37 +90,11 @@ const SigninUser = () => {
                 </button>
               </Form>
             </Formik>
-            <button
-              type={'button'}
-              className={
-                'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white w-full mt-5'
-              }
-            >
-              Google
-            </button>
           </div>
-          <p className={'text-sm text-center my-5'}>
-            Chưa có tài khoản? {''}
-            <button
-              type={'button'}
-              onClick={() => {
-                openModalRegister();
-              }}
-              className={
-                'hover:text-blue-500 decoration-1 hover:underline hover:underline-offset-4'
-              }
-            >
-              <RegisterUser
-                visible={isOpenRegister}
-                onClose={closeModalRegister}
-              />
-              Đăng ký
-            </button>
-          </p>
         </div>
-      </MyModal> */}
+      </div>
     </div>
   );
 };
 
-export default SigninUser;
+export default page;
