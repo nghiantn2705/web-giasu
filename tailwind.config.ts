@@ -21,6 +21,15 @@ module.exports = {
       lg: '1024px',
       xl: '1320px',
     },
+    animation: {
+      'lds-spinner': 'lds-spinner 1200ms cubic-bezier(0.5, 0, 0.5, 1)',
+    },
+    keyframes: {
+      'lds-spinner': {
+        '0%': { transform: 'rotate(0deg)' },
+        '100%': { transform: 'rotate(360deg)' },
+      },
+    },
   },
   plugins: [],
 };
