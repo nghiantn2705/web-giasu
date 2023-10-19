@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 const navLink = [
   {
@@ -31,7 +31,7 @@ const navLink = [
 ];
 const Header = () => {
   const router = usePathname();
-  const session = useSession();
+
   return (
     <div
       className={
@@ -66,19 +66,16 @@ const Header = () => {
             </Link>
           ))}
         </ul>
-        {session?.data ? (
-          <div className={'col-start-11 col-span-2'}>
-            <span>{session.data.user?.name}</span>
-            <button
-              onClick={() => signOut()}
-              className={'df-text-sm df-font-bold  df-rounded-md px-2'}
-            >
-              Đăng xuất
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
+
+        <div className={'col-start-11 col-span-2'}>
+          {/*<span>{session.data.user?.name}</span>*/}
+          <button
+            onClick={() => signOut()}
+            className={'df-text-sm df-font-bold  df-rounded-md px-2'}
+          >
+            Đăng xuất
+          </button>
+        </div>
       </div>
     </div>
   );

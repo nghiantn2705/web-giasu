@@ -1,15 +1,14 @@
 'use client';
-import { useState } from 'react';
+
 import Image from 'next/image';
 import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '@/lib/Constants';
-import { signIn } from 'next-auth/react';
+
 const SignInUser = () => {
   const router = useRouter();
-  const [error, setError] = useState('');
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -46,21 +45,18 @@ const SignInUser = () => {
             <Formik
               initialValues={{ email: '', password: '' }}
               onSubmit={async (values) => {
-                signIn('credentials', {
-                  ...values,
-                  redirect: false,
-                })
-                  .then((callback) => {
-                    if (callback?.error) {
-                      console.log('đăng nhập thất bại');
-                    } else {
-                      console.log('đăng nhập thành công');
-                      router.push('/');
-                    }
-                  })
-                  .catch((e) => {
-                    console.log(e);
-                  });
+                const res = await fetch(API_URL + `/auth/login`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ ...values }),
+                });
+                const data = await res.json();
+                if (res.ok) {
+                  localStorage.setItem('apiuser', JSON.stringify(data));
+                  router.push('/');
+                }
               }}
             >
               <Form className={'flex flex-col gap-5'}>

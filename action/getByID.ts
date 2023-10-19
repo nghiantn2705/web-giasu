@@ -17,4 +17,11 @@ async function getTeachesTimeSlot(id: string) {
 
   return res.json();
 }
-export { getTeachesDistrict, getTeachesTimeSlot };
+async function getTeachesByid(id: number) {
+  const res = await fetch(API_URL + `/teachers/${id}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
+export { getTeachesDistrict, getTeachesTimeSlot, getTeachesByid };

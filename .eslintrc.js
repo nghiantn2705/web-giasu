@@ -29,6 +29,14 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        labelAttributes: ['label'],
+        controlComponents: ['Field'],
+        depth: 3,
+      },
+    ],
     'jsx-a11y/media-has-caption': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'react/react-in-jsx-scope': 'off',
