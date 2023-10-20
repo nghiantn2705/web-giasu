@@ -38,7 +38,7 @@ export default function MyModal(props: IMyModal) {
             <div className="fixed inset-0 bg-black bg-opacity-50" />
           </Transition.Child>
 
-          <div className="fixed top-12 left-0  w-screen h-screen inset-0 overflow-auto">
+          <div className="fixed top-16 left-0  w-screen h-screen inset-0 ">
             <div className="flex items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -49,7 +49,7 @@ export default function MyModal(props: IMyModal) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white px-8 py-2 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
                   {children}
 
                   <button

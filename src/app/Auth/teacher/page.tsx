@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
 
-import SignInUser from '@/components/Auth/SignInUser';
+import SignInUserTeacher from '@/components/Auth/SignInTeacher';
 
 const page = () => {
   return (
     <div>
-      <SignInUser />
+      <SignInUserTeacher />
     </div>
   );
 };

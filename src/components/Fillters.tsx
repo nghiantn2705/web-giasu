@@ -11,52 +11,54 @@ import 'swiper/css/scrollbar';
 import { GrFormPrevious } from 'react-icons/gr';
 import { MdNavigateNext } from 'react-icons/md';
 import { getDistrict, getTeachers, getTimeslot } from '../../action/get';
-import { getTeachesDistrict } from '../../action/getByID';
+import { getTeachesDistrict, getTeachesTimeSlot } from '../../action/getByID';
 import Teacher from '@/components/Teacher/Teacher';
 import Loading from '@/components/Loading';
-import classNames from 'classnames';
 
 const Fillters = () => {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   const [option, setOption] = useState([]);
-  const [timeslot, setTimeslot] = useState([]);
-  const [district, setDistrict] = useState([]);
   const [teacher, setTeacher] = useState([]);
+  const [request, setRequest] = useState('');
+  const [select, setSelect] = useState('');
+  const [active, setActive] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getDistrict();
-      const timeslot = await getTimeslot();
-      const teacher = await getTeachers();
-      setOption(res);
-      setDistrict(res);
-      setTimeslot(timeslot);
-      setTeacher(teacher);
+      if (!select || select == 'location') {
+        const res = await getDistrict();
+        setOption(res);
+        if (request) {
+          const teacherDistrict = await getTeachesDistrict(request);
+          setTeacher(teacherDistrict);
+        }
+        if (!request || request == 'all') {
+          const teacher = await getTeachers();
+          setTeacher(teacher);
+        }
+      }
+      if (select == 'timeslot') {
+        const timeslot = await getTimeslot();
+        setOption(timeslot);
+        if (request) {
+          const teacherDistrict = await getTeachesTimeSlot(request);
+          setTeacher(teacherDistrict);
+        }
+        if (!request || request == 'all') {
+          const teacher = await getTeachers();
+          setTeacher(teacher);
+        }
+      }
     };
     fetchData();
-  }, [setOption]);
+  }, [setOption, request, select]);
   const handlerChange = (e: any) => {
     const renderText = e.target.value || 'location';
-    if (renderText == 'location') {
-      const show: any = district;
-      setOption(show);
-    }
-    if (renderText == 'timeslot') {
-      const show: any = timeslot;
-      setOption(show);
-    }
+    setSelect(renderText);
   };
-  const ChangeBtn = async (id: any) => {
-    if (id) {
-      const teachersDisctrict = await getTeachesDistrict(id);
-      setTeacher(teachersDisctrict);
-    }
-    if (id == 'all') {
-      const teacher = await getTeachers();
-      setTeacher(teacher);
-    }
+  const ChangeBtn = async (id: string) => {
+    setRequest(id);
   };
-
   return (
     <>
       {option.length > 0 ? (
@@ -92,23 +94,26 @@ const Fillters = () => {
               >
                 <SwiperSlide>
                   <button
-                    className={`rounded-full py-2 border text-center w-full hover:border-blue-400`}
+                    className={`rounded-full py-2 border text-center w-full hover:border-blue-400 ${
+                      active == 0 ? 'bg-blue-500 text-white' : ''
+                    }`}
                     onClick={() => {
                       ChangeBtn('all');
+                      setActive(0);
                     }}
                   >
                     Tất cả
                   </button>
                 </SwiperSlide>
-                {option.map(({ name, id }) => (
+                {option.map(({ name, id, index }) => (
                   <SwiperSlide key={id}>
                     <button
-                      className={classNames(
-                        `rounded-full py-2 border text-center w-full hover:border-blue-400`,
-                        { 'bg-blue-500': id },
-                      )}
+                      className={`rounded-full py-2 border text-center w-full hover:border-blue-400 target:bg-blue-500 target:text-white ${
+                        active == id ? 'bg-blue-500 text-white' : ''
+                      }`}
                       onClick={() => {
                         ChangeBtn(id);
+                        setActive(id);
                       }}
                     >
                       {name}
@@ -134,7 +139,7 @@ const Fillters = () => {
               </button>
             </div>
           </div>
-          {teacher ? <Teacher teachers={teacher} /> : <Loading />}
+          {teacher.length > 0 ? <Teacher teachers={teacher} /> : <Loading />}
         </div>
       ) : (
         <Loading />
