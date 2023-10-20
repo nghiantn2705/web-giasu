@@ -5,6 +5,11 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      backgroundImage: {
+        'banner-main': "url('/banner-main.png')",
+      },
+    },
     container: {
       center: true,
       padding: {

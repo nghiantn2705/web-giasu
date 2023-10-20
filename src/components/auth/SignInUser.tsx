@@ -6,9 +6,11 @@ import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '@/lib/Constants';
+import { useStore } from '@/hook/use-store';
 
 const SignInUser = () => {
   const router = useRouter();
+  const [userInfo, setUserInfo] = useStore('userInfo');
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -52,9 +54,11 @@ const SignInUser = () => {
                   },
                   body: JSON.stringify({ ...values }),
                 });
-                const data = await res.json();
                 if (res.ok) {
-                  localStorage.setItem('apiuser', JSON.stringify(data));
+                  const data = await res.json();
+                  setUserInfo(data);
+                  localStorage.setItem('access_token', data.access_token);
+                  localStorage.setItem('refresh_token', data.refresh_token);
                   router.push('/');
                 }
               }}

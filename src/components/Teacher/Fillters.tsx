@@ -10,8 +10,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { GrFormPrevious } from 'react-icons/gr';
 import { MdNavigateNext } from 'react-icons/md';
-import { getDistrict, getTeachers, getTimeslot } from '../../action/get';
-import { getTeachesDistrict, getTeachesTimeSlot } from '../../action/getByID';
+import { getDistrict, getTeachers, getTimeslot } from '../../../action/get';
+import {
+  getTeachesDistrict,
+  getTeachesTimeSlot,
+} from '../../../action/getByID';
 import Teacher from '@/components/Teacher/Teacher';
 import Loading from '@/components/Loading';
 
@@ -105,7 +108,7 @@ const Fillters = () => {
                     Tất cả
                   </button>
                 </SwiperSlide>
-                {option.map(({ name, id, index }) => (
+                {option.map(({ name, id }) => (
                   <SwiperSlide key={id}>
                     <button
                       className={`rounded-full py-2 border text-center w-full hover:border-blue-400 target:bg-blue-500 target:text-white ${

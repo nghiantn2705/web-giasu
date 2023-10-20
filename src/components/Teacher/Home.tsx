@@ -44,22 +44,19 @@ export default function Home({ children }: IHome) {
                 >
                   <li
                     className={
-                      'bg-yellow-500 rounded-xl font-bold uppercase content-center text-sm px-2 pt-2 w-fit'
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
                     }
                   >
                     <Link href={''} className={''}>
                       Giới thiệu hoạt động
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      className={
-                        'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
-                      }
-                      href={'/auth/user'}
-                    >
-                      Đăng nhập/đăng ký
-                    </Link>
+                  <li
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
+                    }
+                  >
+                    <Link href={'/auth/user'}>Đăng nhập/ đăng ký</Link>
                   </li>
                   <li>
                     <Link

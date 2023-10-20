@@ -2,10 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
+import { FiHome, FiPhone, FiSearch, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { usePathname, useRouter } from 'next/navigation';
 
 const navLink = [
   {
@@ -29,9 +28,14 @@ const navLink = [
     icon: <FiPhone />,
   },
 ];
-const Header = () => {
+const Header = (props: any) => {
   const router = usePathname();
-
+  const refreshRouter = useRouter();
+  const Signin = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    refreshRouter.push('/');
+  };
   return (
     <div
       className={
@@ -67,15 +71,73 @@ const Header = () => {
           ))}
         </ul>
 
-        <div className={'col-start-11 col-span-2'}>
-          {/*<span>{session.data.user?.name}</span>*/}
-          <button
-            onClick={() => signOut()}
-            className={'df-text-sm df-font-bold  df-rounded-md px-2'}
-          >
-            Đăng xuất
-          </button>
-        </div>
+        {props.userInfo ? (
+          <div className={'col-start-11 col-span-2 relative w-fit group'}>
+            <div>
+              <Image
+                src={`${props?.userInfo?.avatar}`}
+                width={45}
+                height={45}
+                className={
+                  'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'
+                }
+                alt={''}
+              />
+            </div>
+            <div
+              className={
+                'absolute top-[59px] right-0 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
+              }
+            >
+              <div
+                className={
+                  'flex gap-3 items-center hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                }
+              >
+                <Image
+                  src={`${props?.userInfo?.avatar}`}
+                  width={45}
+                  height={45}
+                  className={
+                    'rounded-full shadow drop-shadow-2xl border border-black '
+                  }
+                  alt={''}
+                />
+                <span className={'text-lg font-bold '}>
+                  {props?.userInfo?.name}
+                </span>
+              </div>
+              <hr className={'mb-2 mt-1 px-1'} />
+              <div className={'flex flex-col py-2'}>
+                <span
+                  className={
+                    'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                  }
+                >
+                  Đổi Mật Khẩu
+                </span>
+                <span
+                  className={
+                    'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                  }
+                >
+                  Chỉnh sửa thông tin
+                </span>
+                <button
+                  onClick={Signin}
+                  type={'button'}
+                  className={
+                    'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2 text-left'
+                  }
+                >
+                  Đăng xuất
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

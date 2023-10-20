@@ -18,7 +18,15 @@ async function getTeachesTimeSlot(id: string) {
   return res.json();
 }
 async function getTeachesByid(id: number) {
-  const res = await fetch(API_URL + `/teachers/${id}`);
+  const token = localStorage.getItem('apiuser');
+  const accessToken = JSON.parse(token as string);
+  const res = await fetch(API_URL + `/teachers/${id}`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
