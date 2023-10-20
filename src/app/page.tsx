@@ -7,7 +7,7 @@ import Main from '@/components/Main';
 
 export default function App() {
   return (
-    <main className={''}>
+    <main>
       <Main />
     </main>
   );
