@@ -112,7 +112,7 @@ export default function Home() {
                   </li>
                   <li>
                     <Link
-                      href={''}
+                      href={'/auth/teacher'}
                       className={
                         'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                       }
