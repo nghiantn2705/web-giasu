@@ -1,9 +1,20 @@
 export interface ITeachers {
-  id: bigint;
-  role: string;
-  name: string;
-  email: string;
-  avatar: string;
-  subject: string;
+  Certificate: string;
+  Citizen_card: string;
   DistrictID: string;
+  address: string;
+  avatar: string;
+  class: string;
+  description: string;
+  education_level: string;
+  email: string;
+  id: number;
+  name: string;
+  phone: string;
+  role: string;
+  salary: string;
+  school_id: string;
+  status: boolean;
+  subject: string;
+  time_tutor: string;
 }
