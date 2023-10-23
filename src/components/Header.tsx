@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FiHome, FiPhone, FiSearch, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 const navLink = [
   {
     name: 'Trang Chủ',
@@ -115,7 +115,7 @@ const Header = (props: any) => {
                     'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
-                  Đổi Mật Khẩu
+                  <Link href={'/custom_password'}>Đổi mật khẩu</Link>
                 </span>
                 <span
                   className={
