@@ -10,8 +10,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { GrFormPrevious } from 'react-icons/gr';
 import { MdNavigateNext } from 'react-icons/md';
-import { getDistrict, getTeachers, getTimeslot } from '../../action/get';
-import { getTeachesDistrict, getTeachesTimeSlot } from '../../action/getByID';
+import { getDistrict, getTeachers, getTimeslot } from '../../../action/get';
+import {
+  getTeachesDistrict,
+  getTeachesTimeSlot,
+} from '../../../action/getByID';
 import Teacher from '@/components/Teacher/Teacher';
 import Loading from '@/components/Loading';
 

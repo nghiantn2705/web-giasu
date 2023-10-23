@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Footer from '@/components/Footer';
 import { ReactNode } from 'react';
+import { GlobalContextProvider } from '@/contexts';
+import Layout from '@/components/Layout';
 
 const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
@@ -18,11 +20,11 @@ export default function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/*<Providers>*/}
-        <Header />
-        <div className={'mt-[100px] md:mt-[67px]'}>{props.children}</div>
-        <Footer />
-        {/*</Providers>*/}
+        <GlobalContextProvider store={[]}>
+          <Layout>
+            <div className={'mt-[100px] md:mt-[67px]'}>{props.children}</div>
+          </Layout>
+        </GlobalContextProvider>
       </body>
     </html>
   );
