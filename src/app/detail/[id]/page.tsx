@@ -5,7 +5,7 @@ import MyDialog from '@/components/Teacher/BtnModal/BtnAddForm';
 import { getTeachesByid } from '../../../../action/getByID';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ITeachers } from '@/types/Teachers';
+import { ITeachers } from '@/types/ITeachers';
 import Loading from '@/components/Loading';
 
 export default function Home() {

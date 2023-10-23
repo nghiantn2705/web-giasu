@@ -5,12 +5,16 @@ import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
-import { API_URL } from '@/lib/Constants';
+
 import { useStore } from '@/hook/use-store';
+import { token } from '@/services';
 
 const SignInUser = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
+  if (userInfo) {
+    router.push('/giasu');
+  }
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -47,19 +51,18 @@ const SignInUser = () => {
             <Formik
               initialValues={{ email: '', password: '' }}
               onSubmit={async (values) => {
-                const res = await fetch(API_URL + `/auth/login`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({ ...values }),
-                });
-                if (res.ok) {
-                  const data = await res.json();
-                  setUserInfo(data);
-                  localStorage.setItem('access_token', data.access_token);
-                  localStorage.setItem('refresh_token', data.refresh_token);
-                  router.push('/');
+                try {
+                  const data = await token({
+                    ...values,
+                  });
+                  if (data) {
+                    setUserInfo(data?.user);
+                    localStorage.setItem('access_token', data?.access_token);
+                    localStorage.setItem('refresh_token', data?.refresh_token);
+                    router.push('/');
+                  }
+                } catch (ex) {
+                  console.log(ex);
                 }
               }}
             >

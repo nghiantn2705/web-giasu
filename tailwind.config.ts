@@ -9,6 +9,9 @@ module.exports = {
       backgroundImage: {
         'banner-main': "url('/banner-main.png')",
       },
+      minHeight: {
+        content: 'calc(100vh - 148px)',
+      },
     },
     container: {
       center: true,

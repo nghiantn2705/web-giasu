@@ -22,7 +22,9 @@ export default function RootLayout(props: Props) {
       <body className={inter.className}>
         <GlobalContextProvider store={[]}>
           <Layout>
-            <div className={'mt-[100px] md:mt-[67px]'}>{props.children}</div>
+            <div className={'mt-[100px] md:mt-[67px] min-h-content'}>
+              {props.children}
+            </div>
           </Layout>
         </GlobalContextProvider>
       </body>

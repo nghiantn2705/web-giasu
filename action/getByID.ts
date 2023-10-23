@@ -1,7 +1,7 @@
-import { API_URL } from '../src/lib/Constants';
-
 async function getTeachesDistrict(id: string) {
-  const res = await fetch(API_URL + `/teachers/district/${id}`);
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/teachers/district/${id}`,
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -10,7 +10,9 @@ async function getTeachesDistrict(id: string) {
 }
 
 async function getTeachesTimeSlot(id: string) {
-  const res = await fetch(API_URL + `/teachers/timeSlot/${id}`);
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/teachers/timeSlot/${id}`,
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -20,7 +22,7 @@ async function getTeachesTimeSlot(id: string) {
 async function getTeachesByid(id: number) {
   const token = localStorage.getItem('apiuser');
   const accessToken = JSON.parse(token as string);
-  const res = await fetch(API_URL + `/teachers/${id}`, {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/teachers/${id}`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${accessToken}`,

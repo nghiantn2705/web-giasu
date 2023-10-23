@@ -39,7 +39,10 @@ const Main = () => {
             <br />, kỹ năng giảng dạy của bạn.
           </p>
           <div className={'flex gap-5'}>
-            <Link href={''} className={'text-indigo-500 hover:underline'}>
+            <Link
+              href={'/auth/teacher/register'}
+              className={'text-indigo-500 hover:underline'}
+            >
               {'>'} Đăng ký làm gia sư
             </Link>
             <Link href={''} className={'text-indigo-500 hover:underline'}>

@@ -4,28 +4,21 @@ import React, { useEffect } from 'react';
 import { Header } from '@/components/index';
 import Footer from '@/components/Footer';
 import { useStore } from '@/hook/use-store';
+import { getTokenRefresh } from '@/services';
 interface IProps {
   children: React.ReactNode;
 }
 const Layout = ({ children }: IProps) => {
   const [infoUser, setInfoUser] = useStore('userInfo');
-
   useEffect(() => {
-    const refreshToken = localStorage.getItem('refresh_token') || '';
-    const accessToken = localStorage.getItem('access_token') || '';
+    const refreshToken = localStorage.getItem('refresh_token') || null;
+    const accessToken = localStorage.getItem('access_token') || null;
     const ObjectRefreshToken = { refresh_token_id: refreshToken };
     const ObjectAccessToken = { accessToken: accessToken };
     if (ObjectAccessToken) {
-      const fetchToken = async () => {
-        const res = await fetch('http://127.0.0.1:8000/api/auth/refresh', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(ObjectRefreshToken),
-        });
-        if (res.ok) {
-          const data = await res.json();
+      (async () => {
+        try {
+          const data = await getTokenRefresh(ObjectRefreshToken);
           if (data.access_token) {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
@@ -33,17 +26,19 @@ const Layout = ({ children }: IProps) => {
               setInfoUser(data?.user);
             }
           }
+        } catch (error: any) {
+          console.log(error);
         }
-      };
-      fetchToken();
+      })();
     }
   }, []);
+
   return (
-    <div>
+    <>
       <Header userInfo={infoUser} />
       {children}
       <Footer />
-    </div>
+    </>
   );
 };
 
