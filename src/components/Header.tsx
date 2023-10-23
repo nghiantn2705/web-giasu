@@ -4,8 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { FiHome, FiPhone, FiSearch, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
+
 const navLink = [
   {
     name: 'Trang Chủ',
@@ -24,21 +24,21 @@ const navLink = [
   },
   {
     name: 'Liên hệ',
-    link: '/profile',
+    link: '/contact',
     icon: <FiPhone />,
   },
 ];
 const Header = (props: any) => {
-  console.log(props?.userInfo?.name);
   const router = usePathname();
-  // const rsrouter = useRouter();
+  const rsrouter = useRouter();
   const Signout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    rsrouter.push('/');
     window.location.reload();
   };
   return (
-    <div
+    <header
       className={
         'fixed top-0 left-0 right-0  border-b shadow bg-white p-2 w-full z-10'
       }
@@ -72,11 +72,11 @@ const Header = (props: any) => {
           ))}
         </ul>
 
-        {props.userInfo?.user ? (
+        {props?.userInfo ? (
           <div className={'col-start-11 col-span-2 relative w-fit group'}>
             <div>
               <Image
-                src={props?.userInfo?.user?.avatar}
+                src={`${props?.userInfo?.avatar}`}
                 width={45}
                 height={45}
                 className={
@@ -90,13 +90,14 @@ const Header = (props: any) => {
                 'absolute top-[59px] right-0 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
               }
             >
-              <div
+              <a
+                href={`/profile`}
                 className={
                   'flex gap-3 items-center hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                 }
               >
                 <Image
-                  src={`${props?.userInfo?.user?.avatar}`}
+                  src={`${props?.userInfo?.avatar}`}
                   width={45}
                   height={45}
                   className={
@@ -105,9 +106,10 @@ const Header = (props: any) => {
                   alt={''}
                 />
                 <span className={'text-lg font-bold '}>
-                  {props?.userInfo?.user?.name}
+                  {props?.userInfo?.name}
                 </span>
-              </div>
+              </a>
+
               <hr className={'mb-2 mt-1 px-1'} />
               <div className={'flex flex-col py-2'}>
                 <span
@@ -117,13 +119,14 @@ const Header = (props: any) => {
                 >
                   Đổi Mật Khẩu
                 </span>
-                <span
+                <a
+                  href={`/profile`}
                   className={
                     'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
                   Chỉnh sửa thông tin
-                </span>
+                </a>
                 <button
                   onClick={Signout}
                   type={'button'}
@@ -140,7 +143,7 @@ const Header = (props: any) => {
           ''
         )}
       </div>
-    </div>
+    </header>
   );
 };
 

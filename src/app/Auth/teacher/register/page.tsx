@@ -3,15 +3,9 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 const page = () => {
   return (
-    <div className=" mt-40 mb-20 w-[1200px] m-auto ">
-      <h1 className="size-[20px] mb-20 text-2xl">
-        Hoàn thành đơn đăng kí của bạn
-      </h1>
+    <div className={'container mx-auto py-5 shadow-lg'}>
+      <h1 className={'text-3xl font-bold'}>Hoàn thành đơn đăng kí của bạn</h1>
       <div className="">
-        <p className="font-bold">
-          Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và những
-          bài học của bạn như thế nào:
-        </p>
         <div className="h-px bg-slate-400 mt-4 "></div>
         <div className="mt-10">
           <Formik
@@ -19,48 +13,6 @@ const page = () => {
             onSubmit={(values) => console.log(values)}
           >
             <Form className={'flex flex-col gap-5'}>
-              <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
-                  Tên môn học:
-                </label>
-                <Field
-                  type={'text'}
-                  name={'subject'}
-                  placeholder={'Tên môn học'}
-                  className={
-                    'w-[900px] px-4 py-2 text-lg border border-black rounded-xl'
-                  }
-                />
-              </div>
-              <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
-                  Lớp:
-                </label>
-                <Field
-                  type={'text'}
-                  name={'class'}
-                  placeholder={'Dạy học sinh lớp'}
-                  className={
-                    'w-[900px] px-4 py-2 text-lg border border-black rounded-xl'
-                  }
-                />
-              </div>
-              <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
-                  Mô tả:
-                </label>
-                <Field
-                  type={'text'}
-                  name={'description'}
-                  component={'textarea'}
-                  rows={'6'}
-                  placeholder={'Giới thiệu về bạn'}
-                  className={
-                    'w-[900px] px-4 py-2 text-lg  border border-black rounded-xl'
-                  }
-                />
-              </div>
-
               <p className="font-bold mt-10">Tạo hồ sơ cá nhân </p>
               <div className="h-px bg-slate-400 mb-4"></div>
               <div className="flex">
@@ -102,6 +54,7 @@ const page = () => {
                   }
                 />
               </div>
+
               <div className="flex">
                 <label htmlFor="subject" className={'w-34 mr-[70px]'}>
                   Thành phố/Quận/Huyện:
@@ -115,6 +68,52 @@ const page = () => {
                   }
                 />
               </div>
+              <div className="flex">
+                <label htmlFor="subject" className={'w-32 mr-32'}>
+                  Tên môn học:
+                </label>
+                <Field
+                  type={'text'}
+                  name={'subject'}
+                  placeholder={'Tên môn học'}
+                  className={
+                    'w-[900px] px-4 py-2 text-lg border border-black rounded-xl'
+                  }
+                />
+              </div>
+              <div className="flex">
+                <label htmlFor="subject" className={'w-32 mr-32'}>
+                  Lớp:
+                </label>
+                <Field
+                  type={'text'}
+                  name={'class'}
+                  placeholder={'Dạy học sinh lớp'}
+                  className={
+                    'w-[900px] px-4 py-2 text-lg border border-black rounded-xl'
+                  }
+                />
+              </div>
+              <p className="font-bold">
+                Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và
+                những bài học của bạn như thế nào:
+              </p>
+              <div className="flex">
+                <label htmlFor="subject" className={'w-32 mr-32'}>
+                  Mô tả:
+                </label>
+                <Field
+                  type={'text'}
+                  name={'description'}
+                  component={'textarea'}
+                  rows={'6'}
+                  placeholder={'Giới thiệu về bạn'}
+                  className={
+                    'w-[900px] px-4 py-2 text-lg  border border-black rounded-xl'
+                  }
+                />
+              </div>
+
               <button
                 type={'submit'}
                 className={
