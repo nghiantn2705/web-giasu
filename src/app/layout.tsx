@@ -1,8 +1,7 @@
-import { Header } from '@/components';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Footer from '@/components/Footer';
+
 import { ReactNode } from 'react';
 import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout';
