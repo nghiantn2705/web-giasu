@@ -4,8 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { FiHome, FiPhone, FiSearch, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 const navLink = [
   {
     name: 'Trang Chủ',
@@ -29,12 +29,13 @@ const navLink = [
   },
 ];
 const Header = (props: any) => {
+  console.log(props?.userInfo?.name);
   const router = usePathname();
-  const refreshRouter = useRouter();
-  const Signin = () => {
+  // const rsrouter = useRouter();
+  const Signout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    refreshRouter.replace('/');
+    window.location.reload();
   };
   return (
     <div
@@ -71,11 +72,11 @@ const Header = (props: any) => {
           ))}
         </ul>
 
-        {props.userInfo ? (
+        {props.userInfo?.user ? (
           <div className={'col-start-11 col-span-2 relative w-fit group'}>
             <div>
               <Image
-                src={props?.userInfo?.avatar}
+                src={props?.userInfo?.user?.avatar}
                 width={45}
                 height={45}
                 className={
@@ -95,7 +96,7 @@ const Header = (props: any) => {
                 }
               >
                 <Image
-                  src={`${props?.userInfo?.avatar}`}
+                  src={`${props?.userInfo?.user?.avatar}`}
                   width={45}
                   height={45}
                   className={
@@ -104,7 +105,7 @@ const Header = (props: any) => {
                   alt={''}
                 />
                 <span className={'text-lg font-bold '}>
-                  {props?.userInfo?.name}
+                  {props?.userInfo?.user?.name}
                 </span>
               </div>
               <hr className={'mb-2 mt-1 px-1'} />
@@ -124,7 +125,7 @@ const Header = (props: any) => {
                   Chỉnh sửa thông tin
                 </span>
                 <button
-                  onClick={Signin}
+                  onClick={Signout}
                   type={'button'}
                   className={
                     'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2 text-left'
