@@ -43,6 +43,21 @@ const page = () => {
               </div>
               <div className="flex">
                 <label htmlFor="subject" className={'w-32 mr-32'}>
+                  Giới tính:
+                </label>
+                <Field
+                  as="select"
+                  name="sex"
+                  className={
+                    'w-[900px] px-4 py-2 text-lg  border border-black rounded-xl'
+                  }
+                >
+                  <option value="nam">Nam</option>
+                  <option value="nữ">Nữ</option>
+                </Field>
+              </div>
+              <div className="flex">
+                <label htmlFor="subject" className={'w-32 mr-32'}>
                   Số điện thoại:
                 </label>
                 <Field
