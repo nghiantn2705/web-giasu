@@ -29,6 +29,7 @@ const navLink = [
   },
 ];
 const Header = (props: any) => {
+  console.log(props?.userInfo?.name);
   const router = usePathname();
   const rsrouter = useRouter();
   const Signout = () => {
