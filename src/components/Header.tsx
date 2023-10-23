@@ -24,7 +24,7 @@ const navLink = [
   },
   {
     name: 'Liên hệ',
-    link: '/lienhe',
+    link: '/profile',
     icon: <FiPhone />,
   },
 ];

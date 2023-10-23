@@ -10,7 +10,6 @@ const nextConfig = {
         hostname: '**.png.pngtree.com',
       },
     ],
-    domains: ['png.pngtree.com'],
   },
 };
 

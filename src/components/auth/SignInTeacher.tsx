@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { API_URL } from '@/lib/Constants';
 import { useStore } from '@/hook/use-store';
 
-const SignInUser = () => {
+const SignInTeacher = () => {
   const router = useRouter();
   const infoUser = useStore('userInfo');
 
@@ -115,4 +115,4 @@ const SignInUser = () => {
   );
 };
 
-export default SignInUser;
+export default SignInTeacher;
