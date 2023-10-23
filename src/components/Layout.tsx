@@ -11,8 +11,8 @@ const Layout = ({ children }: IProps) => {
   const [infoUser, setInfoUser] = useStore('userInfo');
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem('refresh_token');
-    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token') || '';
+    const accessToken = localStorage.getItem('access_token') || '';
     const ObjectRefreshToken = { refresh_token_id: refreshToken };
     const ObjectAccessToken = { accessToken: accessToken };
     if (ObjectAccessToken) {
