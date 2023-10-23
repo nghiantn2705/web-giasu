@@ -34,7 +34,7 @@ const Header = (props: any) => {
   const Signin = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    refreshRouter.push('/');
+    refreshRouter.replace('/');
   };
   return (
     <div
@@ -75,7 +75,7 @@ const Header = (props: any) => {
           <div className={'col-start-11 col-span-2 relative w-fit group'}>
             <div>
               <Image
-                src={`${props?.userInfo?.avatar}`}
+                src={props?.userInfo?.avatar}
                 width={45}
                 height={45}
                 className={
