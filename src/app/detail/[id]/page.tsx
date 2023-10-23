@@ -65,19 +65,22 @@ export default function Home() {
                 {/*  */}
                 {/* Thông tin */}
                 <div className="py-4 border-b">
-                  <p className="text-xl font-bold">Nhận dạy:</p>
-                  <div className=" grid gap-2 grid-cols-7 py-3">
-                    <div className="text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                      <p>{data?.class}</p>
+                  <div className={' grid gap-2 grid-cols-2'}>
+                    <div>
+                      <p className="text-xl font-bold">Nhận dạy:</p>
+                      <div className=" grid gap-2 grid-cols-8 py-3">
+                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
+                          <p>{data?.class}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                      <p>Cấp 2</p>
-                    </div>
-                    <div className="text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                      <p>Cấp 3</p>
-                    </div>
-                    <div className="text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                      <p>Ôn thi đại học</p>
+                    <div>
+                      <p className="text-xl font-bold">Dạy môn:</p>
+                      <div className=" grid gap-2 grid-cols-8 py-3">
+                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
+                          <p>{data?.subject}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -87,23 +90,20 @@ export default function Home() {
                   </div>
 
                   <div className="pt-2">
-                    <div className=" col-span-3 text-zinc-950 ">
+                    {/* <div className=" col-span-3 text-zinc-950 ">
                       <label className="font-bold">Năm sinh : </label>
                       <label>30/12/2003</label>
-                    </div>
+                    </div> */}
 
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold">Số điện thoại : </label>
 
-                      <label>098761999</label>
+                      <label>{data?.phone}</label>
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold">Khu vực : </label>
 
-                      <label className="">
-                        {' '}
-                        phương canh , xuân phương , nam từ liêm , hà nội
-                      </label>
+                      <label className=""> {data?.address}</label>
                     </div>
                   </div>
                 </div>
@@ -114,13 +114,13 @@ export default function Home() {
 
                   <div className="pt-2">
                     <div className="pt-2 col-span-3 text-zinc-950 ">
-                      <label className="font-bold"> Hiện tại: </label>{' '}
-                      <label className="">Sinh viên</label>{' '}
+                      <label className="font-bold"> Trình độ học vấn: </label>{' '}
+                      <label className="">{data?.education_level}</label>{' '}
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold"> Trường học :</label>
 
-                      <label className=""> Cao đẳng fpt</label>
+                      <label className=""> {data?.school_id}</label>
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold"> Chuyên ngành :</label>
@@ -135,10 +135,12 @@ export default function Home() {
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold">Khu vực dạy : </label>
 
-                      <label className="">
-                        {' '}
-                        phương canh , xuân phương , nam từ liêm , hà nội
-                      </label>
+                      <label className=""> {data?.DistrictID}</label>
+                    </div>
+                    <div className="pt-2 col-span-3 text-zinc-950 ">
+                      <label className="font-bold"> Thời gian dạy: </label>
+
+                      <label className=""> {data?.time_tutor}</label>
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold">
@@ -146,15 +148,12 @@ export default function Home() {
                         Mức lương mong muốn :{' '}
                       </label>
 
-                      <label className=""> 50,000,000 đồng/tháng</label>
+                      <label className=""> {data?.salary}</label>
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold"> Kinh nghiệm : </label>
 
-                      <label className="">
-                        {' '}
-                        có kinh nghiệm 1 năm trong việc giảng dạy và trợ giảng
-                      </label>
+                      <label className=""> {data?.description}</label>
                     </div>
                   </div>
                 </div>
@@ -170,11 +169,7 @@ export default function Home() {
                         Ghi chú của gia sư :{' '}
                       </label>
 
-                      <label className="">
-                        {' '}
-                        Có thể dạy on , sẵn sàng tăng ca khi học sinh chưa hiểu
-                        bài
-                      </label>
+                      <label className=""> {data?.description}</label>
                     </div>
                   </div>
                 </div>
