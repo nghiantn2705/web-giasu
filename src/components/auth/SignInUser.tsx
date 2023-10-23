@@ -55,6 +55,7 @@ const SignInUser = () => {
                   const data = await token({
                     ...values,
                   });
+                  console.log(data);
                   if (data) {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);
