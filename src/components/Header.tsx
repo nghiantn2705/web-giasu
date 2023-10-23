@@ -121,7 +121,16 @@ const Header = (props: any) => {
                     'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
-                  Chỉnh sửa thông tin
+                  <Link href={'/profile'}>Thông tin cá nhân</Link>
+                </span>
+                <span
+                  className={
+                    'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                  }
+                >
+                  <Link href={'/customer_info'}>
+                    Chỉnh sửa thông tin cá nhân
+                  </Link>
                 </span>
                 <button
                   onClick={Signin}
