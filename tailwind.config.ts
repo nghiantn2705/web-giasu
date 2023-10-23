@@ -22,12 +22,12 @@ module.exports = {
       xl: '1320px',
     },
     animation: {
-      'lds-spinner': 'lds-spinner 1200ms cubic-bezier(0.5, 0, 0.5, 1)',
+      'lds-spinner': 'lds-spinner 1200ms linear infinite',
     },
     keyframes: {
       'lds-spinner': {
-        '0%': { transform: 'rotate(0deg)' },
-        '100%': { transform: 'rotate(360deg)' },
+        '0%': { opacity: '1' },
+        '100%': { opacity: '0' },
       },
     },
   },

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FiSearch, FiUsers, FiHome, FiPhone } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 const navLink = [
   {
@@ -30,6 +31,7 @@ const navLink = [
 ];
 const Header = () => {
   const router = usePathname();
+
   return (
     <div
       className={
@@ -50,7 +52,7 @@ const Header = () => {
             <span className={'text-sm'}>Uy tín và chất lượng</span>
           </div>
         </div>
-        <ul className={'flex gap-2 col-span-8 col-start-5'}>
+        <ul className={'flex gap-2 col-span-5 col-start-5'}>
           {navLink.map(({ link, name, icon }) => (
             <Link
               href={link}
@@ -64,6 +66,16 @@ const Header = () => {
             </Link>
           ))}
         </ul>
+
+        <div className={'col-start-11 col-span-2'}>
+          {/*<span>{session.data.user?.name}</span>*/}
+          <button
+            onClick={() => signOut()}
+            className={'df-text-sm df-font-bold  df-rounded-md px-2'}
+          >
+            Đăng xuất
+          </button>
+        </div>
       </div>
     </div>
   );
