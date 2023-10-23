@@ -6,9 +6,12 @@ import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '@/lib/Constants';
+import { useStore } from '@/hook/use-store';
 
 const SignInUser = () => {
   const router = useRouter();
+  const infoUser = useStore('userInfo');
+
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
