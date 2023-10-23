@@ -7,7 +7,7 @@ import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '@/lib/Constants';
 
-const SignInUser = () => {
+const SignInTeacher = () => {
   const router = useRouter();
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
@@ -112,4 +112,4 @@ const SignInUser = () => {
   );
 };
 
-export default SignInUser;
+export default SignInTeacher;
