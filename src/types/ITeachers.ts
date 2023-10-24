@@ -1,7 +1,7 @@
 export interface ITeachers {
   Certificate: string;
   Citizen_card: string;
-  DistrictID: string;
+  District: string;
   address: string;
   avatar: string;
   class: string;
