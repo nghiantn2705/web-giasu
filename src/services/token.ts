@@ -18,3 +18,13 @@ export const getTokenRefresh = (body: IFetchBody) => {
     user: ITeachers;
   }>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, body);
 };
+
+export const getFilter = (body: IFetchBody) => {
+  return apiRequest.post<[ITeachers]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/filter?subject=${body?.subject}&DistrictID=${body?.districts}`,
+    body,
+  );
+};
+export const postForm = (body: IFetchBody) => {
+  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/job`, body);
+};

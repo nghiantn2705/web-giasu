@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -11,7 +12,6 @@ const nextConfig = {
         hostname: '**.png.pngtree.com',
       },
     ],
-    domains: ['png.pngtree.com'],
   },
 };
 

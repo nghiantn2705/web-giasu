@@ -9,7 +9,6 @@ interface IProps {
   infoUser: ITeachers;
 }
 const Profile = ({ infoUser }: IProps) => {
-  console.log(infoUser);
   return (
     <div className={'container m-auto my-5 p-5'}>
       <div className={'md:flex no-wrap md:-mx-2 shadow-lg'}>

@@ -1,7 +1,10 @@
 export interface ITeachers {
   Certificate: string;
   Citizen_card: string;
-  District: string;
+  district: {
+    id: number;
+    name: string;
+  };
   address: string;
   avatar: string;
   class: string;
@@ -15,6 +18,9 @@ export interface ITeachers {
   salary: string;
   school_id: string;
   status: boolean;
-  subject: string;
+  subject: {
+    id: number;
+    name: string;
+  };
   time_tutor: string;
 }

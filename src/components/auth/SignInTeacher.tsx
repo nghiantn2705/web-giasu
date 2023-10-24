@@ -8,13 +8,16 @@ import { useRouter } from 'next/navigation';
 
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
+import { useEffect } from 'react';
 
 const SignInTeacher = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
-  if (userInfo) {
-    router.push('/giasu');
-  }
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/giasu');
+    }
+  }, []);
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div

@@ -10,7 +10,11 @@ const Teacher = ({ teachers }: any) => {
         <div className={'grid grid-cols-5 gap-x-4 gap-y-10 py-5'}>
           {teachers?.map((items: ITeachers, index: number) => {
             return (
-              <Link href={''} key={index} className={'border rounded-md'}>
+              <Link
+                href={`/detail/${items?.id}`}
+                key={index}
+                className={'border rounded-md'}
+              >
                 <Image
                   src={items?.avatar}
                   alt={''}
@@ -22,7 +26,7 @@ const Teacher = ({ teachers }: any) => {
                   <h3 className={'font-bold text-lg'}>{items?.name}</h3>
                   <ul className={'flex gap-1'}>
                     <li className={'border px-1 text-center rounded-md'}>
-                      {items?.subject}
+                      {items?.subject?.name}
                     </li>
                   </ul>
                   <span
@@ -30,7 +34,7 @@ const Teacher = ({ teachers }: any) => {
                       'text-sm text-gray-400 border rounded-md min-w-fit px-2 self-end'
                     }
                   >
-                    {items?.DistrictID}
+                    {items?.district?.name}
                   </span>
                 </div>
               </Link>

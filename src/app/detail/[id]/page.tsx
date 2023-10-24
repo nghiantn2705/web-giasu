@@ -18,7 +18,6 @@ export default function Home() {
     };
     fetch();
   }, [setData]);
-  console.log(data);
   return (
     <div>
       {data ? (
@@ -181,7 +180,7 @@ export default function Home() {
                 {/*  */}
               </div>
               <div className="mt-5 col-span-2">
-                <MyDialog />
+                <MyDialog id={data?.id} />
               </div>
             </div>
           </main>

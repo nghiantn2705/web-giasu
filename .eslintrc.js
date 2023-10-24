@@ -33,7 +33,7 @@ module.exports = {
       2,
       {
         labelAttributes: ['label'],
-        controlComponents: ['Field'],
+        controlComponents: ['Field', 'span'],
         depth: 3,
       },
     ],

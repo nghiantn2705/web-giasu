@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, ReactNode } from 'react';
-
+import { AiOutlineClose } from 'react-icons/ai';
 interface IModaltitle {
   children: ReactNode;
 }
@@ -10,7 +10,7 @@ export const ModalTitle = ({ children }: IModaltitle) => {
   return (
     <Dialog.Title
       as="h3"
-      className="text-lg font-medium leading-6 text-gray-900"
+      className="text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300"
     >
       {children}
     </Dialog.Title>
@@ -51,17 +51,17 @@ export default function MyModal(props: IMyModal) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                   {children}
 
                   <button
                     type="button"
                     className={
-                      'absolute top-2 right-3 rounded-full border py-1 px-3 hover:bg-red-400 hover:text-white'
+                      'absolute top-3 right-3 rounded-full  text-gray-500 hover:text-black'
                     }
                     onClick={onClose}
                   >
-                    X
+                    <AiOutlineClose />
                   </button>
                 </Dialog.Panel>
               </Transition.Child>
