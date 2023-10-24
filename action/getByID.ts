@@ -1,5 +1,7 @@
-async function getTeachesDistrict(id: number) {
-  const res = await fetch(`http://127.0.0.1:8000/api/teachers/district/${id}`);
+async function getTeachesDistrict(id: string) {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/teachers/district/${id}`,
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -7,4 +9,29 @@ async function getTeachesDistrict(id: number) {
   return res.json();
 }
 
-export { getTeachesDistrict };
+async function getTeachesTimeSlot(id: string) {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/teachers/timeSlot/${id}`,
+  );
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+async function getTeachesByid(id: number) {
+  const token = localStorage.getItem('apiuser');
+  const accessToken = JSON.parse(token as string);
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/teachers/${id}`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
+export { getTeachesDistrict, getTeachesTimeSlot, getTeachesByid };

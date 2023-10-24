@@ -68,7 +68,6 @@ export default function MyHistory() {
                       <td className={'py-3 px-6 text-center'}>2h-10h</td>
                       <td className={'py-3 px-6 text-center'}>01479566311</td>
                     </tr>
-                  
                   </tbody>
                 </table>
               </main>
