@@ -1,7 +1,6 @@
 'use client';
-import React from 'react';
-
 import SignInUser from '@/components/auth/SignInUser';
+import React from 'react';
 
 const page = () => {
   return (

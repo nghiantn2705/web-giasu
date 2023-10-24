@@ -1,8 +1,6 @@
-import { API_URL } from '@/lib/Constants';
-
 async function SigninUser(req: any) {
   const body = JSON.stringify(req.body);
-  const res = await fetch(API_URL + `/auth/login`, {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

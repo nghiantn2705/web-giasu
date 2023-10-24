@@ -5,13 +5,16 @@ import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
-import { API_URL } from '@/lib/Constants';
+
 import { useStore } from '@/hook/use-store';
+import { token } from '@/services';
 
 const SignInTeacher = () => {
   const router = useRouter();
-  const infoUser = useStore('userInfo');
-
+  const [userInfo, setUserInfo] = useStore('userInfo');
+  if (userInfo) {
+    router.push('/giasu');
+  }
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -48,17 +51,18 @@ const SignInTeacher = () => {
             <Formik
               initialValues={{ email: '', password: '' }}
               onSubmit={async (values) => {
-                const res = await fetch(API_URL + `/auth/login`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({ ...values }),
-                });
-                const data = await res.json();
-                if (res.ok) {
-                  localStorage.setItem('apiuser', JSON.stringify(data));
-                  router.push('/');
+                try {
+                  const data = await token({
+                    ...values,
+                  });
+                  if (data) {
+                    setUserInfo(data?.user);
+                    localStorage.setItem('access_token', data?.access_token);
+                    localStorage.setItem('refresh_token', data?.refresh_token);
+                    router.push('/');
+                  }
+                } catch (ex) {
+                  console.log(ex);
                 }
               }}
             >
