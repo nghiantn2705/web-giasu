@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { ITeachers } from '@/types/ITeachers';
+
 import Image from 'next/image';
 import MyHistory from '../Teacher/BtnModal/BtnHistoryAdd';
+import { ITeachers } from '@/types/Teachers';
 
 interface IProps {
   infoUser: ITeachers;
