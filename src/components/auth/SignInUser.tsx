@@ -12,9 +12,9 @@ import { token } from '@/services';
 const SignInUser = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
-  if (userInfo) {
-    router.push('/giasu');
-  }
+  // if (userInfo) {
+  //   router.push('/giasu');
+  // }
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -55,6 +55,7 @@ const SignInUser = () => {
                   const data = await token({
                     ...values,
                   });
+                  console.log(data);
                   if (data) {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);

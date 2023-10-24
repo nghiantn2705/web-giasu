@@ -7,7 +7,7 @@ const Main = () => {
     <div>
       <section className={'bg-banner-main bg-cover bg-center py-20'}>
         <div className={'container'}>
-          <div className={'flex flex-col bg-white w-[35%] p-7'}>
+          <div className={'flex flex-col bg-white  p-7 md:w-[50%] xl:w-[35%]'}>
             <h2 className={'text-xl font-bold mb-2'}>Kết nối gia sư GS7</h2>
             <p className={'text-3xl text-red-400 font-bold mb-6'}>
               Mang thành công đến <br /> với con bạn
@@ -27,11 +27,11 @@ const Main = () => {
           </div>
         </div>
       </section>
-      <section className={'container flex flex-wrap px-4 py-12'}>
-        <div className={'w-[40%] flex justify-center'}>
+      <section className={'container flex flex-col md:flex-row px-4 py-12'}>
+        <div className={'md:w-[40%] flex justify-center'}>
           <Image src={'/banner-gs-1.jpg'} width={350} height={230} alt={''} />
         </div>
-        <div className={'flex flex-col gap-4 pl-12 py-8 w-[60%]'}>
+        <div className={'flex flex-col gap-4 py-4 md:pl-12 md:py-8 md:w-[60%]'}>
           <h3 className={'text-2xl font-bold'}>Bạn là giáo viên, sinh viên?</h3>
           <p>
             Gia nhập vào đội ngũ gia sư của GS7, nhận lớp và có thêm thu nhập từ
@@ -64,9 +64,15 @@ const Main = () => {
         </div>
       </section>
       <section className={'bg-gray-200 '}>
-        <div className={'container flex flex-wrap px-4 py-12'}>
-          <div className={'flex flex-col gap-4 pl-12 py-8 w-[60%]'}>
-            <h3 className={'text-2xl font-bold'}>Bạn cần thuê gia sư?</h3>
+        <div
+          className={
+            'container flex flex-col gap-5 md:gap-0 md:flex-row px-4 py-12'
+          }
+        >
+          <div className={'flex flex-col gap-4 md:py-8 w-full md:w-[60%]'}>
+            <h3 className={'text-center md:text-left text-2xl font-bold'}>
+              Bạn cần thuê gia sư?
+            </h3>
             <p>Trải nghiệm dịch vụ chất lượng và chuyên nghiệp!</p>
             <p>
               Thật tốn thời gian khi gặp phải gia sư không phù hợp. GrowGreen
@@ -84,16 +90,22 @@ const Main = () => {
               <span> Đến trang thuê gia sư</span>
             </Link>
           </div>
-          <div className={'w-[40%] flex justify-center'}>
+          <div className={'md:w-[40%] flex justify-center'}>
             <Image src={'/banner-gs-2.png'} width={350} height={230} alt={''} />
           </div>
         </div>
       </section>
-      <section className={'container flex px-4 py-12'}>
-        <div className={'w-[25%] flex pl-12 py-8 '}>
+      <section
+        className={'container flex flex-col md:flex-row px-4 md:py-8 lg:py-12'}
+      >
+        <div className={'lg:w-[25%] flex justify-center lg:pl-12 py-8 '}>
           <h2 className={'text-2xl font-bold'}>Dịch vụ tại GS7</h2>
         </div>
-        <div className={'flex flex-col gap-4 pl-12 py-8 w-[60%]'}>
+        <div
+          className={
+            'flex flex-col gap-4 md:py-8 md:w-full lg:w-[60%] md:pl-12 '
+          }
+        >
           <h3 className={'text-lg '}>
             Trung tâm gia sư GS7 luôn nỗ lực để cung cấp cho bạn dịch vụ gia sư
             chất lượng nhất, bao gồm:

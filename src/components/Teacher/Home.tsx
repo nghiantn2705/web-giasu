@@ -23,13 +23,17 @@ export default function Home({ children }: IHome) {
           }
         >
           <Banner />
-          <div className={'grid grid-cols-2 gap-5'}>
+          <div className={'grid gap-5 md:grid-cols-2 px-2 md:px-4 lg:px-0'}>
             <div
               className={
                 "bg-[url('/bg-ph.png')] rounded-md bg-center bg-cover bg-no-repeat"
               }
             >
-              <div className={'px-2 flex flex-col gap-10 pb-8 pt-5'}>
+              <div
+                className={
+                  'px-2 flex flex-col pb-8 pt-5 gap-3 lg:gap-5 xl:gap-10'
+                }
+              >
                 <h3
                   className={
                     'text-center text-white font-bold text-xl uppercase'
@@ -39,7 +43,7 @@ export default function Home({ children }: IHome) {
                 </h3>
                 <ul
                   className={
-                    'grid grid-cols-2 gap-y-6 px-4 bg-center bg-cover bg-no-repeat'
+                    'grid  bg-center bg-cover bg-no-repeat pl-5 gap-y-2 xl:pl-0  xl:grid-cols-2 xl:gap-y-6 xl:px-4'
                   }
                 >
                   <li
@@ -47,9 +51,7 @@ export default function Home({ children }: IHome) {
                       'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
                     }
                   >
-                    <Link href={''} className={''}>
-                      Giới thiệu hoạt động
-                    </Link>
+                    <Link href={''}>Giới thiệu hoạt động</Link>
                   </li>
                   <li
                     className={
@@ -58,25 +60,19 @@ export default function Home({ children }: IHome) {
                   >
                     <Link href={'/user'}>Đăng nhập/ đăng ký</Link>
                   </li>
-                  <li>
-                    <Link
-                      href={''}
-                      className={
-                        'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
-                      }
-                    >
-                      Học phí tham khảo
-                    </Link>
+                  <li
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
+                    }
+                  >
+                    <Link href={''}>Học phí tham khảo</Link>
                   </li>
-                  <li>
-                    <Link
-                      href={''}
-                      className={
-                        'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
-                      }
-                    >
-                      Đăng ký tìm gia sư
-                    </Link>
+                  <li
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
+                    }
+                  >
+                    <Link href={''}>Đăng ký tìm gia sư</Link>
                   </li>
                 </ul>
               </div>
@@ -86,7 +82,11 @@ export default function Home({ children }: IHome) {
                 "bg-[url('/bg-gs.png')] rounded-md bg-center bg-cover bg-no-repeat"
               }
             >
-              <div className={'px-2 flex flex-col gap-10 pb-8 pt-5'}>
+              <div
+                className={
+                  'px-2 flex flex-col pb-8 pt-5 gap-3 lg:gap-5 xl:gap-10'
+                }
+              >
                 <h3
                   className={
                     'text-center text-white font-bold text-xl uppercase'
@@ -96,18 +96,15 @@ export default function Home({ children }: IHome) {
                 </h3>
                 <ul
                   className={
-                    'grid grid-cols-2 gap-y-6 px-4 bg-center bg-cover bg-no-repeat'
+                    'grid  bg-center bg-cover bg-no-repeat pl-5 xl:pl-0 gap-y-2 xl:grid-cols-2 xl:gap-y-6 xl:px-4'
                   }
                 >
-                  <li>
-                    <Link
-                      href={''}
-                      className={
-                        'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
-                      }
-                    >
-                      Những kĩ năng cần biết
-                    </Link>
+                  <li
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
+                    }
+                  >
+                    <Link href={''}>Những kĩ năng cần biết</Link>
                   </li>
                   <li>
                     <Link
@@ -119,15 +116,12 @@ export default function Home({ children }: IHome) {
                       Đăng nhập/ đăng ký
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      href={''}
-                      className={
-                        'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
-                      }
-                    >
-                      Đăng ký làm gia sư
-                    </Link>
+                  <li
+                    className={
+                      'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
+                    }
+                  >
+                    <Link href={''}>Đăng ký làm gia sư</Link>
                   </li>
                 </ul>
               </div>
