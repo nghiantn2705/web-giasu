@@ -135,7 +135,7 @@ export default function Home() {
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold">Khu vực dạy : </label>
 
-                      <label className=""> {data?.DistrictID}</label>
+                      <label className=""> {data?.District}</label>
                     </div>
                     <div className="pt-2 col-span-3 text-zinc-950 ">
                       <label className="font-bold"> Thời gian dạy: </label>

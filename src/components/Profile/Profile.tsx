@@ -3,6 +3,7 @@
 import React from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import Image from 'next/image';
+import MyHistory from '../Teacher/BtnModal/BtnHistoryAdd';
 
 interface IProps {
   infoUser: ITeachers;
@@ -222,6 +223,9 @@ const Profile = ({ infoUser }: IProps) => {
             <button className={'w-full md:w-9/12 mx-10'}>
               <a href={'/info'}>Cập nhật thông tin cá nhân</a>
             </button>
+            <div className="">
+              <MyHistory />
+            </div>
           </div>
         </div>
       </div>
