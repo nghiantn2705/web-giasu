@@ -41,11 +41,28 @@ export default function App() {
             setTeachers(res);
           }}
         >
-          <Form>
-            <Filters data={districts} name={'districts'} textName={'Khu Vực'} />
-            <Filters data={subject} name={'subject'} textName={'Môn học'} />
+          <Form className={'flex justify-between'}>
+            <div className={'grid grid-cols-2 gap-2 basis-9/12'}>
+              <Filters
+                data={districts}
+                name={'districts'}
+                textName={'Khu Vực'}
+                classnames={'w-full border p-2 rounded-md'}
+              />
+              <Filters
+                data={subject}
+                name={'subject'}
+                textName={'Môn học'}
+                classnames={'w-full border p-2 rounded-md'}
+              />
+            </div>
 
-            <button type={'submit'} className={'px-4 py-2 border'}>
+            <button
+              type={'submit'}
+              className={
+                'px-4 py-2 border rounded-md hover:text-white hover:bg-red-400'
+              }
+            >
               {' '}
               Tìm kiếm
             </button>

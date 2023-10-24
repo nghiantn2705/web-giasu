@@ -43,7 +43,13 @@ const SignInUser = () => {
 
           <div className={'py-8'}>
             <div className={'flex flex-col justify-center items-center'}>
-              <Image src={'/logo.png'} alt={''} width={50} height={100} />
+              <Image
+                src={'/logo.png'}
+                alt={''}
+                width={50}
+                height={100}
+                className={'h-auto w-auto'}
+              />
               <h4 className={'mt-1 pb-1 text-xl font-semibold inline-block'}>
                 Xin chào đến với GS7
               </h4>

@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 
-import MyModal, { ModalTitle } from '@/components/Modal';
 import { Form, Formik } from 'formik';
+import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 
 export default function MyHistory() {
   const [isOpen, setIsOpen] = useState(false);

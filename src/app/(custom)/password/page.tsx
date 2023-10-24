@@ -15,7 +15,13 @@ const page = () => {
         <div className={'grid grid-cols-2 justify-items-center content-center'}>
           <div className={'py-8 shadow-xl w-full'}>
             <div className={'flex flex-col justify-center items-center my-4'}>
-              <Image src={'/logo.png'} alt={''} width={50} height={100} />
+              <Image
+                src={'/logo.png'}
+                alt={''}
+                width={50}
+                height={100}
+                className={'h-auto w-auto'}
+              />
             </div>
             <Formik
               initialValues={{ email: '', password: '' }}

@@ -63,7 +63,7 @@ const Header = (props: any) => {
             alt={''}
             width={50}
             height={100}
-            className={'rounded-full'}
+            className={'rounded-full h-auto w-auto'}
           />
           <div className={'flex flex-col'}>
             <span className={'text-xl'}>GS7</span>
