@@ -40,12 +40,15 @@ const Main = () => {
           </p>
           <div className={'flex gap-5'}>
             <Link
-              href={'/auth/teacher/register'}
+              href={'/teacher/register'}
               className={'text-indigo-500 hover:underline'}
             >
               {'>'} Đăng ký làm gia sư
             </Link>
-            <Link href={''} className={'text-indigo-500 hover:underline'}>
+            <Link
+              href={'/teacher'}
+              className={'text-indigo-500 hover:underline'}
+            >
               {'>'} Đăng nhập tài khoản
             </Link>
           </div>

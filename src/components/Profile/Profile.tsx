@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { ITeachers } from '@/types/ITeachers';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import MyHistory from '../Teacher/BtnModal/BtnHistoryAdd';
+import { ITeachers } from '@/types/Teachers';
 
 interface IProps {
   infoUser: ITeachers;
@@ -220,8 +221,11 @@ const Profile = ({ infoUser }: IProps) => {
               </div>
             </div>
             <button className={'w-full md:w-9/12 mx-10'}>
-              <Link href={'/customer_info'}>Cập nhật thông tin cá nhân</Link>
+              <a href={'/info'}>Cập nhật thông tin cá nhân</a>
             </button>
+            <div className="">
+              <MyHistory />
+            </div>
           </div>
         </div>
       </div>
