@@ -113,13 +113,14 @@ const Header = (props: any) => {
 
               <hr className={'mb-2 mt-1 px-1'} />
               <div className={'flex flex-col py-2'}>
-                <span
+                <a
+                  href={'/password'}
                   className={
                     'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
-                  <Link href={'/custom_password'}>Đổi mật khẩu</Link>
-                </span>
+                  Đổi mật khẩu
+                </a>
                 <a
                   href={`/profile`}
                   className={

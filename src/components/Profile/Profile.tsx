@@ -3,7 +3,6 @@
 import React from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface IProps {
   infoUser: ITeachers;
@@ -221,7 +220,7 @@ const Profile = ({ infoUser }: IProps) => {
               </div>
             </div>
             <button className={'w-full md:w-9/12 mx-10'}>
-              <Link href={'/customer_info'}>Cập nhật thông tin cá nhân</Link>
+              <a href={'/password'}>Cập nhật thông tin cá nhân</a>
             </button>
           </div>
         </div>

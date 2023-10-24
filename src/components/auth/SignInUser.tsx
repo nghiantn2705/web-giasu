@@ -104,7 +104,7 @@ const SignInUser = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/auth/user/register'}
+                href={'/user/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }
