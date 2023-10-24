@@ -12,9 +12,9 @@ import { token } from '@/services';
 const SignInUser = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
-  if (userInfo) {
-    router.push('/giasu');
-  }
+  // if (userInfo) {
+  //   router.push('/giasu');
+  // }
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -105,7 +105,7 @@ const SignInUser = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/auth/user/register'}
+                href={'/user/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

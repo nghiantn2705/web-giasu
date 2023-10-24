@@ -36,9 +36,9 @@ const Header = (props: any) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  // const closeMenu = () => {
+  //   setIsMenuOpen(false);
+  // };
   const Signout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
@@ -142,13 +142,14 @@ const Header = (props: any) => {
 
                 <hr className={'mb-2 mt-1 px-1'} />
                 <div className={'flex flex-col py-2'}>
-                  <span
+                  <a
+                    href={'/password'}
                     className={
                       'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                     }
                   >
                     Đổi Mật Khẩu
-                  </span>
+                  </a>
                   <a
                     href={`/profile`}
                     className={

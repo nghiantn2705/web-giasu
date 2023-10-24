@@ -6,9 +6,7 @@ import Fillters from '@/components/Teacher/Fillters';
 export default function App() {
   return (
     <>
-      <Home>
-        <Fillters />
-      </Home>
+      <Home>{/*<Fillters />*/}</Home>
     </>
   );
 }

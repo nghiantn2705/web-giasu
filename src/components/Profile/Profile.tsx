@@ -3,7 +3,6 @@
 import React from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface IProps {
   infoUser: ITeachers;
@@ -85,7 +84,7 @@ const Profile = ({ infoUser }: IProps) => {
                 </div>
                 <div className={'grid grid-cols-2'}>
                   <div className="px-4 py-2 font-semibold">Khu vực dạy </div>
-                  <div className="px-4 py-2">{infoUser?.DistrictID}</div>
+                  <div className="px-4 py-2">{infoUser?.District}</div>
                 </div>
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">Giới tính</div>
@@ -221,7 +220,7 @@ const Profile = ({ infoUser }: IProps) => {
               </div>
             </div>
             <button className={'w-full md:w-9/12 mx-10'}>
-              <Link href={'/customer_info'}>Cập nhật thông tin cá nhân</Link>
+              <a href={'/info'}>Cập nhật thông tin cá nhân</a>
             </button>
           </div>
         </div>

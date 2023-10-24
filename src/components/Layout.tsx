@@ -15,13 +15,15 @@ const Layout = ({ children }: IProps) => {
     const accessToken = localStorage.getItem('access_token') || null;
     const ObjectRefreshToken = { refresh_token_id: refreshToken };
     const ObjectAccessToken = { accessToken: accessToken };
+    console.log({ ...ObjectRefreshToken });
     if (ObjectAccessToken) {
       (async () => {
         try {
           const data = await getTokenRefresh(ObjectRefreshToken);
-          if (data.access_token) {
-            localStorage.setItem('access_token', data.access_token);
-            localStorage.setItem('refresh_token', data.refresh_token);
+          console.log(data);
+          if (data?.access_token) {
+            localStorage.setItem('access_token', data?.access_token);
+            localStorage.setItem('refresh_token', data?.refresh_token);
             if (data?.user) {
               setInfoUser(data?.user);
             }
@@ -32,7 +34,7 @@ const Layout = ({ children }: IProps) => {
       })();
     }
   }, []);
-
+  console.log(infoUser);
   return (
     <>
       <Header userInfo={infoUser} />
