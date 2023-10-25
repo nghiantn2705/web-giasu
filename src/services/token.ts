@@ -31,6 +31,12 @@ export const getFilter = (query: IFetchQuery = {}) => {
 export const postJob = (body: IFetchBody) => {
   return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/job`, body);
 };
+export const putJob = (body: IFetchBody) => {
+  return apiRequest.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/job/${body?.id}`,
+    body,
+  );
+};
 export const getJob = (query: IFetchQuery = {}) => {
   return apiRequest.get<
     {

@@ -1,8 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Form, Formik, Field } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
+import { putJob } from '@/services';
+import toast from 'react-hot-toast';
 interface IJob {
   user: {
     id: number;
@@ -16,13 +18,17 @@ interface IJob {
 }
 
 export default function FormAccept({ user }: IJob) {
-  console.log(user?.id);
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
     setIsOpen(true);
+  };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
   return (
     <div>
@@ -40,11 +46,27 @@ export default function FormAccept({ user }: IJob) {
           <ModalTitle>Xác nhận thuê</ModalTitle>
           <Formik
             className={''}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+              (async () => {
+                try {
+                  await putJob({ ...values });
+                  toast.success('Xác nhận thành công !', {
+                    duration: 3000,
+                    position: 'top-right',
+                    icon: '✅',
+                    iconTheme: {
+                      primary: '#000',
+                      secondary: '#fff',
+                    },
+                  });
+                  reloadPageAfterDelay();
+                } catch (ex: any) {
+                  console.log(ex);
+                }
+              })();
+            }}
             initialValues={{
-              idUser: user?.idUser,
-              idTeacher: user?.idTeacher,
-              idSubject: user?.idSubject,
+              id: user?.id,
               status: '',
               description: '',
             }}

@@ -114,7 +114,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                 </td>
                 <td className="px-6 py-4">
                   {infoUser?.role == 'teacher' ? (
-                    items?.status == 1 ? (
+                    items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (
                       <FormAccept user={items} />

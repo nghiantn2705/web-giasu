@@ -70,7 +70,7 @@ const SignInUser = () => {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);
                     localStorage.setItem('refresh_token', data?.refresh_token);
-                    toast.success('Đăng kí thành công !', {
+                    toast.success('Đăng nhập thành công !', {
                       duration: 3000,
                       position: 'top-right',
                       icon: '✅',
