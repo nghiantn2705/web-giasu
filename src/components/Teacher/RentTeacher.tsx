@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import { Filters } from '@/components';
-import { getSubject } from '../../../../action/get';
-import { postForm } from '@/services';
+import { getSubject } from '../../../action/get';
+import { postJob } from '@/services';
+import toast from 'react-hot-toast';
 
 interface IProps {
   id: number;
@@ -35,14 +36,18 @@ export default function MyDialog({ id }: IProps) {
   };
   return (
     <div>
-      <button
-        onClick={openModal}
-        className={
-          'mt-16 text center bg-red-400 w-[90%] h-12 rounded-md text-1xl font-bold leading-normal tracking-normal text-white  uppercase'
-        }
-      >
-        Thuê
-      </button>
+      {user?.role == 'user' ? (
+        <button
+          onClick={openModal}
+          className={
+            'mt-16 text center bg-red-400 w-[90%] h-12 rounded-md text-1xl font-bold leading-normal tracking-normal text-white  uppercase'
+          }
+        >
+          Thuê
+        </button>
+      ) : (
+        ''
+      )}
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
@@ -50,12 +55,21 @@ export default function MyDialog({ id }: IProps) {
           <Formik
             className={''}
             onSubmit={async (values) => {
-              const res = await postForm({ ...values });
+              const res = await postJob({ ...values });
+              toast.success('Vui lòng đợi gia sư đồng ý !', {
+                duration: 3000,
+                position: 'top-right',
+                icon: '✅',
+                iconTheme: {
+                  primary: '#000',
+                  secondary: '#fff',
+                },
+              });
               console.log(res);
             }}
             initialValues={{
-              idUser: 5,
-              idTeacher: 1,
+              idUser: user?.id,
+              idTeacher: id,
             }}
           >
             <Form className={'flex flex-col gap-5 pt-5 font-medium'}>

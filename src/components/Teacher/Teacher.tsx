@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ITeachers } from '@/types/ITeachers';
 
 const Teacher = ({ teachers }: any) => {
+  console.log(teachers);
   return (
     <div>
       {teachers ? (

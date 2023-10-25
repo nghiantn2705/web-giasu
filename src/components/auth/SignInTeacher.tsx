@@ -113,7 +113,7 @@ const SignInTeacher = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/teacher/register'}
+                href={'/user/teacher/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

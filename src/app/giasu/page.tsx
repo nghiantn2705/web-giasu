@@ -10,14 +10,14 @@ import { getFilter } from '@/services';
 import { ITeachers } from '@/types/ITeachers';
 
 export default function App() {
-  const [teachers, setTeachers] = useState<[ITeachers]>();
+  const [teachers, setTeachers] = useState<ITeachers[]>();
   const [districts, setDistricts] = useState<any>();
   const [subject, setSubject] = useState();
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await getTeachers();
+        const res = await getFilter();
         const resDistricts = await getDistrict();
         const resSubject = await getSubject();
         setTeachers(res);
@@ -34,7 +34,6 @@ export default function App() {
         <Formik
           initialValues={{
             districts: '',
-            subject: '',
           }}
           onSubmit={async (values) => {
             const res = await getFilter({ ...values });

@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const SignInUser = () => {
   const router = useRouter();
@@ -69,6 +70,15 @@ const SignInUser = () => {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);
                     localStorage.setItem('refresh_token', data?.refresh_token);
+                    toast.success('Đăng kí thành công !', {
+                      duration: 3000,
+                      position: 'top-right',
+                      icon: '✅',
+                      iconTheme: {
+                        primary: '#000',
+                        secondary: '#fff',
+                      },
+                    });
                     router.push('/');
                   }
                 } catch (ex) {
@@ -114,7 +124,7 @@ const SignInUser = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/user/register'}
+                href={'/auth/user/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

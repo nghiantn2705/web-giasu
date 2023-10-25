@@ -1,4 +1,4 @@
-export interface ITeachers {
+export interface IUserInfo {
   Certificate: string;
   Citizen_card: string;
   District: string;
