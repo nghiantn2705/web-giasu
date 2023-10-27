@@ -4,21 +4,20 @@ import React from 'react';
 import { useStore } from '@/hook/use-store';
 import Profile from '@/components/Profile/Profile';
 import { IUserInfo } from '@/types/IUserInfo';
-import Error404 from '@/components/Error404';
 import InfoUser from '@/components/Profile/InfoUser';
+import { useRouter } from 'next/navigation';
 
 const App = () => {
+  const router = useRouter();
   const [data] = useStore<IUserInfo>('userInfo');
-
+  if (!data) {
+    router.push('/auth/user');
+  }
   return (
     <div>
-      {data ? (
-        <Profile infoUser={data}>
-          <InfoUser infoUser={data} />
-        </Profile>
-      ) : (
-        <Error404 />
-      )}
+      <Profile infoUser={data}>
+        <InfoUser infoUser={data} />
+      </Profile>
     </div>
   );
 };

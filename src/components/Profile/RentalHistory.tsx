@@ -67,17 +67,17 @@ export default function RentalHistory({ infoUser }: IProps) {
                     'flex items-center px-6 py-4 gap-4 text-gray-900 whitespace-nowrap '
                   }
                 >
-                  <Image
-                    src={`${
-                      infoUser?.role == 'teacher'
-                        ? items?.teacherImage
-                        : items?.userImage
-                    }`}
-                    width={40}
-                    height={40}
-                    alt={''}
-                    className={'rounded-full'}
-                  />
+                  {/*<Image*/}
+                  {/*  src={`${*/}
+                  {/*    infoUser?.role == 'teacher'*/}
+                  {/*      ? items?.teacherImage*/}
+                  {/*      : items?.userImage*/}
+                  {/*  }`}*/}
+                  {/*  width={40}*/}
+                  {/*  height={40}*/}
+                  {/*  alt={''}*/}
+                  {/*  className={'rounded-full'}*/}
+                  {/*/>*/}
                   <div className={'text-base font-semibold'}>
                     {infoUser.role == 'teacher'
                       ? `${items?.idUser}`

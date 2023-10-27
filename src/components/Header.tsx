@@ -105,15 +105,15 @@ const Header = (props: any) => {
           {props?.userInfo ? (
             <div className={'col-start-11 col-span-2 relative w-fit group'}>
               <div>
-                <Image
-                  src={`${props?.userInfo?.avatar}`}
-                  width={45}
-                  height={45}
-                  className={
-                    'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'
-                  }
-                  alt={''}
-                />
+                {/*<Image*/}
+                {/*  src={`${props?.userInfo?.avatar}`}*/}
+                {/*  width={45}*/}
+                {/*  height={45}*/}
+                {/*  className={*/}
+                {/*    'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'*/}
+                {/*  }*/}
+                {/*  alt={''}*/}
+                {/*/>*/}
               </div>
               <div
                 className={
@@ -126,15 +126,15 @@ const Header = (props: any) => {
                     'flex gap-3 items-center hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
-                  <Image
-                    src={`${props?.userInfo?.avatar}`}
-                    width={45}
-                    height={45}
-                    className={
-                      'rounded-full shadow drop-shadow-2xl border border-black '
-                    }
-                    alt={''}
-                  />
+                  {/*<Image*/}
+                  {/*  src={`${props?.userInfo?.avatar}`}*/}
+                  {/*  width={45}*/}
+                  {/*  height={45}*/}
+                  {/*  className={*/}
+                  {/*    'rounded-full shadow drop-shadow-2xl border border-black '*/}
+                  {/*  }*/}
+                  {/*  alt={''}*/}
+                  {/*/>*/}
                   <span className={'text-lg font-bold '}>
                     {props?.userInfo?.name}
                   </span>

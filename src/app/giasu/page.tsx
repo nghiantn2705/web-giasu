@@ -33,7 +33,7 @@ export default function App() {
       <Home>
         <Formik
           initialValues={{
-            DisctrictID: '',
+            DistrictID: '',
           }}
           onSubmit={async (values) => {
             const res = await getFilter({ ...values });
@@ -44,7 +44,7 @@ export default function App() {
             <div className={'grid grid-cols-2 gap-2 basis-9/12'}>
               <Filters
                 data={districts}
-                name={'DisctrictID'}
+                name={'DistrictID'}
                 textName={'Khu Vực'}
                 classnames={'w-full border p-2 rounded-md'}
               />

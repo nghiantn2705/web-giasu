@@ -5,12 +5,11 @@ import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
-
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-
+import { cookies } from 'next/headers';
 const SignInUser = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
@@ -65,7 +64,6 @@ const SignInUser = () => {
                   const data = await token({
                     ...values,
                   });
-                  console.log(data);
                   if (data) {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);
