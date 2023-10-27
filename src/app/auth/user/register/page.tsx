@@ -7,6 +7,7 @@ import { RegisterUser } from '@/services';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 const page = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   return (
     <div className={'container mx-auto  shadow-md py-10'}>
