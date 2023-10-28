@@ -109,7 +109,7 @@ const page = () => {
                 </label>
               </div>
               <Field
-                type={'text'}
+                type={'file'}
                 name={'avatar'}
                 placeholder={'Image'}
                 className={
