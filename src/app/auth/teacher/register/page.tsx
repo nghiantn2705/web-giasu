@@ -10,7 +10,7 @@ import {
   getTimeSlot,
   getSchool,
 } from '../../../../../action/get';
-import { SignupSchema } from '@/validate/index';
+import { SignupSchemaTeacher } from '@/validate/index';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
 import { IDisctrict } from '@/types/IDistrict';
@@ -73,7 +73,7 @@ const page = () => {
             Certificate: '',
             description: '',
           }}
-          validationSchema={SignupSchema}
+          validationSchema={SignupSchemaTeacher}
           onSubmit={(values) => {
             (async () => {
               try {

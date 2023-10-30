@@ -10,6 +10,7 @@ import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { LoginSchema } from '@/validate';
 
 const SignInUser = () => {
   const router = useRouter();
@@ -60,6 +61,7 @@ const SignInUser = () => {
             </div>
             <Formik
               initialValues={{ email: '', password: '' }}
+              validationSchema={LoginSchema}
               onSubmit={async (values) => {
                 try {
                   const data = await token({
@@ -86,40 +88,48 @@ const SignInUser = () => {
                 }
               }}
             >
-              <Form className={'flex flex-col gap-5'}>
-                <Field
-                  type={'email'}
-                  name={'email'}
-                  placeholder={'Tên đăng nhập hoặc email'}
-                  className={
-                    'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                  }
-                />
-                <Field
-                  type={'password'}
-                  name={'password'}
-                  placeholder={'Nhập mật khẩu'}
-                  className={
-                    'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                  }
-                />
-                <Link
-                  href={'/'}
-                  className={
-                    'text-right text-sm text-gray-600 hover:text-black'
-                  }
-                >
-                  Quên mật khẩu?
-                </Link>
-                <button
-                  type={'submit'}
-                  className={
-                    'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white'
-                  }
-                >
-                  Đăng nhập
-                </button>
-              </Form>
+              {({ errors, touched }) => (
+                <Form className={'flex flex-col gap-5'}>
+                  <Field
+                    type={'email'}
+                    name={'email'}
+                    placeholder={'Tên đăng nhập hoặc email'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.email && touched.email ? (
+                    <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                  ) : null}
+                  <Field
+                    type={'password'}
+                    name={'password'}
+                    placeholder={'Nhập mật khẩu'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.password && touched.password ? (
+                    <div className={'text-red-600 mt-2'}>{errors.password}</div>
+                  ) : null}
+                  <Link
+                    href={'/'}
+                    className={
+                      'text-right text-sm text-gray-600 hover:text-black'
+                    }
+                  >
+                    Quên mật khẩu?
+                  </Link>
+                  <button
+                    type={'submit'}
+                    className={
+                      'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white'
+                    }
+                  >
+                    Đăng nhập
+                  </button>
+                </Form>
+              )}
             </Formik>
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
