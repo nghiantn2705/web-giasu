@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-import { apiRequest, IFetchBody } from './base';
+import { apiRequest, IFetchBody, IFetchQuery } from './base';
 import { ITeachers } from '@/types/ITeachers';
 
 export const token = (body: IFetchBody) => {
@@ -17,4 +17,31 @@ export const getTokenRefresh = (body: IFetchBody) => {
     access_token: string;
     user: ITeachers;
   }>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, body);
+};
+
+export const RegisterUser = (body: IFetchBody) => {
+  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, body);
+};
+export const getFilter = (query: IFetchQuery = {}) => {
+  return apiRequest.get<[ITeachers]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/filter`,
+    query,
+  );
+};
+export const postJob = (body: IFetchBody) => {
+  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/job`, body);
+};
+export const getJob = (query: IFetchQuery = {}) => {
+  return apiRequest.get<
+    {
+      id: number;
+      idUser: string;
+      idTeacher: string;
+      idSubject: string;
+      userImage: string;
+      teacherImage: string;
+      status: number;
+      description: string;
+    }[]
+  >(`${process.env.NEXT_PUBLIC_API_URL}/job/${query?.id}`, query);
 };

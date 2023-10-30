@@ -1,14 +1,11 @@
-export interface ITeachers {
+export interface ITeachers1 {
   Certificate: string;
   Citizen_card: string;
-  DistrictID: number;
-  district: {
-    id: number;
-    name: string;
-  };
+  DistrictID: string;
+  district: string;
   address: string;
   avatar: string;
-  class: string;
+  class_id: string;
   description: string;
   education_level: string;
   email: string;
@@ -16,12 +13,9 @@ export interface ITeachers {
   name: string;
   phone: string;
   role: string;
-  salary: string;
+  salary_id: string;
   school_id: string;
   status: boolean;
-  subject: {
-    id: number;
-    name: string;
-  };
-  time_tutor: string;
+  subject: string;
+  time_tutor_id: string;
 }

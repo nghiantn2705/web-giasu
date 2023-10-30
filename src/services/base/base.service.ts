@@ -26,8 +26,8 @@ const requestAPI = async <T>(
     }
 
     const error = new Error();
-    error.message = body.error.message;
-    error.name = body.error.name;
+    error.message = body.message;
+    error.name = body.name;
     (error as any).response = body; //eslint-disable-line
     throw error;
   } else {

@@ -8,13 +8,16 @@ import { useRouter } from 'next/navigation';
 
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
+import { useEffect } from 'react';
 
 const SignInTeacher = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
-  if (userInfo) {
-    router.push('/giasu');
-  }
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/giasu');
+    }
+  }, []);
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -40,7 +43,13 @@ const SignInTeacher = () => {
 
           <div className={'py-8'}>
             <div className={'flex flex-col justify-center items-center'}>
-              <Image src={'/logo.png'} alt={''} width={50} height={100} />
+              <Image
+                src={'/logo.png'}
+                alt={''}
+                width={50}
+                height={100}
+                className={'h-auto w-auto'}
+              />
               <h4 className={'mt-1 pb-1 text-xl font-semibold inline-block'}>
                 Xin chào đến với GS7
               </h4>
@@ -104,7 +113,7 @@ const SignInTeacher = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/teacher/register'}
+                href={'/user/teacher/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

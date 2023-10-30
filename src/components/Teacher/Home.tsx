@@ -58,7 +58,7 @@ export default function Home({ children }: IHome) {
                       'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white w-fit'
                     }
                   >
-                    <Link href={'/user'}>Đăng nhập/ đăng ký</Link>
+                    <Link href={'/auth/user'}>Đăng nhập/ đăng ký</Link>
                   </li>
                   <li
                     className={
@@ -108,7 +108,7 @@ export default function Home({ children }: IHome) {
                   </li>
                   <li>
                     <Link
-                      href={'/teacher'}
+                      href={'/auth/teacher'}
                       className={
                         'bg-yellow-500 py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-red-400 hover:text-white'
                       }

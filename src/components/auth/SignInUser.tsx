@@ -8,13 +8,17 @@ import { useRouter } from 'next/navigation';
 
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const SignInUser = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useStore('userInfo');
-  // if (userInfo) {
-  //   router.push('/giasu');
-  // }
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/giasu');
+    }
+  }, []);
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -40,7 +44,13 @@ const SignInUser = () => {
 
           <div className={'py-8'}>
             <div className={'flex flex-col justify-center items-center'}>
-              <Image src={'/logo.png'} alt={''} width={50} height={100} />
+              <Image
+                src={'/logo.png'}
+                alt={''}
+                width={50}
+                height={100}
+                className={'h-auto w-auto'}
+              />
               <h4 className={'mt-1 pb-1 text-xl font-semibold inline-block'}>
                 Xin chào đến với GS7
               </h4>
@@ -60,6 +70,15 @@ const SignInUser = () => {
                     setUserInfo(data?.user);
                     localStorage.setItem('access_token', data?.access_token);
                     localStorage.setItem('refresh_token', data?.refresh_token);
+                    toast.success('Đăng kí thành công !', {
+                      duration: 3000,
+                      position: 'top-right',
+                      icon: '✅',
+                      iconTheme: {
+                        primary: '#000',
+                        secondary: '#fff',
+                      },
+                    });
                     router.push('/');
                   }
                 } catch (ex) {
@@ -105,7 +124,7 @@ const SignInUser = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/user/register'}
+                href={'/auth/user/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

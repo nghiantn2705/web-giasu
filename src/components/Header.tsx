@@ -63,7 +63,7 @@ const Header = (props: any) => {
             alt={''}
             width={50}
             height={100}
-            className={'rounded-full'}
+            className={'rounded-full h-auto w-auto'}
           />
           <div className={'flex flex-col'}>
             <span className={'text-xl'}>GS7</span>
@@ -117,7 +117,7 @@ const Header = (props: any) => {
               </div>
               <div
                 className={
-                  'absolute top-[59px] right-0 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
+                  'absolute top-[55px] -right-2 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
                 }
               >
                 <a
@@ -157,6 +157,14 @@ const Header = (props: any) => {
                     }
                   >
                     Chỉnh sửa thông tin
+                  </a>
+                  <a
+                    href={`/profile/history`}
+                    className={
+                      'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                    }
+                  >
+                    Lịch sử thuê
                   </a>
                   <button
                     onClick={Signout}
