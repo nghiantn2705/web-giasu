@@ -42,7 +42,17 @@ const page = () => {
             </p>
           </div>
           <Formik
-            initialValues={{ role: 2 }}
+            initialValues={{
+              role: 2,
+              name: '',
+              email: '',
+              password: '',
+              address: '',
+              gender: '',
+              avatar: '',
+              phone: '',
+              date_of_birth: '',
+            }}
             onSubmit={(values) => {
               (async () => {
                 try {

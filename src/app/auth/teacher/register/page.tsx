@@ -3,18 +3,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { getSubject, getClass } from '../../../../../action/get';
-import RegisterTeacher from '@/components/Auth/RegisterTeacher';
-import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
-import { RegisterUser } from '@/services';
-import { useRouter } from 'next/navigation';
 import { Field, Form, Formik } from 'formik';
 const page = () => {
-  const router = useRouter();
   const [classes, setClasses] = useState<any>();
   const [subject, setSubject] = useState<any>();
   console.log(subject);
   console.log(classes);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetch = async () => {
@@ -36,26 +32,37 @@ const page = () => {
         <div className="h-px bg-slate-400 mt-4 "></div>
         <div className="mt-10">
           <Formik
-            initialValues={{ role: 1 }}
+            initialValues={{
+              role: 1,
+              name: '',
+              email: '',
+              password: '',
+              address: '',
+              gender: '',
+              avatar: '',
+              phone: '',
+              date_of_birth: '',
+              description: '',
+            }}
             onSubmit={(values) => {
               console.log(values);
-              (async () => {
-                try {
-                  await RegisterUser({ ...values });
-                  toast.success('Đăng kí thành công !', {
-                    duration: 3000,
-                    position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
-                  });
-                  router.push('/auth/teacher');
-                } catch (ex: any) {
-                  console.log(ex);
-                }
-              })();
+              // (async () => {
+              //   try {
+              //     await RegisterUser({ ...values });
+              //     toast.success('Đăng kí thành công !', {
+              //       duration: 3000,
+              //       position: 'top-right',
+              //       icon: '✅',
+              //       iconTheme: {
+              //         primary: '#000',
+              //         secondary: '#fff',
+              //       },
+              //     });
+              //     router.push('/auth/teacher');
+              //   } catch (ex: any) {
+              //     console.log(ex);
+              //   }
+              // })();
             }}
           >
             <Form className={'flex flex-col gap-5'}>
@@ -123,7 +130,7 @@ const page = () => {
                 </div>
               </div>
               <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
+                <label htmlFor="date_of_birth" className={'w-32 mr-32'}>
                   Ngày sinh:
                 </label>
                 <Field
@@ -136,7 +143,7 @@ const page = () => {
                 />
               </div>
               <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
+                <label htmlFor="phone" className={'w-32 mr-32'}>
                   Số điện thoại:
                 </label>
                 <Field
@@ -150,7 +157,7 @@ const page = () => {
               </div>
 
               <div className="flex">
-                <label htmlFor="subject" className={'w-34 mr-[80px]'}>
+                <label htmlFor="address" className={'w-34 mr-[80px]'}>
                   Thành phố/Quận/Huyện:
                 </label>
                 <Field
@@ -167,45 +174,46 @@ const page = () => {
                   Lớp:
                 </label>
                 <div className={'flex space-x-4'}>
-                  {subject?.map((i: ISubject) => {
-                    return (
-                      <label key={i?.id}>
-                        <Field
-                          type={'checkbox'}
-                          name={'subject'}
-                          value={`${i?.id}`}
-                        />
-                        {i?.name}
-                      </label>
-                    );
-                  })}
+                  {/*<Select options={options} />*/}
+                  {/*{subject?.map((i: ISubject) => {*/}
+                  {/*  return (*/}
+                  {/*    <label key={i?.id}>*/}
+                  {/*      <Field*/}
+                  {/*        type={'checkbox'}*/}
+                  {/*        name={'subject'}*/}
+                  {/*        value={`${i?.id}`}*/}
+                  {/*      />*/}
+                  {/*      {i?.name}*/}
+                  {/*    </label>*/}
+                  {/*  );*/}
+                  {/*})}*/}
                 </div>
               </div>
               <div className="flex">
                 <label htmlFor="subject" className={'w-32 mr-32'}>
                   Môn học:
                 </label>
-                <div className={'flex space-x-4'}>
-                  {subject?.map((i: ISubject) => {
-                    return (
-                      <label key={i?.id}>
-                        <Field
-                          type={'checkbox'}
-                          name={'subject'}
-                          value={`${i?.id}`}
-                        />
-                        {i?.name}
-                      </label>
-                    );
-                  })}
-                </div>
+                {/*<div className={'flex space-x-4'}>*/}
+                {/*  {subject?.map((i: ISubject) => {*/}
+                {/*    return (*/}
+                {/*      <label key={i?.id}>*/}
+                {/*        <Field*/}
+                {/*          type={'checkbox'}*/}
+                {/*          name={'subject'}*/}
+                {/*          value={`${i?.id}`}*/}
+                {/*        />*/}
+                {/*        {i?.name}*/}
+                {/*      </label>*/}
+                {/*    );*/}
+                {/*  })}*/}
+                {/*</div>*/}
               </div>
               <p className="font-bold">
                 Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và
                 những bài học của bạn như thế nào:
               </p>
               <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
+                <label htmlFor="description" className={'w-32 mr-32'}>
                   Mô tả:
                 </label>
                 <Field
