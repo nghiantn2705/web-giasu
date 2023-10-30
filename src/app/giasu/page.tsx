@@ -1,15 +1,21 @@
+import Home from '@/components/Teacher/Home';
 import React from 'react';
-import GiaSu from '@/app/giasu/giasu';
+import Teacher from '@/components/Teacher/Teacher';
+import { getFilter } from '@/services';
+import SelectFilter from '@/components/Teacher/SelectFilter';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Demo - Gia sư',
-  description: 'abcxyyz',
+export const metadata: Metadata = {
+  title: 'Thuê Gia Sư',
+  description: 'Trang thuê gia sư',
 };
+export default async function App(props: any) {
+  const teachers = await getFilter(props.searchParams);
 
-export default function App() {
   return (
-    <>
-      <GiaSu />
-    </>
+    <Home>
+      <SelectFilter />
+      <Teacher teachers={teachers} />
+    </Home>
   );
 }

@@ -5,12 +5,17 @@ import { ReactNode } from 'react';
 import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout';
 import { Toaster } from 'react-hot-toast';
-import Head from 'next/head';
 
 const roboto = Roboto({ weight: '400', subsets: ['latin-ext'] });
 export const metadata: Metadata = {
-  title: 'Gia Sư Poly',
-  description: 'Gia sư abc',
+  title: {
+    default: 'Gia Sư Poly',
+    template: `%s | Poly`,
+  },
+  icons: {
+    icon: '_favicon.ico',
+  },
+  description: 'Tìm kiếm gia sư',
 };
 interface Props {
   children: ReactNode;
@@ -19,9 +24,6 @@ interface Props {
 export default function RootLayout(props: Props) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-      </Head>
       <body className={roboto.className}>
         <GlobalContextProvider store={[]}>
           <Toaster />
