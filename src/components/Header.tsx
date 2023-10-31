@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FiHome, FiPhone, FiSearch, FiUsers, FiMenu } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { deleteCookie } from 'cookies-next';
 
 const navLink = [
   {
@@ -36,12 +37,10 @@ const Header = (props: any) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  // const closeMenu = () => {
-  //   setIsMenuOpen(false);
-  // };
+
   const Signout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    deleteCookie('access_token');
+    deleteCookie('refresh_token');
     rsrouter.push('/');
     window.location.reload();
   };
@@ -107,8 +106,6 @@ const Header = (props: any) => {
               <div>
                 <Image
                   src={`${props?.userInfo?.avatar}`}
-                  width={45}
-                  height={45}
                   className={
                     'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'
                   }
@@ -120,7 +117,7 @@ const Header = (props: any) => {
                   'absolute top-[55px] -right-2 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
                 }
               >
-                <a
+                <Link
                   href={`/profile`}
                   className={
                     'flex gap-3 items-center hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
@@ -128,8 +125,6 @@ const Header = (props: any) => {
                 >
                   <Image
                     src={`${props?.userInfo?.avatar}`}
-                    width={45}
-                    height={45}
                     className={
                       'rounded-full shadow drop-shadow-2xl border border-black '
                     }
@@ -138,7 +133,7 @@ const Header = (props: any) => {
                   <span className={'text-lg font-bold '}>
                     {props?.userInfo?.name}
                   </span>
-                </a>
+                </Link>
 
                 <hr className={'mb-2 mt-1 px-1'} />
                 <div className={'flex flex-col py-2'}>
@@ -150,14 +145,14 @@ const Header = (props: any) => {
                   >
                     Đổi Mật Khẩu
                   </a>
-                  <a
+                  <Link
                     href={`/profile`}
                     className={
                       'hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                     }
                   >
                     Chỉnh sửa thông tin
-                  </a>
+                  </Link>
                   <a
                     href={`/profile/history`}
                     className={

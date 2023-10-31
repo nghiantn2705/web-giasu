@@ -5,11 +5,11 @@ import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
-
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
 import { useEffect } from 'react';
 import { LoginSchema } from '@/validate';
+import { setCookie } from 'cookies-next';
 
 const SignInTeacher = () => {
   const router = useRouter();
@@ -68,8 +68,8 @@ const SignInTeacher = () => {
                   });
                   if (data) {
                     setUserInfo(data?.user);
-                    localStorage.setItem('access_token', data?.access_token);
-                    localStorage.setItem('refresh_token', data?.refresh_token);
+                    setCookie('access_token', data?.access_token);
+                    setCookie('refresh_token', data?.refresh_token);
                     router.push('/');
                   }
                 } catch (ex) {
@@ -78,29 +78,35 @@ const SignInTeacher = () => {
               }}
             >
               {({ errors, touched }) => (
-                <Form className={'flex flex-col gap-5'}>
-                  <Field
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Tên đăng nhập hoặc email'}
-                    className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                    }
-                  />
-                  {errors.email && touched.email ? (
-                    <div className={'text-red-600 mt-2'}>{errors.email}</div>
-                  ) : null}
-                  <Field
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'Nhập mật khẩu'}
-                    className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                    }
-                  />
-                  {errors.password && touched.password ? (
-                    <div className={'text-red-600 mt-2'}>{errors.password}</div>
-                  ) : null}
+                <Form className={'flex flex-col gap-3'}>
+                  <div>
+                    <Field
+                      type={'email'}
+                      name={'email'}
+                      placeholder={'Tên đăng nhập hoặc email'}
+                      className={
+                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      }
+                    />
+                    {errors.email && touched.email ? (
+                      <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <div>
+                    <Field
+                      type={'password'}
+                      name={'password'}
+                      placeholder={'Nhập mật khẩu'}
+                      className={
+                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      }
+                    />
+                    {errors.password && touched.password ? (
+                      <div className={'text-red-600 mt-2'}>
+                        {errors.password}
+                      </div>
+                    ) : null}
+                  </div>
                   <Link
                     href={'/'}
                     className={

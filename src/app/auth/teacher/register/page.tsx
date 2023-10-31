@@ -13,26 +13,25 @@ import {
 import { SignupSchemaTeacher } from '@/validate/index';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
-import { IDisctrict } from '@/types/IDistrict';
+// import { IDisctrict } from '@/types/IDistrict';
 import { IClass } from '@/types/IClass';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
 import { Field, Form, Formik } from 'formik';
 // import TextField from '@material-ui/core/TextField';
-import { ISalary } from '@/types/ISalary';
-import { ITimeSlot } from '@/types/ITimeSlot';
+// import { ISalary } from '@/types/ISalary';
+// import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
 
 const page = () => {
   const router = useRouter();
   const [classes, setClasses] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
-  const [district, setDistrict] = useState<IDisctrict[]>();
-  const [salary, setSalary] = useState<ISalary[]>();
-  const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
+  // const [district, setDistrict] = useState<IDisctrict[]>();
+  // const [salary, setSalary] = useState<ISalary>();
+  // const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
   console.log(classes);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -53,7 +52,7 @@ const page = () => {
       }
     };
     fetch();
-  }, [setSubject, setClasses, setDistrict, setSalary, setTimeSlot, setSchool]);
+  }, []);
   return (
     <div className={'container mx-auto py-5 shadow-lg'}>
       <h1 className={'text-3xl font-bold'}>Hoàn thành đơn đăng kí của bạn</h1>
@@ -145,7 +144,7 @@ const page = () => {
                 <div className={'text-red-600 mt-2'}>{errors.password}</div>
               ) : null}
               <Field
-                type={'file'}
+                as={'file'}
                 name={'avatar'}
                 placeholder={'Ảnh đại diện'}
                 className={
@@ -274,49 +273,24 @@ const page = () => {
                   );
                 })}
               </div>
-              <Field
-                name={'districtID'}
-                as={'select'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              >
-                {district?.map((items: IDisctrict) => {
-                  return (
-                    <option key={items.id} value={`${items?.id}`}>
-                      {items?.name}
-                    </option>
-                  );
-                })}
-              </Field>
-              <Field
-                name={'salary_id'}
-                as={'select'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              >
-                {salary?.map((items: ISalary) => {
-                  return (
-                    <option key={items.id} value={`${items?.id}`}>
-                      {items?.name}
-                    </option>
-                  );
-                })}
-              </Field>
-              <div className={'flex space-x-4'}>
-                {timeslot?.map((i: ITimeSlot) => {
-                  return (
-                    <label key={i?.id}>
-                      <Field
-                        type={'checkbox'}
-                        name={'time_tutor_id'}
-                        value={`${i?.id}`}
-                      />
-                      {i?.name}
-                    </label>
-                  );
-                })}
+              <div className="flex">
+                <label htmlFor="subject" className={'w-32 mr-32'}>
+                  Môn học:
+                </label>
+                <div className={'flex space-x-4'}>
+                  {subject?.map((i: ISubject) => {
+                    return (
+                      <label key={i?.id}>
+                        <Field
+                          type={'checkbox'}
+                          name={'subject'}
+                          value={`${i?.id}`}
+                        />
+                        {i?.name}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
               <p className="font-bold">
                 Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và
