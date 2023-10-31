@@ -21,7 +21,8 @@ const SignupSchemaTeacher = Yup.object().shape({
   date_of_birth: Yup.date().required(),
   phone: Yup.string()
     .required('Trường bắt buộc phải nhập')
-    .matches(regexPhoneNumber, 'Không được phép để ký tự'),
+    .matches(regexPhoneNumber, 'Không được phép để ký tự')
+    .min(10, 'Không đúng số điện thoại.'),
   address: Yup.string().required('Bắt buộc'),
   citizen_card: Yup.number().required('Bắt buộc').min(8),
   education_level: Yup.string().required('Bắt buộc'),
@@ -40,7 +41,7 @@ const SignupSchemaUser = Yup.object().shape({
   password: Yup.string()
     .required('Không có bảo mật')
     .min(8, 'Mật khẩu quá ngắn - Mật khẩu cần 8 kí tự trở lên.'),
-  avatar: Yup.mixed().required('Ảnh'),
+  avatar: Yup.mixed().required('Bạn cần ảnh đại diện'),
   phone: Yup.string()
     .required('Trường bắt buộc phải nhập')
     .matches(regexPhoneNumber, 'Không được phép để ký tự'),
@@ -50,8 +51,6 @@ const LoginSchema = Yup.object().shape({
     .email('Không đúng định dạng của Email')
     .required('Trường bắt buộc phải nhập')
     .matches(regexEmail, 'Không đúng định dạng email.'),
-  password: Yup.string()
-    .required('Không có bảo mật')
-    .min(8, 'Mật khẩu quá ngắn - Mật khẩu cần 8 kí tự trở lên.'),
+  password: Yup.string().required('Không có bảo mật'),
 });
 export { SignupSchemaTeacher, SignupSchemaUser, LoginSchema };

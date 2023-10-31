@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Field, Form, Formik } from 'formik';
 import imageAsset from '/public/iconos_alumnos.png';
@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { SignupSchemaUser } from '@/validate';
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [file, setFile] = useState();
   const router = useRouter();
   return (
     <div className={'container mx-auto  shadow-md py-10'}>
@@ -51,7 +50,7 @@ const page = () => {
               email: '',
               phone: '',
               password: '',
-              avatar: file,
+              avatar: '',
               address: '',
             }}
             validationSchema={SignupSchemaUser}
