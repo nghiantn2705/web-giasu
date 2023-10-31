@@ -13,20 +13,19 @@ import {
 import { SignupSchemaTeacher } from '@/validate/index';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
-import { IDisctrict } from '@/types/IDistrict';
+// import { IDisctrict } from '@/types/IDistrict';
 import { IClass } from '@/types/IClass';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
 import { Field, Form, Formik } from 'formik';
-// import TextField from '@material-ui/core/TextField';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
+import { IDisctrict } from '@/types/IDistrict';
 
 const page = () => {
   const router = useRouter();
   const [classes, setClasses] = useState<IClass[]>();
-  const [file, setFile] = useState();
   const [subject, setSubject] = useState<ISubject[]>();
   const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary>();
@@ -65,7 +64,7 @@ const page = () => {
             name: '',
             email: '',
             password: '',
-            avatar: file,
+            avatar: '',
             phone: '',
             address: '',
             citizen_card: '',
@@ -75,6 +74,7 @@ const page = () => {
           }}
           validationSchema={SignupSchemaTeacher}
           onSubmit={(values) => {
+            console.log(values);
             (async () => {
               try {
                 await RegisterUser({ ...values });
@@ -95,29 +95,43 @@ const page = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={'flex flex-col gap-5 w-full'}>
-              <Field
-                type={'text'}
-                name={'name'}
-                placeholder={'Học và tên'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.name && touched.name ? (
-                <div className={'text-red-600 mt-2'}>{errors.name}</div>
-              ) : null}
-              <Field
-                type={'email'}
-                name={'email'}
-                placeholder={'Email'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.email && touched.email ? (
-                <div className={'text-red-600 mt-2'}>{errors.email}</div>
-              ) : null}
+            <Form className={'flex flex-col gap-5 w-full m-auto'}>
+              <div className="flex">
+                <label htmlFor="name" className={'w-28'}>
+                  Email Address
+                </label>
+                <div className={''}>
+                  <Field
+                    type={'text'}
+                    name={'name'}
+                    placeholder={'Học và tên'}
+                    className={
+                      'w-[900px] px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.name && touched.name ? (
+                    <div className={'text-red-600 mt-2'}>{errors.name}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className={'flex'}>
+                <label htmlFor="email" className={''}>
+                  Email Address
+                </label>
+                <div className={''}>
+                  <Field
+                    type={'email'}
+                    name={'email'}
+                    placeholder={'Email'}
+                    className={
+                      'w-[900px] px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.email && touched.email ? (
+                    <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                  ) : null}
+                </div>
+              </div>
               <Field
                 type={'password'}
                 name={'password'}
