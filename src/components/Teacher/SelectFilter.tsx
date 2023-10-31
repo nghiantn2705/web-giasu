@@ -85,7 +85,9 @@ const SelectFilter = () => {
             })}
           </select>
         </div>
-        <button type={'submit'}>Tìm kiếm</button>
+        <button type={'submit'} className={'py-2 px-4 border rounded-md '}>
+          Tìm kiếm
+        </button>
       </form>
     </>
   );

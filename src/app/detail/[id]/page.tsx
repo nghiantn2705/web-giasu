@@ -6,7 +6,7 @@ import { getTeachesByid } from '../../../../action/getByID';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ITeachers } from '@/types/ITeachers';
-import Loading from '@/components/Loading';
+import Loading from '@/components/Layout/Loading';
 
 export default function Home() {
   const [data, setData] = useState<ITeachers>();

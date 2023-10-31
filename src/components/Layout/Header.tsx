@@ -33,7 +33,6 @@ const Header = (props: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = usePathname();
   const rsrouter = useRouter();
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -103,15 +102,17 @@ const Header = (props: any) => {
 
           {props?.userInfo ? (
             <div className={'col-start-11 col-span-2 relative w-fit group'}>
-              <div>
+              <picture>
                 <img
-                  src={`${props?.userInfo?.avatar}`}
+                  src={`/abcxyz`}
+                  width={45}
+                  height={45}
                   className={
                     'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'
                   }
                   alt={''}
                 />
-              </div>
+              </picture>
               <div
                 className={
                   'absolute top-[55px] -right-2 p-3 border shadow-md w-[250px] bg-white rounded-b-lg invisible transition-all group-hover:visible'
@@ -123,13 +124,17 @@ const Header = (props: any) => {
                     'flex gap-3 items-center hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
                   }
                 >
-                  <img
-                    src={`${props?.userInfo?.avatar}`}
-                    className={
-                      'rounded-full shadow drop-shadow-2xl border border-black '
-                    }
-                    alt={''}
-                  />
+                  <picture>
+                    <img
+                      src={`${props?.userInfo?.avatar}`}
+                      width={45}
+                      height={45}
+                      className={
+                        'rounded-full shadow drop-shadow-2xl border border-black '
+                      }
+                      alt={''}
+                    />
+                  </picture>
                   <span className={'text-lg font-bold '}>
                     {props?.userInfo?.name}
                   </span>

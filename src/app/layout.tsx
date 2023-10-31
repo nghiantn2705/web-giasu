@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { ReactNode } from 'react';
 import { GlobalContextProvider } from '@/contexts';
-import Layout from '@/components/Layout';
+import Layout from '@/components/Layout/Layout';
 import { Toaster } from 'react-hot-toast';
 
 const roboto = Roboto({ weight: '400', subsets: ['latin-ext'] });

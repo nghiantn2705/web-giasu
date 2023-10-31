@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
-import MyHistory from './RentalHistory';
 import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
 
@@ -22,6 +20,8 @@ const Profile = ({ infoUser, children }: IProps) => {
                 <div className={''}>
                   <img
                     src={infoUser?.avatar}
+                    height={200}
+                    width={200}
                     alt={''}
                     className={'w-3/4 h-auto mx-auto'}
                   />

@@ -1,6 +1,6 @@
 'use client';
 
-import Banner from '@/components/Banner';
+import Banner from '@/components/Layout/Banner';
 import { Navigation } from '@/components';
 import React, { ReactNode } from 'react';
 import Link from 'next/link';

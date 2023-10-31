@@ -4,6 +4,7 @@ import Teacher from '@/components/Teacher/Teacher';
 import { getFilter } from '@/services';
 import SelectFilter from '@/components/Teacher/SelectFilter';
 import { Metadata } from 'next';
+import Footer from '@/components/Layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Thuê Gia Sư',
@@ -13,9 +14,12 @@ export default async function App(props: any) {
   const teachers = await getFilter(props.searchParams);
 
   return (
-    <Home>
-      <SelectFilter />
-      <Teacher teachers={teachers} />
-    </Home>
+    <>
+      <Home>
+        <SelectFilter />
+        <Teacher teachers={teachers} />
+      </Home>
+      <Footer />
+    </>
   );
 }
