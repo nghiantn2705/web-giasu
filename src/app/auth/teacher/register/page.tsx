@@ -13,7 +13,6 @@ import {
 import { SignupSchemaTeacher } from '@/validate/index';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
-// import { IDisctrict } from '@/types/IDistrict';
 import { IClass } from '@/types/IClass';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
@@ -28,7 +27,7 @@ const page = () => {
   const [classes, setClasses] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [district, setDistrict] = useState<IDisctrict[]>();
-  const [salary, setSalary] = useState<ISalary>();
+  const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
   console.log(classes);
@@ -54,7 +53,7 @@ const page = () => {
     fetch();
   }, []);
   return (
-    <div className={'container mx-auto py-5 shadow-lg'}>
+    <div className={'flex flex-col w-xl mx-auto my-10'}>
       <h1 className={'text-3xl font-bold'}>Hoàn thành đơn đăng kí của bạn</h1>
       <h1 className="h-px bg-slate-400 mt-4 ">{''}</h1>
       <div className="mt-10">
@@ -74,7 +73,6 @@ const page = () => {
           }}
           validationSchema={SignupSchemaTeacher}
           onSubmit={(values) => {
-            console.log(values);
             (async () => {
               try {
                 await RegisterUser({ ...values });
@@ -95,187 +93,259 @@ const page = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={'flex flex-col gap-5 w-full m-auto'}>
-              <div className="flex">
-                <label htmlFor="name" className={'w-28'}>
-                  Email Address
-                </label>
-                <div className={''}>
+            <Form className={'flex flex-col w-full m-auto my-10'}>
+              <div className="flex md:flex-row space-x-4 w-full m-auto sm:flex-col">
+                <div className={'w-6/12'}>
+                  <label htmlFor="name" className="text-lg font-semibold">
+                    Họ và Tên
+                  </label>
+                  <div className={''}>
+                    <Field
+                      type={'text'}
+                      name={'name'}
+                      placeholder={'Học và tên'}
+                      className={
+                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      }
+                    />
+                    {errors.name && touched.name ? (
+                      <div className={'text-red-600 mt-2'}>{errors.name}</div>
+                    ) : null}
+                  </div>
+                  <label htmlFor="email" className="text-lg font-semibold">
+                    Email
+                  </label>
+                  <div className={''}>
+                    <Field
+                      type={'email'}
+                      name={'email'}
+                      placeholder={'Email'}
+                      className={
+                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      }
+                    />
+                    {errors.email && touched.email ? (
+                      <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <label htmlFor="password" className="text-lg font-semibold">
+                    Mật khẩu
+                  </label>
+                  <Field
+                    type={'password'}
+                    name={'password'}
+                    placeholder={'Mat Khau'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.password && touched.password ? (
+                    <div className={'text-red-600 mt-2'}>{errors.password}</div>
+                  ) : null}
+                  <label htmlFor="avatar" className="text-lg font-semibold">
+                    Ảnh đại diện
+                  </label>
+                  <div className={''}>
+                    <Field
+                      type={'file'}
+                      name={'avatar'}
+                      placeholder={'Ảnh đại diện'}
+                      className={
+                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      }
+                    />
+                    {errors.avatar && touched.avatar ? (
+                      <div className={'text-red-600 mt-2'}>{errors.avatar}</div>
+                    ) : null}
+                  </div>
+                  <label htmlFor="gender" className="text-lg font-semibold">
+                    Giới tính
+                  </label>
+                  <Field
+                    as="select"
+                    name="gender"
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  >
+                    <option value="">-- Chọn giới tính --</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </Field>
+                  <label
+                    htmlFor="date_of_birth"
+                    className="text-lg font-semibold"
+                  >
+                    Ngày sinh
+                  </label>
+                  <Field
+                    type={'date'}
+                    name={'date_of_birth'}
+                    placeholder={'Ngày sinh'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  <label htmlFor="phone" className="text-lg font-semibold">
+                    Số điện thoại
+                  </label>
                   <Field
                     type={'text'}
-                    name={'name'}
-                    placeholder={'Học và tên'}
+                    name={'phone'}
+                    placeholder={'Số điện thoại'}
                     className={
-                      'w-[900px] px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
                     }
                   />
-                  {errors.name && touched.name ? (
-                    <div className={'text-red-600 mt-2'}>{errors.name}</div>
+                  {errors.phone && touched.phone ? (
+                    <div className={'text-red-600 mt-2'}>{errors.phone}</div>
                   ) : null}
                 </div>
-              </div>
-              <div className={'flex'}>
-                <label htmlFor="email" className={''}>
-                  Email Address
-                </label>
-                <div className={''}>
+                <div className={'w-6/12'}>
+                  <label htmlFor="address" className="text-lg font-semibold">
+                    Địa chỉ nơi ở
+                  </label>
                   <Field
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Email'}
+                    type={'text'}
+                    name={'address'}
+                    placeholder={'Nơi bạn đang ở'}
                     className={
-                      'w-[900px] px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
                     }
                   />
-                  {errors.email && touched.email ? (
-                    <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                  {errors.address && touched.address ? (
+                    <div className={'text-red-600 mt-2'}>{errors.address}</div>
                   ) : null}
+                  <label htmlFor="address" className="text-lg font-semibold">
+                    Số căn cước công dân
+                  </label>
+                  <Field
+                    type={'text'}
+                    name={'citizen_card'}
+                    placeholder={'Căn cước công dân'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.citizen_card && touched.citizen_card ? (
+                    <div className={'text-red-600 mt-2'}>
+                      {errors.citizen_card}
+                    </div>
+                  ) : null}
+                  <label
+                    htmlFor="education_level"
+                    className="text-lg font-semibold"
+                  >
+                    Trình đọc học vấn
+                  </label>
+                  <Field
+                    type={'text'}
+                    name={'education_level'}
+                    placeholder={'Trình độ học vấn'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.education_level && touched.education_level ? (
+                    <div className={'text-red-600 mt-2'}>
+                      {errors.education_level}
+                    </div>
+                  ) : null}
+                  <label
+                    htmlFor="Certificate"
+                    className="text-lg font-semibold"
+                  >
+                    Bằng cấp hộ tập
+                  </label>
+                  <Field
+                    type={'text'}
+                    name={'Certificate'}
+                    placeholder={'Bàng cấp học tập'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                  {errors.Certificate && touched.Certificate ? (
+                    <div className={'text-red-600 mt-2'}>
+                      {errors.Certificate}
+                    </div>
+                  ) : null}
+                  <label htmlFor="school_id" className="text-lg font-semibold">
+                    Đại học
+                  </label>
+                  <Field
+                    name={'school_id'}
+                    as={'select'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  >
+                    {school?.map((items: ISchool) => {
+                      return (
+                        <option key={items.id} value={`${items?.id}`}>
+                          {items?.name}
+                        </option>
+                      );
+                    })}
+                  </Field>
+                  <label htmlFor="district" className="text-lg font-semibold">
+                    Khu vực dạy
+                  </label>
+                  <Field
+                    name={'district'}
+                    as={'select'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  >
+                    {district?.map((items: IDisctrict) => {
+                      return (
+                        <option key={items.id} value={`${items?.id}`}>
+                          {items?.name}
+                        </option>
+                      );
+                    })}
+                  </Field>
+                  <label htmlFor="salary" className="text-lg font-semibold">
+                    Lương
+                  </label>
+                  <Field
+                    name={'salary'}
+                    as={'select'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  >
+                    {salary?.map((items: ISalary) => {
+                      return (
+                        <option key={items.id} value={`${items?.id}`}>
+                          {items?.name}
+                        </option>
+                      );
+                    })}
+                  </Field>
                 </div>
               </div>
-              <Field
-                type={'password'}
-                name={'password'}
-                placeholder={'Mat Khau'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.password && touched.password ? (
-                <div className={'text-red-600 mt-2'}>{errors.password}</div>
-              ) : null}
-              <Field
-                as={'file'}
-                name={'avatar'}
-                placeholder={'Ảnh đại diện'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.avatar && touched.avatar ? (
-                <div className={'text-red-600 mt-2'}>{errors.avatar}</div>
-              ) : null}
-              <Field
-                as="select"
-                name="gender"
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              >
-                <option value="">-- Chọn giới tính --</option>
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
-              </Field>
-              <Field
-                type={'date'}
-                name={'date_of_birth'}
-                placeholder={'Ngày sinh'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              <Field
-                type={'text'}
-                name={'phone'}
-                placeholder={'Số điện thoại'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.phone && touched.phone ? (
-                <div className={'text-red-600 mt-2'}>{errors.phone}</div>
-              ) : null}
-              <Field
-                type={'text'}
-                name={'address'}
-                placeholder={'Nơi bạn đang ở'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.address && touched.address ? (
-                <div className={'text-red-600 mt-2'}>{errors.address}</div>
-              ) : null}
-              <Field
-                type={'text'}
-                name={'citizen_card'}
-                placeholder={'Căn cước công dân'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.citizen_card && touched.citizen_card ? (
-                <div className={'text-red-600 mt-2'}>{errors.citizen_card}</div>
-              ) : null}
-              <Field
-                type={'text'}
-                name={'education_level'}
-                placeholder={'Bằng cấp học tập'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.education_level && touched.education_level ? (
-                <div className={'text-red-600 mt-2'}>
-                  {errors.education_level}
+              <div className={'m-auto'}>
+                <label htmlFor="school_id" className="text-lg font-semibold">
+                  Lớp học
+                </label>
+                <div className={'flex space-x-4'}>
+                  {classes?.map((i: IClass) => {
+                    return (
+                      <label key={i?.id}>
+                        <Field
+                          type={'checkbox'}
+                          name={'class_id'}
+                          value={`${i?.id}`}
+                        />
+                        {i?.name}
+                      </label>
+                    );
+                  })}
                 </div>
-              ) : null}
-              <Field
-                type={'text'}
-                name={'Certificate'}
-                placeholder={'Bằng cấp học tập'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              />
-              {errors.Certificate && touched.Certificate ? (
-                <div className={'text-red-600 mt-2'}>{errors.Certificate}</div>
-              ) : null}
-              <Field
-                name={'school_id'}
-                as={'select'}
-                className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                }
-              >
-                {school?.map((items: ISchool) => {
-                  return (
-                    <option key={items.id} value={`${items?.id}`}>
-                      {items?.name}
-                    </option>
-                  );
-                })}
-              </Field>
-              <div className={'flex space-x-4'}>
-                {classes?.map((i: IClass) => {
-                  return (
-                    <label key={i?.id}>
-                      <Field
-                        type={'checkbox'}
-                        name={'class_id'}
-                        value={`${i?.id}`}
-                      />
-                      {i?.name}
-                    </label>
-                  );
-                })}
-              </div>
-              <div className={'flex space-x-4'}>
-                {subject?.map((i: ISubject) => {
-                  return (
-                    <label key={i?.id}>
-                      <Field
-                        type={'checkbox'}
-                        name={'subject'}
-                        value={`${i?.id}`}
-                      />
-                      {i?.name}
-                    </label>
-                  );
-                })}
-              </div>
-              <div className="flex">
-                <label htmlFor="subject" className={'w-32 mr-32'}>
-                  Môn học:
+                <label htmlFor="school_id" className="text-lg font-semibold">
+                  Môn học
                 </label>
                 <div className={'flex space-x-4'}>
                   {subject?.map((i: ISubject) => {
@@ -291,7 +361,25 @@ const page = () => {
                     );
                   })}
                 </div>
+                <label htmlFor="timeslot" className="text-lg font-semibold">
+                  Ca học:
+                </label>
+                <div className={'flex space-x-4'}>
+                  {timeslot?.map((i: ISubject) => {
+                    return (
+                      <label key={i?.id}>
+                        <Field
+                          type={'checkbox'}
+                          name={'timeslot'}
+                          value={`${i?.id}`}
+                        />
+                        {i?.name}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
+
               <p className="font-bold">
                 Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và
                 những bài học của bạn như thế nào:
@@ -303,7 +391,7 @@ const page = () => {
                 rows={'6'}
                 placeholder={'Giới thiệu về bạn'}
                 className={
-                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                  'w-full px-4 py-2 text-lg text-center border border-black rounded-xl m-auto'
                 }
               />
               {errors.description && touched.description ? (
