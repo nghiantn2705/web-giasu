@@ -65,7 +65,26 @@ const post = async <T>(
   });
 };
 
+const put = async <T>(
+  uri: string,
+  body: IFetchBody,
+  options?: IFetchOptions,
+): Promise<T> => {
+  let isPostForm = false;
+
+  if (typeof body === 'object' && body.constructor === FormData) {
+    isPostForm = true;
+  }
+
+  return await requestAPI(uri, {
+    method: 'PUT',
+    body: isPostForm ? body : JSON.stringify(body),
+    headers: isPostForm ? {} : { 'Content-Type': 'application/json' },
+    ...options,
+  });
+};
 export const apiRequest = {
   get,
   post,
+  put,
 };

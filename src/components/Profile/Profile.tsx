@@ -20,13 +20,10 @@ const Profile = ({ infoUser, children }: IProps) => {
             <div className={'w-full md:w-3/12 md:mx-2 '}>
               <div className={'p-3 border-t-4 border-red-400 '}>
                 <div className={''}>
-                  <Image
+                  <img
                     src={infoUser?.avatar}
                     alt={''}
-                    width={290}
-                    height={290}
                     className={'w-3/4 h-auto mx-auto'}
-                    priority={true}
                   />
                 </div>
                 <h1

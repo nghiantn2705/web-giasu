@@ -31,6 +31,12 @@ export const getFilter = (query: IFetchQuery = {}) => {
 export const postJob = (body: IFetchBody) => {
   return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/job`, body);
 };
+export const putJob = (body: IFetchBody) => {
+  return apiRequest.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/job/${body?.id}`,
+    body,
+  );
+};
 export const getJob = (query: IFetchQuery = {}) => {
   return apiRequest.get<
     {
@@ -45,3 +51,23 @@ export const getJob = (query: IFetchQuery = {}) => {
     }[]
   >(`${process.env.NEXT_PUBLIC_API_URL}/job/${query?.id}`, query);
 };
+export const postFeedback = (body: IFetchBody) => {
+  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, body);
+};
+// export const t = (query: IFetchQuery = {}) => {
+//   return apiRequest.get<
+//     {
+//       id: number;
+//       idSender: string;
+//       idTeacher: string;
+//       point: string;
+//       description: string;
+//     }[]
+//   >(`${process.env.NEXT_PUBLIC_API_URL}/feedback/${query?.id}`, query);
+// };
+// export const getFeedback = (query: IFetchQuery = {}) => {
+//   return apiRequest.get(
+//     `${process.env.NEXT_PUBLIC_API_URL}/feedback/${query?.id}`,
+//     query,
+//   );
+// };

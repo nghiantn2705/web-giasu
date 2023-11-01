@@ -1,27 +1,23 @@
 export interface ITeachers {
-  Certificate: string;
-  Citizen_card: string;
-  DistrictID: number;
-  district: {
-    id: number;
-    name: string;
-  };
-  address: string;
-  avatar: string;
-  class: string;
-  description: string;
-  education_level: string;
-  email: string;
-  id: number;
-  name: string;
-  phone: string;
   role: string;
-  salary: string;
-  school_id: string;
-  status: boolean;
-  subject: {
-    id: number;
-    name: string;
-  };
-  time_tutor: string;
+  address: string;
+  school_id: number;
+  citizen_card: string;
+  education_level: string;
+  class_id: { id: number; name: string };
+  subject: { id: number; name: string };
+  salary_id: number;
+  gender: string;
+  description: string;
+  districtID: number;
+  Certificate: string;
+  avatar: string;
+  name: string;
+  email: string;
+  phone: string;
+  time_tutor_id: { id: number; name: string };
+  password: string;
+  district: { id: number; name: string };
+  id: number;
+  status: number;
 }
