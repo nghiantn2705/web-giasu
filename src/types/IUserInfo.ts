@@ -1,10 +1,13 @@
 export interface IUserInfo {
   Certificate: string;
-  Citizen_card: string;
   District: string;
   address: string;
   avatar: string;
-  class: string;
+  citizen_card: string;
+  class: {
+    id: number;
+    name: string;
+  };
   description: string;
   education_level: string;
   email: string;
@@ -13,11 +16,13 @@ export interface IUserInfo {
   phone: string;
   role: string;
   salary: string;
-  school_id: string;
-  status: boolean;
+  school: string;
   subject: {
     id: number;
     name: string;
   };
-  time_tutor: string;
+  time_tutor: {
+    id: number;
+    name: string;
+  };
 }

@@ -1,12 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout/Layout';
 import { Toaster } from 'react-hot-toast';
 
-const roboto = Roboto({ weight: '400', subsets: ['latin-ext'] });
+const roboto = Inter({ weight: '500', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: {
     default: 'Gia Sư Poly',

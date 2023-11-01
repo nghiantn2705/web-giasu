@@ -12,12 +12,12 @@ export default function Home() {
   const [data, setData] = useState<ITeachers>();
   const { id: params } = useParams();
   useEffect(() => {
-    const fetch = async () => {
+    (async () => {
       const res = await getTeachesByid(Number(params));
       setData(res);
-    };
-    fetch();
+    })();
   }, [setData]);
+  console.log(data);
   return (
     <div>
       {data ? (
@@ -84,7 +84,7 @@ export default function Home() {
                         'text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center'
                       }
                     >
-                      <p>{data?.class}</p>
+                      <p>{data?.class_id}</p>
                     </div>
                     <div
                       className={

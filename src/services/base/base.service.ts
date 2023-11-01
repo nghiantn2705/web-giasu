@@ -17,7 +17,10 @@ const requestAPI = async <T>(
     url = `${apiUrl}${uri}`;
   }
 
-  const res = await fetch(url, options);
+  const res = await fetch(url, {
+    ...options,
+    cache: 'no-store',
+  });
 
   if (options.mode !== 'no-cors') {
     const body = await res.json();

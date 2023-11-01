@@ -6,8 +6,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      linearGradients: {
+        'custom-tw':
+          'linear-gradient(transparent, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9))',
+      },
+      colors: {
+        'blue-tw': '#2C74B3',
+        'blue-tw1': '#205295',
+        'blue-tw2': '#144272',
+      },
       backgroundImage: {
         'banner-main': "url('/banner-main.png')",
+        'banner-home-1': "url('/banner-10.jpg')",
+        'banner-home-2': "url('/banner-11.jpg')",
       },
       minHeight: {
         content: 'calc(100vh - 148px)',
