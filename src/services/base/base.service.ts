@@ -34,7 +34,7 @@ const requestAPI = async <T>(
     (error as any).response = body; //eslint-disable-line
     throw error;
   } else {
-        return null as any; //eslint-disable-line
+    return null as any; //eslint-disable-line
   }
 };
 
