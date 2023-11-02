@@ -82,7 +82,7 @@ const Header = (props: any) => {
             <Link
               href={link}
               key={name}
-              className={`flex justify-center items-center border-b-gray-300 px-4 py-2 gap-2 lg:rounded-lg  lg:border-2 lg:shadow-md uppercase font-bold text-blue-tw2 text-base  ${
+              className={`flex justify-center items-center border-b-gray-300 px-4 py-2 gap-2 lg:rounded-lg  lg:border-2 lg:shadow-md uppercase text-blue-tw2 text-base  ${
                 router === link ? 'text-white bg-blue-tw ' : ''
               }`}
             >

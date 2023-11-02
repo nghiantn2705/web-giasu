@@ -8,7 +8,6 @@ interface IProps {
   teachers: ITeachers[];
 }
 const Teacher = ({ teachers }: IProps) => {
-  console.log(teachers);
   return (
     <div className={'relative py-5'}>
       <div
@@ -32,13 +31,13 @@ const Teacher = ({ teachers }: IProps) => {
               >
                 <div className={'relative'}>
                   <a href={`/detail/${items?.id}`}>
-                    <picture>
+                    <picture className={'flex justify-center'}>
                       <img
                         src={`${items?.avatar}`}
                         width={280}
                         height={200}
                         alt=""
-                        className={'w-full h-auto'}
+                        className={'w-auto h-[200px]'}
                       />
                     </picture>
                   </a>

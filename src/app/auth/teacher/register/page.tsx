@@ -30,7 +30,6 @@ const page = () => {
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-  console.log(classes);
   useEffect(() => {
     const fetch = async () => {
       try {

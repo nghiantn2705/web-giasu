@@ -13,17 +13,14 @@ export const metadata: Metadata = {
 };
 export default async function App(props: any) {
   const teachers = await getFilter(props?.searchParams);
-
+  console.log(teachers);
   return (
     <>
-      <div className={'flex'}>
-        <Navigation />
-        <Home>
-          <SortRate teachers={teachers} />
-          <Teacher teachers={teachers} />
-          <Footer />
-        </Home>
-      </div>
+      <Home>
+        <SortRate teachers={teachers} />
+        <Teacher teachers={teachers} />
+        <Footer />
+      </Home>
     </>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation } from 'swiper/modules';
+import { FreeMode, Navigation, Pagination } from 'swiper/modules';
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
@@ -61,32 +61,14 @@ const SortRate = ({ teachers }: IProps) => {
           swiper.params.navigation.prevEl = navigationPrevRef.current;
           swiper.params.navigation.nextEl = navigationNextRef.current;
         }}
-        breakpoints={{
-          576: {
-            width: 576,
-            slidesPerView: 3,
-          },
-          768: {
-            width: 768,
-            slidesPerView: 4,
-          },
-          1280: {
-            width: 1280,
-            slidesPerView: 5,
-          },
-          1440: {
-            width: 1440,
-            slidesPerView: 7,
-          },
-        }}
-        freeMode={true}
-        modules={[Navigation, FreeMode]}
-        slidesPerView={7}
+        modules={[Navigation, Pagination]}
+        slidesPerView={5.5}
         spaceBetween={15}
+        className={'w-full'}
       >
         {teachers?.map((items, index) => {
           return (
-            <SwiperSlide key={index + 1}>
+            <SwiperSlide key={index + 1} className={'m-0'}>
               <div
                 className={
                   'rounded-xl bg-white  shadow hover:shadow-md duration-200 my-2 p-1 border hover:border-gray-300 '
@@ -99,7 +81,7 @@ const SortRate = ({ teachers }: IProps) => {
                       width={160}
                       height={160}
                       alt=""
-                      className={'w-[200px] mx-auto rounded-t-xl '}
+                      className={'h-[200px] w-full rounded-t-xl '}
                     />
                     <div
                       className={
@@ -111,20 +93,6 @@ const SortRate = ({ teachers }: IProps) => {
                       </p>
                     </div>
                   </picture>
-                  <div
-                    className={
-                      'absolute top-2 end-2  p-2 rounded-full bg-white'
-                    }
-                  >
-                    <a
-                      href={'/'}
-                      className={
-                        'bg-white text-black  focus:text-red-600 hover:text-red-600 '
-                      }
-                    >
-                      <BsFillHeartFill />
-                    </a>
-                  </div>
                 </div>
 
                 <div className={'px-3 py-2'}>
