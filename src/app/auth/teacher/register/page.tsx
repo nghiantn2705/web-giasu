@@ -96,8 +96,8 @@ const page = () => {
         >
           {({ errors, touched }) => (
             <Form className={'flex flex-col w-sm m-auto pl-20 pr-20 my-4'}>
-              <div className="flex md:flex-row space-x-4 w-full m-auto sm:flex-col">
-                <div className={'w-6/12'}>
+              <div className="grid grid-cols-2 gap-4 w-full m-auto">
+                <div>
                   <label htmlFor="name" className="text-lg font-semibold">
                     Họ và Tên
                   </label>
@@ -107,13 +107,15 @@ const page = () => {
                       name={'name'}
                       placeholder={'Học và tên'}
                       className={
-                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                        'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                       }
                     />
                     {errors.name && touched.name ? (
                       <div className={'text-red-600 mt-2'}>{errors.name}</div>
                     ) : null}
                   </div>
+                </div>
+                <div>
                   <label htmlFor="email" className="text-lg font-semibold">
                     Email
                   </label>
@@ -123,13 +125,15 @@ const page = () => {
                       name={'email'}
                       placeholder={'Email'}
                       className={
-                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                        'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                       }
                     />
                     {errors.email && touched.email ? (
                       <div className={'text-red-600 mt-2'}>{errors.email}</div>
                     ) : null}
                   </div>
+                </div>
+                <div>
                   <label htmlFor="password" className="text-lg font-semibold">
                     Mật khẩu
                   </label>
@@ -138,12 +142,14 @@ const page = () => {
                     name={'password'}
                     placeholder={'Mật khẩu'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.password && touched.password ? (
                     <div className={'text-red-600 mt-2'}>{errors.password}</div>
                   ) : null}
+                </div>
+                <div>
                   <label htmlFor="avatar" className="text-lg font-semibold">
                     Ảnh đại diện
                   </label>
@@ -153,13 +159,15 @@ const page = () => {
                       name={'avatar'}
                       placeholder={'Ảnh đại diện'}
                       className={
-                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                        'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                       }
                     />
                     {errors.avatar && touched.avatar ? (
                       <div className={'text-red-600 mt-2'}>{errors.avatar}</div>
                     ) : null}
                   </div>
+                </div>
+                <div>
                   <label htmlFor="gender" className="text-lg font-semibold">
                     Giới tính
                   </label>
@@ -167,13 +175,15 @@ const page = () => {
                     as="select"
                     name="gender"
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   >
                     <option value="">-- Chọn giới tính --</option>
                     <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
                   </Field>
+                </div>
+                <div>
                   <label
                     htmlFor="date_of_birth"
                     className="text-lg font-semibold"
@@ -185,9 +195,11 @@ const page = () => {
                     name={'date_of_birth'}
                     placeholder={'Ngày sinh'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
+                </div>
+                <div>
                   <label htmlFor="phone" className="text-lg font-semibold">
                     Số điện thoại
                   </label>
@@ -196,14 +208,14 @@ const page = () => {
                     name={'phone'}
                     placeholder={'Số điện thoại'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.phone && touched.phone ? (
                     <div className={'text-red-600 mt-2'}>{errors.phone}</div>
                   ) : null}
                 </div>
-                <div className={'w-6/12'}>
+                <div>
                   <label htmlFor="address" className="text-lg font-semibold">
                     Địa chỉ nơi ở
                   </label>
@@ -212,12 +224,14 @@ const page = () => {
                     name={'address'}
                     placeholder={'Nơi bạn đang ở'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.address && touched.address ? (
                     <div className={'text-red-600 mt-2'}>{errors.address}</div>
                   ) : null}
+                </div>
+                <div>
                   <label htmlFor="address" className="text-lg font-semibold">
                     Số căn cước công dân
                   </label>
@@ -226,7 +240,7 @@ const page = () => {
                     name={'citizen_card'}
                     placeholder={'Căn cước công dân'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.citizen_card && touched.citizen_card ? (
@@ -234,6 +248,8 @@ const page = () => {
                       {errors.citizen_card}
                     </div>
                   ) : null}
+                </div>
+                <div>
                   <label
                     htmlFor="education_level"
                     className="text-lg font-semibold"
@@ -245,7 +261,7 @@ const page = () => {
                     name={'education_level'}
                     placeholder={'Trình độ học vấn'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.education_level && touched.education_level ? (
@@ -253,6 +269,8 @@ const page = () => {
                       {errors.education_level}
                     </div>
                   ) : null}
+                </div>
+                <div>
                   <label
                     htmlFor="Certificate"
                     className="text-lg font-semibold"
@@ -264,7 +282,7 @@ const page = () => {
                     name={'Certificate'}
                     placeholder={'Bằng cấp học tập'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   />
                   {errors.Certificate && touched.Certificate ? (
@@ -272,6 +290,8 @@ const page = () => {
                       {errors.Certificate}
                     </div>
                   ) : null}
+                </div>
+                <div>
                   <label htmlFor="school_id" className="text-lg font-semibold">
                     Đại học
                   </label>
@@ -279,7 +299,7 @@ const page = () => {
                     name={'school_id'}
                     as={'select'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   >
                     {school?.map((items: ISchool) => {
@@ -290,6 +310,8 @@ const page = () => {
                       );
                     })}
                   </Field>
+                </div>
+                <div>
                   <label htmlFor="district" className="text-lg font-semibold">
                     Khu vực dạy
                   </label>
@@ -297,7 +319,7 @@ const page = () => {
                     name={'district'}
                     as={'select'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   >
                     {district?.map((items: IDisctrict) => {
@@ -308,6 +330,8 @@ const page = () => {
                       );
                     })}
                   </Field>
+                </div>
+                <div>
                   <label htmlFor="salary" className="text-lg font-semibold">
                     Lương
                   </label>
@@ -315,7 +339,7 @@ const page = () => {
                     name={'salary'}
                     as={'select'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'w-full h-[51px] px-4 py-2 text-lg text-center border border-black rounded-xl '
                     }
                   >
                     {salary?.map((items: ISalary) => {
@@ -327,62 +351,65 @@ const page = () => {
                     })}
                   </Field>
                 </div>
+                <div>
+                  <label htmlFor="school_id" className="text-lg font-semibold">
+                    Lớp học
+                  </label>
+                  <div className={'flex space-x-4'}>
+                    {classes?.map((i: IClass) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'class_id'}
+                            value={`${i?.id}`}
+                          />
+                          {i?.name}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="school_id" className="text-lg font-semibold">
+                    Môn học
+                  </label>
+                  <div className={'flex space-x-4'}>
+                    {subject?.map((i: ISubject) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'subject'}
+                            value={`${i?.id}`}
+                          />
+                          {i?.name}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="timeslot" className="text-lg font-semibold">
+                    Ca học:
+                  </label>
+                  <div className={'flex space-x-4'}>
+                    {timeslot?.map((i: ISubject) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'timeslot'}
+                            value={`${i?.id}`}
+                          />
+                          {i?.name}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-              <div className={'m-auto'}>
-                <label htmlFor="school_id" className="text-lg font-semibold">
-                  Lớp học
-                </label>
-                <div className={'flex space-x-4'}>
-                  {classes?.map((i: IClass) => {
-                    return (
-                      <label key={i?.id}>
-                        <Field
-                          type={'checkbox'}
-                          name={'class_id'}
-                          value={`${i?.id}`}
-                        />
-                        {i?.name}
-                      </label>
-                    );
-                  })}
-                </div>
-                <label htmlFor="school_id" className="text-lg font-semibold">
-                  Môn học
-                </label>
-                <div className={'flex space-x-4'}>
-                  {subject?.map((i: ISubject) => {
-                    return (
-                      <label key={i?.id}>
-                        <Field
-                          type={'checkbox'}
-                          name={'subject'}
-                          value={`${i?.id}`}
-                        />
-                        {i?.name}
-                      </label>
-                    );
-                  })}
-                </div>
-                <label htmlFor="timeslot" className="text-lg font-semibold">
-                  Ca học:
-                </label>
-                <div className={'flex space-x-4'}>
-                  {timeslot?.map((i: ISubject) => {
-                    return (
-                      <label key={i?.id}>
-                        <Field
-                          type={'checkbox'}
-                          name={'timeslot'}
-                          value={`${i?.id}`}
-                        />
-                        {i?.name}
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <p className="font-bold">
+              <p className="font-bold mt-4 mb-2">
                 Nói ngắn gọn với những học sinh tiềm năng về những gì bạn dạy và
                 những bài học của bạn như thế nào:
               </p>
