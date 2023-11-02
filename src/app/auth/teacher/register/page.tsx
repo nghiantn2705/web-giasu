@@ -54,8 +54,10 @@ const page = () => {
   }, []);
   return (
     <div className={'flex flex-col w-xl mx-auto my-10'}>
-      <h1 className={'text-3xl font-bold'}>Hoàn thành đơn đăng kí của bạn</h1>
-      <h1 className="h-px bg-slate-400 mt-4 ">{''}</h1>
+      <h1 className={'text-3xl font-bold mt-10 pl-20'}>
+        Hoàn thành đơn đăng kí của bạn
+      </h1>
+      <h1 className="h-px bg-slate-400 mt-4 ml-20 mr-20">{''}</h1>
       <div className="mt-10">
         <Formik
           initialValues={{
@@ -93,7 +95,7 @@ const page = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={'flex flex-col w-full m-auto my-10'}>
+            <Form className={'flex flex-col w-sm m-auto pl-20 pr-20 my-4'}>
               <div className="flex md:flex-row space-x-4 w-full m-auto sm:flex-col">
                 <div className={'w-6/12'}>
                   <label htmlFor="name" className="text-lg font-semibold">
@@ -134,7 +136,7 @@ const page = () => {
                   <Field
                     type={'password'}
                     name={'password'}
-                    placeholder={'Mat Khau'}
+                    placeholder={'Mật khẩu'}
                     className={
                       'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
                     }
@@ -260,7 +262,7 @@ const page = () => {
                   <Field
                     type={'text'}
                     name={'Certificate'}
-                    placeholder={'Bàng cấp học tập'}
+                    placeholder={'Bằng cấp học tập'}
                     className={
                       'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
                     }
