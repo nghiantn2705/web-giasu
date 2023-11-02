@@ -80,12 +80,15 @@ const InfoUser = ({ infoUser }: IProps) => {
               </div>
             </div>
           </div>
-          <div
-            className={
-              'w-full py-2 border text-center rounded-md hover:bg-red-400 hover:text-white'
-            }
-          >
-            <Link href={'/info'}>Cập nhật thông tin cá nhân</Link>
+          <div className={'flex justify-center'}>
+            <Link
+              className={
+                'w-full  p-2 border bg-blue-tw text-center rounded-md hover:bg-blue-tw1 text-white'
+              }
+              href={'/info'}
+            >
+              Cập nhật thông tin cá nhân
+            </Link>
           </div>
           <div className={'bg-white p-3 shadow-sm rounded-sm'}>
             <div className="grid grid-cols-2">

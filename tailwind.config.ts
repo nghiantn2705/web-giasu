@@ -19,9 +19,14 @@ module.exports = {
         'banner-main': "url('/banner-main.png')",
         'banner-home-1': "url('/banner-10.jpg')",
         'banner-home-2': "url('/banner-11.jpg')",
+        'banner-register': "url('/bg-register.jpg')",
       },
       minHeight: {
         content: 'calc(100vh - 148px)',
+        fit: 'calc(100vh - 73px)',
+      },
+      maxHeight: {
+        content: 'calc(100vh - 120px)',
       },
     },
     container: {

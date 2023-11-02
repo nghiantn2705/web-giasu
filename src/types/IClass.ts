@@ -1,4 +1,4 @@
 export interface IClass {
   id: number;
-  name: string;
+  class: string;
 }

@@ -3,54 +3,46 @@
 'use client';
 import Image from 'next/image';
 import MyDialog from '@/components/Teacher/RentTeacher';
-import {
-  getTeachesByid,
-  getFeedback,
-  getStart,
-} from '../../../../action/getByID';
+
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { SetStateAction, useEffect, useState } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
-import { IUser } from '@/types/IUser';
 import { ITeachers } from '@/types/ITeachers';
 import { ITeachers1 } from '@/types/ITeachers1';
-import { postFeedback } from '@/services';
-import { number } from 'yup';
 import { IFeedback } from '@/types/IFeedback';
-import { IStart } from '@/types/IStart';
 import Loading from '@/components/Layout/Loading';
+import { getFeedback, postFeedback, getStart } from '@/services/feedback';
+import { getTeacherByid } from '@/services/teacher';
+import RentTeacher from '@/components/Teacher/RentTeacher';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachers1>('userInfo');
-  const [data, setData] = useState<ITeachers>();
+  const [teacher, setTeachers] = useState<ITeachers>();
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
-  const [starData, setStarData] = useState<IStart>();
+  const [starData, setStarData] = useState<{ avg: string }>();
+  const [point1, setPoint] = useState(0);
+  const [description1, setDescription] = useState('');
   const { id: params } = useParams();
-  console.log(data);
+  console.log(params);
   useEffect(() => {
     (async () => {
-      const res = await getTeachesByid(Number(params));
-      const resFeedback = await getFeedback(Number(params));
-      const resRating = await getStart(Number(params));
-      setData(res);
+      const resTeacher = await getTeacherByid({ id: params });
+      const resFeedback = await getFeedback({ id: params });
+      const resRating = await getStart({ id: params });
+      setTeachers(resTeacher);
       setFeedbackData(resFeedback);
       setStarData(resRating);
     })();
   }, []);
-  console.log(starData);
-  const [point1, setPoint] = useState(0);
-  const [description1, setDescription] = useState('');
-  const handleRatingChange = (selectedRating: SetStateAction<number>) => {
-    setPoint(selectedRating);
-  };
-
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
     setDescription(event.target.value);
+  };
+  const handleRatingChange = (selectedRating: SetStateAction<number>) => {
+    setPoint(selectedRating);
   };
 
   const submitFeedback = async (e: any) => {
@@ -59,20 +51,20 @@ export default function Home() {
       description: description1,
       point: point1,
       idSender: userInfo?.id,
-      idTeacher: data?.id,
+      idTeacher: teacher?.id,
     };
     await postFeedback({ ...value });
   };
   return (
     <div>
-      {data ? (
+      {teacher ? (
         <div className={''}>
-          <main className={'container mx-auto pt-10  '}>
+          <main className={'container mx-auto pt-6  '}>
             <div className={' grid gap-10 grid-cols-12 '}>
               {/* avatar */}
               <div className={' pt-5 col-span-2'}>
                 <Image
-                  src={`${data?.avatar}`}
+                  src={`${teacher?.avatar}`}
                   width={260}
                   height={260}
                   alt={'Picture of the author'}
@@ -116,7 +108,7 @@ export default function Home() {
               {/*  */}
               <div className={'pt-5 col-span-8 py-15'}>
                 <p className={'text-[30px] font-bold text-stone-800'}>
-                  {data?.name}
+                  {teacher?.name}
                 </p>
                 {/* Nhận Dậy */}
                 <div className={' flex flex-row border-b py-3'}>
@@ -149,7 +141,7 @@ export default function Home() {
                       <p className="text-xl font-bold">Nhận dạy:</p>
                       <div className=" grid gap-2 grid-cols-8 py-3">
                         <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{data?.class_id}</p>
+                          <p>{teacher?.class_id}</p>
                         </div>
                       </div>
                     </div>
@@ -157,7 +149,7 @@ export default function Home() {
                       <p className="text-xl font-bold">Dạy môn:</p>
                       <div className=" grid gap-2 grid-cols-8 py-3">
                         <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{data?.subject?.name}</p>
+                          <p>{teacher?.subject?.name}</p>
                         </div>
                       </div>
                     </div>
@@ -172,14 +164,14 @@ export default function Home() {
                       <div className={'pt-2 text-zinc-950 '}>
                         <label className={'font-bold'}>Số điện thoại : </label>
 
-                        <label>{data?.phone}</label>
+                        <label>{teacher?.phone}</label>
                       </div>
                     </div>
                     <div className={'col-span-5'}>
                       <div className="pt-2  text-zinc-950 ">
                         <label className="font-bold">Khu vực : </label>
 
-                        <label className=""> {data?.address}</label>
+                        <label className=""> {teacher?.address}</label>
                       </div>
                     </div>
                   </div>
@@ -197,12 +189,12 @@ export default function Home() {
                       </div>
                       <div className="pt-2 text-zinc-950 ">
                         <label className="font-bold"> Trình độ học vấn: </label>{' '}
-                        <label className="">{data?.education_level}</label>{' '}
+                        <label className="">{teacher?.education_level}</label>{' '}
                       </div>
                       <div className={'pt-2 text-zinc-950 '}>
                         <label className={'font-bold'}> Trường học :</label>
 
-                        <label className=""> {data?.school_id}</label>
+                        <label className=""> {teacher?.school_id}</label>
                       </div>
                       <div className={'pt-2  text-zinc-950 '}>
                         <label className={'font-bold'}> Chuyên ngành :</label>
@@ -214,24 +206,24 @@ export default function Home() {
                       <div className="pt-2  text-zinc-950 ">
                         <label className="font-bold">Khu vực dạy : </label>
 
-                        <label className=""> {data?.DistrictID}</label>
+                        <label className=""> {teacher?.DistrictID}</label>
                       </div>
                       <div className="pt-2  text-zinc-950 ">
                         <label className="font-bold"> Thời gian dạy: </label>
 
-                        <label className=""> {data?.time_tutor_id}</label>
+                        <label className=""> {teacher?.time_tutor_id}</label>
                       </div>
                       <div className={'pt-2  text-zinc-950 '}>
                         <label className={'font-bold'}>
                           Mức lương mong muốn :
                         </label>
 
-                        <label className=""> {data?.salary_id}</label>
+                        <label className=""> {teacher?.salary_id}</label>
                       </div>
                       <div className="pt-2 col-span-3 text-zinc-950 ">
                         <label className="font-bold"> Kinh nghiệm : </label>
 
-                        <label className=""> {data?.description}</label>
+                        <label className=""> {teacher?.description}</label>
                       </div>
                     </div>
                   </div>
@@ -247,14 +239,14 @@ export default function Home() {
                         Ghi chú của gia sư :
                       </label>
 
-                      <label className=""> {data?.description}</label>
+                      <label className=""> {teacher?.description}</label>
                     </div>
                   </div>
                 </div>
                 {/*  */}
               </div>
               <div className={'mt-5 col-span-2'}>
-                <MyDialog id={data?.id} />
+                <RentTeacher id={Number(params)} />
               </div>
             </div>
             <div
@@ -272,7 +264,9 @@ export default function Home() {
                           src={userInfo?.avatar}
                           width={45}
                           height={45}
-                          className="rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer"
+                          className={
+                            'rounded-full  border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto'
+                          }
                           alt=""
                         />
                       </div>
@@ -280,9 +274,9 @@ export default function Home() {
                       <div className={'col-span-5 text-right'}>
                         <label htmlFor="rating">Đánh giá sao:</label>
                         <div>
-                          {[1, 2, 3, 4, 5].map((star) => (
+                          {[1, 2, 3, 4, 5].map((star, index) => (
                             <FontAwesomeIcon
-                              key={star}
+                              key={index}
                               icon={faStar}
                               className={`text-${
                                 point1 >= star ? 'amber-300' : 'gray-500'
@@ -318,8 +312,8 @@ export default function Home() {
 
                 <div className={'col-span-2 text-left'}>
                   <div className={'text-left  pt-2'}>
-                    {feedbackData?.map((item: IFeedback) => (
-                      <div key={item?.idTeacher}>
+                    {feedbackData?.map((item: IFeedback, index) => (
+                      <div key={index}>
                         <div className={' pt-3 grid gap-10 grid-cols-10'}>
                           <label
                             className={
@@ -329,9 +323,9 @@ export default function Home() {
                             {item?.idSender}
                           </label>
                           <div className={'col-span-5 text-right'}>
-                            {[1, 2, 3, 4, 5].map((star) => (
+                            {[1, 2, 3, 4, 5].map((star, index) => (
                               <FontAwesomeIcon
-                                key={star}
+                                key={index}
                                 icon={faStar}
                                 className={`text ${
                                   star <= parseInt(item?.point)

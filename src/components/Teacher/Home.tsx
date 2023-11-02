@@ -12,7 +12,7 @@ export default function Home({ children }: IHome) {
   return (
     <div
       className={
-        'container lg:shadow-x-md pt-4 lg:grid lg:grid-cols-12 xl:grid-cols-10 lg:gap-4 lg:px-4'
+        'container lg:shadow-x-md lg:grid lg:grid-cols-12 xl:grid-cols-10 lg:gap-4 lg:px-4 '
       }
     >
       <div className={'hidden lg:block lg:col-span-3 xl:col-span-2'}>

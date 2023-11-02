@@ -28,7 +28,7 @@ export default function RootLayout(props: Props) {
         <GlobalContextProvider store={[]}>
           <Toaster />
           <Layout>
-            <div className={'mt-[67px] min-h-content'}>{props.children}</div>
+            <div className={'mt-[70px] min-h-content'}>{props.children}</div>
           </Layout>
         </GlobalContextProvider>
       </body>

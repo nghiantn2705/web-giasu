@@ -9,18 +9,9 @@ interface IProps {
 }
 const Teacher = ({ teachers }: IProps) => {
   return (
-    <div className={'relative py-5'}>
-      <div
-        className={
-          ' before:absolute before:border-t-blue-tw before:border-t-2 before:top-9 before:w-[96%] before:z-0'
-        }
-      >
-        <span className={'text-2xl bg-white px-3 relative z-10 uppercase'}>
-          Tất cả
-        </span>
-      </div>
+    <>
       {teachers ? (
-        <div className={'grid grid-cols-5 gap-x-4 gap-y-8 mt-8'}>
+        <div className={'grid grid-cols-4 gap-x-4 gap-y-8 mt-8'}>
           {teachers?.map((items: ITeachers, index: number) => {
             return (
               <div
@@ -41,20 +32,6 @@ const Teacher = ({ teachers }: IProps) => {
                       />
                     </picture>
                   </a>
-                  <div
-                    className={
-                      'absolute top-4 end-4  p-2 rounded-full  bg-white'
-                    }
-                  >
-                    <a
-                      href={'/'}
-                      className={
-                        'bg-white text-black  focus:text-red-600 hover:text-red-600 '
-                      }
-                    >
-                      <BsFillHeartFill />
-                    </a>
-                  </div>
                 </div>
 
                 <div className={'py-3'}>
@@ -151,7 +128,7 @@ const Teacher = ({ teachers }: IProps) => {
       ) : (
         ''
       )}
-    </div>
+    </>
   );
 };
 

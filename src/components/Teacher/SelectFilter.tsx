@@ -2,14 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { IDisctrict } from '@/types/IDistrict';
-import { getDistrict, getSubject } from '../../../action/get';
+
 import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsBook, BsSearch } from 'react-icons/bs';
+import { getDistrict, getSubject } from '@/services/get';
+import { ISubject } from '@/types/ISubject';
 
 const SelectFilter = () => {
   const [districts, setDistricts] = useState<IDisctrict[]>();
-  const [subject, setSubject] = useState<IDisctrict[]>();
+  const [subject, setSubject] = useState<ISubject[]>();
   const [queryDistrict, setQueryDistrict] = useState<string>('');
   const [querySubject, setQuerySubject] = useState<string>('');
   const router = useRouter();
@@ -21,29 +23,28 @@ const SelectFilter = () => {
       setSubject(resSubject);
     })();
   }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (queryDistrict == '') {
-      router.replace(`/giasu?subject=${querySubject}`, {
+      router.replace(`/timkiemgiasu?subject=${querySubject}`, {
         scroll: false,
       });
     }
     if (querySubject == '') {
-      router.replace(`/giasu?DistrictID=${queryDistrict}`, {
+      router.replace(`/timkiemgiasu?DistrictID=${queryDistrict}`, {
         scroll: false,
       });
     }
     if (querySubject && queryDistrict) {
       router.replace(
-        `/giasu?DistrictID=${queryDistrict}&subject=${querySubject}`,
+        `/timkiemgiasu?DistrictID=${queryDistrict}&subject=${querySubject}`,
         {
           scroll: false,
         },
       );
     }
     if (querySubject == '' && queryDistrict == '') {
-      router.replace(`/giasu`, {
+      router.replace(`/timkiemgiasu`, {
         scroll: false,
       });
     }
