@@ -13,8 +13,12 @@ const InfoUser = ({ infoUser }: IProps) => {
       {infoUser ? (
         <div className={'w-full'}>
           <div className={'bg-white p-3 '}>
-            <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-              <span className="text-green-500">
+            <div
+              className={
+                'flex items-center space-x-2 font-semibold text-gray-900 leading-8'
+              }
+            >
+              <span className={'text-blue-tw2'}>
                 <svg
                   className="h-5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +34,7 @@ const InfoUser = ({ infoUser }: IProps) => {
                   />
                 </svg>
               </span>
-              <span className="tracking-wide">Thông tin cơ bản</span>
+              <span className="tracking-wide ">Thông tin cơ bản</span>
             </div>
             <div className="text-gray-700">
               <div className="grid md:grid-cols-2 text-sm">

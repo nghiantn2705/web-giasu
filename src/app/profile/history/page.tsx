@@ -6,7 +6,7 @@ import Profile from '@/components/Profile/Profile';
 import { useStore } from '@/hook/use-store';
 import { IUserInfo } from '@/types/IUserInfo';
 import RentalHistory from '@/components/Profile/RentalHistory';
-import Error404 from '@/components/Error404';
+import Error404 from '@/components/Layout/Error404';
 
 const Page = () => {
   const [data] = useStore<IUserInfo>('userInfo');

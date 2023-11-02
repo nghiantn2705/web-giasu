@@ -8,18 +8,20 @@ const Main = () => {
       <section className={'bg-banner-main bg-cover bg-center py-20'}>
         <div className={'container'}>
           <div className={'flex flex-col bg-white  p-7 md:w-[50%] xl:w-[35%]'}>
-            <h2 className={'text-xl font-bold mb-2'}>Kết nối gia sư GS7</h2>
-            <p className={'text-3xl text-red-400 font-bold mb-6'}>
+            <h2 className={'text-xl font-bold mb-2 text-blue-tw2 '}>
+              Kết nối gia sư GS7
+            </h2>
+            <p className={'text-3xl font-bold mb-6 text-blue-tw1'}>
               Mang thành công đến <br /> với con bạn
             </p>
-            <p className={'mb-4'}>
+            <p className={'mb-4 text-blue-tw1'}>
               Bạn muốn con chăm ngoan, học giỏi? Đăng <br /> ký ngay! Đội ngũ
               gia sư giỏi của GS7 <br /> sẽ giúp con bạn tiến bộ nhanh chóng.
             </p>
             <button
               type={'button'}
               className={
-                'w-fit py-2 px-3 bg-red-400 text-white rounded-md font-bold'
+                'w-fit py-2 px-3 text-white rounded-md bg-blue-tw text-lg'
               }
             >
               Đăng ký thuê gia sư ngay
@@ -32,30 +34,28 @@ const Main = () => {
           <Image src={'/banner-gs-1.jpg'} width={350} height={230} alt={''} />
         </div>
         <div className={'flex flex-col gap-4 py-4 md:pl-12 md:py-8 md:w-[60%]'}>
-          <h3 className={'text-2xl font-bold'}>Bạn là giáo viên, sinh viên?</h3>
-          <p>
+          <h3 className={'text-2xl font-bold text-blue-tw1'}>
+            Bạn là giáo viên, sinh viên?
+          </h3>
+          <p className={'text-blue-tw1 text-xl'}>
             Gia nhập vào đội ngũ gia sư của GS7, nhận lớp và có thêm thu nhập từ
-            những kiến thức
-            <br />, kỹ năng giảng dạy của bạn.
+            những kiến thức , kỹ năng giảng dạy của bạn.
           </p>
-          <div className={'flex gap-5'}>
+          <div className={'flex gap-5  text-xl'}>
             <Link
               href={'/teacher/register'}
-              className={'text-indigo-500 hover:underline'}
+              className={'text-blue-tw hover:underline'}
             >
               {'>'} Đăng ký làm gia sư
             </Link>
-            <Link
-              href={'/teacher'}
-              className={'text-indigo-500 hover:underline'}
-            >
+            <Link href={'/teacher'} className={'text-blue-tw hover:underline'}>
               {'>'} Đăng nhập tài khoản
             </Link>
           </div>
           <Link
             href={''}
             className={
-              'flex justify-center items-center gap-2 bg-red-400 text-white w-fit px-4 py-2 rounded-md font-bold uppercase'
+              'flex justify-center items-center gap-2 bg-blue-tw text-white w-fit px-4 py-2 rounded-md font-bold uppercase'
             }
           >
             <FaArrowRightLong />
@@ -63,13 +63,15 @@ const Main = () => {
           </Link>
         </div>
       </section>
-      <section className={'bg-gray-200 '}>
+      <section className={'bg-blue-tw text-white '}>
         <div
           className={
             'container flex flex-col gap-5 md:gap-0 md:flex-row px-4 py-12'
           }
         >
-          <div className={'flex flex-col gap-4 md:py-8 w-full md:w-[60%]'}>
+          <div
+            className={'flex flex-col gap-4 md:py-8 w-full md:w-[60%] text-xl'}
+          >
             <h3 className={'text-center md:text-left text-2xl font-bold'}>
               Bạn cần thuê gia sư?
             </h3>
@@ -83,7 +85,7 @@ const Main = () => {
             <Link
               href={'/giasu'}
               className={
-                'bg-red-400 text-white w-fit px-4 py-2 rounded-md font-bold uppercase flex justify-center items-center gap-2'
+                'bg-white text-blue-tw w-fit px-4 py-2 rounded-md font-bold uppercase flex justify-center items-center gap-2'
               }
             >
               <FaArrowRightLong />
@@ -99,14 +101,16 @@ const Main = () => {
         className={'container flex flex-col md:flex-row px-4 md:py-8 lg:py-12'}
       >
         <div className={'lg:w-[25%] flex justify-center lg:pl-12 py-8 '}>
-          <h2 className={'text-2xl font-bold'}>Dịch vụ tại GS7</h2>
+          <h2 className={'text-2xl font-bold text-blue-tw1'}>
+            Dịch vụ tại GS7
+          </h2>
         </div>
         <div
           className={
             'flex flex-col gap-4 md:py-8 md:w-full lg:w-[60%] md:pl-12 '
           }
         >
-          <h3 className={'text-lg '}>
+          <h3 className={'text-xl text-blue-tw2'}>
             Trung tâm gia sư GS7 luôn nỗ lực để cung cấp cho bạn dịch vụ gia sư
             chất lượng nhất, bao gồm:
           </h3>
@@ -114,15 +118,17 @@ const Main = () => {
             <div className={'w-[20%] flex justify-center'}>
               <span
                 className={
-                  'w-10 h-10 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-red-400 text-white'
+                  'w-12 h-12 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-blue-tw text-white'
                 }
               >
                 1
               </span>
             </div>
-            <div>
-              <h3 className={'text-2xl font-bold mb-5'}>Các môn phổ thông</h3>
-              <p>
+            <div className={'pt-2'}>
+              <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
+                Các môn phổ thông
+              </h3>
+              <p className={'text-blue-tw2 text-xl'}>
                 Bao gồm tất cả các môn trong chương trình học phổ thông: gia sư
                 Toán, Vật Lý, Hóa Học, Sinh Học, Gia sư Văn, Lịch Sử, Địa Lý,
                 Tiếng Anh, Gia sư Tiểu Học, và nhiều môn học khác nữa.
@@ -133,15 +139,17 @@ const Main = () => {
             <div className={'w-[20%] flex justify-center'}>
               <span
                 className={
-                  'w-10 h-10 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-red-400 text-white'
+                  'w-12 h-12 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-blue-tw text-white'
                 }
               >
                 2
               </span>
             </div>
-            <div>
-              <h3 className={'text-2xl font-bold mb-5'}>Các môn ngoại ngữ</h3>
-              <p>
+            <div className={'pt-2'}>
+              <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
+                Các môn ngoại ngữ
+              </h3>
+              <p className={'text-blue-tw2 text-xl'}>
                 Chủ yếu dành cho những người đã đi làm, bao gồm gia sư dạy giao
                 tiếp các môn: Gia sư Tiếng Anh, Tiếng Nhật, Tiếng Hàn, Tiếng
                 Pháp, Tiếng Trung, Tiếng Tây Ban Nha và các môn ngoại ngữ khác.
@@ -152,15 +160,17 @@ const Main = () => {
             <div className={'w-[20%] flex justify-center'}>
               <span
                 className={
-                  'w-10 h-10 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-red-400 text-white'
+                  'w-12 h-12 flex justify-center items-center text-xl text-center font-bold rounded-full border bg-blue-tw text-white'
                 }
               >
                 3
               </span>
             </div>
-            <div>
-              <h3 className={'text-2xl font-bold mb-5'}>Các môn năng khiếu</h3>
-              <p>
+            <div className={'pt-2'}>
+              <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
+                Các môn năng khiếu
+              </h3>
+              <p className={'text-blue-tw2 text-xl'}>
                 Chủ yếu liên quan đến các môn nghệ thuật như: Piano, Guitar,
                 Organ, Mỹ Thuật, Thanh Nhạc. Đối với những môn này, để bạn có
                 được gia sư sẽ tốn nhiều thời gian hơn.

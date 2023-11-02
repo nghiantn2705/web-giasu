@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import { useStore } from '@/hook/use-store';
 import Profile from '@/components/Profile/Profile';

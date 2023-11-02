@@ -1,23 +1,40 @@
 export interface ITeachers {
+  id: number;
   role: string;
+  gender: string;
+  date_of_birth: string;
+  email: string;
+  avatar: string;
+  phone: string;
   address: string;
   school_id: number;
-  citizen_card: string;
+  Citizen_card: number;
   education_level: string;
-  class_id: { id: number; name: string };
-  subject: { id: number; name: string };
-  salary_id: number;
-  gender: string;
+  class_id: number;
+  salary_id: string;
   description: string;
-  districtID: number;
-  Certificate: string;
-  avatar: string;
-  name: string;
-  email: string;
-  phone: string;
-  time_tutor_id: { id: number; name: string };
-  password: string;
-  district: { id: number; name: string };
-  id: number;
+  time_tutor_id: number;
   status: number;
+  DistrictID: number;
+  name: string;
+  subject: {
+    id: number;
+    name: string;
+  };
+  district: {
+    id: number;
+    name: string;
+  };
+  school: {
+    id: number;
+    name: string;
+  };
+  class_levels: {
+    id: number;
+    name: string;
+  };
+  time_slot: {
+    id: number;
+    name: string;
+  };
 }

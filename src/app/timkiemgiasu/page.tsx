@@ -2,28 +2,25 @@ import Home from '@/components/Teacher/Home';
 import React from 'react';
 import Teacher from '@/components/Teacher/Teacher';
 import { getFilter } from '@/services';
+import SelectFilter from '@/components/Teacher/SelectFilter';
 import { Metadata } from 'next';
 import Footer from '@/components/Layout/Footer';
 import SortRate from '@/components/Teacher/SortRate';
-import { Navigation } from '@/components';
 
 export const metadata: Metadata = {
-  title: 'Thuê Gia Sư',
-  description: 'Trang thuê gia sư',
+  title: 'Tìm gia sư',
+  description: 'Tìm thuê gia sư',
 };
 export default async function App(props: any) {
-  const teachers = await getFilter(props?.searchParams);
+  const teachers = await getFilter(props.searchParams);
 
   return (
     <>
-      <div className={'flex'}>
-        <Navigation />
-        <Home>
-          <SortRate teachers={teachers} />
-          <Teacher teachers={teachers} />
-          <Footer />
-        </Home>
-      </div>
+      <Home>
+        <SelectFilter />
+        <Teacher teachers={teachers} />
+      </Home>
+      <Footer />
     </>
   );
 }

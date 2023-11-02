@@ -1,5 +1,5 @@
-import Header from '@/components/Header';
-import Navigation from '@/components/Navigation';
+import Header from '@/components/Layout/Header';
+import Navigation from '@/components/Layout/Navigation';
 import ModalTitle from '@/components/Headless/Modal';
 import MyModal from '@/components/Headless/Modal';
 import Filters from '@/components/Filters';

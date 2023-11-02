@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Header } from '@/components/index';
-import Footer from '@/components/Footer';
+import { Header } from '@/components';
+import Footer from '@/components/Layout/Footer';
 import { useStore } from '@/hook/use-store';
 import { getTokenRefresh } from '@/services';
 import { getCookie, setCookie } from 'cookies-next';
@@ -41,7 +41,6 @@ const Layout = ({ children }: IProps) => {
     <>
       <Header userInfo={infoUser} />
       {children}
-      <Footer />
     </>
   );
 };

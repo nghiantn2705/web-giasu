@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
 import { token } from '@/services';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { LoginSchema } from '@/validate';
 import { setCookie } from 'cookies-next';
 
@@ -23,13 +24,13 @@ const SignInTeacher = () => {
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
         className={
-          'container m-auto shadow-xl border border-t-4 border-t-red-400 rounded-md py-8'
+          'container m-auto shadow-xl border border-t-4 border-t-blue-tw rounded-md py-8'
         }
       >
         <div className={'grid grid-cols-2 justify-items-center content-center'}>
           <div
             className={
-              'w-full flex flex-col items-center justify-center border-r-2'
+              'w-full flex flex-col items-center justify-center border-r-2 border-blue-tw'
             }
           >
             <Image
@@ -42,7 +43,7 @@ const SignInTeacher = () => {
             />
           </div>
 
-          <div className={'py-8'}>
+          <div className={'p-8 w-[80%]'}>
             <div className={'flex flex-col justify-center items-center'}>
               <Image
                 src={'/logo.png'}
@@ -66,11 +67,25 @@ const SignInTeacher = () => {
                   const data = await token({
                     ...values,
                   });
-                  if (data) {
+                  if (data?.user && data?.user?.role == 'teacher') {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
+                    toast.success('Đăng nhập thành công !', {
+                      duration: 3000,
+                      position: 'top-right',
+                      icon: '✅',
+                      iconTheme: {
+                        primary: '#000',
+                        secondary: '#fff',
+                      },
+                    });
                     router.push('/');
+                  } else {
+                    toast.error('Vui lòng đăng nhập bằng tài khoản gia sư !', {
+                      duration: 3000,
+                      position: 'top-right',
+                    });
                   }
                 } catch (ex) {
                   console.log(ex);
@@ -78,7 +93,7 @@ const SignInTeacher = () => {
               }}
             >
               {({ errors, touched }) => (
-                <Form className={'flex flex-col gap-3'}>
+                <Form className={' flex flex-col gap-3'}>
                   <div>
                     <Field
                       type={'email'}
@@ -89,7 +104,7 @@ const SignInTeacher = () => {
                       }
                     />
                     {errors.email && touched.email ? (
-                      <div className={'text-red-600 mt-2'}>{errors.email}</div>
+                      <div className={'text-red-600 '}>{errors.email}</div>
                     ) : null}
                   </div>
                   <div>
@@ -102,11 +117,10 @@ const SignInTeacher = () => {
                       }
                     />
                     {errors.password && touched.password ? (
-                      <div className={'text-red-600 mt-2'}>
-                        {errors.password}
-                      </div>
+                      <div className={'text-red-600 '}>{errors.password}</div>
                     ) : null}
                   </div>
+
                   <Link
                     href={'/'}
                     className={
@@ -118,7 +132,7 @@ const SignInTeacher = () => {
                   <button
                     type={'submit'}
                     className={
-                      'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white'
+                      'border py-2 bg-blue-tw text-white rounded-xl hover:bg-blue-tw1 '
                     }
                   >
                     Đăng nhập
@@ -129,7 +143,7 @@ const SignInTeacher = () => {
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}
               <Link
-                href={'/auth/teacher/register'}
+                href={'/auth/user/register'}
                 className={
                   'font-medium text-sm uppercase hover:underline hover:decoration-1 '
                 }

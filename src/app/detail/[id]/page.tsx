@@ -10,7 +10,7 @@ import {
 } from '../../../../action/getByID';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { SetStateAction, useEffect, useState } from 'react';
-import Loading from '@/components/Loading';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
@@ -21,23 +21,24 @@ import { postFeedback } from '@/services';
 import { number } from 'yup';
 import { IFeedback } from '@/types/IFeedback';
 import { IStart } from '@/types/IStart';
+import Loading from '@/components/Layout/Loading';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachers1>('userInfo');
-  const [data, setData] = useState<ITeachers1>();
+  const [data, setData] = useState<ITeachers>();
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
   const [starData, setStarData] = useState<IStart>();
   const { id: params } = useParams();
+  console.log(data);
   useEffect(() => {
-    const fetch = async () => {
+    (async () => {
       const res = await getTeachesByid(Number(params));
       const resFeedback = await getFeedback(Number(params));
       const resRating = await getStart(Number(params));
       setData(res);
       setFeedbackData(resFeedback);
       setStarData(resRating);
-    };
-    fetch();
+    })();
   }, []);
   console.log(starData);
   const [point1, setPoint] = useState(0);
@@ -156,7 +157,7 @@ export default function Home() {
                       <p className="text-xl font-bold">Dạy môn:</p>
                       <div className=" grid gap-2 grid-cols-8 py-3">
                         <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{data?.subject}</p>
+                          <p>{data?.subject?.name}</p>
                         </div>
                       </div>
                     </div>

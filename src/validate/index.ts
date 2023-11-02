@@ -15,21 +15,22 @@ const SignupSchemaTeacher = Yup.object().shape({
     .required('Trường bắt buộc phải nhập')
     .matches(regexEmail, 'Không đúng định dạng email.'),
   password: Yup.string()
-    .required('Không có bảo mật')
+    .required('Trường bắt buộc phải nhập')
     .min(8, 'Mật khẩu quá ngắn - Mật khẩu cần 8 kí tự trở lên.'),
-  avatar: Yup.mixed().required('Ảnh'),
+  avatar: Yup.mixed().required('Bắt buộc phải có ảnh đại diện'),
   gender: Yup.string()
     .required('Bắt buộc phải chon giới tính')
     .label('Chọn giới tính'),
   date_of_birth: Yup.date().required(),
   phone: Yup.string()
     .required('Trường bắt buộc phải nhập')
-    .matches(regexPhoneNumber, 'Không được phép để ký tự'),
-  address: Yup.string().required('Bắt buộc'),
-  citizen_card: Yup.number().required('Bắt buộc').min(8),
-  education_level: Yup.string().required('Bắt buộc'),
-  Certificate: Yup.string().required('Bắt buộc'),
-  description: Yup.string().required('Bắt buộc'),
+    .matches(regexPhoneNumber, 'Không được phép để ký tự')
+    .min(10, 'Không đúng số điện thoại.'),
+  address: Yup.string().required('Trường bắt buộc phải nhập'),
+  citizen_card: Yup.number().required('Trường bắt buộc phải nhập').min(8),
+  education_level: Yup.string().required('Trường bắt buộc phải nhập'),
+  Certificate: Yup.string().required('Trường bắt buộc phải nhập'),
+  description: Yup.string().required('Trường bắt buộc phải nhập'),
 });
 const SignupSchemaUser = Yup.object().shape({
   name: Yup.string()
@@ -41,12 +42,13 @@ const SignupSchemaUser = Yup.object().shape({
     .required('Trường bắt buộc phải nhập')
     .matches(regexEmail, 'Không đúng định dạng email.'),
   password: Yup.string()
-    .required('Không có bảo mật')
+    .required('Trường bắt buộc phải nhập')
     .min(8, 'Mật khẩu quá ngắn - Mật khẩu cần 8 kí tự trở lên.'),
-  avatar: Yup.mixed().required('Ảnh'),
+  avatar: Yup.mixed().required('Bắt buộc phải có ảnh đại diện'),
   phone: Yup.string()
     .required('Trường bắt buộc phải nhập')
     .matches(regexPhoneNumber, 'Không được phép để ký tự'),
+  address: Yup.string().required('Trường bắt buộc phải nhập'),
 });
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -54,7 +56,7 @@ const LoginSchema = Yup.object().shape({
     .required('Trường bắt buộc phải nhập')
     .matches(regexEmail, 'Không đúng định dạng email.'),
   password: Yup.string()
-    .required('Không có bảo mật')
+    .required('Trường bắt buộc phải nhập')
     .min(5, 'Mật khẩu quá ngắn - Mật khẩu cần 5 kí tự trở lên.'),
 });
 export { SignupSchemaTeacher, SignupSchemaUser, LoginSchema };

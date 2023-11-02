@@ -5,7 +5,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['png.pngtree.com', 'i.ibb.co'],
+    domains: ['png.pngtree.com', 'i.ibb.co', '127.0.0.1'],
     remotePatterns: [
       {
         protocol: 'https',

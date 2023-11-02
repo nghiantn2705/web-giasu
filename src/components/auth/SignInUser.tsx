@@ -24,13 +24,13 @@ const SignInUser = () => {
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
         className={
-          'container m-auto shadow-xl border border-t-4 border-t-red-400 rounded-md py-8'
+          'container m-auto shadow-xl border border-t-4 border-t-blue-tw rounded-md py-8'
         }
       >
         <div className={'grid grid-cols-2 justify-items-center content-center'}>
           <div
             className={
-              'w-full flex flex-col items-center justify-center border-r-2'
+              'w-full flex flex-col items-center justify-center border-r-2 border-blue-tw'
             }
           >
             <Image
@@ -135,7 +135,7 @@ const SignInUser = () => {
                   <button
                     type={'submit'}
                     className={
-                      'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white'
+                      'border py-2 bg-blue-tw text-white rounded-xl hover:bg-blue-tw1 '
                     }
                   >
                     Đăng nhập

@@ -20,10 +20,11 @@ export const getTokenRefresh = (body: IFetchBody) => {
 };
 
 export const RegisterUser = (body: IFetchBody) => {
-  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, body);
+  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, body);
 };
 export const getFilter = (query: IFetchQuery = {}) => {
-  return apiRequest.get<[ITeachers]>(
+  console.log(query);
+  return apiRequest.get<ITeachers[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/filter`,
     query,
   );

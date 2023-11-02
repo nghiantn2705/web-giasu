@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 
 import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
@@ -18,10 +17,12 @@ const Profile = ({ infoUser, children }: IProps) => {
         <div className={'container m-auto my-5 p-5'}>
           <div className={'md:flex no-wrap shadow-lg'}>
             <div className={'w-full md:w-3/12 md:mx-2 '}>
-              <div className={'p-3 border-t-4 border-red-400 '}>
+              <div className={'p-3 border-t-4 border-blue-tw '}>
                 <div className={''}>
                   <img
                     src={infoUser?.avatar}
+                    height={200}
+                    width={200}
                     alt={''}
                     className={'w-3/4 h-auto mx-auto'}
                   />
@@ -63,7 +64,7 @@ const Profile = ({ infoUser, children }: IProps) => {
                   <Link
                     href={'/profile/history'}
                     className={
-                      'block text-center p-2 mt-2 rounded-md bg-red-400 text-white hover:bg-red-500'
+                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-red-500'
                     }
                   >
                     Lịch sử thuê

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Field, Form, Formik } from 'formik';
 import imageAsset from '/public/iconos_alumnos.png';
@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { SignupSchemaUser } from '@/validate';
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [file, setFile] = useState();
   const router = useRouter();
   return (
     <div className={'container mx-auto  shadow-md py-10'}>
@@ -51,7 +50,7 @@ const page = () => {
               email: '',
               phone: '',
               password: '',
-              avatar: file,
+              avatar: '',
               address: '',
             }}
             validationSchema={SignupSchemaUser}
@@ -137,7 +136,7 @@ const page = () => {
                   name={'avatar'}
                   placeholder={'Image'}
                   className={
-                    'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    'relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 '
                   }
                 />
                 {errors.avatar && touched.avatar ? (
@@ -165,7 +164,7 @@ const page = () => {
                 <button
                   type={'submit'}
                   className={
-                    'border py-2 bg-red-400 text-white rounded-xl hover:bg-red-600 hover:text-white'
+                    'border py-2 bg-blue-tw text-white rounded-xl hover:bg-white hover:text-blue-tw2'
                   }
                 >
                   Đăng Ký
