@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 'use client';
@@ -22,6 +23,7 @@ import { number } from 'yup';
 import { IFeedback } from '@/types/IFeedback';
 import { IStart } from '@/types/IStart';
 import Loading from '@/components/Layout/Loading';
+import { log } from 'console';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachers1>('userInfo');
@@ -29,6 +31,7 @@ export default function Home() {
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
   const [starData, setStarData] = useState<IStart>();
   const { id: params } = useParams();
+
   console.log(data);
   useEffect(() => {
     (async () => {
@@ -52,7 +55,7 @@ export default function Home() {
   }) => {
     setDescription(event.target.value);
   };
-
+  console.log(data?.id);
   const submitFeedback = async (e: any) => {
     e.preventDefault();
     const value = {
@@ -63,6 +66,7 @@ export default function Home() {
     };
     await postFeedback({ ...value });
   };
+
   return (
     <div>
       {data ? (
@@ -94,24 +98,6 @@ export default function Home() {
                     24/1/2021
                   </label>
                 </p>
-                {/* <div className={'py-4 border-b '}>
-                  <div className={'text-xl font-bold'}>
-                    <p>Thông tin cá nhân:</p>
-                  </div>
-
-                  <div className="">
-                    <div className={'pt-2 col-span-3  '}>
-                      <label className={'font-bold'}>Số điện thoại : </label>
-
-                      <label>{data?.phone}</label>
-                    </div>
-                    <div className="pt-2 col-span-3 text-zinc-950 ">
-                      <label className="font-bold">Khu vực : </label>
-
-                      <label className=""> {data?.address}</label>
-                    </div>
-                  </div>
-                </div> */}
               </div>
               {/*  */}
               <div className={'pt-5 col-span-8 py-15'}>
@@ -136,8 +122,20 @@ export default function Home() {
                         'text-[14px] font-semibold font-poppins text-stone-400 '
                       }
                     >
-                      {starData?.avg}
-                      <span className={'text-red-400'}>100%</span>
+                      <div>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <FontAwesomeIcon
+                            key={star}
+                            icon={faStar}
+                            className={`text ${
+                              star <=
+                              ((starData && parseInt(starData?.avg)) || 0)
+                                ? 'text-amber-300'
+                                : 'gray-200'
+                            } cursor-pointer`}
+                          />
+                        ))}
+                      </div>
                     </p>
                   </div>
                 </div>
