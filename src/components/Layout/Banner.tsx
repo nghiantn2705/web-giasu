@@ -18,7 +18,7 @@ const Banner = () => {
         effect={'fade'}
         spaceBetween={50}
         slidesPerView={1}
-        className={'h-full'}
+        className={'w-full'}
         pagination={{ clickable: true }}
         navigation={true}
       >

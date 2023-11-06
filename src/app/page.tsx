@@ -6,9 +6,9 @@ import Footer from '@/components/Layout/Footer';
 
 export default function App() {
   return (
-    <main>
+    <>
       <Main />
       <Footer />
-    </main>
+    </>
   );
 }

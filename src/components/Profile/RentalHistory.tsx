@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
-import { getJob } from '@/services';
 import { IUserInfo } from '@/types/IUserInfo';
 import FormAccept from '@/components/Profile/FormAccept';
+import { getJob } from '@/services/job';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -14,7 +14,8 @@ interface IJob {
   idUser: string;
   idTeacher: string;
   idSubject: string;
-  userImage: string;
+  subject: string[];
+  class: string[];
   teacherImage: string;
   status: number;
   description: string;
@@ -28,7 +29,7 @@ export default function RentalHistory({ infoUser }: IProps) {
       setJob(res);
     })();
   }, [setJob, infoUser?.id]);
-
+  console.log(job);
   return (
     <div className={'relative w-full overflow-x-auto px-4 border-l-2'}>
       <h3
@@ -63,9 +64,7 @@ export default function RentalHistory({ infoUser }: IProps) {
               >
                 <th
                   scope="row"
-                  className={
-                    'flex items-center px-6 py-4 gap-4 text-gray-900 whitespace-nowrap '
-                  }
+                  className={'px-6 py-4 gap-4 text-gray-900 whitespace-nowrap '}
                 >
                   {/* <Image
                     src={`${
@@ -84,7 +83,17 @@ export default function RentalHistory({ infoUser }: IProps) {
                       : `${items?.idTeacher}`}
                   </div>
                 </th>
-                <td className={'px-6 py-4'}>{items?.idSubject}</td>
+                <td className={'px-6 py-4'}>
+                  <div className={'flex flex-col gap-2'}>
+                    {items?.subject?.map((items: string) => {
+                      return (
+                        <>
+                          <span>{items}</span>
+                        </>
+                      );
+                    })}
+                  </div>
+                </td>
                 <td className={'px-6 py-4'}>
                   {items?.status == 0 ? (
                     <div

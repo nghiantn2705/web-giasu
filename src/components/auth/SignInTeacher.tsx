@@ -6,10 +6,9 @@ import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
-import { token } from '@/services';
+import { auth } from '@/services';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { LoginSchema } from '@/validate';
 import { setCookie } from 'cookies-next';
 
 const SignInTeacher = () => {
@@ -61,10 +60,9 @@ const SignInTeacher = () => {
             </div>
             <Formik
               initialValues={{ email: '', password: '' }}
-              validationSchema={LoginSchema}
               onSubmit={async (values) => {
                 try {
-                  const data = await token({
+                  const data = await auth({
                     ...values,
                   });
                   if (data?.user && data?.user?.role == 'teacher') {
@@ -92,53 +90,45 @@ const SignInTeacher = () => {
                 }
               }}
             >
-              {({ errors, touched }) => (
-                <Form className={' flex flex-col gap-3'}>
-                  <div>
-                    <Field
-                      type={'email'}
-                      name={'email'}
-                      placeholder={'Tên đăng nhập hoặc email'}
-                      className={
-                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                      }
-                    />
-                    {errors.email && touched.email ? (
-                      <div className={'text-red-600 '}>{errors.email}</div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <Field
-                      type={'password'}
-                      name={'password'}
-                      placeholder={'Nhập mật khẩu'}
-                      className={
-                        'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
-                      }
-                    />
-                    {errors.password && touched.password ? (
-                      <div className={'text-red-600 '}>{errors.password}</div>
-                    ) : null}
-                  </div>
+              <Form className={' flex flex-col gap-3'}>
+                <div>
+                  <Field
+                    type={'email'}
+                    name={'email'}
+                    placeholder={'Tên đăng nhập hoặc email'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                </div>
+                <div>
+                  <Field
+                    type={'password'}
+                    name={'password'}
+                    placeholder={'Nhập mật khẩu'}
+                    className={
+                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                    }
+                  />
+                </div>
 
-                  <Link
-                    href={'/'}
-                    className={
-                      'text-right text-sm text-gray-600 hover:text-black'
-                    }
-                  >
-                    Quên mật khẩu?
-                  </Link>
-                  <button
-                    type={'submit'}
-                    className={
-                      'border py-2 bg-blue-tw text-white rounded-xl hover:bg-blue-tw1 '
-                    }
-                  >
-                    Đăng nhập
-                  </button>
-                </Form>
-              )}
+                <Link
+                  href={'/'}
+                  className={
+                    'text-right text-sm text-gray-600 hover:text-black'
+                  }
+                >
+                  Quên mật khẩu?
+                </Link>
+                <button
+                  type={'submit'}
+                  className={
+                    'border py-2 bg-blue-tw text-white rounded-xl hover:bg-blue-tw1 '
+                  }
+                >
+                  Đăng nhập
+                </button>
+              </Form>
             </Formik>
             <p className={'text-center text-sm mt-3'}>
               Chưa có tài khoản ?{' '}

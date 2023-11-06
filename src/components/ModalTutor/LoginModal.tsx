@@ -14,7 +14,7 @@ import { IClass } from '@/types/IClass';
 interface IProps {
   id: number;
 }
-export default function RentTeacher(props: IProps) {
+export default function ModalFeeback(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
   const [subject, setSubject] = useState<ISubject[]>();
   const [classr, setClassr] = useState<IClass[]>();

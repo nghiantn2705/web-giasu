@@ -3,17 +3,20 @@ import React, { useEffect, useState } from 'react';
 
 import { Form, Formik, Field } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import { putJob } from '@/services';
+import {} from '@/services';
 import toast from 'react-hot-toast';
+import { putJob } from '@/services/job';
 interface IJob {
   user: {
     id: number;
     idUser: string;
     idTeacher: string;
     idSubject: string;
-    userImage: string;
+    subject: string[];
+    class: string[];
     teacherImage: string;
     status: number;
+    description: string;
   };
 }
 
