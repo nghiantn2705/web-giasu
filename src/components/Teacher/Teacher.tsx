@@ -1,13 +1,27 @@
+/* eslint-disable no-unused-vars */
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ITeachers } from '@/types/ITeachers';
-import { BsFillHeartFill } from 'react-icons/bs';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { getStart } from '@/services/feedback';
+import { useParams } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
   teachers: ITeachers[];
 }
 const Teacher = ({ teachers }: IProps) => {
+  const [starData, setStarData] = useState<{ avg: string }>();
+  const { id: params } = useParams();
+  useEffect(() => {
+    (async () => {
+      const resRating = await getStart({ id: params });
+
+      setStarData(resRating);
+    })();
+  }, []);
+  console.log(params);
   return (
     <>
       {teachers ? (
@@ -115,7 +129,7 @@ const Teacher = ({ teachers }: IProps) => {
                           <i className="mdi mdi-star"></i>
                         </li>
                         <li className="inline text-black dark:text-white">
-                          5.0(30)
+                        5.0(30)
                         </li>
                       </ul>
                     </li>

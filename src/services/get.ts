@@ -5,7 +5,6 @@ import { IClass } from '@/types/IClass';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
-import { ITeachers } from '@/types/ITeachers';
 
 export const getDistrict = (query: IFetchQuery = {}) => {
   return apiRequest.get<IDisctrict[]>(
