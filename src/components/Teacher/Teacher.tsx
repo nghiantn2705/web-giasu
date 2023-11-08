@@ -16,12 +16,12 @@ const Teacher = ({ teachers }: IProps) => {
   const { id: params } = useParams();
   useEffect(() => {
     (async () => {
-      const resRating = await getStart({ id: params });
+      const resRating = await getStart({ params });
 
       setStarData(resRating);
     })();
   }, []);
-  console.log(params);
+  console.log(teachers);
   return (
     <>
       {teachers ? (
