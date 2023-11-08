@@ -2,7 +2,7 @@
 'use client';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { SignupSchemaTeacher } from '@/validate/index';
+import { SignupSchemaTeacher } from '@/validate';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
@@ -22,16 +22,14 @@ import {
   getSubject,
   getTimeSlot,
 } from '@/services/get';
-
 const page = () => {
   const router = useRouter();
-  const [classes, setClasses] = useState<IClass[]>();
+  const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-  console.log(classes);
   useEffect(() => {
     (async () => {
       try {
@@ -42,7 +40,7 @@ const page = () => {
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
         setSubject(resSubject);
-        setClasses(resClasses);
+        setClasslevels(resClasses);
         setDistrict(resDistrict);
         setSalary(resSalary);
         setTimeSlot(resTimeSlote);
@@ -76,12 +74,14 @@ const page = () => {
             education_level: '',
             Certificate: '',
             description: '',
+            date_of_birth: new Date(),
           }}
           validationSchema={SignupSchemaTeacher}
           onSubmit={(values) => {
+            console.log(values);
             (async () => {
               try {
-                await RegisterUser({ ...values });
+                await RegisterUser({ ...JSON.parse(JSON.stringify(values)) });
                 toast.success('Đăng kí thành công !', {
                   duration: 3000,
                   position: 'top-right',
@@ -164,13 +164,15 @@ const page = () => {
                   </Field>
                 </label>
                 <label className={'flex flex-col'} htmlFor={'date_of_birth'}>
-                  Ngày sinh{' '}
-                  <Field
-                    type={'date'}
-                    name={'date_of_birth'}
-                    placeholder={'Ngày sinh'}
-                    className={'w-full px-4 py-2 text-lg  border'}
-                  />
+                  Ngày sinh
+                  <div className={'w-full px-4 py-2 text-lg  border  h-full'}>
+                    {/* <MyDatePicker name="date_of_birth" /> */}
+                    <Field
+                      type={'date'}
+                      name={'date_of_birth'}
+                      className={'w-full px-4 py-2 text-lg  border'}
+                    />
+                  </div>
                 </label>
                 <label className={'flex flex-col'} htmlFor={'phone'}>
                   Số điện thoại
@@ -196,7 +198,7 @@ const page = () => {
                     <div className={'text-red-600 mt-2'}>{errors.address}</div>
                   ) : null}
                 </label>
-                <label className={'flex flex-col'} htmlFor={'cmt'}>
+                <label className={'flex flex-col'} htmlFor={'citizen_card'}>
                   Số căn cước công dân
                   <Field
                     type={'text'}
@@ -254,10 +256,10 @@ const page = () => {
                     })}
                   </Field>
                 </label>
-                <label className={'flex flex-col'} htmlFor={'district'}>
+                <label className={'flex flex-col'} htmlFor={'districtID'}>
                   Khu vực dạy{' '}
                   <Field
-                    name={'district'}
+                    name={'districtID'}
                     as={'select'}
                     className={'w-full px-4 py-2 text-lg  border  '}
                   >
@@ -270,10 +272,10 @@ const page = () => {
                     })}
                   </Field>
                 </label>
-                <label className={'flex flex-col'} htmlFor={'salary'}>
+                <label className={'flex flex-col'} htmlFor={'salary_id'}>
                   Lương{' '}
                   <Field
-                    name={'salary'}
+                    name={'salary_id'}
                     as={'select'}
                     className={'w-full px-4 py-2 text-lg  border  '}
                   >
@@ -291,7 +293,7 @@ const page = () => {
                   <div
                     className={'grid grid-cols-6 gap-2 justify-items-center'}
                   >
-                    {classes?.map((i: IClass) => {
+                    {classlevels?.map((i: IClass) => {
                       return (
                         <label key={i?.id} className={'flex gap-2'}>
                           <Field
@@ -334,7 +336,7 @@ const page = () => {
                         <label key={i?.id} className={'flex gap-2'}>
                           <Field
                             type={'checkbox'}
-                            name={'timeslot'}
+                            name={'time_tutor_id'}
                             value={`${i?.id}`}
                           />
                           {i?.name}
@@ -343,6 +345,20 @@ const page = () => {
                     })}
                   </div>
                 </div>
+                <label htmlFor={'name'} className={'flex flex-col'}>
+                  Mô tả
+                  <Field
+                    type={'textarea'}
+                    name={'description'}
+                    placeholder={'Mô tả'}
+                    className={'w-full px-4 py-2 text-lg  border'}
+                  />
+                  {errors.description && touched.description ? (
+                    <div className={'text-red-600 mt-2'}>
+                      {errors.description}
+                    </div>
+                  ) : null}
+                </label>
               </div>
               <button
                 type={'submit'}
