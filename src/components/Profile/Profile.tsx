@@ -64,7 +64,7 @@ const Profile = ({ infoUser, children }: IProps) => {
                   <Link
                     href={'/profile/history'}
                     className={
-                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-red-500'
+                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
                     }
                   >
                     Lịch sử thuê

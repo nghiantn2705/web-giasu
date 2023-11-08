@@ -1,12 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { ReactNode } from 'react';
 import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout/Layout';
 import { Toaster } from 'react-hot-toast';
 
-const roboto = Inter({ weight: '500', subsets: ['latin'] });
+const roboto = Roboto({ weight: '500', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: {
     default: 'Gia Sư Poly',
@@ -28,7 +28,7 @@ export default function RootLayout(props: Props) {
         <GlobalContextProvider store={[]}>
           <Toaster />
           <Layout>
-            <div className={'mt-[67px] min-h-content'}>{props.children}</div>
+            <div className={'mt-[70px] min-h-content'}>{props.children}</div>
           </Layout>
         </GlobalContextProvider>
       </body>

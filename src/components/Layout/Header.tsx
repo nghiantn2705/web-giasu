@@ -82,7 +82,7 @@ const Header = (props: any) => {
             <Link
               href={link}
               key={name}
-              className={`flex justify-center items-center border-b-gray-300 px-4 py-2 gap-2 lg:rounded-lg  lg:border-2 lg:shadow-md uppercase font-bold text-blue-tw2 text-base  ${
+              className={`flex justify-center items-center border-b-gray-300 px-4 py-2 gap-2 lg:rounded-lg  lg:border-2 lg:shadow-md uppercase text-blue-tw2 text-base  ${
                 router === link ? 'text-white bg-blue-tw ' : ''
               }`}
             >
@@ -94,13 +94,13 @@ const Header = (props: any) => {
 
         {props?.userInfo ? (
           <div className={'col-start-11 col-span-2 relative w-fit group'}>
-            <picture>
+            <picture className={''}>
               <img
                 src={`${props?.userInfo?.avatar}`}
-                width={45}
-                height={45}
+                width={50}
+                height={50}
                 className={
-                  'rounded-full shadow drop-shadow-2xl border border-black hover:bg-gray-200 cursor-pointer'
+                  'rounded-full  border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12'
                 }
                 alt={''}
               />
@@ -122,7 +122,7 @@ const Header = (props: any) => {
                     width={45}
                     height={45}
                     className={
-                      'rounded-full shadow drop-shadow-2xl border border-black '
+                      'rounded-full  border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 '
                     }
                     alt={''}
                   />
@@ -176,7 +176,7 @@ const Header = (props: any) => {
         ) : (
           <div className={'relative group'}>
             <div
-              className={'border px-4 py-2 rounded-full bg-blue-tw text-white '}
+              className={'border px-4 py-2 rounded-md bg-blue-tw text-white '}
             >
               Đăng nhập
             </div>
