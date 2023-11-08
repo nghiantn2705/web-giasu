@@ -142,7 +142,7 @@ const Header = (props: any) => {
                   <BiMoney />
                   Số dư :
                 </span>
-                <Link
+                <a
                   href={`/profile`}
                   className={
                     'flex items-center gap-2 hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
@@ -150,7 +150,7 @@ const Header = (props: any) => {
                 >
                   <FiSettings />
                   Chỉnh sửa thông tin
-                </Link>
+                </a>
                 <a
                   href={`/profile/history`}
                   className={
