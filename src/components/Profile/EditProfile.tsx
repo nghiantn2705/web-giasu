@@ -3,7 +3,7 @@ import React from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { updateProfile } from '@/services/post';
+// import { updateProfile } from '@/services/post';
 interface IProps {
   editProfile: IUserInfo;
 }
@@ -32,7 +32,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                 console.log(values);
                 (async () => {
                   try {
-                    await updateProfile({ ...values });
+                    // await updateProfile({ ...values });
                     toast.success('Cập nhật thành công !', {
                       duration: 3000,
                       position: 'top-right',
