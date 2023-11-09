@@ -98,7 +98,7 @@ const SortRate = ({ teachers }: IProps) => {
                 <div className={'px-3 py-2'}>
                   <div className={'text-center '}>
                     <a
-                      href={'/'}
+                      href={`/detail/${items?.id}`}
                       className={
                         ' hover:text-blue-tw font-medium ease-in-out duration-500'
                       }
