@@ -78,7 +78,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                     className={'rounded-full'}
                   /> */}
                   <div className={'text-base font-semibold'}>
-                    {infoUser.role == 'teacher'
+                    {infoUser.role == 'Teacher'
                       ? `${items?.idUser}`
                       : `${items?.idTeacher}`}
                   </div>
@@ -122,7 +122,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  {infoUser?.role == 'teacher' ? (
+                  {infoUser?.role == 'Teacher' ? (
                     items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (
