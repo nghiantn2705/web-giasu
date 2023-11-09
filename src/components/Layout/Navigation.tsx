@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import Link from 'next/link';
 
 const Navigation = () => {
+  const [classes, setClass] = useState([]);
   return (
     <div className={'relative pb-4 gap-3 pr-2 flex flex-col  shadow-x-md'}>
       <div
