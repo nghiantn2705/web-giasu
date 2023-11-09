@@ -36,10 +36,6 @@ const SignupSchemaUser = Yup.object().shape({
   avatar: Yup.mixed().required('Bắt buộc phải có ảnh đại diện'),
   phone: Yup.string().required().matches(regex),
   address: Yup.string().required('Trường bắt buộc phải nhập'),
-  description: Yup.string()
-    .min(2, 'quá ngắn!')
-    .max(1000, 'quá dài')
-    .required('Trường bắt buộc phải nhập'),
 });
 const LoginSchema = Yup.object().shape({
   email: Yup.string()

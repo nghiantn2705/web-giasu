@@ -25,13 +25,13 @@ const Teacher = ({ teachers }: IProps) => {
   return (
     <>
       {teachers ? (
-        <div className={'grid grid-cols-4 gap-x-4 gap-y-8 mt-8'}>
+        <div className={'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-8'}>
           {teachers?.map((items: ITeachers, index: number) => {
             return (
               <div
                 key={index}
                 className={
-                  'rounded-xl bg-white border border-blue-tw  shadow hover:shadow-md overflow-hidden ease-in-out duration-500'
+                  'rounded-xl bg-white border border-blue-tw  shadow hover:shadow-md overflow-hidden ease-in-out duration-500  '
                 }
               >
                 <div className={'relative'}>
@@ -62,7 +62,7 @@ const Teacher = ({ teachers }: IProps) => {
 
                   <ul
                     className={
-                      'py-3 px-3 border-y border-slate-100 grid grid-cols-3 gap-1'
+                      'py-3 px-3 border-y border-slate-100 grid grid-cols-2 gap-1'
                     }
                   >
                     <li
@@ -70,36 +70,9 @@ const Teacher = ({ teachers }: IProps) => {
                         'border text-center rounded-md bg-blue-tw text-white'
                       }
                     >
-                      Toán
+                     {items.subject?.name}
                     </li>
-                    <li
-                      className={
-                        'border text-center rounded-md bg-blue-tw text-white'
-                      }
-                    >
-                      Lý
-                    </li>
-                    <li
-                      className={
-                        'border text-center rounded-md bg-blue-tw text-white'
-                      }
-                    >
-                      Hóa
-                    </li>
-                    <li
-                      className={
-                        'border text-center rounded-md bg-blue-tw text-white'
-                      }
-                    >
-                      Anh
-                    </li>
-                    <li
-                      className={
-                        'border text-center rounded-md bg-blue-tw text-white'
-                      }
-                    >
-                      Văn
-                    </li>
+                  
                   </ul>
 
                   <ul className="pt-3 px-3 flex justify-between items-center list-none">

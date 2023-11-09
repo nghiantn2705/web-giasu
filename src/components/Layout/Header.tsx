@@ -39,13 +39,16 @@ const navLink = [
 ];
 const Header = (props: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNavLinkOpen, setIsNavLinkOpen] = useState(false);
   const router = usePathname();
   const rsrouter = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+  const toggleNavLink = () => {
+    setIsNavLinkOpen(!isNavLinkOpen);
+  };
   const Signout = () => {
     deleteCookie('access_token');
     deleteCookie('refresh_token');
@@ -76,8 +79,10 @@ const Header = (props: any) => {
         <button className={' lg:hidden'} onClick={toggleMenu}>
           <FiMenu className={'text-2xl'} />
         </button>
-
-        <ul className={'flex justify-center items-center gap-5'}>
+        <button className={' lg:hidden'} onClick={toggleNavLink}>
+          <FiMenu className={'text-2xl'} />
+        </button>
+        <ul className="hidden lg:flex justify-center items-center gap-5">
           {navLink.map(({ link, name, icon }) => (
             <Link
               href={link}
@@ -91,7 +96,22 @@ const Header = (props: any) => {
             </Link>
           ))}
         </ul>
-
+        {isNavLinkOpen && (
+          <ul className={`lg:hidden block justify-center items-center gap-5`}>
+            {navLink.map(({ link, name, icon }) => (
+              <Link
+                href={link}
+                key={name}
+                className={`flex justify-center items-center border-b-gray-300 px-4 py-2 gap-2 lg:rounded-lg  lg:border-2 lg:shadow-md uppercase text-blue-tw2 text-base  ${
+                  router === link ? 'text-white bg-blue-tw ' : ''
+                }`}
+              >
+                {icon}
+                <span>{name}</span>
+              </Link>
+            ))}
+          </ul>
+        )}
         {props?.userInfo ? (
           <div className={'col-start-11 col-span-2 relative w-fit group'}>
             <picture className={''}>

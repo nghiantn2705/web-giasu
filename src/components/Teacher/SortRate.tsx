@@ -66,6 +66,7 @@ const SortRate = ({ teachers }: IProps) => {
         spaceBetween={15}
         className={'w-full'}
       >
+        <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'}>
         {teachers?.map((items, index) => {
           return (
             <SwiperSlide key={index + 1} className={'m-0'}>
@@ -111,6 +112,7 @@ const SortRate = ({ teachers }: IProps) => {
             </SwiperSlide>
           );
         })}
+        </div>
       </Swiper>
     </div>
   );
