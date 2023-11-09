@@ -3,7 +3,7 @@ import React from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-// import { updateProfile } from '@/services/post';
+import { updateProfile } from '@/services/put';
 interface IProps {
   editProfile: IUserInfo;
 }
