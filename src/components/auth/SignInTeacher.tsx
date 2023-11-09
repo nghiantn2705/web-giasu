@@ -65,7 +65,7 @@ const SignInTeacher = () => {
                   const data = await auth({
                     ...values,
                   });
-                  if (data?.user && data?.user?.role == 'teacher') {
+                  if (data?.user && data?.user?.role == 'Teacher') {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);

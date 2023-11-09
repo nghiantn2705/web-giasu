@@ -71,12 +71,12 @@ const InfoUser = ({ infoUser }: IProps) => {
                     </Link>
                   </div>
                 </div>
-                <div className="grid grid-cols-2">
+                {/* <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">
                     Ngày/tháng/Năm sinh
                   </div>
                   <div className="px-4 py-2">25/07/2003</div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ const InfoUser = ({ infoUser }: IProps) => {
               className={
                 'w-full  p-2 border bg-blue-tw text-center rounded-md hover:bg-blue-tw1 text-white'
               }
-              href={'/info'}
+              href={'/profile/info'}
             >
               Cập nhật thông tin cá nhân
             </Link>
@@ -115,25 +115,10 @@ const InfoUser = ({ infoUser }: IProps) => {
                       />
                     </svg>
                   </span>
-                  <span className="tracking-wide">Education</span>
+                  <span className="tracking-wide">Bằng đại học</span>
                 </div>
                 <ul className="list-inside space-y-2">
-                  <li>
-                    <div className="text-teal-600">
-                      Masters Degree in Oxford
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
-                  <li>
-                    <div className="text-teal-600">
-                      Bachelors Degreen in LPU
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
+                  <div className="text-teal-600">{infoUser?.school}</div>
                 </ul>
               </div>
             </div>

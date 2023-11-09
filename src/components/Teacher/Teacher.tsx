@@ -102,7 +102,7 @@ const Teacher = ({ teachers }: IProps) => {
                           <i className="mdi mdi-star"></i>
                         </li>
                         <li className="inline text-black dark:text-white">
-                        5.0(30)
+                          5.0(30)
                         </li>
                       </ul>
                     </li>

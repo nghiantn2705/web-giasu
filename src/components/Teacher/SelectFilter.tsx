@@ -6,12 +6,14 @@ import { IDisctrict } from '@/types/IDistrict';
 import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsBook, BsSearch } from 'react-icons/bs';
-import { getDistrict, getSubject } from '@/services/get';
+import { getDistrict, getSubject, getClass } from '@/services/get';
 import { ISubject } from '@/types/ISubject';
+import { IClass } from '@/types/IClass';
 
 const SelectFilter = () => {
   const [districts, setDistricts] = useState<IDisctrict[]>();
   const [subject, setSubject] = useState<ISubject[]>();
+  const [classes, setClass] = useState<IClass[]>();
   const [queryDistrict, setQueryDistrict] = useState<string>('');
   const [querySubject, setQuerySubject] = useState<string>('');
   const router = useRouter();
@@ -19,8 +21,10 @@ const SelectFilter = () => {
     (async () => {
       const resDistricts = await getDistrict();
       const resSubject = await getSubject();
+      const resClass = await getClass();
       setDistricts(resDistricts);
       setSubject(resSubject);
+      setClass(resClass);
     })();
   }, []);
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,11 +126,11 @@ const SelectFilter = () => {
                   setQuerySubject(event.target.value);
                 }}
               >
-                <option value={''}>Môn học</option>
-                {subject?.map((items: IDisctrict) => {
+                <option value={''}>Lớp học</option>
+                {classes?.map((items: IClass) => {
                   return (
                     <option key={items?.id} value={items?.id}>
-                      {items?.name}
+                      {items?.class}
                     </option>
                   );
                 })}

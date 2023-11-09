@@ -40,7 +40,7 @@ export default function RentTeacher(props: IProps) {
   };
   return (
     <div>
-      {user?.role == 'user' ? (
+      {user?.role == 'User' ? (
         <button
           onClick={openModal}
           className={
