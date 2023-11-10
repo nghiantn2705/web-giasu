@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className={'container text-center border-t mt-8 lg:text-left'}>
       <div className="flex items-center justify-center  border-neutral-200 px-6 py-3 lg:justify-between">
         <div className="mr-12 hidden lg:block">
-          <span>Get connected with us on social networks:</span>
+          <span>Hãy kết nối với chúng tôi trên các mạng xã hội:</span>
         </div>
 
         <div className="flex justify-center">
