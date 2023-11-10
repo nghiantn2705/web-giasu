@@ -19,6 +19,7 @@ export default function ModalFeeback(props: IProps) {
   const [subject, setSubject] = useState<ISubject[]>();
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
+  console.log('halo' + user);
 
   useEffect(() => {
     (async () => {
@@ -38,9 +39,10 @@ export default function ModalFeeback(props: IProps) {
   const openModal = () => {
     setIsOpen(true);
   };
+
   return (
     <div>
-      {user?.role == 'user' ? (
+      {user?.role == 'User' ? (
         <button
           onClick={openModal}
           className={
