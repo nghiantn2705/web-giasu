@@ -160,18 +160,28 @@ export default function Home() {
                   <div className={' grid gap-2 grid-cols-2'}>
                     <div>
                       <p className="text-xl font-bold">Nhận dạy:</p>
-                      <div className=" grid gap-2 grid-cols-8 py-3">
-                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{teacher?.class_id}</p>
-                        </div>
+                      <div className="grid gap-2 grid-cols-8 py-3">
+                        {teacher?.class_id.map((classId, index: number) => (
+                          <div
+                            key={index}
+                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                          >
+                            <p>{classId}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                     <div>
                       <p className="text-xl font-bold">Dạy môn:</p>
-                      <div className=" grid gap-2 grid-cols-8 py-3">
-                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{teacher?.subject?.name}</p>
-                        </div>
+                      <div className="grid gap-2 grid-cols-8 py-3">
+                        {teacher?.subject.map((subjectId, index: number) => (
+                          <div
+                            key={index}
+                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                          >
+                            <p>{subjectId}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -231,8 +241,7 @@ export default function Home() {
                       </div>
                       <div className="pt-2  text-zinc-950 ">
                         <label className="font-bold"> Thời gian dạy: </label>
-
-                        <label className=""> {teacher?.time_tutor_id}</label>
+                        <label className="">{teacher?.time_tutor_id}</label>
                       </div>
                       <div className={'pt-2  text-zinc-950 '}>
                         <label className={'font-bold'}>
