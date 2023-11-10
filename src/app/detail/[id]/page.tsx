@@ -170,7 +170,7 @@ export default function Home() {
                       <p className="text-xl font-bold">Dạy môn:</p>
                       <div className=" grid gap-2 grid-cols-8 py-3">
                         <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{teacher?.subject}</p>
+                          <p>{teacher?.subject?.name}</p>
                         </div>
                       </div>
                     </div>
