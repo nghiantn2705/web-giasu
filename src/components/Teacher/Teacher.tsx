@@ -25,7 +25,11 @@ const Teacher = ({ teachers }: IProps) => {
   return (
     <>
       {teachers ? (
-        <div className={'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-8'}>
+        <div
+          className={
+            'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'
+          }
+        >
           {teachers?.map((items: ITeachers, index: number) => {
             return (
               <div
@@ -70,9 +74,8 @@ const Teacher = ({ teachers }: IProps) => {
                         'border text-center rounded-md bg-blue-tw text-white'
                       }
                     >
-                     {items.subject?.name}
+                      {items.subject?.name}
                     </li>
-                  
                   </ul>
 
                   <ul className="pt-3 px-3 flex justify-between items-center list-none">

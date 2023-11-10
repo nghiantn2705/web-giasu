@@ -38,14 +38,14 @@ const navLink = [
   },
 ];
 const Header = (props: any) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavLinkOpen, setIsNavLinkOpen] = useState(false);
   const router = usePathname();
   const rsrouter = useRouter();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const toggleMenu = () => {
+  //   setIsMenuOpen(!isMenuOpen);
+  // };
   const toggleNavLink = () => {
     setIsNavLinkOpen(!isNavLinkOpen);
   };
@@ -76,9 +76,9 @@ const Header = (props: any) => {
           </div>
         </Link>
 
-        <button className={' lg:hidden'} onClick={toggleMenu}>
+        {/* <button className={' lg:hidden'} onClick={toggleMenu}>
           <FiMenu className={'text-2xl'} />
-        </button>
+        </button> */}
         <button className={' lg:hidden'} onClick={toggleNavLink}>
           <FiMenu className={'text-2xl'} />
         </button>
