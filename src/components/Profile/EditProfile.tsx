@@ -25,7 +25,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                 name: editProfile.name,
                 email: editProfile.email,
                 phone: editProfile.phone,
-                avatar: editProfile.avatar,
+                // avatar: editProfile.avatar,
                 address: editProfile.address,
               }}
               onSubmit={async (values) => {
@@ -123,7 +123,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                       Ảnh đại diện
                     </label>
                     <Field
-                      type={'text'}
+                      type={'file'}
                       name={'avatar'}
                       placeholder={'Ảnh đại điện'}
                       className={

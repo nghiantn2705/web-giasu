@@ -19,7 +19,6 @@ export default function RentTeacher(props: IProps) {
   const [subject, setSubject] = useState<ISubject[]>();
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     (async () => {
       try {
@@ -81,7 +80,7 @@ export default function RentTeacher(props: IProps) {
             <Form className={'flex flex-col gap-5 pt-5 font-medium'}>
               <div className={'flex flex-col gap-5 px-5'}>
                 <label className={'grid grid-cols-2'}>
-                  <span>Gia sư</span>
+                  <span>Người thuê</span>
                   <span>{user?.name}</span>
                 </label>
                 <label className={'grid grid-cols-2 '}>
