@@ -18,10 +18,12 @@ export interface ITeachers {
   DistrictID: number;
   name: string;
   // subject: string;
-  subject: {
-    id: number;
-    name: string;
-  };
+  subject: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   district: {
     id: number;
     name: string;

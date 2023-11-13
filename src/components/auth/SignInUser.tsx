@@ -65,12 +65,8 @@ const SignInUser = () => {
                   const data = await auth({
                     ...values,
                   });
-<<<<<<< HEAD
-                  console.log(data);
+
                   if (data?.user && data?.user?.role == 'user') {
-=======
-                  if (data?.user && data?.user?.role == 'User') {
->>>>>>> b26d64b928a3c95daadbe4de02804c8634eaef3c
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
