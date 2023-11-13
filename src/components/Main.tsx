@@ -18,14 +18,16 @@ const Main = () => {
               Bạn muốn con chăm ngoan, học giỏi? Đăng <br /> ký ngay! Đội ngũ
               gia sư giỏi của GS7 <br /> sẽ giúp con bạn tiến bộ nhanh chóng.
             </p>
-            <button
-              type={'button'}
-              className={
-                'w-fit py-2 px-3 text-white rounded-md bg-blue-tw text-lg'
-              }
-            >
-              Đăng ký thuê gia sư ngay
-            </button>
+            <Link href={'./giasu'}>
+              <button
+                type={'button'}
+                className={
+                  'w-fit py-2 px-3 text-white rounded-md bg-blue-tw text-lg'
+                }
+              >
+                Đăng ký thuê gia sư ngay
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -43,12 +45,15 @@ const Main = () => {
           </p>
           <div className={'flex gap-5  text-xl'}>
             <Link
-              href={'/teacher/register'}
+              href={'./auth/teacher/register'}
               className={'text-blue-tw hover:underline'}
             >
               {'>'} Đăng ký làm gia sư
             </Link>
-            <Link href={'/teacher'} className={'text-blue-tw hover:underline'}>
+            <Link
+              href={'./auth/teacher'}
+              className={'text-blue-tw hover:underline'}
+            >
               {'>'} Đăng nhập tài khoản
             </Link>
           </div>

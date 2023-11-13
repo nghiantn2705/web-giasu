@@ -1,22 +1,62 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IDisctrict } from '@/types/IDistrict';
+
+import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsBook, BsSearch } from 'react-icons/bs';
+import { getDistrict, getSubject, getClass } from '@/services/get';
+import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
-import { useRouter } from 'next/navigation';
 
-const SelectFilter = ({ district, subject, classer }: any) => {
+const SelectFilter = () => {
+  const [districts, setDistricts] = useState<IDisctrict[]>();
+  const [subject, setSubject] = useState<ISubject[]>();
+  const [classes, setClass] = useState<IClass[]>();
   const [queryDistrict, setQueryDistrict] = useState<string>('');
   const [querySubject, setQuerySubject] = useState<string>('');
-  const [queryClass, setQueryClass] = useState<string>('');
   const router = useRouter();
-
+  useEffect(() => {
+    (async () => {
+      const resDistricts = await getDistrict();
+      const resSubject = await getSubject();
+      const resClass = await getClass();
+      setDistricts(resDistricts);
+      setSubject(resSubject);
+      setClass(resClass);
+    })();
+  }, []);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (queryDistrict == '') {
+      router.replace(`/timkiemgiasu?subject=${querySubject}`, {
+        scroll: false,
+      });
+    }
+    if (querySubject == '') {
+      router.replace(`/timkiemgiasu?DistrictID=${queryDistrict}`, {
+        scroll: false,
+      });
+    }
+    if (querySubject && queryDistrict) {
+      router.replace(
+        `/timkiemgiasu?DistrictID=${queryDistrict}&subject=${querySubject}`,
+        {
+          scroll: false,
+        },
+      );
+    }
+    if (querySubject == '' && queryDistrict == '') {
+      router.replace(`/timkiemgiasu`, {
+        scroll: false,
+      });
+    }
+  };
   return (
     <div className={'relative'}>
       <form
-        method={'GET'}
+        onSubmit={handleSubmit}
         className={' shadow-xl p-5 rounded-b-xl border  bg-white w-full'}
       >
         <div className={'grid grid-cols-3'}>
@@ -29,13 +69,13 @@ const SelectFilter = ({ district, subject, classer }: any) => {
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'DistrictID'}
-                value={queryDistrict}
+                defaultValue={''}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                   setQueryDistrict(event.target.value);
                 }}
               >
                 <option value={''}>Khu vực</option>
-                {district?.map((items: IDisctrict) => {
+                {districts?.map((items: IDisctrict) => {
                   return (
                     <option key={items?.id} value={items?.id}>
                       {items?.name}
@@ -55,7 +95,7 @@ const SelectFilter = ({ district, subject, classer }: any) => {
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'subject'}
-                value={querySubject}
+                defaultValue={''}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                   setQuerySubject(event.target.value);
                 }}
@@ -80,14 +120,14 @@ const SelectFilter = ({ district, subject, classer }: any) => {
               />
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
-                name={'class'}
-                value={queryClass}
+                name={'subject'}
+                defaultValue={''}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                  setQueryClass(event.target.value);
+                  setQuerySubject(event.target.value);
                 }}
               >
-                <option value={''}>Lớp</option>
-                {classer?.map((items: IClass) => {
+                <option value={''}>Lớp học</option>
+                {classes?.map((items: IClass) => {
                   return (
                     <option key={items?.id} value={items?.id}>
                       {items?.class}

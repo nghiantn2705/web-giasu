@@ -66,51 +66,57 @@ const SortRate = ({ teachers }: IProps) => {
         spaceBetween={15}
         className={'w-full'}
       >
-        {teachers?.map((items, index) => {
-          return (
-            <SwiperSlide key={index + 1} className={'m-0'}>
-              <div
-                className={
-                  'rounded-xl bg-white  shadow hover:shadow-md duration-200 my-2 p-1 border hover:border-gray-300 '
-                }
-              >
-                <div className={'relative'}>
-                  <picture className={'w-auto relative h-[160px]'}>
-                    <img
-                      src={items?.avatar}
-                      width={160}
-                      height={160}
-                      alt=""
-                      className={'h-[200px] w-full rounded-t-xl '}
-                    />
-                    <div
-                      className={
-                        'absolute bottom-0 left-0 w-full flex h-[40px] justify-end custom-tw px-2 py-1'
-                      }
-                    >
-                      <p className={'self-end flex gap-1 text-white'}>
-                        <AiOutlineStar className={'self-center'} />4
-                      </p>
-                    </div>
-                  </picture>
-                </div>
+        <div
+          className={
+            'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'
+          }
+        >
+          {teachers?.map((items, index) => {
+            return (
+              <SwiperSlide key={index + 1} className={'m-0'}>
+                <div
+                  className={
+                    'rounded-xl bg-white  shadow hover:shadow-md duration-200 my-2 p-1 border hover:border-gray-300 '
+                  }
+                >
+                  <div className={'relative'}>
+                    <picture className={'w-auto relative h-[160px]'}>
+                      <img
+                        src={items?.avatar}
+                        width={160}
+                        height={160}
+                        alt=""
+                        className={'h-[200px] w-full rounded-t-xl '}
+                      />
+                      <div
+                        className={
+                          'absolute bottom-0 left-0 w-full flex h-[40px] justify-end custom-tw px-2 py-1'
+                        }
+                      >
+                        <p className={'self-end flex gap-1 text-white'}>
+                          <AiOutlineStar className={'self-center'} />4
+                        </p>
+                      </div>
+                    </picture>
+                  </div>
 
-                <div className={'px-3 py-2'}>
-                  <div className={'text-center '}>
-                    <a
-                      href={'/'}
-                      className={
-                        ' hover:text-blue-tw font-medium ease-in-out duration-500'
-                      }
-                    >
-                      {items?.name}
-                    </a>
+                  <div className={'px-3 py-2'}>
+                    <div className={'text-center '}>
+                      <a
+                        href={`/detail/${items?.id}`}
+                        className={
+                          ' hover:text-blue-tw font-medium ease-in-out duration-500'
+                        }
+                      >
+                        {items?.name}
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          );
-        })}
+              </SwiperSlide>
+            );
+          })}
+        </div>
       </Swiper>
     </div>
   );

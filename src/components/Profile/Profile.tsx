@@ -10,6 +10,7 @@ interface IProps {
   children: React.ReactNode;
 }
 const Profile = ({ infoUser, children }: IProps) => {
+  console.log(infoUser);
   useEffect(() => {}, []);
   return (
     <>
@@ -44,20 +45,16 @@ const Profile = ({ infoUser, children }: IProps) => {
                   }
                 >
                   <li className={'flex items-center py-3'}>
-                    <span>Status</span>
+                    <span>Trạng thái</span>
                     <span className={'ml-auto'}>
                       <span
                         className={
                           'bg-green-500 py-1 px-2 rounded text-white text-sm'
                         }
                       >
-                        Active
+                        Đang sẵn sàng
                       </span>
                     </span>
-                  </li>
-                  <li className={'flex items-center py-3'}>
-                    <span>Member since</span>
-                    <span className={'ml-auto'}>Nov 07, 2016</span>
                   </li>
                 </ul>
                 <div>

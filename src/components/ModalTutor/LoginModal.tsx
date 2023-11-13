@@ -7,35 +7,27 @@ import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
 import { getClass, getSubject } from '@/services/get';
-import { getClassRent, getSubjectRent } from '@/services/getRent';
 import { postJob } from '@/services/job';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
-import { useParams } from 'next/navigation';
-import { getTeacherByid } from '@/services/teacher';
 
 interface IProps {
   id: number;
 }
-export default function RentTeacher(props: IProps) {
+export default function ModalFeeback(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
   const [subject, setSubject] = useState<ISubject[]>();
-  const [subjectteacher, setSubjectTeacher] = useState<any>();
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
-  const { id: params } = useParams();
-  console.log(user);
-  console.log(subjectteacher);
+  console.log('halo' + user);
 
   useEffect(() => {
     (async () => {
       try {
         const resSubject = await getSubject();
         const resClass = await getClass();
-        const resTeacher = await getTeacherByid({ id: params });
         setSubject(resSubject);
         setClassr(resClass);
-        setSubjectTeacher(resTeacher);
       } catch (ex: any) {
         console.log(ex.message);
       }
@@ -47,6 +39,7 @@ export default function RentTeacher(props: IProps) {
   const openModal = () => {
     setIsOpen(true);
   };
+
   return (
     <div>
       {user?.role == 'User' ? (
@@ -90,7 +83,7 @@ export default function RentTeacher(props: IProps) {
             <Form className={'flex flex-col gap-5 pt-5 font-medium'}>
               <div className={'flex flex-col gap-5 px-5'}>
                 <label className={'grid grid-cols-2'}>
-                  <span>Người thuê</span>
+                  <span>Gia sư</span>
                   <span>{user?.name}</span>
                 </label>
                 <label className={'grid grid-cols-2 '}>

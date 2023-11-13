@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 'use client';
@@ -5,7 +6,7 @@ import Image from 'next/image';
 import MyDialog from '@/components/Teacher/RentTeacher';
 
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
@@ -16,6 +17,8 @@ import Loading from '@/components/Layout/Loading';
 import { getFeedback, postFeedback, getStart } from '@/services/feedback';
 import { getTeacherByid } from '@/services/teacher';
 import RentTeacher from '@/components/Teacher/RentTeacher';
+import ModalFeeback from '@/components/ModalTutor/LoginModal';
+import { Dialog, Transition } from '@headlessui/react';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachers1>('userInfo');
@@ -25,6 +28,13 @@ export default function Home() {
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
+  console.log(teacher);
+  console.log(userInfo);
+  let [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     (async () => {
@@ -47,29 +57,43 @@ export default function Home() {
 
   const submitFeedback = async (e: any) => {
     e.preventDefault();
+    if (!userInfo) {
+      setIsOpen(true);
+    }
+
     const value = {
       description: description1,
       point: point1,
       idSender: userInfo?.id,
-      idTeacher: teacher?.id,
+      idTeacher: params,
     };
     await postFeedback({ ...value });
   };
+
   return (
     <div>
       {teacher ? (
         <div className={''}>
           <main className={'container mx-auto pt-6  '}>
-            <div className={' grid gap-10 grid-cols-12 '}>
+            <div
+              className={
+                'grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-12 '
+              }
+            >
               {/* avatar */}
-              <div className={' pt-5 col-span-2'}>
+              <div
+                className={
+                  'pt-5 col-span-8 mx-auto sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
+                }
+              >
                 <Image
                   src={`${teacher?.avatar}`}
-                  width={260}
-                  height={260}
+                  width={360}
+                  height={360}
                   alt={'Picture of the author'}
                 />
-                <p
+                {/* <img src={teacher?.avatar} width={260} height={260} alt="" /> */}
+                {/* <p
                   className={
                     'mt-5 text-center text-green-600 text-2xl font-serif'
                   }
@@ -85,25 +109,7 @@ export default function Home() {
                   <label className={'text-stone-950 font-bold'}>
                     24/1/2021
                   </label>
-                </p>
-                {/* <div className={'py-4 border-b '}>
-                  <div className={'text-xl font-bold'}>
-                    <p>Thông tin cá nhân:</p>
-                  </div>
-
-                  <div className="">
-                    <div className={'pt-2 col-span-3  '}>
-                      <label className={'font-bold'}>Số điện thoại : </label>
-
-                      <label>{data?.phone}</label>
-                    </div>
-                    <div className="pt-2 col-span-3 text-zinc-950 ">
-                      <label className="font-bold">Khu vực : </label>
-
-                      <label className=""> {data?.address}</label>
-                    </div>
-                  </div>
-                </div> */}
+                </p> */}
               </div>
               {/*  */}
               <div className={'pt-5 col-span-8 py-15'}>
@@ -128,8 +134,23 @@ export default function Home() {
                         'text-[14px] font-semibold font-poppins text-stone-400 '
                       }
                     >
-                      {starData?.avg}
-                      <span className={'text-red-400'}>100%</span>
+                      <div>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <FontAwesomeIcon
+                            key={star}
+                            icon={faStar}
+                            className={`text ${
+                              star <=
+                              (starData && starData?.avg
+                                ? Math.floor(parseFloat(starData?.avg))
+                                : 0)
+                                ? 'text-amber-300'
+                                : 'gray-200'
+                            } cursor-pointer`}
+                          />
+                        ))}
+                        <label className={'pl-2'}>{starData?.avg}</label>
+                      </div>
                     </p>
                   </div>
                 </div>
@@ -139,18 +160,28 @@ export default function Home() {
                   <div className={' grid gap-2 grid-cols-2'}>
                     <div>
                       <p className="text-xl font-bold">Nhận dạy:</p>
-                      <div className=" grid gap-2 grid-cols-8 py-3">
-                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{teacher?.class_id}</p>
-                        </div>
+                      <div className="grid gap-2 grid-cols-8 py-3">
+                        {teacher?.class_id.map((classId, index: number) => (
+                          <div
+                            key={index}
+                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                          >
+                            <p>{classId}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                     <div>
                       <p className="text-xl font-bold">Dạy môn:</p>
-                      <div className=" grid gap-2 grid-cols-8 py-3">
-                        <div className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center">
-                          <p>{teacher?.subject?.name}</p>
-                        </div>
+                      <div className="grid gap-2 grid-cols-8 py-3">
+                        {teacher?.subject.map((subjectId, index: number) => (
+                          <div
+                            key={index}
+                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                          >
+                            <p>{subjectId}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -210,8 +241,7 @@ export default function Home() {
                       </div>
                       <div className="pt-2  text-zinc-950 ">
                         <label className="font-bold"> Thời gian dạy: </label>
-
-                        <label className=""> {teacher?.time_tutor_id}</label>
+                        <label className="">{teacher?.time_tutor_id}</label>
                       </div>
                       <div className={'pt-2  text-zinc-950 '}>
                         <label className={'font-bold'}>
@@ -245,33 +275,32 @@ export default function Home() {
                 </div>
                 {/*  */}
               </div>
-              <div className={'mt-5 col-span-2'}>
+              <div
+                className={
+                  'mt-5 col-span-8 text-center sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
+                }
+              >
                 <RentTeacher id={Number(params)} />
               </div>
             </div>
-            <div
-              className={'w-[850px] border border-gray-300 p-8 mx-auto pt-10'}
-            >
-              <div className={'text-center text-2xl font-bold'}>
-                <p>Đánh giá :</p>
+            <div className="w-[90%] mt-20 border border-gray-300 p-8 mx-auto pt-10">
+              <div className="text-center text-2xl font-bold">
+                <p>Đánh giá:</p>
               </div>
-              <div className={' mx-auto  grid gap-5 grid-cols-2'}>
-                <div className={'pt-2 col-span-2 text-right'}>
-                  <form className={'text-right'} onSubmit={submitFeedback}>
-                    <div className={'grid gap-10 grid-cols-10'}>
-                      <div className={'col-span-5'}>
+              <div className="mx-auto grid grid-cols-2 gap-5">
+                <div className="col-span-2 text-right">
+                  <form className="text-right" onSubmit={submitFeedback}>
+                    <div className="grid grid-cols-10 gap-6">
+                      <div className="col-span-5">
                         <img
                           src={userInfo?.avatar}
                           width={45}
                           height={45}
-                          className={
-                            'rounded-full  border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto'
-                          }
+                          className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
                           alt=""
                         />
                       </div>
-
-                      <div className={'col-span-5 text-right'}>
+                      <div className="col-span-5 text-right">
                         <label htmlFor="rating">Đánh giá sao:</label>
                         <div>
                           {[1, 2, 3, 4, 5].map((star, index) => (
@@ -289,57 +318,105 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-
                     <br />
 
                     <textarea
-                      className={'w-full border border-gray-300 rounded p-2'}
+                      className="w-full border border-gray-300 rounded p-2"
                       id="feedback"
                       value={description1}
                       onChange={handleFeedbackChange}
                       placeholder="Nhập ý kiến phản hồi..."
                     />
                     <br />
+                    <Transition appear show={isOpen} as={Fragment}>
+                      <Dialog
+                        as="div"
+                        className="relative z-10"
+                        onClose={closeModal}
+                      >
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <div className="fixed inset-0 bg-black/25" />
+                        </Transition.Child>
 
+                        <div className="fixed inset-0 overflow-y-auto">
+                          <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                              as={Fragment}
+                              enter="ease-out duration-300"
+                              enterFrom="opacity-0 scale-95"
+                              enterTo="opacity-100 scale-100"
+                              leave="ease-in duration-200"
+                              leaveFrom="opacity-100 scale-100"
+                              leaveTo="opacity-0 scale-95"
+                            >
+                              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Title
+                                  as="h3"
+                                  className="text-lg font-medium leading-6 text-gray-900"
+                                ></Dialog.Title>
+                                <div className="mt-2">
+                                  <p className="text-xl text-gray-500 text-center">
+                                    Vui lòng đăng nhập để gửi phản hồi
+                                  </p>
+                                </div>
+
+                                <div className="mt-4">
+                                  {/* <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    onClick={closeModal}
+                                  >
+                                    Got it, thanks!
+                                  </button> */}
+                                </div>
+                              </Dialog.Panel>
+                            </Transition.Child>
+                          </div>
+                        </div>
+                      </Dialog>
+                    </Transition>
                     <button
-                      className={'text-right text-white bg-red-400 rounded p-2'}
-                      type={'submit'}
+                      className="text-right text-white bg-red-400 rounded p-2"
+                      type="submit"
                     >
                       Gửi ý kiến
                     </button>
                   </form>
                 </div>
-
-                <div className={'col-span-2 text-left'}>
-                  <div className={'text-left  pt-2'}>
+                <div className="col-span-2 text-left">
+                  <div className="text-left pt-2">
                     {feedbackData?.map((item: IFeedback, index) => (
                       <div key={index}>
-                        <div className={' pt-3 grid gap-10 grid-cols-10'}>
-                          <label
-                            className={
-                              'text-base text-red-400 font-bold col-span-5'
-                            }
-                          >
-                            {item?.idSender}
+                        <div className="py-3 grid grid-cols-10 gap-5">
+                          <label className="text-base text-red-400 font-bold col-span-5">
+                            {item.idSender}
                           </label>
-                          <div className={'col-span-5 text-right'}>
+                          <div className="col-span-5 text-right">
                             {[1, 2, 3, 4, 5].map((star, index) => (
                               <FontAwesomeIcon
                                 key={index}
                                 icon={faStar}
-                                className={`text ${
-                                  star <= parseInt(item?.point)
-                                    ? 'text-amber-300'
+                                className={`text-${
+                                  star <= parseInt(item.point)
+                                    ? 'amber-300'
                                     : 'gray-200'
                                 } cursor-pointer`}
                               />
                             ))}
                           </div>
                         </div>
-                        <div className={' py-3'}>
-                          <label className={'font-bold '}>Nội dung :</label>
-                          <label className={'text-base py-10'}>
-                            {item?.description}
+                        <div className="py-3">
+                          <label className="font-bold">Nội dung :</label>
+                          <label className="text-base py-10">
+                            {item.description}
                           </label>
                         </div>
                         <hr />
