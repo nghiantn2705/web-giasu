@@ -7,9 +7,12 @@ import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
 import { getClass, getSubject } from '@/services/get';
+import { getClassRent, getSubjectRent } from '@/services/getRent';
 import { postJob } from '@/services/job';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
+import { useParams } from 'next/navigation';
+import { getTeacherByid } from '@/services/teacher';
 
 interface IProps {
   id: number;
@@ -17,15 +20,22 @@ interface IProps {
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
   const [subject, setSubject] = useState<ISubject[]>();
+  const [subjectteacher, setSubjectTeacher] = useState<any>();
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
+  const { id: params } = useParams();
+  console.log(user);
+  console.log(subjectteacher);
+
   useEffect(() => {
     (async () => {
       try {
         const resSubject = await getSubject();
         const resClass = await getClass();
+        const resTeacher = await getTeacherByid({ id: params });
         setSubject(resSubject);
         setClassr(resClass);
+        setSubjectTeacher(resTeacher);
       } catch (ex: any) {
         console.log(ex.message);
       }

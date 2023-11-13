@@ -1,4 +1,4 @@
-export interface ITeachers {
+export interface ITeachers3 {
   id: number;
   role: string;
   gender: string;
@@ -10,7 +10,7 @@ export interface ITeachers {
   school_id: number;
   Citizen_card: number;
   education_level: string;
-  class_id: number;
+  class_id: [classId: string, index: number];
   salary_id: string;
   description: string;
   time_tutor_id: number;
@@ -18,10 +18,7 @@ export interface ITeachers {
   DistrictID: number;
   name: string;
   // subject: string;
-  subject: {
-    id: number;
-    name: string;
-  };
+  subject: [index: number, subjectId: string];
   district: {
     id: number;
     name: string;

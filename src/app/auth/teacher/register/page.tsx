@@ -2,18 +2,33 @@
 'use client';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { SignupSchemaTeacher } from '@/validate';
+import {
+  Button,
+  Form,
+  Input,
+  Select,
+  Upload,
+  Radio,
+  RadioChangeEvent,
+  DatePicker,
+  InputNumber,
+  message,
+  Checkbox,
+} from 'antd';
+import type { DatePickerProps } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import type { UploadFile } from 'antd/es/upload/interface';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
-import { Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
 import { IDisctrict } from '@/types/IDistrict';
+import axios from 'axios';
 import {
   getClass,
   getDistrict,
@@ -21,15 +36,125 @@ import {
   getSchool,
   getSubject,
   getTimeSlot,
+  getLocation,
+  getLocationDistric,
 } from '@/services/get';
+import Link from 'next/link';
 const page = () => {
   const router = useRouter();
+  type FieldType = {
+    name?: string;
+    password?: string;
+    email?: string;
+    subject?: string[];
+    avatar?: any;
+    gender?: string;
+    date_of_birth?: string;
+    phone?: number;
+    Citizen_card?: number;
+    class_id?: string[];
+    description?: string;
+    time_tutor_id?: string[];
+    current_role?: string;
+    exp?: string;
+    school_id?: string;
+    salary_id?: string;
+    DistrictID?: string[];
+  };
+  const [fileList2, setFileList2] = useState([]);
+  const [value, setValue] = useState('');
+  const [fileList, setFileList] = useState([]);
+  const [location, setLocation] = useState([]);
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
+  console.log(subject);
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
+  const onFinish = (values: any) => {
+    console.log({ role: 3, ...values });
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+  const callAPI = async (host: any) => {
+    const response = await axios.get(host);
+    return response;
+  };
+  callAPI('https://provinces.open-api.vn/api/?depth=1');
+  const onChangeLocation = (api) => {
+    return axios.get(api).then((response) => {});
+  };
+  const callApiWard = (api) => {
+    return axios.get(api).then((response) => {});
+  };
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
+  const [selectedSchool, setSelectedSchool] = useState<string[]>([]);
+  const filteredOptions = subject?.map((o) => ({
+    label: o.name,
+    value: o.id,
+  }));
+  const filteredClasses = classlevels?.map((o) => ({
+    label: o.class,
+    value: o.id,
+  }));
+  const filteredSchool = school?.map((o) => ({
+    label: o.name,
+    value: o.id,
+  }));
+  const filteredTimeSlot = timeslot?.map((o) => ({
+    label: o.name,
+    value: o.id,
+  }));
+  const filteredSalary = salary?.map((o) => ({
+    label: o.name,
+    value: o.id,
+  }));
+
+  const filteredLocation = location?.map((o) => ({
+    label: o.name,
+    value: o.code,
+  }));
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+  const dummyRequest = ({ onSuccess }: any) => {
+    setTimeout(() => {
+      onSuccess('ok');
+    }, 0);
+  };
+
+  const handleBeforeUpload = (file: any) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
+    }
+    const isLt10M = file.size / 1024 / 1024 < 10;
+    if (!isLt10M) {
+      message.error('Kích thước hình ảnh không được vượt quá 10MB!');
+    }
+    return isJpgOrPng && isLt10M;
+  };
+
+  const handleOnChange = ({ fileList2 }: any) => {
+    setFileList2(fileList2);
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -39,17 +164,22 @@ const page = () => {
         const resSalary = await getSalary();
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
+        const reslocation = await getLocation();
+        // const resLocationDis = await getLocationDistric()
+        console.log(district);
         setSubject(resSubject);
         setClasslevels(resClasses);
         setDistrict(resDistrict);
         setSalary(resSalary);
         setTimeSlot(resTimeSlote);
         setSchool(resSchool);
+        setLocation(reslocation);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
+
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
       <div className={'col-span-7 pt-5 pb-16  px-20'}>
@@ -61,315 +191,303 @@ const page = () => {
             tưởng
           </p>
         </div>
-        <Formik
-          initialValues={{
-            role: 3,
-            name: '',
-            email: '',
-            password: '',
-            avatar: '',
-            phone: '',
-            address: '',
-            citizen_card: '',
-            education_level: '',
-            Certificate: '',
-            description: '',
-            date_of_birth: new Date(),
-          }}
-          validationSchema={SignupSchemaTeacher}
-          onSubmit={(values) => {
-            console.log(values);
-            (async () => {
-              try {
-                await RegisterUser({ ...JSON.parse(JSON.stringify(values)) });
-                toast.success('Đăng kí thành công !', {
-                  duration: 3000,
-                  position: 'top-right',
-                  icon: '✅',
-                  iconTheme: {
-                    primary: '#000',
-                    secondary: '#fff',
-                  },
-                });
-                router.push('/auth/teacher');
-              } catch (ex: any) {
-                console.log(ex);
-              }
-            })();
-          }}
+        <Form
+          layout="vertical"
+          className={'w-full'}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          {({ errors, touched }) => (
-            <Form className={'flex flex-col'}>
-              <div className={'grid grid-cols-2 gap-5'}>
-                <label htmlFor={'name'} className={'flex flex-col'}>
-                  Họ và Tên
-                  <Field
-                    type={'text'}
-                    name={'name'}
-                    placeholder={'Học và tên'}
-                    className={'w-full px-4 py-2 text-lg  border'}
-                  />
-                  {errors.name && touched.name ? (
-                    <div className={'text-red-600 mt-2'}>{errors.name}</div>
-                  ) : null}
-                </label>
-                <label htmlFor={'email'} className={'flex flex-col'}>
-                  Email :
-                  <Field
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Email'}
-                    className={'w-full px-4 py-2 text-lg  border '}
-                  />
-                  {errors.email && touched.email ? (
-                    <div className={'text-red-600 mt-2'}>{errors.email}</div>
-                  ) : null}
-                </label>
-                <label htmlFor="password" className={'flex flex-col'}>
-                  Mật khẩu
-                  <Field
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'Mat Khau'}
-                    className={'w-full px-4 py-2 text-lg  border '}
-                  />
-                  {errors.password && touched.password ? (
-                    <div className={'text-red-600 mt-2'}>{errors.password}</div>
-                  ) : null}
-                </label>
-                <label htmlFor={'avatar'} className={'flex flex-col'}>
-                  Ảnh đại diện{' '}
-                  <Field
-                    type={'file'}
-                    name={'avatar'}
-                    placeholder={'Ảnh đại diện'}
-                    className={
-                      'relative w-full flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:overflow-hidden file:rounded-none file:h-full file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none '
+          <div className={'grid grid-cols-2 gap-4'}>
+            <Form.Item<FieldType>
+              label="Họ và Tên "
+              name="name"
+              rules={[{ required: true, message: 'Hãy điền họ và tên!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Số điện thoại "
+              name="phone"
+              rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
+              className={'w-full'}
+            >
+              <InputNumber min={0} max={10} step={1} precision={0} />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+              label="Email "
+              name="email"
+              rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+              label="Mật khẩu"
+              name="password"
+              rules={[
+                { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
+              ]}
+            >
+              <Input.Password className={'w-full'} />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Giới tính"
+              name="gender"
+              required
+              rules={[
+                { required: true, message: 'Hãy chọn giới tính của bạn!' },
+              ]}
+            >
+              <Radio.Group onChange={onChange} value={value}>
+                <Radio value={'Nam'}>Nam</Radio>
+                <Radio value={'Nữ'}>Nữ</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Ngày sinh"
+              name="date_of_birth"
+              rules={[
+                { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
+              ]}
+            >
+              <DatePicker picker="date" format="DD/MM/YYYY" />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Ảnh đại diện"
+              name="avatar"
+              getValueFromEvent={(event) => {
+                console.log(event.file.name);
+                return event?.fileList;
+              }}
+              valuePropName="fileList"
+              rules={[
+                { required: true, message: 'Hãy upload ảnh đại diện của bạn!' },
+                {
+                  validator(_, fileList) {
+                    return new Promise((resolve, rejects) => {
+                      if (fileList && fileList[0].size > 900000) {
+                        rejects('Ảnh quá dung lượng');
+                      } else {
+                        resolve('Thành công');
+                      }
+                    });
+                  },
+                },
+              ]}
+            >
+              <Upload
+                maxCount={1}
+                beforeUpload={(file) => {
+                  return new Promise((resolve, rejects) => {
+                    if (file.size > 900000) {
+                      rejects('Ảnh quá dung lượng');
+                    } else {
+                      resolve('Thành công');
                     }
-                  />
-                  {errors.avatar && touched.avatar ? (
-                    <div className={'text-red-600 mt-2'}>{errors.avatar}</div>
-                  ) : null}
-                </label>
-                <label htmlFor={'gender'} className={'flex flex-col'}>
-                  Giới tính
-                  <Field
-                    as="select"
-                    name="gender"
-                    className={'w-full px-4 py-2 text-lg  border  h-full'}
-                  >
-                    <option value="">-- Chọn giới tính --</option>
-                    <option value="Nam">Nam</option>
-                    <option value="Nữ">Nữ</option>
-                  </Field>
-                </label>
-                <label className={'flex flex-col'} htmlFor={'date_of_birth'}>
-                  Ngày sinh
-                  <div className={'w-full px-4 py-2 text-lg  border  h-full'}>
-                    <Field
-                      type={'date'}
-                      name={'date_of_birth'}
-                      className={'w-full px-4 py-2 text-lg  border'}
-                    />
-                  </div>
-                </label>
-                <label className={'flex flex-col'} htmlFor={'phone'}>
-                  Số điện thoại
-                  <Field
-                    type={'text'}
-                    name={'phone'}
-                    placeholder={'Số điện thoại'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  />
-                  {errors.phone && touched.phone ? (
-                    <div className={'text-red-600 mt-2'}>{errors.phone}</div>
-                  ) : null}
-                </label>
-                <label className={'flex flex-col'} htmlFor={'address'}>
-                  Địa chỉ nơi ở :{' '}
-                  <Field
-                    type={'text'}
-                    name={'address'}
-                    placeholder={'Nơi bạn đang ở'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  />
-                  {errors.address && touched.address ? (
-                    <div className={'text-red-600 mt-2'}>{errors.address}</div>
-                  ) : null}
-                </label>
-                <label className={'flex flex-col'} htmlFor={'citizen_card'}>
-                  Số căn cước công dân
-                  <Field
-                    type={'text'}
-                    name={'citizen_card'}
-                    placeholder={'Căn cước công dân'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  />
-                  {errors.citizen_card && touched.citizen_card ? (
-                    <div className={'text-red-600 mt-2'}>
-                      {errors.citizen_card}
-                    </div>
-                  ) : null}
-                </label>
-                <label className={'flex flex-col'} htmlFor="education_level">
-                  Trình đọc học vấn
-                  <Field
-                    type={'text'}
-                    name={'education_level'}
-                    placeholder={'Trình độ học vấn'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  />
-                  {errors.education_level && touched.education_level ? (
-                    <div className={'text-red-600 mt-2'}>
-                      {errors.education_level}
-                    </div>
-                  ) : null}
-                </label>
-                <label className={'flex flex-col'} htmlFor={'Certificate'}>
-                  Bằng cấp hộ tập{' '}
-                  <Field
-                    type={'text'}
-                    name={'Certificate'}
-                    placeholder={'Bàng cấp học tập'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  />
-                  {errors.Certificate && touched.Certificate ? (
-                    <div className={'text-red-600 mt-2'}>
-                      {errors.Certificate}
-                    </div>
-                  ) : null}
-                </label>
-                <label className={'flex flex-col'} htmlFor={'school_id'}>
-                  Đại học{' '}
-                  <Field
-                    name={'school_id'}
-                    as={'select'}
-                    className={'w-full px-4 py-2 text-lg  border  h-full'}
-                  >
-                    {school?.map((items: ISchool) => {
-                      return (
-                        <option key={items.id} value={`${items?.id}`}>
-                          {items?.name}
-                        </option>
-                      );
-                    })}
-                  </Field>
-                </label>
-                <label className={'flex flex-col'} htmlFor={'districtID'}>
-                  Khu vực dạy{' '}
-                  <Field
-                    name={'districtID'}
-                    as={'select'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  >
-                    {district?.map((items: IDisctrict) => {
-                      return (
-                        <option key={items.id} value={`${items?.id}`}>
-                          {items?.name}
-                        </option>
-                      );
-                    })}
-                  </Field>
-                </label>
-                <label className={'flex flex-col'} htmlFor={'salary_id'}>
-                  Lương{' '}
-                  <Field
-                    name={'salary_id'}
-                    as={'select'}
-                    className={'w-full px-4 py-2 text-lg  border  '}
-                  >
-                    {salary?.map((items: ISalary) => {
-                      return (
-                        <option key={items.id} value={`${items?.id}`}>
-                          {items?.name}
-                        </option>
-                      );
-                    })}
-                  </Field>
-                </label>
-                <div className={'flex flex-col'}>
-                  Lớp học
-                  <div
-                    className={'grid grid-cols-6 gap-2 justify-items-center'}
-                  >
-                    {classlevels?.map((i: IClass) => {
-                      return (
-                        <label key={i?.id} className={'flex gap-2'}>
-                          <Field
-                            type={'checkbox'}
-                            name={'class_id'}
-                            value={`${i?.id}`}
-                          />
-                          {i?.class}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className={'flex flex-col'}>
-                  Môn học
-                  <div
-                    className={'grid grid-cols-4 gap-2 justify-items-center'}
-                  >
-                    {subject?.map((i: ISubject) => {
-                      return (
-                        <label key={i?.id} className={'flex gap-2'}>
-                          <Field
-                            type={'checkbox'}
-                            name={'subject'}
-                            value={`${i?.id}`}
-                          />
-                          {i?.name}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className={'flex flex-col'}>
-                  Ca học:
-                  <div
-                    className={'grid grid-cols-4 gap-2 justify-items-center'}
-                  >
-                    {timeslot?.map((i: ISubject) => {
-                      return (
-                        <label key={i?.id} className={'flex gap-2'}>
-                          <Field
-                            type={'checkbox'}
-                            name={'time_tutor_id'}
-                            value={`${i?.id}`}
-                          />
-                          {i?.name}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-                <label htmlFor={'name'} className={'flex flex-col'}>
-                  Mô tả
-                  <Field
-                    type={'textarea'}
-                    name={'description'}
-                    placeholder={'Mô tả'}
-                    className={'w-full px-4 py-2 text-lg  border'}
-                  />
-                  {errors.description && touched.description ? (
-                    <div className={'text-red-600 mt-2'}>
-                      {errors.description}
-                    </div>
-                  ) : null}
-                </label>
-              </div>
-              <button
-                type={'submit'}
-                className={
-                  'border py-2 bg-blue-tw text-white  hover:bg-blue-tw1 hover:text-white w-[200px] mt-4 m-auto'
-                }
+                  });
+                }}
+                customRequest={(info: any) => {
+                  setFileList([info.file]);
+                }}
+                showUploadList={false}
               >
-                Đăng ký
-              </button>
-            </Form>
-          )}
-        </Formik>
+                <Button icon={<UploadOutlined />}>Upload</Button>
+                {fileList[0]?.name}
+              </Upload>
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Số căn cước công dân "
+              name="Citizen_card"
+              rules={[{ required: true, message: 'Hãy điền họ và tên!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} />
+            </Form.Item>
+            <Form.Item
+              label="Ảnh"
+              name="images"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}
+            >
+              <Upload
+                name="avatar"
+                beforeUpload={handleBeforeUpload}
+                customRequest={dummyRequest}
+                onChange={handleOnChange}
+                listType="picture"
+                maxCount={4}
+                fileList={fileList}
+                multiple
+              >
+                {fileList.length === 4 ? (
+                  ''
+                ) : (
+                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                )}
+              </Upload>
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Môn học"
+              name="subject"
+              rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Nhập môn học"
+                value={selectedItems}
+                onChange={setSelectedItems}
+                style={{ width: '100%' }}
+                options={filteredOptions}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Ca dạy"
+              name="time_tutor_id"
+              rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Nhập ca học môn học"
+                value={selectedTimeSlot}
+                onChange={setSelectedTimeSlot}
+                style={{ width: '100%' }}
+                options={filteredTimeSlot}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Lớp học"
+              name="class_id"
+              rules={[{ required: true, message: 'Hãy chọn lớp học bạn dạy!' }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Nhập môn học"
+                value={selectedClasses}
+                onChange={setSelectedClasses}
+                style={{ width: '100%' }}
+                options={filteredClasses}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Mô tả "
+              name="description"
+              rules={[{ required: true, message: 'Hãy điền mô tả về bạn!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Hiện tại đang là"
+              name="current_role"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Sinh Viên',
+                    label: 'Sinh Viên',
+                  },
+                  {
+                    value: 'Giảng Viên',
+                    label: 'Giảng Viên',
+                  },
+                  {
+                    value: 'Giáo viên',
+                    label: 'Giáo viên',
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Mức lương"
+              name="salary_id"
+              rules={[
+                { required: true, message: 'Hãy nhập mức lương của bạn!' },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
+                options={filteredSalary}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Khu vực dạy"
+              name="DistrictID"
+              rules={[
+                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                id="province"
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
+                options={filteredLocation}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Đại học"
+              name="school_id"
+              rules={[{ required: true, message: 'Hãy chọn trường đại học!' }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Nhập môn học"
+                value={selectedSchool}
+                onChange={setSelectedSchool}
+                style={{ width: '100%' }}
+                options={filteredSchool}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              label="Kinh Nghiệm"
+              name="exp"
+              rules={[
+                { required: true, message: 'Hãy nhập kinh nghiệm của bạn!' },
+              ]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} />
+            </Form.Item>
+          </div>
+          <Form.Item
+            name="fieldA"
+            valuePropName="checked"
+            rules={[
+              { required: true, message: 'Hãy ấn đồng ý và xem điều khoản!' },
+            ]}
+          >
+            <Checkbox>
+              {' '}
+              Bạn đồng ý với điều khoản sau{' '}
+              <Link href={'../rules/'}>Xem tại đây</Link>{' '}
+            </Checkbox>
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
       <div
         className={
@@ -379,5 +497,4 @@ const page = () => {
     </div>
   );
 };
-
 export default page;
