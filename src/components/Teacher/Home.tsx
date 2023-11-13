@@ -40,7 +40,7 @@ export default function Home({ children }: IHome) {
               </h3>
               <ul
                 className={
-                  'grid  bg-center bg-cover bg-no-repeat pl-5 gap-y-2 xl:pl-0  xl:grid-cols-2 xl:w-[80%] xl:gap-y-4 xl:mx-auto'
+                  'grid  bg-center bg-cover bg-no-repeat pl-5 gap-y-2 xl:pl-0  xl:grid-cols-2 xl:w-[90%] xl:gap-y-4 xl:mx-auto'
                 }
               >
                 <li

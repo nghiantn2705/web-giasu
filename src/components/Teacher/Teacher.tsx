@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { ITeachers } from '@/types/ITeachers';
-import { BsFillHeartFill } from 'react-icons/bs';
 import Link from 'next/link';
 
 interface IProps {

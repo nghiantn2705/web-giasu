@@ -65,6 +65,7 @@ const SignInUser = () => {
                   const data = await auth({
                     ...values,
                   });
+                  console.log(data);
                   if (data?.user && data?.user?.role == 'user') {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
@@ -78,7 +79,7 @@ const SignInUser = () => {
                         secondary: '#fff',
                       },
                     });
-                    router.push('/');
+                    // router.push('/');
                   } else {
                     toast.error(
                       'Vui lòng đăng nhập bằng tài khoản phụ huynh !',

@@ -1,58 +1,22 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IDisctrict } from '@/types/IDistrict';
-
-import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsBook, BsSearch } from 'react-icons/bs';
-import { getDistrict, getSubject } from '@/services/get';
-import { ISubject } from '@/types/ISubject';
+import { IClass } from '@/types/IClass';
+import { useRouter } from 'next/navigation';
 
-const SelectFilter = () => {
-  const [districts, setDistricts] = useState<IDisctrict[]>();
-  const [subject, setSubject] = useState<ISubject[]>();
+const SelectFilter = ({ district, subject, classer }: any) => {
   const [queryDistrict, setQueryDistrict] = useState<string>('');
   const [querySubject, setQuerySubject] = useState<string>('');
+  const [queryClass, setQueryClass] = useState<string>('');
   const router = useRouter();
-  useEffect(() => {
-    (async () => {
-      const resDistricts = await getDistrict();
-      const resSubject = await getSubject();
-      setDistricts(resDistricts);
-      setSubject(resSubject);
-    })();
-  }, []);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (queryDistrict == '') {
-      router.replace(`/timkiemgiasu?subject=${querySubject}`, {
-        scroll: false,
-      });
-    }
-    if (querySubject == '') {
-      router.replace(`/timkiemgiasu?DistrictID=${queryDistrict}`, {
-        scroll: false,
-      });
-    }
-    if (querySubject && queryDistrict) {
-      router.replace(
-        `/timkiemgiasu?DistrictID=${queryDistrict}&subject=${querySubject}`,
-        {
-          scroll: false,
-        },
-      );
-    }
-    if (querySubject == '' && queryDistrict == '') {
-      router.replace(`/timkiemgiasu`, {
-        scroll: false,
-      });
-    }
-  };
+
   return (
     <div className={'relative'}>
       <form
-        onSubmit={handleSubmit}
+        method={'GET'}
         className={' shadow-xl p-5 rounded-b-xl border  bg-white w-full'}
       >
         <div className={'grid grid-cols-3'}>
@@ -65,13 +29,13 @@ const SelectFilter = () => {
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'DistrictID'}
-                defaultValue={''}
+                value={queryDistrict}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                   setQueryDistrict(event.target.value);
                 }}
               >
                 <option value={''}>Khu vực</option>
-                {districts?.map((items: IDisctrict) => {
+                {district?.map((items: IDisctrict) => {
                   return (
                     <option key={items?.id} value={items?.id}>
                       {items?.name}
@@ -91,7 +55,7 @@ const SelectFilter = () => {
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'subject'}
-                defaultValue={''}
+                value={querySubject}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                   setQuerySubject(event.target.value);
                 }}
@@ -116,17 +80,17 @@ const SelectFilter = () => {
               />
               <select
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
-                name={'subject'}
-                defaultValue={''}
+                name={'class'}
+                value={queryClass}
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                  setQuerySubject(event.target.value);
+                  setQueryClass(event.target.value);
                 }}
               >
-                <option value={''}>Môn học</option>
-                {subject?.map((items: IDisctrict) => {
+                <option value={''}>Lớp</option>
+                {classer?.map((items: IClass) => {
                   return (
                     <option key={items?.id} value={items?.id}>
-                      {items?.name}
+                      {items?.class}
                     </option>
                   );
                 })}

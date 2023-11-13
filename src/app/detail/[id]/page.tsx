@@ -25,7 +25,7 @@ export default function Home() {
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
-  console.log(params);
+
   useEffect(() => {
     (async () => {
       const resTeacher = await getTeacherByid({ id: params });
