@@ -1,8 +1,6 @@
 import { apiRequest, IFetchBody, IFetchQuery } from '@/services/base';
 
 export const getJob = (query: IFetchQuery = {}) => {
-  const token =
-    typeof window === 'object' && window.localStorage.getItem('access_token');
   return apiRequest.get<
     {
       id: number;
@@ -15,13 +13,7 @@ export const getJob = (query: IFetchQuery = {}) => {
       status: number;
       description: string;
     }[]
-  >(`${process.env.NEXT_PUBLIC_API_URL}/job/${query?.id}`, query, {
-    headers: token
-      ? {
-          Authorization: 'Bearer ' + token,
-        }
-      : {},
-  });
+  >(`${process.env.NEXT_PUBLIC_API_URL}/job/${query?.id}`, query);
 };
 
 export const postJob = (body: IFetchBody) => {

@@ -3,7 +3,27 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, ReactNode } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+interface IModaltitle {
+  children: ReactNode;
+}
+export const ModalTitle = ({ children }: IModaltitle) => {
+  return (
+    <Dialog.Title
+      as={'h3'}
+      className={
+        'text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
+      }
+    >
+      {children}
+    </Dialog.Title>
+  );
+};
 
+interface IMyModal {
+  visible: boolean;
+  children: ReactNode;
+  onClose: () => void;
+}
 export default function MyModalRules(props: IMyModal) {
   const { visible, onClose, children } = props;
   return (

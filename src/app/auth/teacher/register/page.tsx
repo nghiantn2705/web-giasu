@@ -53,7 +53,7 @@ const page = () => {
     school_id?: string;
     salary_id?: string;
     DistrictID?: string[];
-    address?: string;
+    address: string;
     education_level?: string;
   };
   const [fileList2, setFileList2] = useState([]);
@@ -555,11 +555,12 @@ const page = () => {
             Bạn hãy xem điều khoản sau đây
             <button onClick={openModal}>Xem tại đây</button>
           </span>
+          <MyModalRules visible={isOpen} onClose={closeModal}>
+            <div>Trường</div>
+          </MyModalRules>
         </Form>
       </div>
-      <MyModalRules visible={isOpen} onClose={closeModal}>
-        <div>Trường</div>
-      </MyModalRules>
+
       <div
         className={
           'col-span-5 bg-banner-register bg-center bg-cover bg-no-repeat relative before:absolute before:top-0 before:w-full before:h-full before:bg-blue-tw1 before:opacity-30'

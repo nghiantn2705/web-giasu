@@ -26,7 +26,6 @@ const Layout = ({ children }: IProps) => {
           if (res?.access_token) {
             setCookie('access_token', res?.access_token);
             setCookie('refresh_token', res?.refresh_token);
-            window.localStorage.setItem('access_token', res?.access_token);
             if (res?.user) {
               setInfoUser(res?.user);
             }

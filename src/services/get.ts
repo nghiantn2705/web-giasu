@@ -5,6 +5,7 @@ import { IClass } from '@/types/IClass';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
+
 export const getDistrict = (query: IFetchQuery = {}) => {
   return apiRequest.get<IDisctrict[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/district/`,
@@ -46,15 +47,11 @@ export const getSchool = (query: IFetchQuery = {}) => {
     query,
   );
 };
-// export const getLocationDistric = (query: IFetchQuery = {}) => {
-//   return apiRequest.get<ISchool[]>(
-//     `https://provinces.open-api.vn/api` + `/p` + `${query}` + `?depth=2`,
-//   );
-// };
-// const BASE_API_URL = 'https://provinces.open-api.vn/api';
 export const getLocation = (query: IFetchQuery = {}) => {
-  return apiRequest.get(
-    `https://provinces.open-api.vn/api/?depth=3&fbclid=IwAR0Oq10iuK0olnjCAjFYQKmJ0YTsFPy9H1bCeqpiQzrcDDQCsavB7Z4V8Ns`,
-    query,
+  return apiRequest.get<ISchool[]>(`https://provinces.open-api.vn/api/`, query);
+};
+export const getLocationDistric = (query: IFetchQuery = {}) => {
+  return apiRequest.get<ISchool[]>(
+    `https://provinces.open-api.vn/api/p/${query?.code}/depth=2`,
   );
 };

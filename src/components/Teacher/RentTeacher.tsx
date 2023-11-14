@@ -7,6 +7,7 @@ import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
 import { getClass, getSubject } from '@/services/get';
+import { getClassRent, getSubjectRent } from '@/services/getRent';
 import { postJob } from '@/services/job';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
@@ -23,6 +24,8 @@ export default function RentTeacher(props: IProps) {
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
+  console.log(user);
+  console.log(subjectteacher);
 
   useEffect(() => {
     (async () => {

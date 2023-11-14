@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 import queryString from 'query-string';
+
 import { IFetchOptions, IFetchBody, IFetchQuery } from './base.model';
 
 const requestAPI = async <T>(

@@ -4,13 +4,13 @@ import React, { useEffect } from 'react';
 
 import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
-import Paypal from '@/app/profile/paypal/page';
 
 interface IProps {
   infoUser: IUserInfo;
   children: React.ReactNode;
 }
 const Profile = ({ infoUser, children }: IProps) => {
+  console.log(infoUser);
   useEffect(() => {}, []);
   return (
     <>
@@ -67,7 +67,6 @@ const Profile = ({ infoUser, children }: IProps) => {
                     Lịch sử thuê
                   </Link>
                 </div>
-                <Paypal />
               </div>
             </div>
             {children}
