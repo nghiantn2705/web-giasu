@@ -48,10 +48,8 @@ export const getSchool = (query: IFetchQuery = {}) => {
   );
 };
 export const getLocation = (query: IFetchQuery = {}) => {
-  return apiRequest.get<ISchool[]>(`https://provinces.open-api.vn/api/`, query);
-};
-export const getLocationDistric = (query: IFetchQuery = {}) => {
   return apiRequest.get<ISchool[]>(
-    `https://provinces.open-api.vn/api/p/${query?.code}/depth=2`,
+    `https://provinces.open-api.vn/api/?depth=3&fbclid=IwAR0-hlFhzL4KsOvX2IBKXpxy5-2hNf6ZlGKSrTceLwK-e-ppuMsgL5oTX4s`,
+    query,
   );
 };

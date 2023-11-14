@@ -24,8 +24,10 @@ import Image from 'next/image';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
+import { IDisctrict } from '@/types/IDistrict';
 import {
   getClass,
+  getDistrict,
   getSalary,
   getSchool,
   getSubject,
@@ -53,36 +55,37 @@ const page = () => {
     school_id?: string;
     salary_id?: string;
     DistrictID?: string[];
-    address: string;
+    address?: string;
     education_level?: string;
   };
+  const [isOpen, setIsOpen] = useState(false);
   const [fileList2, setFileList2] = useState([]);
   const [value, setValue] = useState('');
   const [fileList, setFileList] = useState([]);
   const [location, setLocation] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
+  const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-
+  console.log(subject);
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const onFinish = (values: any) => {
-    console.log({ role: 3, ...values });
     (async () => {
       try {
         await RegisterUser({ role: 3, ...values });
@@ -128,9 +131,10 @@ const page = () => {
     label: o.name,
     value: o.id,
   }));
+
   const filteredLocation = location?.map((item: any) => {
     const newDistricts = item.districts?.map((district: any) => {
-      const newWards = district.wards?.map((ward: any) => {
+      const newWards = district?.wards.map((ward: any) => {
         return {
           value: ward.name,
           title: ward.name,
@@ -148,6 +152,7 @@ const page = () => {
       children: newDistricts,
     };
   });
+
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
@@ -180,22 +185,26 @@ const page = () => {
     (async () => {
       try {
         const resSubject = await getSubject();
-        setSubject(resSubject);
         const resClasses = await getClass();
-        setClasslevels(resClasses);
+        const resDistrict = await getDistrict();
         const resSalary = await getSalary();
-        setSalary(resSalary);
         const resTimeSlote = await getTimeSlot();
-        setTimeSlot(resTimeSlote);
         const resSchool = await getSchool();
-        setSchool(resSchool);
         const reslocation = await getLocation();
+        console.log(district);
+        setSubject(resSubject);
+        setClasslevels(resClasses);
+        setDistrict(resDistrict);
+        setSalary(resSalary);
+        setTimeSlot(resTimeSlote);
+        setSchool(resSchool);
         setLocation(reslocation);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
+
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
       <div className={'col-span-7 pt-5 pb-16  px-20'}>
@@ -217,10 +226,10 @@ const page = () => {
           <div className={'grid grid-cols-2 gap-4'}>
             <Form.Item<FieldType>
               name="name"
-              rules={[{ required: true, message: 'Hãy điền họ và tên!' }]}
+              rules={[{ required: true, message: 'Họ và tên!' }]}
               className={'w-full'}
             >
-              <Input className={'w-full'} placeholder={'Họ và Tên'} />
+              <Input className={'w-full'} placeholder="Họ và Tên" />
             </Form.Item>
             <Form.Item<FieldType>
               name="phone"
@@ -228,10 +237,10 @@ const page = () => {
               className={'w-full'}
             >
               <Input
-                maxLength={10}
                 className={'w-full'}
-                placeholder={'Số điện thoại'}
                 pattern="^[0-9]*$"
+                maxLength={10}
+                placeholder="Số điện thoại"
               />
             </Form.Item>
 
@@ -240,7 +249,7 @@ const page = () => {
               rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
               className={'w-full'}
             >
-              <Input className={'w-full'} placeholder={'Email'} />
+              <Input className={'w-full'} placeholder="Email" />
             </Form.Item>
 
             <Form.Item<FieldType>
@@ -249,10 +258,24 @@ const page = () => {
                 { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
               ]}
             >
-              <Input.Password
-                className={'w-full'}
-                placeholder={'Mật Khẩu'}
-                minLength={8}
+              <Input.Password className={'w-full'} placeholder="Mật khẩu" />
+            </Form.Item>
+            <Form.Item<FieldType>
+              name="address"
+              rules={[
+                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
+              ]}
+              className={'w-full'}
+            >
+              <TreeSelect
+                showSearch
+                style={{ width: '100%' }}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                placeholder="Nơi đang ở"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                treeData={filteredLocation}
               />
             </Form.Item>
             <Form.Item<FieldType>
@@ -268,41 +291,22 @@ const page = () => {
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
-              name="address"
-              rules={[
-                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
-              ]}
-              className={'w-full'}
-            >
-              <TreeSelect
-                showSearch
-                style={{ width: '100%' }}
-                value={value}
-                dropdownStyle={{ maxHeight: 10000, overflow: 'auto' }}
-                placeholder="Nơi ở"
-                allowClear
-                multiple
-                treeDefaultExpandAll
-                treeData={filteredLocation}
-              />
-            </Form.Item>
-            <Form.Item<FieldType>
               name="date_of_birth"
               rules={[
-                { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
+                { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
               ]}
             >
               <DatePicker
-                placeholder={'Ngày Sinh'}
-                className={'w-full'}
                 picker="date"
                 format="DD/MM/YYYY"
+                className={'w-full'}
               />
             </Form.Item>
             <Form.Item<FieldType>
               label="Ảnh đại diện"
               name="avatar"
               getValueFromEvent={(event) => {
+                console.log(event.file.name);
                 return event?.fileList;
               }}
               valuePropName="fileList"
@@ -343,48 +347,10 @@ const page = () => {
             </Form.Item>
             <Form.Item<FieldType>
               name="Citizen_card"
-              rules={[
-                { required: true, message: 'Hãy điển số chứng minh nhân dân' },
-              ]}
+              rules={[{ required: true, message: 'Hãy sô căn cước công dân!' }]}
               className={'w-full'}
             >
-              <Input
-                maxLength={10}
-                className={'w-full'}
-                pattern="^[0-9]*$"
-                placeholder="Số chứng minh nhân dân"
-              />
-            </Form.Item>
-            <Form.Item<FieldType>
-              name="education_level"
-              rules={[
-                {
-                  required: true,
-                  message: 'Hãy điền trình độ học vấn của bạn!',
-                },
-              ]}
-              className={'w-full'}
-            >
-              <Select
-                showSearch
-                placeholder="Hiện đang là"
-                optionFilterProp="children"
-                filterOption={filterOption}
-                options={[
-                  {
-                    value: 'Đại học',
-                    label: 'Đại học',
-                  },
-                  {
-                    value: 'Cao đẳng',
-                    label: 'Cao đẳng',
-                  },
-                  {
-                    value: 'Trung cấp',
-                    label: 'Trung cấp',
-                  },
-                ]}
-              />
+              <Input className={'w-full'} placeholder="Số căn cước công dân" />
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
@@ -410,7 +376,37 @@ const page = () => {
                 )}
               </Upload>
             </Form.Item>
-
+            <Form.Item<FieldType>
+              name="education_level"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Nhập trình độ học vấn"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Đại học',
+                    label: 'Đại học',
+                  },
+                  {
+                    value: 'Cao đẳng',
+                    label: 'Cao đẳng',
+                  },
+                  {
+                    value: 'Trung cấp',
+                    label: 'Trung cấp',
+                  },
+                ]}
+              />
+            </Form.Item>
             <Form.Item<FieldType>
               name="subject"
               rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
@@ -426,11 +422,11 @@ const page = () => {
             </Form.Item>
             <Form.Item<FieldType>
               name="time_tutor_id"
-              rules={[{ required: true, message: 'Hãy chọn ca học bạn dạy!' }]}
+              rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
             >
               <Select
                 mode="multiple"
-                placeholder="Ca dạy"
+                placeholder="Ca học"
                 value={selectedTimeSlot}
                 onChange={setSelectedTimeSlot}
                 style={{ width: '100%' }}
@@ -452,6 +448,37 @@ const page = () => {
             </Form.Item>
 
             <Form.Item<FieldType>
+              name="current_role"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Hiện tại đang là"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Sinh Viên',
+                    label: 'Sinh Viên',
+                  },
+                  {
+                    value: 'Giảng Viên',
+                    label: 'Giảng Viên',
+                  },
+                  {
+                    value: 'Giáo viên',
+                    label: 'Giáo viên',
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
               name="salary_id"
               rules={[
                 { required: true, message: 'Hãy nhập mức lương của bạn!' },
@@ -460,7 +487,7 @@ const page = () => {
             >
               <Select
                 showSearch
-                placeholder="Mức lương"
+                placeholder="Mức lương của bạn"
                 optionFilterProp="children"
                 options={filteredSalary}
               />
@@ -475,8 +502,7 @@ const page = () => {
               <TreeSelect
                 showSearch
                 style={{ width: '100%' }}
-                value={value}
-                dropdownStyle={{ maxHeight: 10000, overflow: 'auto' }}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 placeholder="Khu vực dạy"
                 allowClear
                 multiple
@@ -498,44 +524,13 @@ const page = () => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              name="current_role"
-              rules={[
-                {
-                  required: true,
-                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
-                },
-              ]}
-              className={'w-full'}
-            >
-              <Select
-                showSearch
-                placeholder="Hiện đang là"
-                optionFilterProp="children"
-                filterOption={filterOption}
-                options={[
-                  {
-                    value: 'Giảng viên',
-                    label: 'Giảng viên',
-                  },
-                  {
-                    value: 'Sinh Viên',
-                    label: 'Sinh Viên',
-                  },
-                  {
-                    value: 'Giáo viên',
-                    label: 'Giáo viên',
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item<FieldType>
               name="exp"
               rules={[
                 { required: true, message: 'Hãy nhập kinh nghiệm của bạn!' },
               ]}
               className={'w-full'}
             >
-              <Input className={'w-full'} placeholder="Kinh nghiệm giảng dạy" />
+              <Input className={'w-full'} placeholder="Kinh nghiệm" />
             </Form.Item>
             <Form.Item<FieldType>
               name="description"
@@ -546,21 +541,20 @@ const page = () => {
             </Form.Item>
           </div>
           <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
-            <Button type="primary" htmlType="submit" className="bg-blue-tw">
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
-          <span>
-            {' '}
-            Bạn hãy xem điều khoản sau đây
-            <button onClick={openModal}>Xem tại đây</button>
-          </span>
-          <MyModalRules visible={isOpen} onClose={closeModal}>
-            <div>Trường</div>
-          </MyModalRules>
         </Form>
+        <span>
+          {' '}
+          Bạn xem điều khoản sau{' '}
+          <button onClick={openModal}>Xem tại đây</button>
+        </span>
+        <MyModalRules visible={isOpen} onClose={closeModal}>
+          <div>Trường</div>
+        </MyModalRules>
       </div>
-
       <div
         className={
           'col-span-5 bg-banner-register bg-center bg-cover bg-no-repeat relative before:absolute before:top-0 before:w-full before:h-full before:bg-blue-tw1 before:opacity-30'
@@ -569,5 +563,4 @@ const page = () => {
     </div>
   );
 };
-
 export default page;
