@@ -12,7 +12,6 @@ import {
   RadioChangeEvent,
   DatePicker,
   message,
-  Checkbox,
   TreeSelect,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -33,8 +32,7 @@ import {
   getTimeSlot,
   getLocation,
 } from '@/services/get';
-import Link from 'next/link';
-
+import MyModalRules from '../../rules/page';
 const page = () => {
   const router = useRouter();
   type FieldType = {
@@ -55,26 +53,32 @@ const page = () => {
     school_id?: string;
     salary_id?: string;
     DistrictID?: string[];
-    address: string;
+    address?: string;
+    education_level?: string;
   };
   const [fileList2, setFileList2] = useState([]);
   const [value, setValue] = useState('');
   const [fileList, setFileList] = useState([]);
   const [location, setLocation] = useState([]);
-  // const [locationD, setLocationD] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-  console.log(subject);
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
   const onFinish = (values: any) => {
@@ -212,42 +216,46 @@ const page = () => {
         >
           <div className={'grid grid-cols-2 gap-4'}>
             <Form.Item<FieldType>
-              label="Họ và Tên "
               name="name"
               rules={[{ required: true, message: 'Hãy điền họ và tên!' }]}
               className={'w-full'}
             >
-              <Input className={'w-full'} />
+              <Input className={'w-full'} placeholder={'Họ và Tên'} />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Số điện thoại "
               name="phone"
               rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
               className={'w-full'}
             >
-              <Input className={'w-full'} placeholder="Telephone Number" />
+              <Input
+                maxLength={10}
+                className={'w-full'}
+                placeholder={'Số điện thoại'}
+                pattern="^[0-9]*$"
+              />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Email "
               name="email"
               rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
               className={'w-full'}
             >
-              <Input className={'w-full'} />
+              <Input className={'w-full'} placeholder={'Email'} />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Mật khẩu"
               name="password"
               rules={[
                 { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
               ]}
             >
-              <Input.Password className={'w-full'} />
+              <Input.Password
+                className={'w-full'}
+                placeholder={'Mật Khẩu'}
+                minLength={8}
+              />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Giới tính"
               name="gender"
               required
               rules={[
@@ -260,30 +268,32 @@ const page = () => {
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
-              label="Nơi ở "
               name="address"
               rules={[
                 { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
               ]}
               className={'w-full'}
             >
-              <Select
-                // onChange={onChange1}
-                id="province"
+              <TreeSelect
                 showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                options={filteredLocation}
+                style={{ width: '100%' }}
+                value={value}
+                dropdownStyle={{ maxHeight: 10000, overflow: 'auto' }}
+                placeholder="Nơi ở"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                treeData={filteredLocation}
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Ngày sinh"
               name="date_of_birth"
               rules={[
                 { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
               ]}
             >
               <DatePicker
+                placeholder={'Ngày Sinh'}
                 className={'w-full'}
                 picker="date"
                 format="DD/MM/YYYY"
@@ -293,7 +303,6 @@ const page = () => {
               label="Ảnh đại diện"
               name="avatar"
               getValueFromEvent={(event) => {
-                console.log(event.file.name);
                 return event?.fileList;
               }}
               valuePropName="fileList"
@@ -333,12 +342,49 @@ const page = () => {
               </Upload>
             </Form.Item>
             <Form.Item<FieldType>
-              label="Số căn cước công dân "
               name="Citizen_card"
-              rules={[{ required: true, message: 'Hãy điền họ và tên!' }]}
+              rules={[
+                { required: true, message: 'Hãy điển số chứng minh nhân dân' },
+              ]}
               className={'w-full'}
             >
-              <Input className={'w-full'} />
+              <Input
+                maxLength={10}
+                className={'w-full'}
+                pattern="^[0-9]*$"
+                placeholder="Số chứng minh nhân dân"
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              name="education_level"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền trình độ học vấn của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Hiện đang là"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Đại học',
+                    label: 'Đại học',
+                  },
+                  {
+                    value: 'Cao đẳng',
+                    label: 'Cao đẳng',
+                  },
+                  {
+                    value: 'Trung cấp',
+                    label: 'Trung cấp',
+                  },
+                ]}
+              />
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
@@ -364,47 +410,14 @@ const page = () => {
                 )}
               </Upload>
             </Form.Item>
+
             <Form.Item<FieldType>
-              id={'truong'}
-              label="Hiện tại đang là"
-              name="current_role"
-              rules={[
-                {
-                  required: true,
-                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
-                },
-              ]}
-              className={'w-full'}
-            >
-              <Select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                filterOption={filterOption}
-                options={[
-                  {
-                    value: 'Đại học',
-                    label: 'Đại học',
-                  },
-                  {
-                    value: 'Cao đẳng',
-                    label: 'Cao đẳng',
-                  },
-                  {
-                    value: 'Trung Cấp',
-                    label: 'Trung Cấp',
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label="Môn học"
               name="subject"
               rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
             >
               <Select
                 mode="multiple"
-                placeholder="Nhập môn học"
+                placeholder="Môn học"
                 value={selectedItems}
                 onChange={setSelectedItems}
                 style={{ width: '100%' }}
@@ -412,13 +425,12 @@ const page = () => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Ca dạy"
               name="time_tutor_id"
               rules={[{ required: true, message: 'Hãy chọn ca học bạn dạy!' }]}
             >
               <Select
                 mode="multiple"
-                placeholder="Nhập ca học môn học"
+                placeholder="Ca dạy"
                 value={selectedTimeSlot}
                 onChange={setSelectedTimeSlot}
                 style={{ width: '100%' }}
@@ -426,61 +438,20 @@ const page = () => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Lớp học"
               name="class_id"
               rules={[{ required: true, message: 'Hãy chọn lớp học bạn dạy!' }]}
             >
               <Select
                 mode="multiple"
-                placeholder="Nhập môn học"
+                placeholder="Lớp học"
                 value={selectedClasses}
                 onChange={setSelectedClasses}
                 style={{ width: '100%' }}
                 options={filteredClasses}
               />
             </Form.Item>
+
             <Form.Item<FieldType>
-              label="Mô tả "
-              name="description"
-              rules={[{ required: true, message: 'Hãy điền mô tả về bạn!' }]}
-              className={'w-full'}
-            >
-              <Input className={'w-full'} />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label="Hiện tại đang là"
-              name="current_role"
-              rules={[
-                {
-                  required: true,
-                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
-                },
-              ]}
-              className={'w-full'}
-            >
-              <Select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                filterOption={filterOption}
-                options={[
-                  {
-                    value: 'Sinh Viên',
-                    label: 'Sinh Viên',
-                  },
-                  {
-                    value: 'Giảng Viên',
-                    label: 'Giảng Viên',
-                  },
-                  {
-                    value: 'Giáo viên',
-                    label: 'Giáo viên',
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label="Mức lương"
               name="salary_id"
               rules={[
                 { required: true, message: 'Hãy nhập mức lương của bạn!' },
@@ -489,13 +460,12 @@ const page = () => {
             >
               <Select
                 showSearch
-                placeholder="Select a person"
+                placeholder="Mức lương"
                 optionFilterProp="children"
                 options={filteredSalary}
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Khu vực dạy"
               name="DistrictID"
               rules={[
                 { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
@@ -507,7 +477,7 @@ const page = () => {
                 style={{ width: '100%' }}
                 value={value}
                 dropdownStyle={{ maxHeight: 10000, overflow: 'auto' }}
-                placeholder="Please select"
+                placeholder="Khu vực dạy"
                 allowClear
                 multiple
                 treeDefaultExpandAll
@@ -515,13 +485,12 @@ const page = () => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Đại học"
               name="school_id"
               rules={[{ required: true, message: 'Hãy chọn trường đại học!' }]}
             >
               <Select
                 mode="multiple"
-                placeholder="Nhập môn học"
+                placeholder="Trường đang và đã học"
                 value={selectedSchool}
                 onChange={setSelectedSchool}
                 style={{ width: '100%' }}
@@ -529,36 +498,68 @@ const page = () => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Kinh Nghiệm"
+              name="current_role"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Hiện đang là"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Giảng viên',
+                    label: 'Giảng viên',
+                  },
+                  {
+                    value: 'Sinh Viên',
+                    label: 'Sinh Viên',
+                  },
+                  {
+                    value: 'Giáo viên',
+                    label: 'Giáo viên',
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
               name="exp"
               rules={[
                 { required: true, message: 'Hãy nhập kinh nghiệm của bạn!' },
               ]}
               className={'w-full'}
             >
-              <Input className={'w-full'} />
+              <Input className={'w-full'} placeholder="Kinh nghiệm giảng dạy" />
+            </Form.Item>
+            <Form.Item<FieldType>
+              name="description"
+              rules={[{ required: true, message: 'Hãy điền mô tả về bạn!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} placeholder="Mô tả về bạn" />
             </Form.Item>
           </div>
-          <Form.Item
-            name="fieldA"
-            valuePropName="checked"
-            rules={[
-              { required: true, message: 'Hãy ấn đồng ý và xem điều khoản!' },
-            ]}
-          >
-            <Checkbox>
-              {' '}
-              Bạn đồng ý với điều khoản sau{' '}
-              <Link href={'../rules/'}>Xem tại đây</Link>{' '}
-            </Checkbox>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+          <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
+            <Button type="primary" htmlType="submit" className="bg-blue-tw">
               Submit
             </Button>
           </Form.Item>
+          <span>
+            {' '}
+            Bạn hãy xem điều khoản sau đây
+            <button onClick={openModal}>Xem tại đây</button>
+          </span>
         </Form>
       </div>
+      <MyModalRules visible={isOpen} onClose={closeModal}>
+        <div>Trường</div>
+      </MyModalRules>
       <div
         className={
           'col-span-5 bg-banner-register bg-center bg-cover bg-no-repeat relative before:absolute before:top-0 before:w-full before:h-full before:bg-blue-tw1 before:opacity-30'
@@ -567,4 +568,5 @@ const page = () => {
     </div>
   );
 };
+
 export default page;
