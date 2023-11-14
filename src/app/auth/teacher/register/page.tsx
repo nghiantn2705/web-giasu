@@ -11,13 +11,11 @@ import {
   Radio,
   RadioChangeEvent,
   DatePicker,
-  InputNumber,
   message,
   Checkbox,
+  TreeSelect,
 } from 'antd';
-import type { DatePickerProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadFile } from 'antd/es/upload/interface';
 import toast from 'react-hot-toast';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
@@ -27,19 +25,16 @@ import Image from 'next/image';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
-import { IDisctrict } from '@/types/IDistrict';
-import axios from 'axios';
 import {
   getClass,
-  getDistrict,
   getSalary,
   getSchool,
   getSubject,
   getTimeSlot,
   getLocation,
-  getLocationDistric,
 } from '@/services/get';
 import Link from 'next/link';
+
 const page = () => {
   const router = useRouter();
   type FieldType = {
@@ -60,14 +55,15 @@ const page = () => {
     school_id?: string;
     salary_id?: string;
     DistrictID?: string[];
+    address: string;
   };
   const [fileList2, setFileList2] = useState([]);
   const [value, setValue] = useState('');
   const [fileList, setFileList] = useState([]);
   const [location, setLocation] = useState([]);
+  // const [locationD, setLocationD] = useState();
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
-  const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
@@ -83,20 +79,26 @@ const page = () => {
   };
   const onFinish = (values: any) => {
     console.log({ role: 3, ...values });
+    (async () => {
+      try {
+        await RegisterUser({ role: 3, ...values });
+        toast.success('Đăng kí thành công !', {
+          duration: 3000,
+          position: 'top-right',
+          icon: '✅',
+          iconTheme: {
+            primary: '#000',
+            secondary: '#fff',
+          },
+        });
+        router.push('/auth/user');
+      } catch (ex: any) {
+        console.log(ex);
+      }
+    })();
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
-  };
-  const callAPI = async (host: any) => {
-    const response = await axios.get(host);
-    return response;
-  };
-  callAPI('https://provinces.open-api.vn/api/?depth=1');
-  const onChangeLocation = (api) => {
-    return axios.get(api).then((response) => {});
-  };
-  const callApiWard = (api) => {
-    return axios.get(api).then((response) => {});
   };
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
@@ -122,11 +124,26 @@ const page = () => {
     label: o.name,
     value: o.id,
   }));
-
-  const filteredLocation = location?.map((o) => ({
-    label: o.name,
-    value: o.code,
-  }));
+  const filteredLocation = location?.map((item: any) => {
+    const newDistricts = item.districts?.map((district: any) => {
+      const newWards = district.wards?.map((ward: any) => {
+        return {
+          value: ward.name,
+          title: ward.name,
+        };
+      });
+      return {
+        value: district.name,
+        title: district.name,
+        children: newWards,
+      };
+    });
+    return {
+      value: item.name,
+      title: item.name,
+      children: newDistricts,
+    };
+  });
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
@@ -159,27 +176,22 @@ const page = () => {
     (async () => {
       try {
         const resSubject = await getSubject();
-        const resClasses = await getClass();
-        const resDistrict = await getDistrict();
-        const resSalary = await getSalary();
-        const resTimeSlote = await getTimeSlot();
-        const resSchool = await getSchool();
-        const reslocation = await getLocation();
-        // const resLocationDis = await getLocationDistric()
-        console.log(district);
         setSubject(resSubject);
+        const resClasses = await getClass();
         setClasslevels(resClasses);
-        setDistrict(resDistrict);
+        const resSalary = await getSalary();
         setSalary(resSalary);
+        const resTimeSlote = await getTimeSlot();
         setTimeSlot(resTimeSlote);
+        const resSchool = await getSchool();
         setSchool(resSchool);
+        const reslocation = await getLocation();
         setLocation(reslocation);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
-
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
       <div className={'col-span-7 pt-5 pb-16  px-20'}>
@@ -213,7 +225,7 @@ const page = () => {
               rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
               className={'w-full'}
             >
-              <InputNumber min={0} max={10} step={1} precision={0} />
+              <Input className={'w-full'} placeholder="Telephone Number" />
             </Form.Item>
 
             <Form.Item<FieldType>
@@ -248,13 +260,34 @@ const page = () => {
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
+              label="Nơi ở "
+              name="address"
+              rules={[
+                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                // onChange={onChange1}
+                id="province"
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
+                options={filteredLocation}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
               label="Ngày sinh"
               name="date_of_birth"
               rules={[
                 { required: true, message: 'Hãy nhập mật khẩu của bạn!' },
               ]}
             >
-              <DatePicker picker="date" format="DD/MM/YYYY" />
+              <DatePicker
+                className={'w-full'}
+                picker="date"
+                format="DD/MM/YYYY"
+              />
             </Form.Item>
             <Form.Item<FieldType>
               label="Ảnh đại diện"
@@ -308,7 +341,7 @@ const page = () => {
               <Input className={'w-full'} />
             </Form.Item>
             <Form.Item
-              label="Ảnh"
+              label="Bằng đại học"
               name="images"
               valuePropName="fileList"
               getValueFromEvent={normFile}
@@ -332,6 +365,39 @@ const page = () => {
               </Upload>
             </Form.Item>
             <Form.Item<FieldType>
+              id={'truong'}
+              label="Hiện tại đang là"
+              name="current_role"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                },
+              ]}
+              className={'w-full'}
+            >
+              <Select
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 'Đại học',
+                    label: 'Đại học',
+                  },
+                  {
+                    value: 'Cao đẳng',
+                    label: 'Cao đẳng',
+                  },
+                  {
+                    value: 'Trung Cấp',
+                    label: 'Trung Cấp',
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
               label="Môn học"
               name="subject"
               rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
@@ -348,7 +414,7 @@ const page = () => {
             <Form.Item<FieldType>
               label="Ca dạy"
               name="time_tutor_id"
-              rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
+              rules={[{ required: true, message: 'Hãy chọn ca học bạn dạy!' }]}
             >
               <Select
                 mode="multiple"
@@ -436,12 +502,16 @@ const page = () => {
               ]}
               className={'w-full'}
             >
-              <Select
-                id="province"
+              <TreeSelect
                 showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                options={filteredLocation}
+                style={{ width: '100%' }}
+                value={value}
+                dropdownStyle={{ maxHeight: 10000, overflow: 'auto' }}
+                placeholder="Please select"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                treeData={filteredLocation}
               />
             </Form.Item>
             <Form.Item<FieldType>
