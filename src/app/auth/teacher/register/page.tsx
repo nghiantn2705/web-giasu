@@ -540,8 +540,8 @@ const page = () => {
               <Input className={'w-full'} placeholder="Mô tả về bạn" />
             </Form.Item>
           </div>
-          <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+          <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
+            <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
               Submit
             </Button>
           </Form.Item>
