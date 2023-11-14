@@ -71,14 +71,13 @@ const page = () => {
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-  console.log(subject);
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
   const onFinish = (values: any) => {
@@ -165,8 +164,7 @@ const page = () => {
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
         const reslocation = await getLocation();
-        // const resLocationDis = await getLocationDistric()
-        console.log(district);
+
         setSubject(resSubject);
         setClasslevels(resClasses);
         setDistrict(resDistrict);
@@ -260,7 +258,6 @@ const page = () => {
               label="Ảnh đại diện"
               name="avatar"
               getValueFromEvent={(event) => {
-                console.log(event.file.name);
                 return event?.fileList;
               }}
               valuePropName="fileList"

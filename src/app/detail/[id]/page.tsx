@@ -28,8 +28,7 @@ export default function Home() {
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
-  console.log(teacher);
-  console.log(userInfo);
+
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -174,7 +173,7 @@ export default function Home() {
                     <div>
                       <p className="text-xl font-bold">Dạy môn:</p>
                       <div className="grid gap-2 grid-cols-8 py-3">
-                        {teacher?.subject.map((subjectId, index: number) => (
+                        {teacher?.subject?.map((subjectId, index: number) => (
                           <div
                             key={index}
                             className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"

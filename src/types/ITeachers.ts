@@ -10,7 +10,12 @@ export interface ITeachers {
   school_id: number;
   Citizen_card: number;
   education_level: string;
-  class_id: number;
+  class_id: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   salary_id: string;
   description: string;
   time_tutor_id: number;
@@ -24,18 +29,22 @@ export interface ITeachers {
       name: string;
     },
   ];
-  district: {
-    id: number;
-    name: string;
-  };
+  district: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   school: {
     id: number;
     name: string;
   };
-  class_levels: {
-    id: number;
-    name: string;
-  };
+  class_levels: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   time_slot: {
     id: number;
     name: string;
