@@ -95,7 +95,6 @@ const page = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
-  const [selectedSchool, setSelectedSchool] = useState<string[]>([]);
   const filteredOptions = subject?.map((o) => ({
     label: o.name,
     value: o.id,
@@ -138,9 +137,11 @@ const page = () => {
   //   };
   // });
   const filteredLocation = location?.map((item: any) => {
-    return item.districts;
+    return {
+      value: item.code,
+      label: item.name,
+    };
   });
-  console.log(filteredLocation);
 
   const filteredLocationAddress = adress?.map((item: any) => {
     const newDistricts = item.districts?.map((district: any) => {
@@ -216,26 +217,26 @@ const page = () => {
       }
     })();
   }, []);
-  const MyDatePicker = DatePicker.generatePicker(dayjsGenerateConfig);
   const onFinish = (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
-    // (async () => {
-    //   try {
-    //     await RegisterUser({ role: 3, ...values });
-    //     toast.success('Đăng kí thành công !', {
-    //       duration: 3000,
-    //       position: 'top-right',
-    //       icon: '✅',
-    //       iconTheme: {
-    //         primary: '#000',
-    //         secondary: '#fff',
-    //       },
-    //     });
-    //     router.push('/auth/user');
-    //   } catch (ex: any) {
-    //     console.log(ex);
-    //   }
-    // })();
+    console.log({ role: 3, ...values });
+    (async () => {
+      try {
+        await RegisterUser({ role: 3, ...values });
+        toast.success('Đăng kí thành công !', {
+          duration: 3000,
+          position: 'top-right',
+          icon: '✅',
+          iconTheme: {
+            primary: '#000',
+            secondary: '#fff',
+          },
+        });
+        router.push('/auth/teacher');
+      } catch (ex: any) {
+        console.log(ex);
+      }
+    })();
   };
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
@@ -298,6 +299,8 @@ const page = () => {
               className={'w-full'}
             >
               <TreeSelect
+                value={adress}
+                key={Math.random()}
                 showSearch
                 style={{ width: '100%' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -326,7 +329,7 @@ const page = () => {
                 { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
               ]}
             >
-              <MyDatePicker format="YYYY-MM-DD" className={'w-full'} />
+              <DatePicker format="YYYY-MM-DD" className={'w-full'} />
             </Form.Item>
             <Form.Item<FieldType>
               label="Ảnh đại diện"
@@ -380,7 +383,7 @@ const page = () => {
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
-              name="Certificate"
+              name="Certificate[]"
               valuePropName="fileList"
               getValueFromEvent={normFile}
               rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}
@@ -524,7 +527,9 @@ const page = () => {
               ]}
               className={'w-full'}
             >
-              <TreeSelect
+              {/* <TreeSelect
+                key={Math.random()}
+                value={location}
                 showSearch
                 style={{ width: '100%' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -533,6 +538,12 @@ const page = () => {
                 multiple
                 treeDefaultExpandAll
                 treeData={filteredLocation}
+              /> */}
+              <Select
+                showSearch
+                placeholder="Khu vực dạy"
+                optionFilterProp="children"
+                options={filteredLocation}
               />
             </Form.Item>
             <Form.Item<FieldType>
@@ -540,11 +551,9 @@ const page = () => {
               rules={[{ required: true, message: 'Hãy chọn trường đại học!' }]}
             >
               <Select
-                mode="multiple"
+                showSearch
                 placeholder="Trường đang và đã học"
-                value={selectedSchool}
-                onChange={setSelectedSchool}
-                style={{ width: '100%' }}
+                optionFilterProp="children"
                 options={filteredSchool}
               />
             </Form.Item>
