@@ -12,6 +12,7 @@ interface IProps {
   teachers: ITeachers[];
 }
 const Teacher = ({ teachers }: IProps) => {
+  console.log(teachers);
   const [starData, setStarData] = useState<{ avg: string }>();
   const { id: params } = useParams();
   useEffect(() => {
@@ -21,7 +22,6 @@ const Teacher = ({ teachers }: IProps) => {
       setStarData(resRating);
     })();
   }, []);
-  console.log(teachers);
   return (
     <>
       {teachers ? (
@@ -69,7 +69,7 @@ const Teacher = ({ teachers }: IProps) => {
                       'py-3 px-3 border-y border-slate-100 grid grid-cols-2 gap-1'
                     }
                   >
-                    {items?.subject.map((classId, index: number) => (
+                    {items?.subject?.map((classId, index: number) => (
                       <li
                         key={index}
                         className={

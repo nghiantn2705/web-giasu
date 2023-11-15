@@ -1,18 +1,20 @@
+'use client';
 import Home from '@/components/Teacher/Home';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Teacher from '@/components/Teacher/Teacher';
 import SelectFilter from '@/components/Teacher/SelectFilter';
-import { Metadata } from 'next';
 import Footer from '@/components/Layout/Footer';
 import { getFilter } from '@/services/fillter';
+import { ITeachers } from '@/types/ITeachers';
 
-export const metadata: Metadata = {
-  title: 'Tìm gia sư',
-  description: 'Tìm thuê gia sư',
-};
-export default async function App(props: any) {
-  const teachers = await getFilter(props?.searchParams);
-
+export default function App(props: any) {
+  const [teacher, setTeacher] = useState<ITeachers[]>();
+  useEffect(() => {
+    (async () => {
+      const teachers = await getFilter(props?.searchParams);
+      setTeacher(teachers);
+    })();
+  }, []);
   return (
     <>
       <Home>
@@ -27,7 +29,7 @@ export default async function App(props: any) {
               Kết quả tìm kiếm
             </span>
           </div>
-          <Teacher teachers={teachers} />
+          {teacher ? <Teacher teachers={teacher} /> : ''}
         </div>
         <Footer />
       </Home>

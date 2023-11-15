@@ -65,10 +65,14 @@ const SignInTeacher = () => {
                   const data = await auth({
                     ...values,
                   });
-                  if (data?.user && data?.user?.role == 'Teacher') {
+                  if (data?.user && data?.user?.role == 'teacher') {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
+                    window.localStorage.setItem(
+                      'access_token',
+                      data?.access_token,
+                    );
                     toast.success('Đăng nhập thành công !', {
                       duration: 3000,
                       position: 'top-right',
