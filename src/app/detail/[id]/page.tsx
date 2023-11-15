@@ -165,7 +165,7 @@ export default function Home() {
                             key={index}
                             className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
                           >
-                            <p>{classId}</p>
+                            <p>{classId?.name}</p>
                           </div>
                         ))}
                       </div>
@@ -178,7 +178,7 @@ export default function Home() {
                             key={index}
                             className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
                           >
-                            <p>{subjectId}</p>
+                            <p>{subjectId?.name}</p>
                           </div>
                         ))}
                       </div>

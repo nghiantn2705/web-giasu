@@ -12,6 +12,7 @@ interface IProps {
   teachers: ITeachers[];
 }
 const Teacher = ({ teachers }: IProps) => {
+  console.log(teachers);
   const [starData, setStarData] = useState<{ avg: string }>();
   const { id: params } = useParams();
   useEffect(() => {

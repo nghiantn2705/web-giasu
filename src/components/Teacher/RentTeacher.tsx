@@ -23,6 +23,8 @@ export default function RentTeacher(props: IProps) {
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
+  console.log(user);
+  console.log(subjectteacher);
 
   useEffect(() => {
     (async () => {
