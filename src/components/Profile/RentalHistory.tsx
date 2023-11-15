@@ -47,6 +47,7 @@ export default function RentalHistory({ infoUser }: IProps) {
           <tr>
             <th className={'px-6 py-4'}>Tên</th>
             <th className={'px-6 py-4'}>Môn</th>
+            <th className={'px-6 py-4'}>Lớp</th>
             <th className={'px-6 py-4'}>Trạng thái</th>
             {infoUser?.role == 'teacher' ? (
               <th className={'px-6 py-4'}>Action</th>
@@ -78,7 +79,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                     className={'rounded-full'}
                   /> */}
                   <div className={'text-base font-semibold'}>
-                    {infoUser.role == 'Teacher'
+                    {infoUser.role == 'teacher'
                       ? `${items?.idUser}`
                       : `${items?.idTeacher}`}
                   </div>
@@ -86,6 +87,17 @@ export default function RentalHistory({ infoUser }: IProps) {
                 <td className={'px-6 py-4'}>
                   <div className={'flex flex-col gap-2'}>
                     {items?.subject?.map((items: string) => {
+                      return (
+                        <>
+                          <span>{items}</span>
+                        </>
+                      );
+                    })}
+                  </div>
+                </td>
+                <td className={'px-6 py-4'}>
+                  <div className={'flex flex-col gap-2'}>
+                    {items?.class?.map((items: string) => {
                       return (
                         <>
                           <span>{items}</span>
@@ -122,7 +134,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  {infoUser?.role == 'Teacher' ? (
+                  {infoUser?.role == 'teacher' ? (
                     items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (
