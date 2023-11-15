@@ -33,7 +33,7 @@ const navLink = [
   },
   {
     name: 'Liên hệ',
-    link: '/contact',
+    link: '/test',
     icon: <FiPhone />,
   },
 ];
