@@ -1,5 +1,4 @@
 import { apiRequest, IFetchBody, IFetchQuery } from '@/services/base';
-import { ITeachers } from '@/types/ITeachers';
 
 export const getFeedback = (query: IFetchQuery = {}) => {
   return apiRequest.get<
