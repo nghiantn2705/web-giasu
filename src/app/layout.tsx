@@ -6,7 +6,7 @@ import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout/Layout';
 import { Toaster } from 'react-hot-toast';
 
-const roboto = Roboto({ weight: '500', subsets: ['latin'] });
+const roboto = Roboto({ weight: ['500', '400', '700'], subsets: ['latin'] });
 export const metadata: Metadata = {
   title: {
     default: 'Gia Sư Poly',

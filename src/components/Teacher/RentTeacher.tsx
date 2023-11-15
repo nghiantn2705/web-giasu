@@ -7,7 +7,6 @@ import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
 import { getClass, getSubject } from '@/services/get';
-import { getClassRent, getSubjectRent } from '@/services/getRent';
 import { postJob } from '@/services/job';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
