@@ -46,7 +46,7 @@ export default function App(props: any) {
               Kết quả tìm kiếm
             </span>
           </div>
-          <Teacher teachers={teacher} />
+          {/*<Teacher teachers={teacher} />*/}
         </div>
         <Footer />
       </Home>
