@@ -33,8 +33,10 @@ import {
   getSubject,
   getTimeSlot,
   getLocation,
+  getAddress,
 } from '@/services/get';
 import MyModalRules from '../../rules/page';
+import moment from 'moment';
 const page = () => {
   const router = useRouter();
   type FieldType = {
@@ -61,6 +63,7 @@ const page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [fileList2, setFileList2] = useState([]);
   const [value, setValue] = useState('');
+  const [adress, setAdress] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [location, setLocation] = useState([]);
   const [classlevels, setClasslevels] = useState<IClass[]>();
@@ -85,25 +88,7 @@ const page = () => {
   const openModal = () => {
     setIsOpen(true);
   };
-  const onFinish = (values: any) => {
-    (async () => {
-      try {
-        await RegisterUser({ role: 3, ...values });
-        toast.success('Đăng kí thành công !', {
-          duration: 3000,
-          position: 'top-right',
-          icon: '✅',
-          iconTheme: {
-            primary: '#000',
-            secondary: '#fff',
-          },
-        });
-        router.push('/auth/user');
-      } catch (ex: any) {
-        console.log(ex);
-      }
-    })();
-  };
+
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -132,7 +117,32 @@ const page = () => {
     value: o.id,
   }));
 
+  // const filteredLocation = location?.map((item: any) => {
+  //   const newDistricts = item.districts?.map((district: any) => {
+  //     const newWards = district?.wards.map((ward: any) => {
+  //       return {
+  //         value: ward.name,
+  //         title: ward.name,
+  //       };
+  //     });
+  //     return {
+  //       value: district.name,
+  //       title: district.name,
+  //       children: newWards,
+  //     };
+  //   });
+  //   return {
+  //     value: item.name,
+  //     title: item.name,
+  //     children: newDistricts,
+  //   };
+  // });
   const filteredLocation = location?.map((item: any) => {
+    return item.districts;
+  });
+  console.log(filteredLocation);
+
+  const filteredLocationAddress = adress?.map((item: any) => {
     const newDistricts = item.districts?.map((district: any) => {
       const newWards = district?.wards.map((ward: any) => {
         return {
@@ -191,6 +201,7 @@ const page = () => {
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
         const reslocation = await getLocation();
+        const resAdress = await getAddress();
         console.log(district);
         setSubject(resSubject);
         setClasslevels(resClasses);
@@ -199,12 +210,33 @@ const page = () => {
         setTimeSlot(resTimeSlote);
         setSchool(resSchool);
         setLocation(reslocation);
+        setAdress(resAdress);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
-
+  const MyDatePicker = DatePicker.generatePicker(dayjsGenerateConfig);
+  const onFinish = (values: any) => {
+    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
+    // (async () => {
+    //   try {
+    //     await RegisterUser({ role: 3, ...values });
+    //     toast.success('Đăng kí thành công !', {
+    //       duration: 3000,
+    //       position: 'top-right',
+    //       icon: '✅',
+    //       iconTheme: {
+    //         primary: '#000',
+    //         secondary: '#fff',
+    //       },
+    //     });
+    //     router.push('/auth/user');
+    //   } catch (ex: any) {
+    //     console.log(ex);
+    //   }
+    // })();
+  };
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
       <div className={'col-span-7 pt-5 pb-16  px-20'}>
@@ -262,9 +294,7 @@ const page = () => {
             </Form.Item>
             <Form.Item<FieldType>
               name="address"
-              rules={[
-                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
-              ]}
+              rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
               className={'w-full'}
             >
               <TreeSelect
@@ -275,7 +305,7 @@ const page = () => {
                 allowClear
                 multiple
                 treeDefaultExpandAll
-                treeData={filteredLocation}
+                treeData={filteredLocationAddress}
               />
             </Form.Item>
             <Form.Item<FieldType>
@@ -296,11 +326,7 @@ const page = () => {
                 { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
               ]}
             >
-              <DatePicker
-                picker="date"
-                format="DD/MM/YYYY"
-                className={'w-full'}
-              />
+              <MyDatePicker format="YYYY-MM-DD" className={'w-full'} />
             </Form.Item>
             <Form.Item<FieldType>
               label="Ảnh đại diện"
@@ -354,13 +380,12 @@ const page = () => {
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
-              name="images"
+              name="Certificate"
               valuePropName="fileList"
               getValueFromEvent={normFile}
               rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}
             >
               <Upload
-                name="avatar"
                 beforeUpload={handleBeforeUpload}
                 customRequest={dummyRequest}
                 onChange={handleOnChange}
