@@ -94,7 +94,7 @@ const InfoUser = ({ infoUser }: IProps) => {
               Cập nhật thông tin cá nhân
             </Link>
           </div>
-          {infoUser?.role == 'teacher' ? (
+          {infoUser?.role == 'Teacher' ? (
             <div className={'bg-white p-3 shadow-sm rounded-sm'}>
               <div className="grid grid-cols-2">
                 <div>

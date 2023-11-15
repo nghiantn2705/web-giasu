@@ -38,7 +38,7 @@ export default function FormAccept({ user }: IJob) {
       <button
         onClick={openModal}
         className={
-          'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
+          'font-medium text-blue-6000 border py-2 px-4 hover:bg-red-400 hover:text-white'
         }
       >
         Xác nhận
