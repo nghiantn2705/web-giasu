@@ -66,6 +66,14 @@ const Profile = ({ infoUser, children }: IProps) => {
                   >
                     Lịch sử thuê
                   </Link>
+                  <Link
+                    href={'/profile/history-paypal'}
+                    className={
+                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+                    }
+                  >
+                    Lịch sử nạp tiền
+                  </Link>
                 </div>
                 <Paypal />
               </div>

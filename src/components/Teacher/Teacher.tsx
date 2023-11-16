@@ -36,7 +36,7 @@ const Teacher = ({ teachers }: IProps) => {
               <div
                 key={index}
                 className={
-                  'rounded-xl bg-white border border-blue-tw  shadow hover:shadow-md overflow-hidden ease-in-out duration-500  '
+                  'rounded-xl bg-white border border-blue-tw  shadow hover:shadow-md overflow-hidden ease-in-out duration-500 '
                 }
               >
                 <div className={'relative'}>
@@ -44,7 +44,7 @@ const Teacher = ({ teachers }: IProps) => {
                     <picture className={'flex justify-center'}>
                       <img
                         src={`${items?.avatar}`}
-                        width={280}
+                        width={200}
                         height={200}
                         alt=""
                         className={'w-auto h-[200px]'}
