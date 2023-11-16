@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
-import { ITeachers1 } from '@/types/ITeachers1';
+import { ITeachersDetail } from '@/types/ITeachersDetail';
 import { IFeedback } from '@/types/IFeedback';
 import Loading from '@/components/Layout/Loading';
 import { getFeedback, postFeedback, getStart } from '@/services/feedback';
@@ -21,7 +21,7 @@ import ModalFeeback from '@/components/ModalTutor/LoginModal';
 import { Dialog, Transition } from '@headlessui/react';
 
 export default function Home() {
-  const [userInfo] = useStore<ITeachers1>('userInfo');
+  const [userInfo] = useStore<ITeachersDetail>('userInfo');
   const [teacher, setTeachers] = useState<ITeachers>();
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
   const [starData, setStarData] = useState<{ avg: string }>();

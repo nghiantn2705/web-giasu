@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
 'use client';
 import React, { useEffect, useState } from 'react';
-import { ITeachers } from '@/types/ITeachers';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { getStart } from '@/services/feedback';
 import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ITeacherFilter } from '@/types/ITeacherFilter';
 
 interface IProps {
-  teachers: ITeachers[];
+  teachers: ITeacherFilter[];
 }
+
 const Teacher = ({ teachers }: IProps) => {
-  console.log(teachers);
   const [starData, setStarData] = useState<{ avg: string }>();
   const { id: params } = useParams();
   useEffect(() => {
@@ -22,6 +22,7 @@ const Teacher = ({ teachers }: IProps) => {
       setStarData(resRating);
     })();
   }, []);
+
   return (
     <>
       {teachers ? (
@@ -30,7 +31,7 @@ const Teacher = ({ teachers }: IProps) => {
             'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'
           }
         >
-          {teachers?.map((items: ITeachers, index: number) => {
+          {teachers?.map((items: ITeacherFilter, index: number) => {
             return (
               <div
                 key={index}
@@ -84,9 +85,7 @@ const Teacher = ({ teachers }: IProps) => {
                   <ul className="pt-3 px-3 flex justify-between items-center list-none">
                     <li>
                       <span className="text-slate-400">Khu vực</span>
-                      <p className="text-lg font-medium">
-                        {items?.district?.name}
-                      </p>
+                      <p className="text-lg font-medium">{items?.DistrictID}</p>
                     </li>
 
                     <li>
