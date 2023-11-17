@@ -72,7 +72,8 @@ const page = () => {
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
-  console.log(subject);
+
+  console.log(adress);
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
@@ -92,6 +93,7 @@ const page = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
@@ -99,18 +101,22 @@ const page = () => {
     label: o.name,
     value: o.id,
   }));
+
   const filteredClasses = classlevels?.map((o) => ({
     label: o.class,
     value: o.id,
   }));
+
   const filteredSchool = school?.map((o) => ({
     label: o.name,
     value: o.id,
   }));
+
   const filteredTimeSlot = timeslot?.map((o) => ({
     label: o.name,
     value: o.id,
   }));
+
   const filteredSalary = salary?.map((o) => ({
     label: o.name,
     value: o.id,
@@ -332,10 +338,16 @@ const page = () => {
               <DatePicker format="YYYY-MM-DD" className={'w-full'} />
             </Form.Item>
             <Form.Item<FieldType>
+              name="Citizen_card"
+              rules={[{ required: true, message: 'Hãy sô căn cước công dân!' }]}
+              className={'w-full'}
+            >
+              <Input className={'w-full'} placeholder="Số căn cước công dân" />
+            </Form.Item>
+            <Form.Item<FieldType>
               label="Ảnh đại diện"
               name="avatar"
               getValueFromEvent={(event) => {
-                console.log(event.file.name);
                 return event?.fileList;
               }}
               valuePropName="fileList"
@@ -366,20 +378,13 @@ const page = () => {
                   });
                 }}
                 customRequest={(info: any) => {
-                  setFileList([info.file]);
+                  setFileList([info?.file]);
                 }}
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Upload</Button>
                 {fileList[0]?.name}
               </Upload>
-            </Form.Item>
-            <Form.Item<FieldType>
-              name="Citizen_card"
-              rules={[{ required: true, message: 'Hãy sô căn cước công dân!' }]}
-              className={'w-full'}
-            >
-              <Input className={'w-full'} placeholder="Số căn cước công dân" />
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
