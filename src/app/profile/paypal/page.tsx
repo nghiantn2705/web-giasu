@@ -8,31 +8,37 @@ import { ITeachers } from '@/types/ITeachers';
 import { postPaypal, postSavePaypal } from '@/services/paypal';
 import { IPay } from '@/types/IPay';
 import { useRouter, useSearchParams } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 export default function Paypal() {
   const [user] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
   const [paypal, setPaypal] = useState<IPay>();
   const searchParam = useSearchParams();
-  const vnpAmount = searchParam.get('vnp_Amount');
+  const vnpAmount = Number(searchParam.get('vnp_Amount'));
+  const vnpOrderInfo = searchParam.get('vnp_OrderInfo');
+  const vnpBankCode = searchParam.get('vnp_BankCode');
   const router = useRouter();
-
   useEffect(() => {
-    if (paypal) {
-      const deposit = { id: user?.id, coin: vnpAmount };
+    if (vnpAmount && vnpOrderInfo && vnpBankCode) {
+      const deposit = {
+        userId: user?.id,
+        coin: vnpAmount / 100,
+        code: vnpOrderInfo,
+        status: 'Thành công',
+        bank: vnpBankCode,
+      };
       (async () => {
         const resMessege = await postSavePaypal({ ...deposit });
         if (resMessege) {
           router.push('/profile');
         }
-        toast.success(`${resMessege}`);
       })();
       if (paypal?.data) {
         window.location.assign(`${paypal?.data}`);
       }
     }
   }, [paypal?.data]);
+
   const closeModal = () => {
     setIsOpen(false);
   };

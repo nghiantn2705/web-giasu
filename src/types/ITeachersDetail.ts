@@ -1,4 +1,4 @@
-export interface ITeachers1 {
+export interface ITeachersDetail {
   Certificate: string;
   Citizen_card: string;
   date_of_birth: Date;
