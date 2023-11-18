@@ -29,8 +29,17 @@ export const postJob = (body: IFetchBody) => {
 };
 
 export const putJob = (body: IFetchBody) => {
+  const token =
+    typeof window === 'object' && window.localStorage.getItem('access_token');
   return apiRequest.put(
     `${process.env.NEXT_PUBLIC_API_URL}/job/${body?.id}`,
     body,
+    {
+      headers: token
+        ? {
+            Authorization: 'Bearer ' + token,
+          }
+        : {},
+    },
   );
 };

@@ -22,7 +22,7 @@ interface IJob {
 }
 export default function RentalHistory({ infoUser }: IProps) {
   const [job, setJob] = useState<IJob[]>();
-
+  console.log(job);
   useEffect(() => {
     (async () => {
       const res = await getJob({ id: infoUser?.id });

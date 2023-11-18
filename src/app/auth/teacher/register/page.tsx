@@ -11,7 +11,6 @@ import {
   Radio,
   RadioChangeEvent,
   DatePicker,
-  message,
   TreeSelect,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -32,55 +31,32 @@ import {
   getSchool,
   getSubject,
   getTimeSlot,
-  getLocation,
-  getAddress,
 } from '@/services/get';
 import MyModalRules from '../../rules/page';
 import moment from 'moment';
+import { FieldType } from '@/types/Field';
 const page = () => {
   const router = useRouter();
-  type FieldType = {
-    name?: string;
-    password?: string;
-    email?: string;
-    subject?: string[];
-    avatar?: any;
-    gender?: string;
-    date_of_birth?: string;
-    phone?: number;
-    Citizen_card?: number;
-    class_id?: string[];
-    description?: string;
-    time_tutor_id?: string[];
-    current_role?: string;
-    exp?: string;
-    school_id?: string;
-    salary_id?: string;
-    DistrictID?: string[];
-    address?: string;
-    education_level?: string;
-  };
+
   const [isOpen, setIsOpen] = useState(false);
-  const [fileList2, setFileList2] = useState([]);
   const [value, setValue] = useState('');
-  const [adress, setAdress] = useState([]);
   const [fileList, setFileList] = useState([]);
-  const [location, setLocation] = useState([]);
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
 
-  console.log(adress);
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
   const closeModal = () => {
@@ -94,80 +70,57 @@ const page = () => {
     console.log('Failed:', errorInfo);
   };
 
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
   const filteredOptions = subject?.map((o) => ({
     label: o.name,
     value: o.id,
+    key: o.id,
   }));
 
   const filteredClasses = classlevels?.map((o) => ({
     label: o.class,
     value: o.id,
+    key: o.id,
   }));
 
   const filteredSchool = school?.map((o) => ({
     label: o.name,
     value: o.id,
+    key: o.id,
   }));
 
   const filteredTimeSlot = timeslot?.map((o) => ({
     label: o.name,
     value: o.id,
+    key: o.id,
   }));
 
   const filteredSalary = salary?.map((o) => ({
     label: o.name,
     value: o.id,
+    key: o.id,
   }));
 
-  // const filteredLocation = location?.map((item: any) => {
-  //   const newDistricts = item.districts?.map((district: any) => {
-  //     const newWards = district?.wards.map((ward: any) => {
-  //       return {
-  //         value: ward.name,
-  //         title: ward.name,
-  //       };
-  //     });
-  //     return {
-  //       value: district.name,
-  //       title: district.name,
-  //       children: newWards,
-  //     };
-  //   });
-  //   return {
-  //     value: item.name,
-  //     title: item.name,
-  //     children: newDistricts,
-  //   };
-  // });
-  const filteredLocation = location?.map((item: any) => {
-    return {
-      value: item.code,
-      label: item.name,
-    };
-  });
+  const filteredLocationAddress: any = [];
 
-  const filteredLocationAddress = adress?.map((item: any) => {
-    const newDistricts = item.districts?.map((district: any) => {
-      const newWards = district?.wards.map((ward: any) => {
-        return {
-          value: ward.name,
-          title: ward.name,
-        };
-      });
+  district?.forEach((item) => {
+    const newDistricts = item.district?.map((district) => {
+      const newWards = district?.ward?.map((ward) => ({
+        value: ward?.wardId,
+        title: ward?.name,
+      }));
+
       return {
-        value: district.name,
-        title: district.name,
-        children: newWards,
+        value: district?.districtId,
+        title: district?.districtName,
+        children: newWards || [],
       };
     });
-    return {
-      value: item.name,
-      title: item.name,
-      children: newDistricts,
-    };
+
+    filteredLocationAddress.push({
+      value: item?.provinceId,
+      title: item?.provinceName,
+      children: newDistricts || [],
+    });
   });
 
   const normFile = (e: any) => {
@@ -183,21 +136,6 @@ const page = () => {
     }, 0);
   };
 
-  const handleBeforeUpload = (file: any) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
-    }
-    const isLt10M = file.size / 1024 / 1024 < 10;
-    if (!isLt10M) {
-      message.error('Kích thước hình ảnh không được vượt quá 10MB!');
-    }
-    return isJpgOrPng && isLt10M;
-  };
-
-  const handleOnChange = ({ fileList2 }: any) => {
-    setFileList2(fileList2);
-  };
   useEffect(() => {
     (async () => {
       try {
@@ -207,42 +145,65 @@ const page = () => {
         const resSalary = await getSalary();
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
-        const reslocation = await getLocation();
-        const resAdress = await getAddress();
-        console.log(district);
         setSubject(resSubject);
         setClasslevels(resClasses);
         setDistrict(resDistrict);
         setSalary(resSalary);
         setTimeSlot(resTimeSlote);
         setSchool(resSchool);
-        setLocation(reslocation);
-        setAdress(resAdress);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
-    console.log({ role: 3, ...values });
-    (async () => {
-      try {
-        await RegisterUser({ role: 3, ...values });
-        toast.success('Đăng kí thành công !', {
-          duration: 3000,
-          position: 'top-right',
-          icon: '✅',
-          iconTheme: {
-            primary: '#000',
-            secondary: '#fff',
-          },
-        });
-        router.push('/auth/teacher');
-      } catch (ex: any) {
-        console.log(ex);
-      }
-    })();
+    const fileavata = values?.certificate?.map((item) => {
+      return item?.originFileObj;
+    });
+    const file = values?.certificate?.map((item: any) => {
+      return item?.originFileObj;
+    });
+    const formData = new FormData();
+    for (let i = 0; i < file.length; i++) {
+      formData.append('Certificate[]', file[i]);
+    }
+    for (let i = 0; i < fileavata.length; i++) {
+      formData.append('avatar', fileavata[i]);
+    }
+    formData.append('name', values.name);
+    formData.append('Citizen_card', values.Citizen_card);
+    formData.append('DistrictID', values.DistrictID);
+    formData.append('address', values.address);
+    formData.append('class_id', values.class_id);
+    formData.append('current_role', values.current_role);
+    formData.append('date_of_birth', values.date_of_birth);
+    formData.append('description', values.description);
+    formData.append('education_level', values.education_level);
+    formData.append('email', values.email);
+    formData.append('exp', values.exp);
+    formData.append('gender', values.gender);
+    formData.append('password', values.password);
+    formData.append('phone', values.phone);
+    formData.append('salary_id', values.salary_id);
+    formData.append('school_id', values.school_id);
+    formData.append('subject', values.subject);
+    formData.append('time_tutor_id', values.time_tutor_id);
+    formData.append('role', '3');
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    await RegisterUser(formData);
+    toast.success('Đăng kí thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    // router.push('/auth/teacher');
   };
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
@@ -261,6 +222,7 @@ const page = () => {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          encType={'multipart/form-data'}
         >
           <div className={'grid grid-cols-2 gap-4'}>
             <Form.Item<FieldType>
@@ -305,12 +267,13 @@ const page = () => {
               className={'w-full'}
             >
               <TreeSelect
-                value={adress}
                 key={Math.random()}
+                value={filteredLocationAddress}
                 showSearch
+                treeNodeFilterProp="title"
                 style={{ width: '100%' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                placeholder="Nơi đang ở"
+                placeholder="Khu vực dạy"
                 allowClear
                 multiple
                 treeDefaultExpandAll
@@ -351,20 +314,6 @@ const page = () => {
                 return event?.fileList;
               }}
               valuePropName="fileList"
-              rules={[
-                { required: true, message: 'Hãy upload ảnh đại diện của bạn!' },
-                {
-                  validator(_, fileList) {
-                    return new Promise((resolve, rejects) => {
-                      if (fileList && fileList[0].size > 900000) {
-                        rejects('Ảnh quá dung lượng');
-                      } else {
-                        resolve('Thành công');
-                      }
-                    });
-                  },
-                },
-              ]}
             >
               <Upload
                 maxCount={1}
@@ -383,20 +332,16 @@ const page = () => {
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Upload</Button>
-                {fileList[0]?.name}
               </Upload>
             </Form.Item>
             <Form.Item
               label="Bằng đại học"
-              name="Certificate[]"
+              name="certificate"
               valuePropName="fileList"
               getValueFromEvent={normFile}
-              rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}
             >
               <Upload
-                beforeUpload={handleBeforeUpload}
                 customRequest={dummyRequest}
-                onChange={handleOnChange}
                 listType="picture"
                 maxCount={4}
                 fileList={fileList}
@@ -428,14 +373,17 @@ const page = () => {
                   {
                     value: 'Đại học',
                     label: 'Đại học',
+                    key: 1,
                   },
                   {
                     value: 'Cao đẳng',
                     label: 'Cao đẳng',
+                    key: 2,
                   },
                   {
                     value: 'Trung cấp',
                     label: 'Trung cấp',
+                    key: 3,
                   },
                 ]}
               />
@@ -532,23 +480,18 @@ const page = () => {
               ]}
               className={'w-full'}
             >
-              {/* <TreeSelect
+              <TreeSelect
                 key={Math.random()}
-                value={location}
+                value={filteredLocationAddress}
                 showSearch
                 style={{ width: '100%' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 placeholder="Khu vực dạy"
+                treeCheckable={false}
                 allowClear
                 multiple
                 treeDefaultExpandAll
-                treeData={filteredLocation}
-              /> */}
-              <Select
-                showSearch
-                placeholder="Khu vực dạy"
-                optionFilterProp="children"
-                options={filteredLocation}
+                treeData={filteredLocationAddress}
               />
             </Form.Item>
             <Form.Item<FieldType>

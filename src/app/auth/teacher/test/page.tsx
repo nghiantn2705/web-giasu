@@ -5,93 +5,92 @@ import { useState } from 'react';
 import { RegisterTeacher } from '@/services';
 import Image from 'next/image';
 import MyModalRules from '../../rules/page';
-import { Button, Form, TreeSelect, UploadFile } from 'antd';
-import { getAddress } from '@/services/get';
-interface Iprops {
-  certificate: UploadFile[];
-}
-type FieldType = {
-  name?: string;
-  password?: string;
-  email?: string;
-  subject?: string[];
-  avatar?: any;
-  gender?: string;
-  date_of_birth?: string;
-  phone?: number;
-  Citizen_card?: number;
-  class_id?: string[];
-  description?: string;
-  time_tutor_id?: string[];
-  current_role?: string;
-  exp?: string;
-  school_id?: string;
-  salary_id?: string;
-  DistrictID?: string[];
-  address?: string;
-  education_level?: string;
-};
+import { Button, Form, TreeSelect, Upload, UploadFile } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { getDistrict } from '@/services/get';
+import { IDisctrict } from '@/types/IDistrict';
+import { FieldType } from '@/types/Field';
+
 const page = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [adress, setAdress] = useState([]);
+  const [fileList, setFileList] = useState([]);
+  const [district, setDistrict] = useState<IDisctrict[]>();
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   useEffect(() => {
     (async () => {
       try {
-        const resAdress = await getAddress();
-        setAdress(resAdress);
+        const resDistrict = await getDistrict();
+        setDistrict(resDistrict);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
   }, []);
-  console.log(
-    adress?.map((item: any) => {
-      return item;
-    }),
-  );
-  const filteredLocationAddress = adress?.map((item: any) => {
-    const newDistricts = item.districts?.map((district: any) => {
-      const newWards = district?.wards.map((ward: any) => {
-        return {
-          value: ward.name,
-          title: ward.name,
-        };
-      });
+
+  const filteredLocationAddress: any = [];
+
+  district?.forEach((item) => {
+    const newDistricts = item.district?.map((district) => {
+      const newWards = district?.ward?.map((ward) => ({
+        value: ward?.wardId,
+        title: ward?.name,
+        key: ward?.wardId,
+      }));
+
       return {
-        value: district.code,
-        title: district.name,
-        children: newWards,
+        value: district?.districtId,
+        title: district?.districtName,
+        key: district?.districtId,
+        children: newWards || [],
       };
     });
-    return {
-      value: item.code,
-      title: item.name,
-      children: newDistricts,
-    };
+
+    filteredLocationAddress.push({
+      value: item?.provinceId,
+      title: item?.provinceName,
+      key: item?.provinceId,
+      children: newDistricts || [],
+    });
   });
-  const onFinish = async (values: Iprops) => {
-    // const test = values?.certificate?.map((item) => {
-    //   return item?.originFileObj;
-    // });
-    console.log(values);
-    // try {
-    //   const formData = new FormData();
-    //   for (let i = 0; i < test.length; i++) {
-    //     formData.append('Certificate[]', test[i]);
-    //   }
-    //   const res = await RegisterTeacher(formData);
-    //   console.log(res);
-    // } catch (ex) {
-    //   console.log(ex);
-    // }
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+  const dummyRequest = ({ onSuccess }: any) => {
+    setTimeout(() => {
+      onSuccess('ok');
+    }, 0);
+  };
+  const onFinish = async (values: any) => {
+    console.log(values.address.length);
+
+    try {
+      const test = values?.certificate?.map((item: any) => {
+        return item?.originFileObj;
+      });
+      const formData = new FormData();
+      for (let i = 0; i < test.length; i++) {
+        formData.append('Certificate[]', test[i]);
+      }
+      formData.append('district', values.address);
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+      const res = await RegisterTeacher(formData);
+      console.log(res);
+    } catch (ex) {
+      console.log(ex);
+    }
   };
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>
@@ -112,44 +111,45 @@ const page = () => {
           autoComplete="off"
           encType={'multipart/form-data'}
         >
-          {/*<Form.Item*/}
-          {/*  label="Bằng đại học"*/}
-          {/*  name="certificate"*/}
-          {/*  valuePropName="fileList"*/}
-          {/*  getValueFromEvent={normFile}*/}
-          {/*  rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}*/}
-          {/*>*/}
-          {/*  <Upload*/}
-          {/*    customRequest={dummyRequest}*/}
-          {/*    listType="picture"*/}
-          {/*    maxCount={4}*/}
-          {/*    fileList={fileList}*/}
-          {/*    multiple*/}
-          {/*  >*/}
-          {/*    {fileList.length === 4 ? (*/}
-          {/*      ''*/}
-          {/*    ) : (*/}
-          {/*      <Button icon={<UploadOutlined />}>Click to Upload</Button>*/}
-          {/*    )}*/}
-          {/*  </Upload>*/}
-          {/*</Form.Item>*/}
           <Form.Item<FieldType>
             name="address"
             rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
             className={'w-full'}
           >
             <TreeSelect
-              value={adress}
               key={Math.random()}
+              value={filteredLocationAddress}
               showSearch
+              treeNodeFilterProp="title"
               style={{ width: '100%' }}
               dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-              placeholder="Nơi đang ở"
+              placeholder="Khu vực dạy"
               allowClear
               multiple
               treeDefaultExpandAll
               treeData={filteredLocationAddress}
             />
+          </Form.Item>
+          <Form.Item
+            label="Bằng đại học"
+            name="certificate"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            rules={[{ required: true, message: 'Vui lòng tải lên ảnh!' }]}
+          >
+            <Upload
+              customRequest={dummyRequest}
+              listType="picture"
+              maxCount={4}
+              fileList={fileList}
+              multiple
+            >
+              {fileList.length === 4 ? (
+                ''
+              ) : (
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              )}
+            </Upload>
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>

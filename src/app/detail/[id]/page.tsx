@@ -30,7 +30,7 @@ export default function Home() {
   const { id: params } = useParams();
 
   let [isOpen, setIsOpen] = useState(false);
-
+  console.log(feedbackData);
   function closeModal() {
     setIsOpen(false);
   }

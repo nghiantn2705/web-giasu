@@ -22,17 +22,18 @@ interface IJob {
 
 export default function FormAccept({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(user);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
     setIsOpen(true);
   };
-  const reloadPageAfterDelay = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-  };
+  // const reloadPageAfterDelay = () => {
+  //   setTimeout(() => {
+  //     window.location.reload();
+  //   }, 3000);
+  // };
   return (
     <div>
       <button
@@ -50,6 +51,7 @@ export default function FormAccept({ user }: IJob) {
           <Formik
             className={''}
             onSubmit={(values) => {
+              console.log(values);
               (async () => {
                 try {
                   await putJob({ ...values });
@@ -62,7 +64,7 @@ export default function FormAccept({ user }: IJob) {
                       secondary: '#fff',
                     },
                   });
-                  reloadPageAfterDelay();
+                  // reloadPageAfterDelay();
                 } catch (ex: any) {
                   console.log(ex);
                 }

@@ -1,4 +1,16 @@
 export interface IDisctrict {
-  id: number;
-  name: string;
+  provinceName: string;
+  provinceId: number;
+  district: [
+    {
+      districtName: string;
+      districtId: number;
+      ward: [
+        {
+          name: string;
+          wardId: number;
+        },
+      ];
+    },
+  ];
 }
