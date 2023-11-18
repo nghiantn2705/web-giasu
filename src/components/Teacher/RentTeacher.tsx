@@ -46,11 +46,11 @@ export default function RentTeacher(props: IProps) {
   };
   return (
     <div>
-      {user?.role == 'User' ? (
+      {user?.role !== 'teacher' ? (
         <button
           onClick={openModal}
           className={
-            'mt-16 text-center bg-blue-tw hover:bg-blue-tw1 w-[90%] h-12 rounded-md text-1xl leading-normal tracking-normal text-white  uppercase'
+            'mt-16 text-center bg-blue-tw1 hover:bg-blue-tw w-[90%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
           }
         >
           Thuê

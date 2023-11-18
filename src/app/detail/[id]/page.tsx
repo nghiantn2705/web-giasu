@@ -45,6 +45,7 @@ export default function Home() {
       setStarData(resRating);
     })();
   }, []);
+  console.log(teacher);
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -76,39 +77,35 @@ export default function Home() {
           <main className={'container mx-auto pt-6  '}>
             <div
               className={
-                'grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-12 '
+                'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-12 '
               }
             >
               {/* avatar */}
               <div
                 className={
-                  'pt-5 col-span-8 mx-auto sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
+                  'pt-5 col-span-8 mx-auto sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2 max-w-[300px] max-h-[300px]'
                 }
               >
                 <Image
                   src={`${teacher?.avatar}`}
-                  width={360}
-                  height={360}
+                  width={260}
+                  height={260}
                   alt={'Picture of the author'}
+                  className={'h-[200px] w-[200px] rounded-lg object-cover'}
                 />
-                {/* <img src={teacher?.avatar} width={260} height={260} alt="" /> */}
-                {/* <p
+                <p
                   className={
-                    'mt-5 text-center text-green-600 text-2xl font-serif'
+                    'mt-5 text-center text-green-600 text-xl font-serif'
                   }
                 >
                   Đang sẵn sàng
                 </p>
-                <p
-                  className={
-                    'py-5 text-center text-xs text-stone-400 border-b '
-                  }
-                >
+                <p className={'py-5 text-center text-xs text-stone-400'}>
                   NGÀY THAM GIA:
                   <label className={'text-stone-950 font-bold'}>
                     24/1/2021
                   </label>
-                </p> */}
+                </p>
               </div>
               {/*  */}
               <div className={'pt-5 col-span-8 py-15'}>
@@ -118,21 +115,20 @@ export default function Home() {
                 {/* Nhận Dậy */}
                 <div className={' flex flex-row border-b py-3'}>
                   <div className={'basis-1/2'}>
-                    <p
-                      className={
-                        'text-[14px] font-semibold font-poppins text-stone-400 '
-                      }
-                    >
-                      SỐ NGƯỜI ĐÃ THUÊ:
-                      <span className={'text-red-400'}>566 người</span>
+                    <p className={'text-sm font-bold text-stone-400 '}>
+                      SỐ NGƯỜI ĐÃ THUÊ
                     </p>
+                    <span className={'text-blue-tw2'}>566 người</span>
                   </div>
                   <div className={'basis-1/2'}>
-                    <p
+                    <div
                       className={
                         'text-[14px] font-semibold font-poppins text-stone-400 '
                       }
                     >
+                      <p className={'text-sm font-bold text-stone-400 '}>
+                        Đánh giá
+                      </p>
                       <div>
                         {[1, 2, 3, 4, 5].map((star) => (
                           <FontAwesomeIcon
@@ -148,9 +144,8 @@ export default function Home() {
                             } cursor-pointer`}
                           />
                         ))}
-                        <label className={'pl-2'}>{starData?.avg}</label>
                       </div>
-                    </p>
+                    </div>
                   </div>
                 </div>
                 {/*  */}
@@ -163,9 +158,9 @@ export default function Home() {
                         {teacher?.class_id.map((classId, index: number) => (
                           <div
                             key={index}
-                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                            className="col-span-2 text-shadow text-white font-semibold text-sm bg-blue-tw1 p-3 text-uppercase rounded-md text-center"
                           >
-                            <p>{classId?.name}</p>
+                            <p>{classId}</p>
                           </div>
                         ))}
                       </div>
@@ -176,9 +171,9 @@ export default function Home() {
                         {teacher?.subject?.map((subjectId, index: number) => (
                           <div
                             key={index}
-                            className="col-span-2 text-shadow text-white font-semibold text-xs bg-opacity-75 bg-black p-3 text-uppercase rounded-md text-center"
+                            className="col-span-2 text-shadow text-white font-semibold text-sm bg-blue-tw1 p-3 text-uppercase rounded-md text-center"
                           >
-                            <p>{subjectId?.name}</p>
+                            <p>{subjectId}</p>
                           </div>
                         ))}
                       </div>
@@ -290,7 +285,7 @@ export default function Home() {
                 <div className="col-span-2 text-right">
                   <form className="text-right" onSubmit={submitFeedback}>
                     <div className="grid grid-cols-10 gap-6">
-                      <div className="col-span-5">
+                      <div className="col-span-5 flex items-center gap-4">
                         <img
                           src={userInfo?.avatar}
                           width={45}
@@ -298,6 +293,7 @@ export default function Home() {
                           className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
                           alt=""
                         />
+                        <span className={'text-lg'}>{userInfo?.name}</span>
                       </div>
                       <div className="col-span-5 text-right">
                         <label htmlFor="rating">Đánh giá sao:</label>
@@ -383,7 +379,7 @@ export default function Home() {
                       </Dialog>
                     </Transition>
                     <button
-                      className="text-right text-white bg-red-400 rounded p-2"
+                      className="text-right text-white bg-blue-tw1 rounded py-2 px-4"
                       type="submit"
                     >
                       Gửi ý kiến
@@ -394,10 +390,10 @@ export default function Home() {
                   <div className="text-left pt-2">
                     {feedbackData?.map((item: IFeedback, index) => (
                       <div key={index}>
-                        <div className="py-3 grid grid-cols-10 gap-5">
-                          <label className="text-base text-red-400 font-bold col-span-5">
+                        <div className="grid grid-cols-10 gap-5">
+                          <span className="text-base text-red-400 font-bold col-span-5">
                             {item.idSender}
-                          </label>
+                          </span>
                           <div className="col-span-5 text-right">
                             {[1, 2, 3, 4, 5].map((star, index) => (
                               <FontAwesomeIcon
@@ -412,11 +408,9 @@ export default function Home() {
                             ))}
                           </div>
                         </div>
-                        <div className="py-3">
+                        <div className="">
                           <label className="font-bold">Nội dung :</label>
-                          <label className="text-base py-10">
-                            {item.description}
-                          </label>
+                          <span className="text-base ">{item.description}</span>
                         </div>
                         <hr />
                       </div>

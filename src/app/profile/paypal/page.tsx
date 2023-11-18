@@ -33,9 +33,9 @@ export default function Paypal() {
           router.push('/profile');
         }
       })();
-      if (paypal?.data) {
-        window.location.assign(`${paypal?.data}`);
-      }
+    }
+    if (paypal?.data) {
+      window.location.assign(`${paypal?.data}`);
     }
   }, [paypal?.data]);
 
