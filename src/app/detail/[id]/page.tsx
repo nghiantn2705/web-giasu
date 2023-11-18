@@ -106,6 +106,27 @@ export default function Home() {
                     24/1/2021
                   </label>
                 </p>
+                <div>
+                  <p className={'pt-5 text-center  text-xl font-serif'}>
+                    Ảnh chứng chỉ
+                  </p>
+                  <div className={'text-center'}>
+                    {teacher?.Certificate?.map(
+                      (item: string, index: number) => {
+                        return (
+                          <div className={'py-2'}>
+                            <Image
+                              height={120}
+                              width={120}
+                              key={index}
+                              src={`${item}`}
+                            />
+                          </div>
+                        );
+                      },
+                    )}
+                  </div>
+                </div>
               </div>
               {/*  */}
               <div className={'pt-5 col-span-8 py-15'}>

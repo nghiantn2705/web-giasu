@@ -39,4 +39,5 @@ export interface ITeachers {
     name: string;
   };
   current_role: string;
+  Certificate: string[];
 }
