@@ -18,6 +18,7 @@ export default function Paypal() {
   const vnpOrderInfo = searchParam.get('vnp_OrderInfo');
   const vnpBankCode = searchParam.get('vnp_BankCode');
   const router = useRouter();
+  console.log(paypal?.data);
   useEffect(() => {
     if (vnpAmount && vnpOrderInfo && vnpBankCode) {
       const deposit = {
@@ -30,12 +31,12 @@ export default function Paypal() {
       (async () => {
         const resMessege = await postSavePaypal({ ...deposit });
         if (resMessege) {
-          router.push('/profile');
+          router.push('/profile/history-paypal');
         }
       })();
-      if (paypal?.data) {
-        window.location.assign(`${paypal?.data}`);
-      }
+    }
+    if (paypal?.data) {
+      window.location.assign(`${paypal?.data}`);
     }
   }, [paypal?.data]);
 
