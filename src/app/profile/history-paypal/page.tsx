@@ -7,10 +7,12 @@ import { useStore } from '@/hook/use-store';
 import { IUserInfo } from '@/types/IUserInfo';
 
 import Error404 from '@/components/Layout/Error404';
-import PaypalHistory from '@/components/Profile/paypalHistory';
+
+import PaypalHistory from '@/components/Profile/PaypalHistory';
 
 const Page = () => {
   const [data] = useStore<IUserInfo>('userInfo');
+
   return (
     <div>
       {data ? (
