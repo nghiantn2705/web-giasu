@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ import { getTeacherByid } from '@/services/teacher';
 
 interface IProps {
   id: number;
+  teacher: any;
 }
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
@@ -23,7 +25,7 @@ export default function RentTeacher(props: IProps) {
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
-
+  console.log(props.teacher);
   useEffect(() => {
     (async () => {
       try {
@@ -93,37 +95,41 @@ export default function RentTeacher(props: IProps) {
                 <label className={'grid grid-cols-2 '}>
                   <div className={'h-fit my-auto content-center'}>Môn học </div>
                   <div>
-                    {subject?.map((i: ISubject) => {
-                      return (
-                        <label key={i?.id}>
-                          <Field
-                            type={'checkbox'}
-                            name={'subject'}
-                            value={`${i?.id}`}
-                            className={'m-1'}
-                          />
-                          {i?.name}
-                        </label>
-                      );
-                    })}
+                    {props?.teacher?.class_id.map(
+                      (items: string[], index: number) => {
+                        return (
+                          <label key={index}>
+                            <Field
+                              type={'checkbox'}
+                              name={'class_id'}
+                              value={`${items}`}
+                              className={'m-1'}
+                            />
+                            {items}
+                          </label>
+                        );
+                      },
+                    )}
                   </div>
                 </label>
                 <label className={'grid grid-cols-2 '}>
                   <div className={'h-fit my-auto content-center'}>Môn học </div>
                   <div>
-                    {classr?.map((i: IClass) => {
-                      return (
-                        <label key={i?.id}>
-                          <Field
-                            type={'checkbox'}
-                            name={'class'}
-                            value={`${i?.id}`}
-                            className={'m-1'}
-                          />
-                          {i?.class}
-                        </label>
-                      );
-                    })}
+                    {props?.teacher?.subject.map(
+                      (items: string[], index: number) => {
+                        return (
+                          <label key={index}>
+                            <Field
+                              type={'checkbox'}
+                              name={'class_id'}
+                              value={`${items}`}
+                              className={'m-1'}
+                            />
+                            {items}
+                          </label>
+                        );
+                      },
+                    )}
                   </div>
                 </label>
               </div>

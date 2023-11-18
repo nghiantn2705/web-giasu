@@ -38,4 +38,5 @@ export interface ITeachers {
     id: number;
     name: string;
   };
+  current_role: string;
 }

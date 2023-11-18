@@ -222,9 +222,9 @@ export default function Home() {
                         <label className=""> {teacher?.school_id}</label>
                       </div>
                       <div className={'pt-2  text-zinc-950 '}>
-                        <label className={'font-bold'}> Chuyên ngành :</label>
+                        <label className={'font-bold'}> Hiện tại là :</label>
 
-                        <label className=""> ngôn ngữ anh</label>
+                        <label className=""> {teacher?.current_role}</label>
                       </div>
                     </div>
                     <div className={'col-span-5'}>
@@ -274,7 +274,7 @@ export default function Home() {
                   'mt-5 col-span-8 text-center sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
                 }
               >
-                <RentTeacher id={Number(params)} />
+                <RentTeacher id={Number(params)} teacher={teacher} />
               </div>
             </div>
             <div className="w-[90%] mt-20 border border-gray-300 p-8 mx-auto pt-10">
