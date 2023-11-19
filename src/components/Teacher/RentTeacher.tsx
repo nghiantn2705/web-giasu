@@ -142,7 +142,7 @@ export default function RentTeacher(props: IProps) {
             initialValues={{
               idUser: user?.id,
               idTeacher: props?.id,
-              class_id: [],
+              class: [],
               subject: [],
             }}
           >
@@ -155,41 +155,37 @@ export default function RentTeacher(props: IProps) {
                 <label className={'grid grid-cols-2 '}>
                   <div className={'h-fit my-auto content-center'}>Môn học </div>
                   <div>
-                    {props?.teacher?.class_id.map(
-                      (items: string[], index: number) => {
-                        return (
-                          <label key={index}>
-                            <Field
-                              type={'checkbox'}
-                              name={'class_id'}
-                              value={`${items}`}
-                              className={'m-1'}
-                            />
-                            {items}
-                          </label>
-                        );
-                      },
-                    )}
+                    {classr?.map((i: IClass) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'class'}
+                            value={`${i?.id}`}
+                            className={'m-1'}
+                          />
+                          {i?.class}
+                        </label>
+                      );
+                    })}
                   </div>
                 </label>
                 <label className={'grid grid-cols-2 '}>
                   <div className={'h-fit my-auto content-center'}>Môn học </div>
                   <div>
-                    {props?.teacher?.subject.map(
-                      (items: string[], index: number) => {
-                        return (
-                          <label key={index}>
-                            <Field
-                              type={'checkbox'}
-                              name={'subject'}
-                              value={`${items}`}
-                              className={'m-1'}
-                            />
-                            {items}
-                          </label>
-                        );
-                      },
-                    )}
+                    {subject?.map((i: ISubject) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'subject'}
+                            value={`${i?.id}`}
+                            className={'m-1'}
+                          />
+                          {i?.name}
+                        </label>
+                      );
+                    })}
                   </div>
                 </label>
               </div>
