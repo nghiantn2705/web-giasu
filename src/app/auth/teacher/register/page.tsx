@@ -37,7 +37,6 @@ import moment from 'moment';
 import { FieldType } from '@/types/Field';
 const page = () => {
   const router = useRouter();
-
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState('');
   const [fileList, setFileList] = useState([]);
@@ -203,7 +202,7 @@ const page = () => {
         secondary: '#fff',
       },
     });
-    // router.push('/auth/teacher');
+    router.push('/auth/teacher');
   };
   return (
     <div className={'grid grid-cols-12 min-h-fit'}>

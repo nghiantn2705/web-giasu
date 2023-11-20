@@ -47,7 +47,7 @@ const Teacher = ({ teachers }: IProps) => {
                         width={200}
                         height={200}
                         alt=""
-                        className={'w-auto h-[200px]'}
+                        className={'w-auto h-[200px] object-cover'}
                       />
                     </picture>
                   </a>
@@ -85,12 +85,12 @@ const Teacher = ({ teachers }: IProps) => {
                   <ul className="pt-3 px-3 flex justify-between items-center list-none">
                     <li>
                       <span className="text-slate-400">Khu vực</span>
-                      <p className="text-lg font-medium">{items?.DistrictID}</p>
+                      <p className="text-sm font-medium">{items?.DistrictID}</p>
                     </li>
 
                     <li>
                       <span className="text-slate-400">Rating</span>
-                      <ul className="text-lg font-medium text-amber-400 list-none">
+                      <ul className="text-sm font-medium text-amber-400 list-none">
                         <li className="inline">
                           <i className="mdi mdi-star"></i>
                         </li>

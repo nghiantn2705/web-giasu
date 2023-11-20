@@ -2,9 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 'use client';
-import Image from 'next/image';
 import MyDialog from '@/components/Teacher/RentTeacher';
-
+import { Image } from 'antd';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { SetStateAction, useEffect, useState, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -83,7 +82,7 @@ export default function Home() {
               {/* avatar */}
               <div
                 className={
-                  'pt-5 col-span-8 mx-auto sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2 max-w-[300px] max-h-[300px]'
+                  'pt-5 col-span-8 mx-auto sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-3 max-w-[300px] max-h-[300px]'
                 }
               >
                 <Image
@@ -110,18 +109,16 @@ export default function Home() {
                   <p className={'pt-5 text-center  text-xl font-serif'}>
                     Ảnh chứng chỉ
                   </p>
-                  <div className={'text-center'}>
+                  <div className={'text-center flex gap-2'}>
                     {teacher?.Certificate?.map(
                       (item: string, index: number) => {
                         return (
-                          <div className={'py-2'}>
-                            <Image
-                              height={120}
-                              width={120}
-                              key={index}
-                              src={`${item}`}
-                            />
-                          </div>
+                          <Image
+                            height={80}
+                            width={80}
+                            key={index}
+                            src={`${item}`}
+                          />
                         );
                       },
                     )}
@@ -129,7 +126,7 @@ export default function Home() {
                 </div>
               </div>
               {/*  */}
-              <div className={'pt-5 col-span-8 py-15'}>
+              <div className={'pt-5 col-span-7 py-15'}>
                 <p className={'text-[30px] font-bold text-stone-800'}>
                   {teacher?.name}
                 </p>
@@ -188,7 +185,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-xl font-bold">Dạy môn:</p>
-                      <div className="grid gap-2 grid-cols-8 py-3">
+                      <div className="grid gap-2 grid-cols-6 py-3">
                         {teacher?.subject?.map((subjectId, index: number) => (
                           <div
                             key={index}

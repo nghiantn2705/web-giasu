@@ -67,6 +67,7 @@ export default function Paypal() {
           <ModalTitle>Nạp tiền</ModalTitle>
           <Formik
             onSubmit={async (values) => {
+              console.log(values);
               try {
                 const resPaypal = await postPaypal({ ...values });
                 setPaypal(resPaypal);

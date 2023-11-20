@@ -1,5 +1,5 @@
 export interface IUserInfo {
-  Certificate: string;
+  Certificate: string[];
   District: string;
   address: string;
   avatar: string;
