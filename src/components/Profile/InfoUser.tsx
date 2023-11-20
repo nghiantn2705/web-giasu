@@ -42,7 +42,7 @@ const InfoUser = ({ infoUser }: IProps) => {
                   <div className="px-4 py-2 font-semibold">Họ và tên</div>
                   <div className="px-4 py-2">{infoUser?.name}</div>
                 </div>
-                {infoUser?.role == 'Teacher' ? (
+                {infoUser?.role == 'teacher' ? (
                   <div className={'grid grid-cols-2'}>
                     <div className="px-4 py-2 font-semibold">Khu vực dạy </div>
                     <div className="px-4 py-2">{infoUser?.District}</div>

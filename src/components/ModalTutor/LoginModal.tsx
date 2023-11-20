@@ -42,7 +42,7 @@ export default function ModalFeeback(props: IProps) {
 
   return (
     <div>
-      {user?.role == 'User' ? (
+      {user?.role == 'user' ? (
         <button
           onClick={openModal}
           className={
