@@ -10,7 +10,7 @@ export interface ITeachers {
   school_id: number;
   Citizen_card: number;
   education_level: string;
-  class_id: number;
+  class_id: string[];
   salary_id: string;
   description: string;
   time_tutor_id: number;
@@ -38,4 +38,6 @@ export interface ITeachers {
     id: number;
     name: string;
   };
+  current_role: string;
+  Certificate: string[];
 }

@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import { Field, Form, Formik } from 'formik';
 import { useStore } from '@/hook/use-store';
@@ -12,9 +13,11 @@ import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
 import { useParams } from 'next/navigation';
 import { getTeacherByid } from '@/services/teacher';
+import { Dialog, Transition } from '@headlessui/react';
 
 interface IProps {
   id: number;
+  teacher: any;
 }
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
@@ -23,9 +26,11 @@ export default function RentTeacher(props: IProps) {
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
-  console.log(user);
-  console.log(subjectteacher);
 
+  const [isOpen2, setIsOpen2] = useState(false);
+  function closeModal2() {
+    setIsOpen2(false);
+  }
   useEffect(() => {
     (async () => {
       try {
@@ -40,19 +45,24 @@ export default function RentTeacher(props: IProps) {
       }
     })();
   }, [setSubject]);
+
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
-    setIsOpen(true);
+    if (!user) {
+      setIsOpen2(true);
+    } else {
+      setIsOpen(true);
+    }
   };
   return (
     <div>
-      {user?.role == 'user' ? (
+      {user?.role !== 'teacher' ? (
         <button
           onClick={openModal}
           className={
-            'mt-16 text-center bg-blue-tw hover:bg-blue-tw1 w-[90%] h-12 rounded-md text-1xl leading-normal tracking-normal text-white  uppercase'
+            'mt-16 text-center bg-blue-tw1 hover:bg-blue-tw w-[90%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
           }
         >
           Thuê
@@ -60,7 +70,57 @@ export default function RentTeacher(props: IProps) {
       ) : (
         ''
       )}
+      <Transition appear show={isOpen2} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal2}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
 
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  ></Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-xl text-gray-500 text-center">
+                      Vui lòng đăng nhập để Thuê
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    {/* <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    onClick={closeModal}
+                                  >
+                                    Got it, thanks!
+                                  </button> */}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
           <ModalTitle>Thuê gia sư</ModalTitle>
@@ -95,24 +155,6 @@ export default function RentTeacher(props: IProps) {
                 <label className={'grid grid-cols-2 '}>
                   <div className={'h-fit my-auto content-center'}>Môn học </div>
                   <div>
-                    {subject?.map((i: ISubject) => {
-                      return (
-                        <label key={i?.id}>
-                          <Field
-                            type={'checkbox'}
-                            name={'subject'}
-                            value={`${i?.id}`}
-                            className={'m-1'}
-                          />
-                          {i?.name}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </label>
-                <label className={'grid grid-cols-2 '}>
-                  <div className={'h-fit my-auto content-center'}>Môn học </div>
-                  <div>
                     {classr?.map((i: IClass) => {
                       return (
                         <label key={i?.id}>
@@ -123,6 +165,24 @@ export default function RentTeacher(props: IProps) {
                             className={'m-1'}
                           />
                           {i?.class}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </label>
+                <label className={'grid grid-cols-2 '}>
+                  <div className={'h-fit my-auto content-center'}>Môn học </div>
+                  <div>
+                    {subject?.map((i: ISubject) => {
+                      return (
+                        <label key={i?.id}>
+                          <Field
+                            type={'checkbox'}
+                            name={'subject'}
+                            value={`${i?.id}`}
+                            className={'m-1'}
+                          />
+                          {i?.name}
                         </label>
                       );
                     })}

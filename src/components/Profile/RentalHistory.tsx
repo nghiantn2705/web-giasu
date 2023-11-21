@@ -22,7 +22,7 @@ interface IJob {
 }
 export default function RentalHistory({ infoUser }: IProps) {
   const [job, setJob] = useState<IJob[]>();
-
+  console.log(job);
   useEffect(() => {
     (async () => {
       const res = await getJob({ id: infoUser?.id });
@@ -86,23 +86,15 @@ export default function RentalHistory({ infoUser }: IProps) {
                 </th>
                 <td className={'px-6 py-4'}>
                   <div className={'flex flex-col gap-2'}>
-                    {items?.subject?.map((items: string) => {
-                      return (
-                        <>
-                          <span>{items}</span>
-                        </>
-                      );
+                    {items?.subject?.map((items: string, index: number) => {
+                      return <span key={index}>{items}</span>;
                     })}
                   </div>
                 </td>
                 <td className={'px-6 py-4'}>
                   <div className={'flex flex-col gap-2'}>
-                    {items?.class?.map((items: string) => {
-                      return (
-                        <>
-                          <span>{items}</span>
-                        </>
-                      );
+                    {items?.class?.map((items: string, index: number) => {
+                      return <span key={index}>{items}</span>;
                     })}
                   </div>
                 </td>

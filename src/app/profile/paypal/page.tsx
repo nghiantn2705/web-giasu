@@ -8,31 +8,38 @@ import { ITeachers } from '@/types/ITeachers';
 import { postPaypal, postSavePaypal } from '@/services/paypal';
 import { IPay } from '@/types/IPay';
 import { useRouter, useSearchParams } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 export default function Paypal() {
   const [user] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
   const [paypal, setPaypal] = useState<IPay>();
   const searchParam = useSearchParams();
-  const vnpAmount = searchParam.get('vnp_Amount');
+  const vnpAmount = Number(searchParam.get('vnp_Amount'));
+  const vnpOrderInfo = searchParam.get('vnp_OrderInfo');
+  const vnpBankCode = searchParam.get('vnp_BankCode');
   const router = useRouter();
-
+  console.log(paypal?.data);
   useEffect(() => {
-    if (paypal) {
-      const deposit = { id: user?.id, coin: vnpAmount };
+    if (vnpAmount && vnpOrderInfo && vnpBankCode) {
+      const deposit = {
+        userId: user?.id,
+        coin: vnpAmount / 100,
+        code: vnpOrderInfo,
+        status: 'Thành công',
+        bank: vnpBankCode,
+      };
       (async () => {
         const resMessege = await postSavePaypal({ ...deposit });
         if (resMessege) {
-          router.push('/profile');
+          router.push('/profile/history-paypal');
         }
-        toast.success(`${resMessege}`);
       })();
-      if (paypal?.data) {
-        window.location.assign(`${paypal?.data}`);
-      }
+    }
+    if (paypal?.data) {
+      window.location.assign(`${paypal?.data}`);
     }
   }, [paypal?.data]);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -42,7 +49,7 @@ export default function Paypal() {
 
   return (
     <div>
-      {user?.role == 'teacher' ? (
+      {/* {user?.role == 'teacher' ? (
         <button
           onClick={openModal}
           className={
@@ -53,13 +60,22 @@ export default function Paypal() {
         </button>
       ) : (
         ''
-      )}
+      )} */}
+      <button
+        onClick={openModal}
+        className={
+          'w-full text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+        }
+      >
+        Nạp Tiền
+      </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
           <ModalTitle>Nạp tiền</ModalTitle>
           <Formik
             onSubmit={async (values) => {
+              console.log(values);
               try {
                 const resPaypal = await postPaypal({ ...values });
                 setPaypal(resPaypal);

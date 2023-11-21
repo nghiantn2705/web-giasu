@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer utilities {
     .animation-delay-plus-1100 {
         animation-delay: -1100ms;

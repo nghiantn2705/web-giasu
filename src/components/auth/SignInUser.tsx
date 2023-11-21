@@ -83,7 +83,7 @@ const SignInUser = () => {
                         secondary: '#fff',
                       },
                     });
-                    // router.push('/');
+                    router.push('/giasu');
                   } else {
                     toast.error(
                       'Vui lòng đăng nhập bằng tài khoản phụ huynh !',

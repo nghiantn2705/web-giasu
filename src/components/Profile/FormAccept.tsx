@@ -22,6 +22,7 @@ interface IJob {
 
 export default function FormAccept({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(user);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -50,6 +51,7 @@ export default function FormAccept({ user }: IJob) {
           <Formik
             className={''}
             onSubmit={(values) => {
+              console.log(values);
               (async () => {
                 try {
                   await putJob({ ...values });
@@ -82,7 +84,19 @@ export default function FormAccept({ user }: IJob) {
                 </label>
                 <label className={'grid grid-cols-2'}>
                   <span>Môn học:</span>
-                  <span>{user?.idSubject}</span>
+                  <div className={'flex gap-2'}>
+                    {user?.subject?.map((items: string, index: number) => {
+                      return <span key={index}>{items}</span>;
+                    })}
+                  </div>
+                </label>
+                <label className={'grid grid-cols-2'}>
+                  <span>Lớp:</span>
+                  <div className={'flex gap-2'}>
+                    {user?.class?.map((items: string, index: number) => {
+                      return <span key={index}>{items}</span>;
+                    })}
+                  </div>
                 </label>
                 <div className={'flex gap-3'}>
                   <label className={'flex gap-3'}>
@@ -121,7 +135,7 @@ export default function FormAccept({ user }: IJob) {
                 <button
                   type="submit"
                   className={
-                    'rounded-md border border-transparent bg-red-400 text-sx font-medium text-slate-100 hover:bg-red-600 px-2'
+                    'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
                   onClick={closeModal}
                 >
@@ -130,7 +144,7 @@ export default function FormAccept({ user }: IJob) {
                 <button
                   type="button"
                   className={
-                    ' rounded-md border border-gray-500 px-2 py-2 text-gray-500 text-sx font-medium hover:bg-red-600 '
+                    ' rounded-md border border-gray-500 px-2 py-2 text-gray-500 text-sx font-medium hover:bg-blue-tw1 hover:text-white '
                   }
                   onClick={closeModal}
                 >
