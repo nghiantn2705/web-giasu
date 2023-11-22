@@ -15,7 +15,7 @@ const Profile = ({ infoUser, children }: IProps) => {
   return (
     <>
       {infoUser ? (
-        <div className={'container m-auto my-5 p-5'}>
+        <div className={'w-[80%] m-auto my-5 p-5'}>
           <div className={'md:flex no-wrap shadow-lg'}>
             <div className={'w-full md:w-3/12 md:mx-2 '}>
               <div className={'p-3 border-t-4 border-blue-tw '}>
@@ -66,6 +66,15 @@ const Profile = ({ infoUser, children }: IProps) => {
                   >
                     Lịch sử thuê
                   </Link>
+                  <Link
+                    href={'/profile/history-connect'}
+                    className={
+                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+                    }
+                  >
+                    Lịch sử xác nhận dạy
+                  </Link>
+
                   <Link
                     href={'/profile/history-paypal'}
                     className={

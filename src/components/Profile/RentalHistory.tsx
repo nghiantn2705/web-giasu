@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import FormAccept from '@/components/Profile/FormAccept';
 import { getJob } from '@/services/job';
+import FormProcedure from './FormProcedure';
 
 interface IProps {
   infoUser: IUserInfo;

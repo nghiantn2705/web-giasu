@@ -5,22 +5,22 @@ import { Form, Formik, Field } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
-import { putJob } from '@/services/job';
+import { putConnec } from '@/services/connect';
 interface IJob {
   user: {
     id: number;
+    idJob: number;
     idUser: string;
     idTeacher: string;
-    idSubject: string;
-    subject: string[];
-    class: string[];
-    teacherImage: string;
+    noteUser: string;
+    noteTeacher: string;
+    confirmUser: number;
+    confirmTeacher: number;
     status: number;
-    description: string;
   };
 }
 
-export default function FormAccept({ user }: IJob) {
+export default function FormAcceptConnectUser({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
   console.log(user);
   const closeModal = () => {
@@ -54,7 +54,7 @@ export default function FormAccept({ user }: IJob) {
               console.log(values);
               (async () => {
                 try {
-                  await putJob({ ...values });
+                  await putConnec({ ...values });
                   toast.success('Xác nhận thành công !', {
                     duration: 3000,
                     position: 'top-right',
@@ -72,45 +72,30 @@ export default function FormAccept({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
-              status: '',
-              description: '',
+              confirmUser: '',
+              noteUser: '',
             }}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
                 <label className={'grid grid-cols-2'}>
-                  <span>Người thuê</span>
-                  <span>{user?.idUser}</span>
+                  <span>Gia sư:</span>
+                  <span>{user?.idTeacher}</span>
                 </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Môn học:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.subject?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Lớp:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.class?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
+
                 <div className={'flex gap-3'}>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="1" />
+                    <Field type="radio" name="confirmUser" value="1" />
                     Đồng ý
                   </label>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="2" />
+                    <Field type="radio" name="confirmUser" value="2" />
                     Từ chối
                   </label>
                 </div>
                 <label className={'relative'}>
                   <Field
-                    name="description"
+                    name="noteUser"
                     as={'textarea'}
                     className={
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
