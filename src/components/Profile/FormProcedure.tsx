@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import {} from '@/services';
 
 interface IJob {
   user: {
