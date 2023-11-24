@@ -140,7 +140,7 @@ const SignInUser = () => {
                 </div>
 
                 <Link
-                  href={'/'}
+                  href={'/auth/forgotpassword'}
                   className={
                     'text-right text-sm text-gray-600 hover:text-black'
                   }

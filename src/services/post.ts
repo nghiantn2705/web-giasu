@@ -7,3 +7,16 @@ export const updateProfile = (query: IFetchQuery = {}) => {
     query,
   );
 };
+
+export const SendMail = (query: IFetchQuery = {}) => {
+  return apiRequest.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+    query,
+  );
+};
+export const resetPassword = (query: IFetchQuery = {}) => {
+  return apiRequest.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password/${query.token}`,
+    query,
+  );
+};

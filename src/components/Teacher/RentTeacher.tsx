@@ -26,11 +26,11 @@ export default function RentTeacher(props: IProps) {
   const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
-
   const [isOpen2, setIsOpen2] = useState(false);
   function closeModal2() {
     setIsOpen2(false);
   }
+
   useEffect(() => {
     (async () => {
       try {

@@ -42,7 +42,7 @@ export default function MyModal(props: IMyModal) {
             <div className="fixed inset-0 bg-black bg-opacity-50" />
           </Transition.Child>
 
-          <div className="fixed top-16 left-0  w-screen h-screen inset-0 ">
+          <div className="fixed top-32 left-0  w-screen h-screen inset-0 ">
             <div className="flex items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}

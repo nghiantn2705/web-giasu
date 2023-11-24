@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import SignInUser from '@/components/auth/SignInUser';
+import ResetPassword from '@/components/auth/ResetPassword';
 
 const page = () => {
   return (
     <div>
-      <SignInUser />
+      <ResetPassword />
     </div>
   );
 };

@@ -64,59 +64,55 @@ const SortRate = ({ teachers }: IProps) => {
         modules={[Navigation, Pagination]}
         slidesPerView={5.5}
         spaceBetween={15}
-        className={'w-full'}
+        className={'w-full drop-shadow-lg'}
       >
-        <div
-          className={
-            'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'
-          }
-        >
-          {teachers?.map((items, index) => {
-            return (
-              <SwiperSlide key={index + 1} className={'m-0'}>
-                <div
-                  className={
-                    'rounded-xl bg-white  shadow hover:shadow-md duration-200 my-2 p-1 border hover:border-gray-300 '
-                  }
-                >
-                  <div className={'relative'}>
-                    <picture className={'w-auto relative h-[160px]'}>
-                      <img
-                        src={items?.avatar}
-                        width={160}
-                        height={160}
-                        alt=""
-                        className={'h-[200px] w-full rounded-t-xl '}
-                      />
-                      <div
-                        className={
-                          'absolute bottom-0 left-0 w-full flex h-[40px] justify-end custom-tw px-2 py-1'
-                        }
-                      >
-                        <p className={'self-end flex gap-1 text-white'}>
-                          <AiOutlineStar className={'self-center'} />4
-                        </p>
-                      </div>
-                    </picture>
-                  </div>
-
-                  <div className={'px-3 py-2'}>
-                    <div className={'text-center '}>
-                      <a
-                        href={`/detail/${items?.id}`}
-                        className={
-                          ' hover:text-blue-tw font-medium ease-in-out duration-500'
-                        }
-                      >
-                        {items?.name}
-                      </a>
+        {teachers?.map((items, index) => {
+          return (
+            <SwiperSlide key={index + 1} className={'mt-6 h-full'}>
+              <div
+                className={'rounded-xl bg-white pb-4 pt-[2p] px-[2px] border '}
+              >
+                <div className={'relative'}>
+                  <picture
+                    className={'relative block aspect-square overflow-hidden'}
+                  >
+                    <img
+                      src={items?.avatar}
+                      width={160}
+                      height={160}
+                      alt=""
+                      className={
+                        'absolute w-full h-full object-cover object-center rounded-t-lg'
+                      }
+                    />
+                    <div
+                      className={
+                        'absolute bottom-0 left-0 w-full flex h-[40px] justify-end custom-tw px-3 py-1'
+                      }
+                    >
+                      <p className={'self-end flex gap-1 text-white'}>
+                        <AiOutlineStar className={'self-center'} />4
+                      </p>
                     </div>
+                  </picture>
+                </div>
+
+                <div className={'px-3 py-2'}>
+                  <div className={'text-center '}>
+                    <a
+                      href={`/detail/${items?.id}`}
+                      className={
+                        ' hover:text-blue-tw font-medium ease-in-out duration-500'
+                      }
+                    >
+                      {items?.name}
+                    </a>
                   </div>
                 </div>
-              </SwiperSlide>
-            );
-          })}
-        </div>
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

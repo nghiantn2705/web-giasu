@@ -95,8 +95,8 @@ const page = () => {
     router.push('/auth/user');
   };
   return (
-    <div className={'grid grid-cols-12 min-h-fit'}>
-      <div className={'col-span-7 pt-5 pb-16  px-20'}>
+    <div className={'container drop-shadow border py-5 grid grid-cols-12'}>
+      <div className={'col-span-7 pt-5 px-20'}>
         <div className={'flex flex-col items-center mb-5'}>
           <Image src={'/logo.png'} alt={''} width={100} height={100} />
           <h1 className={'text-2xl text-blue-tw'}>Chào mừng bạn đến với Gs7</h1>
