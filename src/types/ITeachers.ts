@@ -10,34 +10,49 @@ export interface ITeachers {
   school_id: number;
   Citizen_card: number;
   education_level: string;
-  class_id: string[];
+  class_id: [
+    {
+      id: number;
+      class: string;
+    },
+  ];
   salary_id: string;
   description: string;
   time_tutor_id: number;
   status: number;
   DistrictID: number;
   name: string;
-  subject: string[];
-  // subject: {
-  //   id: number;
-  //   name: string;
-  // };
-  district: {
-    id: number;
-    name: string;
-  };
-  school: {
-    id: number;
-    name: string;
-  };
-  class_levels: {
-    id: number;
-    name: string;
-  };
-  time_slot: {
-    id: number;
-    name: string;
-  };
+  // subject: string[];
+  subject: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  district: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  school: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  class_levels: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  time_slot: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   current_role: string;
   Certificate: string[];
 }
