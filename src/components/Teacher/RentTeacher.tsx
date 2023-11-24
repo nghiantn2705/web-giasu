@@ -119,6 +119,8 @@ export default function RentTeacher(props: IProps) {
           <Formik
             className={''}
             onSubmit={async (values) => {
+              values.class = values.class.join(',');
+              values.subject = values.subject.join(',');
               const res = await postJob({ ...values });
               toast.success('Vui lòng đợi gia sư đồng ý !', {
                 duration: 3000,
