@@ -9,9 +9,8 @@ export interface ISavePay {
 }
 export interface IHistoryPaypal {
   id: number;
-  idUser: string;
+  idClient: number;
   coin: string;
-  bank: string;
-  code: number;
-  status: string;
+  type: string;
+  created_at: Date;
 }
