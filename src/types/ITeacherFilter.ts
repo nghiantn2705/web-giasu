@@ -3,7 +3,17 @@ export interface ITeacherFilter {
   name: string;
   avatar: string;
   address: string;
-  class_id: string[];
-  subject: string[];
-  DistrictID: string;
+  class_id: [
+    {
+      id: number;
+      class: string;
+    },
+  ];
+  subject: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  district: string;
 }
