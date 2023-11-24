@@ -15,11 +15,15 @@ const Profile = ({ infoUser, children }: IProps) => {
   return (
     <>
       {infoUser ? (
-        <div className={'w-[80%] m-auto my-5 p-5'}>
-          <div className={'md:flex no-wrap shadow-lg'}>
-            <div className={'w-full md:w-3/12 md:mx-2 '}>
-              <div className={'p-3 border-t-4 border-blue-tw '}>
-                <div className={''}>
+        <div className={'bg-gray-100 min-h-fit'}>
+          <div className={'container mx-auto py-8'}>
+            <div className={'grid grid-cols-4 sm:grid-cols-12 gap-6 px-4'}>
+              <div className={'col-span-4 sm:col-span-3 '}>
+                <div
+                  className={
+                    'bg-white shadow rounded-lg p-6 flex flex-col items-center'
+                  }
+                >
                   <img
                     src={infoUser?.avatar}
                     height={200}
@@ -27,67 +31,39 @@ const Profile = ({ infoUser, children }: IProps) => {
                     alt={''}
                     className={'w-3/4 h-auto mx-auto'}
                   />
-                </div>
-                <h1
-                  className={'text-gray-900 font-bold text-xl leading-8 my-1'}
-                >
-                  {infoUser?.name}
-                </h1>
-                <span
-                  className={'text-gray-600 font-lg text-semibold leading-6'}
-                >
-                  {infoUser?.description}
-                </span>
+                  <h1
+                    className={'text-gray-900 font-bold text-xl leading-8 my-1'}
+                  >
+                    {infoUser?.name}
+                  </h1>
+                  <span
+                    className={'text-gray-600 font-lg text-semibold leading-6'}
+                  >
+                    {infoUser?.description}
+                  </span>
 
-                <ul
-                  className={
-                    'bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm'
-                  }
-                >
-                  <li className={'flex items-center py-3'}>
-                    <span>Trạng thái</span>
-                    <span className={'ml-auto'}>
-                      <span
-                        className={
-                          'bg-green-500 py-1 px-2 rounded text-white text-sm'
-                        }
-                      >
-                        Đang sẵn sàng
+                  <ul
+                    className={
+                      'bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm'
+                    }
+                  >
+                    <li className={'flex items-center gap-3 py-3'}>
+                      <span>Trạng thái</span>
+                      <span className={'ml-auto'}>
+                        <span
+                          className={
+                            'bg-green-500 py-1 px-2 rounded text-white text-sm'
+                          }
+                        >
+                          Đang sẵn sàng
+                        </span>
                       </span>
-                    </span>
-                  </li>
-                </ul>
-                <div>
-                  <Link
-                    href={'/profile/history'}
-                    className={
-                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-                    }
-                  >
-                    Lịch sử thuê
-                  </Link>
-                  <Link
-                    href={'/profile/history-connect'}
-                    className={
-                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-                    }
-                  >
-                    Lịch sử xác nhận dạy
-                  </Link>
-
-                  <Link
-                    href={'/profile/history-paypal'}
-                    className={
-                      'block text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-                    }
-                  >
-                    Lịch sử nạp tiền
-                  </Link>
+                    </li>
+                  </ul>
                 </div>
-                <Paypal />
               </div>
+              <div className={'col-span-4 sm:col-span-9'}>{children}</div>
             </div>
-            {children}
           </div>
         </div>
       ) : (

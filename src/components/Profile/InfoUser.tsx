@@ -14,7 +14,7 @@ const InfoUser = ({ infoUser }: IProps) => {
   return (
     <>
       {infoUser ? (
-        <div className={'w-full'}>
+        <div className={'w-full bg-white shadow rounded-lg p-6'}>
           <div className={'bg-white p-3 '}>
             <div
               className={

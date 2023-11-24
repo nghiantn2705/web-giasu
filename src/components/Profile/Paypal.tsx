@@ -8,6 +8,7 @@ import { ITeachers } from '@/types/ITeachers';
 import { postPaypal, postSavePaypal } from '@/services/paypal';
 import { IPay } from '@/types/IPay';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { BiMoney } from 'react-icons/bi';
 
 export default function Paypal() {
   const [user] = useStore<ITeachers>('userInfo');
@@ -62,9 +63,10 @@ export default function Paypal() {
       <button
         onClick={openModal}
         className={
-          'w-full text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+          'flex items-center gap-2 hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
         }
       >
+        <BiMoney />
         Nạp Tiền
       </button>
 
