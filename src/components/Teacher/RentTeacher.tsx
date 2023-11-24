@@ -54,7 +54,7 @@ export default function RentTeacher(props: IProps) {
         <button
           onClick={openModal}
           className={
-            'mt-16 mx bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
+            'mt-16 mx-auto bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
           }
         >
           Thuê
