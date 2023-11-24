@@ -1,5 +1,6 @@
 import { apiRequest, IFetchQuery } from '@/services/base';
 import { IUserInfo } from '@/types/IUserInfo';
+import { IToken } from '@/types/IToken';
 
 export const updateProfile = (query: IFetchQuery = {}) => {
   return apiRequest.put<IUserInfo[]>(
@@ -9,7 +10,7 @@ export const updateProfile = (query: IFetchQuery = {}) => {
 };
 
 export const SendMail = (query: IFetchQuery = {}) => {
-  return apiRequest.post(
+  return apiRequest.post<IToken>(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
     query,
   );

@@ -6,7 +6,7 @@ import { IUserInfo } from '@/types/IUserInfo';
 // import FormAccept from '@/components/Profile/FormAccept';
 import { GetHistoryPaypal } from '@/services/paypal';
 import { IHistoryPaypal } from '@/types/IPay';
-
+import moment from 'moment';
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -28,7 +28,7 @@ export default function PaypalHistory({ infoUser }: IProps) {
       const resHistoryPaypal = await GetHistoryPaypal({ id: infoUser?.id });
       sethistoryPaypal(resHistoryPaypal);
     })();
-  }, [sethistoryPaypal]);
+  }, [infoUser?.id]);
   // console.log(historyPaypal);
   return (
     <div className={'relative w-full overflow-x-auto px-4 border-l-2'}>
@@ -38,7 +38,7 @@ export default function PaypalHistory({ infoUser }: IProps) {
         }
       >
         {' '}
-        Lịch sử nạp tiền
+        Lịch sử nạp,hoàn trả tiền
       </h3>
       <table className={'w-full text-sm text-left text-gray-500 0'}>
         <thead
@@ -59,7 +59,7 @@ export default function PaypalHistory({ infoUser }: IProps) {
               >
                 <td className={'px-6 py-4 text-center'}>
                   <div className={' text-center'}>
-                    <p>{items?.bank}</p>
+                    <p>{moment(items?.created_at).format('DD/MM/YYYY')}</p>
                   </div>
                 </td>
 
@@ -68,7 +68,7 @@ export default function PaypalHistory({ infoUser }: IProps) {
                 </td>
                 <td className="px-6 py-4 text-center">
                   <div className={'text-center text-red-400 font-bold'}>
-                    <p>{items?.status}</p>
+                    <p>{items?.type}</p>
                   </div>
                 </td>
               </tr>

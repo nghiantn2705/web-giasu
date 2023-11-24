@@ -331,7 +331,7 @@ const page = () => {
                     }
                   });
                 }}
-                customRequest={(info: any) => {
+                customRequest={(info) => {
                   setFileList([info?.file]);
                 }}
                 showUploadList={true}

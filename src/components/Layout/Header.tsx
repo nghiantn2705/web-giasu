@@ -160,7 +160,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiMoney />
-                  Số dư : {props?.userInfo?.name}
+                  Số dư : {props?.userInfo?.coin}
                 </span>
                 <a
                   href={`/profile`}

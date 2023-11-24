@@ -19,7 +19,7 @@ const SignInUser = () => {
     if (userInfo) {
       router.push('/giasu');
     }
-  }, []);
+  }, [router, userInfo]);
   const onClick = async () => {
     const res = await authGoogle(3);
     console.log(res);
@@ -140,7 +140,7 @@ const SignInUser = () => {
                 </div>
 
                 <Link
-                  href={'/auth/forgotpassword'}
+                  href={'/auth/reset-password'}
                   className={
                     'text-right text-sm text-gray-600 hover:text-black'
                   }

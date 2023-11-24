@@ -3,15 +3,10 @@ export interface IPay {
   message: string;
   data: string;
 }
-export interface ISavePay {
-  id: number;
-  coin: string;
-}
 export interface IHistoryPaypal {
   id: number;
-  idUser: string;
+  idClient: number;
   coin: string;
-  bank: string;
-  code: number;
-  status: string;
+  type: string;
+  created_at: Date;
 }

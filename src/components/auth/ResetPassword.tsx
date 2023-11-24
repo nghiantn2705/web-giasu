@@ -19,7 +19,7 @@ const ResetPassword = () => {
     if (userInfo) {
       router.push('/giasu');
     }
-  }, []);
+  }, [router, userInfo]);
 
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
@@ -120,7 +120,7 @@ const ResetPassword = () => {
                   const data = await resetPassword({
                     token,
                   });
-
+                  console.log(data);
                   toast.success('Đổi mật khẩu thành công !', {
                     duration: 3000,
                     position: 'top-right',

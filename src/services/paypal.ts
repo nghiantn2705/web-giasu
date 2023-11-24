@@ -15,8 +15,8 @@ export const postSavePaypal = (body: IFetchBody) => {
   );
 };
 export const GetHistoryPaypal = (query: IFetchQuery) => {
-  return apiRequest.get<IHistoryPaypal>(
-    `${process.env.NEXT_PUBLIC_API_URL}/vnpay/${query?.id}`,
+  return apiRequest.get<IHistoryPaypal[]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/history/${query?.id}`,
     query,
   );
 };
