@@ -3,17 +3,18 @@
 
 import React, { Fragment, useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import { Field, Form, Formik } from 'formik';
+import { FastField, Form, Formik } from 'formik';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
-import { getClass, getSubject } from '@/services/get';
+import { getSubject, getSubjectAndClass } from '@/services/get';
 import { postJob } from '@/services/job';
-import { ISubject } from '@/types/ISubject';
+
 import { IClass } from '@/types/IClass';
 import { useParams } from 'next/navigation';
 import { getTeacherByid } from '@/services/teacher';
 import { Dialog, Transition } from '@headlessui/react';
+import { ISubjectAndClass } from '@/types/ISubjectAndClass';
 
 interface IProps {
   id: number;
@@ -21,11 +22,13 @@ interface IProps {
 }
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
-  const [subject, setSubject] = useState<ISubject[]>();
+  // const [subject, setSubject] = useState<ISubject[]>();
   const [subjectteacher, setSubjectTeacher] = useState<any>();
-  const [classr, setClassr] = useState<IClass[]>();
+  // const [classr, setClassr] = useState<IClass[]>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
+  // eslint-disable-next-line no-unused-vars
+  const [subjectAndClass, setSubjectAndClass] = useState<ISubjectAndClass[]>();
 
   const [isOpen2, setIsOpen2] = useState(false);
   function closeModal2() {
@@ -34,17 +37,19 @@ export default function RentTeacher(props: IProps) {
   useEffect(() => {
     (async () => {
       try {
-        const resSubject = await getSubject();
-        const resClass = await getClass();
+        const resSubjectAndClass = await getSubjectAndClass({ id: params });
+        // const resSubject = await getSubject();
+        // const resClass = await getClass();
         const resTeacher = await getTeacherByid({ id: params });
-        setSubject(resSubject);
-        setClassr(resClass);
+        setSubjectAndClass(resSubjectAndClass);
+        // setSubject(resSubject);
+        // setClassr(resClass);
         setSubjectTeacher(resTeacher);
       } catch (ex: any) {
         console.log(ex.message);
       }
     })();
-  }, [setSubject]);
+  }, [setSubjectAndClass]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -154,42 +159,40 @@ export default function RentTeacher(props: IProps) {
                   <span>Người thuê</span>
                   <span>{user?.name}</span>
                 </label>
-                <label className={'grid grid-cols-2 '}>
-                  <div className={'h-fit my-auto content-center'}>Môn học </div>
-                  <div>
-                    {classr?.map((i: IClass) => {
-                      return (
-                        <label key={i?.id}>
-                          <Field
-                            type={'checkbox'}
-                            name={'class'}
-                            value={`${i?.id}`}
-                            className={'m-1'}
-                          />
-                          {i?.class}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </label>
-                <label className={'grid grid-cols-2 '}>
-                  <div className={'h-fit my-auto content-center'}>Môn học </div>
-                  <div>
-                    {subject?.map((i: ISubject) => {
-                      return (
-                        <label key={i?.id}>
-                          <Field
-                            type={'checkbox'}
-                            name={'subject'}
-                            value={`${i?.id}`}
-                            className={'m-1'}
-                          />
-                          {i?.name}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </label>
+                <div className={'grid grid-cols-2 gap-5'}>
+                  <label className={'h-fit my-auto content-center'}>
+                    Môn học{' '}
+                  </label>
+                  <FastField
+                    as="select"
+                    name="class"
+                    multiple
+                    className={'w-full p-2 border border-gray-300 rounded-md'}
+                  >
+                    {subjectAndClass?.class_id?.map((i: ISubjectAndClass[]) => (
+                      <option key={i?.id} value={`${i?.id}`}>
+                        {i?.class}
+                      </option>
+                    ))}
+                  </FastField>
+                </div>
+                <div className={'grid grid-cols-2 gap-5'}>
+                  <label className={'h-fit my-auto content-center'}>
+                    Môn học{' '}
+                  </label>
+                  <FastField
+                    as="select"
+                    name="subject"
+                    multiple
+                    className={'w-full p-2 border border-gray-300 rounded-md'}
+                  >
+                    {subjectAndClass?.subject?.map((i: ISubjectAndClass[]) => (
+                      <option key={i?.id} value={`${i?.id}`}>
+                        {i?.name}
+                      </option>
+                    ))}
+                  </FastField>
+                </div>
               </div>
               <div
                 className={
@@ -208,7 +211,7 @@ export default function RentTeacher(props: IProps) {
                 <button
                   type="button"
                   className={
-                    ' rounded-md border border-gray-500 px-2 py-2 text-gray-500 text-sx font-medium hover:bg-red-600 '
+                    'rounded-md border border-gray-500 px-2 py-2 text-gray-500 text-sx font-medium hover:bg-red-600'
                   }
                   onClick={closeModal}
                 >

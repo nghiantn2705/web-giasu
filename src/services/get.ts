@@ -1,7 +1,7 @@
 import { apiRequest, IFetchQuery } from '@/services/base';
 import { IDisctrict } from '@/types/IDistrict';
 import { ISubject } from '@/types/ISubject';
-import { IClass } from '@/types/IClass';
+import { ISubjectAndClass } from '@/types/ISubjectAndClass';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
@@ -20,9 +20,9 @@ export const getSubject = (query: IFetchQuery = {}) => {
   );
 };
 
-export const getClass = (query: IFetchQuery = {}) => {
-  return apiRequest.get<IClass[]>(
-    `${process.env.NEXT_PUBLIC_API_URL}/class_levels/`,
+export const getSubjectAndClass = (query: IFetchQuery = {}) => {
+  return apiRequest.get<ISubjectAndClass[]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/teachers/subjectAndClass/${query?.id}`,
     query,
   );
 };
