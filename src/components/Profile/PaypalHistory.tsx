@@ -59,16 +59,16 @@ export default function PaypalHistory({ infoUser }: IProps) {
               >
                 <td className={'px-6 py-4 text-center'}>
                   <div className={' text-center'}>
-                    <p>{items.bank}</p>
+                    <p>{items?.bank}</p>
                   </div>
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  <p>{items.coin}</p>
+                  <p>{items?.coin}</p>
                 </td>
                 <td className="px-6 py-4 text-center">
                   <div className={'text-center text-red-400 font-bold'}>
-                    <p>{items.status}</p>
+                    <p>{items?.status}</p>
                   </div>
                 </td>
               </tr>

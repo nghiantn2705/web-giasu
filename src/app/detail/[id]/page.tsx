@@ -113,6 +113,7 @@ export default function Home() {
                     {teacher?.Certificate?.map(
                       (item: string, index: number) => {
                         return (
+                          // eslint-disable-next-line jsx-a11y/alt-text
                           <Image
                             height={80}
                             width={80}

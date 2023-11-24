@@ -49,18 +49,14 @@ export default function Paypal() {
 
   return (
     <div>
-      {user?.role == 'teacher' ? (
-        <button
-          onClick={openModal}
-          className={
-            'w-full text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-          }
-        >
-          Nạp Tiền
-        </button>
-      ) : (
-        ''
-      )}
+      <button
+        onClick={openModal}
+        className={
+          'w-full text-center p-2 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+        }
+      >
+        Nạp Tiền
+      </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
