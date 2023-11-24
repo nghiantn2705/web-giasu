@@ -291,7 +291,7 @@ export default function Home() {
               </div>
               <div
                 className={
-                  'mt-5 col-span-8 text-center sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
+                  'text-center mt-5 col-span-8 text-center sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
                 }
               >
                 <FormRentProcedure id={Number(params)} teacher={teacher} />

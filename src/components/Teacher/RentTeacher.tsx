@@ -11,7 +11,6 @@ import { getSubjectAndClass } from '@/services/get';
 import { postJob } from '@/services/job';
 import { useParams } from 'next/navigation';
 import { ISubjectAndClass } from '@/types/ISubjectAndClass';
-import Paypal from '../Profile/Paypal';
 
 interface IProps {
   id: number;
@@ -39,11 +38,10 @@ export default function RentTeacher(props: IProps) {
     setIsOpen(false);
   };
   const openModal = () => {
-    if (user.coin < '50000') {
+    if (parseInt(user.coin) < 50000) {
       toast.error('Vui lòng Nạp tiền !', {
         duration: 3000,
       });
-      <Paypal />;
     } else {
       setIsOpen(true);
     }
@@ -54,10 +52,10 @@ export default function RentTeacher(props: IProps) {
         <button
           onClick={openModal}
           className={
-            'mt-16 mx-auto bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
+            'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
           }
         >
-          Thuê
+          Xác nhận thuê
         </button>
       ) : (
         ''

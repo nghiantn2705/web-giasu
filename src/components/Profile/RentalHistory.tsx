@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import { IUserInfo } from '@/types/IUserInfo';
-import FormAccept from '@/components/Profile/FormAccept';
 import { getJob } from '@/services/job';
+import FormConfirmProcedure from '../ModailProcedure/FormConfirmProcedure';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -130,7 +130,8 @@ export default function RentalHistory({ infoUser }: IProps) {
                     items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (
-                      <FormAccept user={items} />
+                      // <FormConfirmProcedure/>
+                      <FormConfirmProcedure user={items} />
                     )
                   ) : (
                     <span>{items?.description}</span>

@@ -63,8 +63,9 @@ export default function FormRentProcedure(props: IProps) {
               với việc không có thông tin liên hệ của gia sư.
             </p>
           </div>
-
-          <RentTeacher id={Number(params)} teacher={teacher} />
+          <div className={'text-center'}>
+            <RentTeacher id={Number(params)} teacher={teacher} />
+          </div>
         </div>
       </MyModal>
     </div>
