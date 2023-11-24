@@ -23,6 +23,14 @@ export default function PaypalHistory({ infoUser }: IProps) {
     IHistoryPaypal[] | undefined
   >(undefined);
 
+  const formatNumber = (value: any) => {
+    if (!value) return value;
+
+    const number = parseInt(value.replace(/\./g, ''), 10); // Loại bỏ dấu chấm và chuyển đổi thành số nguyên
+    const formattedValue = new Intl.NumberFormat('de-DE').format(number); // Định dạng số theo chuẩn 'de-DE' (có dấu chấm phân cách hàng nghìn)
+    return formattedValue;
+  };
+
   useEffect(() => {
     (async () => {
       const resHistoryPaypal = await GetHistoryPaypal({ id: infoUser?.id });
@@ -64,7 +72,7 @@ export default function PaypalHistory({ infoUser }: IProps) {
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  <p>{items?.coin}</p>
+                  <p>{formatNumber(items?.coin)}</p>
                 </td>
                 <td className="px-6 py-4 text-center">
                   <div className={'text-center text-red-400 font-bold'}>

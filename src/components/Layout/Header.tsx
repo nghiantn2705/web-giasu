@@ -55,6 +55,13 @@ const Header = (props: any) => {
     rsrouter.push('/');
     window.location.reload();
   };
+  const formatNumber = (value: any) => {
+    if (!value) return value;
+
+    const number = parseInt(value.replace(/\./g, ''), 10); // Loại bỏ dấu chấm và chuyển đổi thành số nguyên
+    const formattedValue = new Intl.NumberFormat('de-DE').format(number); // Định dạng số theo chuẩn 'de-DE' (có dấu chấm phân cách hàng nghìn)
+    return formattedValue;
+  };
   return (
     <header
       className={
@@ -160,7 +167,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiMoney />
-                  Số dư : {props?.userInfo?.coin}
+                  Số dư : {formatNumber(props?.userInfo?.coin)} vnđ
                 </span>
                 <a
                   href={`/profile`}

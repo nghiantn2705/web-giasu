@@ -29,12 +29,7 @@ export interface ITeachers {
       name: string;
     },
   ];
-  district: [
-    {
-      id: number;
-      name: string;
-    },
-  ];
+  district: string;
   school: [
     {
       id: number;

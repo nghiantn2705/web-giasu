@@ -18,7 +18,17 @@ export default function Paypal() {
   const vnpOrderInfo = searchParam.get('vnp_OrderInfo');
   const vnpBankCode = searchParam.get('vnp_BankCode');
   const router = useRouter();
-  console.log(paypal?.data);
+
+  const formatNumber = (value: any) => {
+    if (!value) return value;
+
+    const number = parseInt(value.replace(/\./g, ''), 10); // Loại bỏ dấu chấm và chuyển đổi thành số nguyên
+    const formattedValue = new Intl.NumberFormat('de-DE').format(number); // Định dạng số theo chuẩn 'de-DE' (có dấu chấm phân cách hàng nghìn)
+    return formattedValue;
+  };
+  const parseNumber = (value: any) => {
+    return value.replace(/\./g, '');
+  };
   useEffect(() => {
     if (vnpAmount && vnpOrderInfo && vnpBankCode) {
       const deposit = {
@@ -63,7 +73,9 @@ export default function Paypal() {
           <ModalTitle>Nạp tiền</ModalTitle>
           <Formik
             onSubmit={async (values) => {
-              console.log(values);
+              const total = parseNumber(values.total);
+              values.total = total;
+
               try {
                 const resPaypal = await postPaypal({ ...values });
                 setPaypal(resPaypal);
@@ -75,36 +87,43 @@ export default function Paypal() {
               total: '',
             }}
           >
-            <Form
-              className={'flex flex-col gap-5 p-5 justify-center font-medium'}
-            >
-              <div className={'flex flex-col gap-5 '}>
-                <label className={'grid grid-cols-2'}>
-                  <span>Số tiền muốn nạp</span>
-                  <Field name={'total'} className={'m-1 border'} />
-                </label>
-              </div>
-              <div className={'flex gap-3 justify-end'}>
-                <button
-                  type="submit"
-                  className={
-                    ' text-center py-2 px-4 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-                  }
-                  onClick={closeModal}
-                >
-                  Nạp tiền
-                </button>
-                <button
-                  type="button"
-                  className={
-                    ' text-center py-2 px-4 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
-                  }
-                  onClick={closeModal}
-                >
-                  Đóng
-                </button>
-              </div>
-            </Form>
+            {({ setFieldValue }) => (
+              <Form
+                className={'flex flex-col gap-5 p-5 justify-center font-medium'}
+              >
+                <div className={'flex flex-col gap-5 '}>
+                  <label className={'grid grid-cols-2'}>
+                    <span>Số tiền muốn nạp</span>
+                    <Field
+                      name={'total'}
+                      className={'m-1 border'}
+                      onChange={(e: any) => {
+                        const formattedValue = formatNumber(e.target.value);
+                        setFieldValue('total', formattedValue);
+                      }}
+                    />
+                  </label>
+                </div>
+                <div className={'flex gap-3 justify-end'}>
+                  <button
+                    type="submit"
+                    className={
+                      'text-center py-2 px-4 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+                    }
+                  >
+                    Nạp tiền
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      'text-center py-2 px-4 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
+                    }
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </Form>
+            )}
           </Formik>
         </div>
       </MyModal>

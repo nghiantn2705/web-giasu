@@ -70,14 +70,14 @@ const Teacher = ({ teachers }: IProps) => {
                       'py-3 px-3 border-y border-slate-100 grid grid-cols-2 gap-1'
                     }
                   >
-                    {items?.subject?.map((classId, index: number) => (
+                    {items?.subject?.map((item, index: number) => (
                       <li
                         key={index}
                         className={
                           'border text-center rounded-md bg-blue-tw text-white'
                         }
                       >
-                        {classId}
+                        {item?.name}
                       </li>
                     ))}
                   </ul>
@@ -85,7 +85,7 @@ const Teacher = ({ teachers }: IProps) => {
                   <ul className="pt-3 px-3 flex justify-between items-center list-none">
                     <li>
                       <span className="text-slate-400">Khu vực</span>
-                      <p className="text-sm font-medium">{items?.DistrictID}</p>
+                      <p className="text-sm font-medium">{items?.district}</p>
                     </li>
 
                     <li>
