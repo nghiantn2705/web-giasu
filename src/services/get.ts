@@ -49,13 +49,16 @@ export const getSchool = (query: IFetchQuery = {}) => {
 };
 
 export const getAdreess = (query: IFetchQuery = {}) => {
-  return apiRequest.get<IAdd>(
+  return apiRequest.get<any>(
     `${process.env.NEXT_PUBLIC_GOONG_API}/Place/AutoComplete?api_key=${process.env.NEXT_PUBLIC_GOONG_API_KEY}&input=${query}`,
   );
 };
 export const getAdreessId = (query: IFetchQuery = {}) => {
-  return apiRequest.get(`${process.env.NEXT_PUBLIC_GOONG_API}/place/detail`, {
-    api_key: process.env.NEXT_PUBLIC_GOONG_API_KEY,
-    placeid: query,
-  });
+  return apiRequest.get<any>(
+    `${process.env.NEXT_PUBLIC_GOONG_API}/place/detail`,
+    {
+      api_key: process.env.NEXT_PUBLIC_GOONG_API_KEY,
+      placeid: query,
+    },
+  );
 };

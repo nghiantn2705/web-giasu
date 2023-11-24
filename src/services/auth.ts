@@ -22,6 +22,11 @@ export const getTokenRefresh = (body: IFetchBody) => {
 export const RegisterUser = (body: IFetchBody) => {
   return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, body);
 };
-export const RegisterTeacher = (body: IFetchBody) => {
-  return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/test`, body);
+export const authGoogle = (body: number) => {
+  return apiRequest.post<string>(
+    `${process.env.NEXT_PUBLIC_API_URL}/get-google-sign-in-url`,
+    {
+      role: body,
+    },
+  );
 };

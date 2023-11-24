@@ -5,31 +5,12 @@ import { useState } from 'react';
 import { getAdreess, getAdreessId } from '@/services/get';
 import { Button, Form, Select } from 'antd';
 import { FieldType } from '@/types/Field';
+import { IAddress, IDistrict } from '@/types/ILocation';
 
-interface IAddress {
-  predictions: [
-    {
-      place_id: string;
-      description: string;
-    },
-  ];
-}
-
-interface IDistrict {
-  result: {
-    formatted_address: string;
-    geometry: {
-      location: {
-        lat: string;
-        lng: string;
-      };
-    };
-  };
-}
 export default function App() {
   const [address, setAddress] = useState<IAddress>();
   const [district, setDistrict] = useState<IDistrict>();
-
+  console.log(district);
   let timeoutId: any;
   const onSearch = (value: any) => {
     clearTimeout(timeoutId);

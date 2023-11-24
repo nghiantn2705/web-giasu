@@ -11,7 +11,7 @@ import {
   Radio,
   RadioChangeEvent,
   DatePicker,
-  TreeSelect,
+  Checkbox,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import toast from 'react-hot-toast';
@@ -23,47 +23,39 @@ import Image from 'next/image';
 import { ISalary } from '@/types/ISalary';
 import { ITimeSlot } from '@/types/ITimeSlot';
 import { ISchool } from '@/types/ISchool';
-import { IDisctrict } from '@/types/IDistrict';
 import {
+  getAdreess,
+  getAdreessId,
   getClass,
-  getDistrict,
   getSalary,
   getSchool,
   getSubject,
   getTimeSlot,
 } from '@/services/get';
-import MyModalRules from '../../rules/page';
 import moment from 'moment';
 import { FieldType } from '@/types/Field';
+import { IAddress, IDistrict } from '@/types/ILocation';
 const page = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState('');
   const [fileList, setFileList] = useState([]);
   const [classlevels, setClasslevels] = useState<IClass[]>();
   const [subject, setSubject] = useState<ISubject[]>();
-  const [district, setDistrict] = useState<IDisctrict[]>();
   const [salary, setSalary] = useState<ISalary[]>();
   const [timeslot, setTimeSlot] = useState<ITimeSlot[]>();
   const [school, setSchool] = useState<ISchool[]>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string[]>([]);
-
+  const [address, setAddress] = useState<IAddress>();
+  const [district, setDistrict] = useState<IDistrict>();
+  const [district1, setDistrict1] = useState<IDistrict>();
+  const [address1, setAddress1] = useState<IAddress>();
+  let timeoutId: any;
   const filterOption = (
     input: string,
     option?: { label: string; value: string },
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-  const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -98,30 +90,44 @@ const page = () => {
     value: o.id,
     key: o.id,
   }));
+  const onChangeGender = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
+  };
+  const onSearchAddress = (value: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+      const res = await getAdreess(value);
+      setAddress(res);
+    }, 500);
+  };
+  const onChangeAddress = async (value: any) => {
+    const res = await getAdreessId(value);
+    setDistrict(res);
+  };
+  const onSearchDistrict = (value: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+      const res = await getAdreess(value);
+      setAddress1(res);
+    }, 500);
+  };
+  const onChangeDistrict = async (value: any) => {
+    const res = await getAdreessId(value);
+    setDistrict1(res);
+  };
 
-  const filteredLocationAddress: any = [];
-
-  district?.forEach((item) => {
-    const newDistricts = item.district?.map((district) => {
-      const newWards = district?.ward?.map((ward) => ({
-        value: ward?.wardId,
-        title: ward?.name,
-      }));
-
-      return {
-        value: district?.districtId,
-        title: district?.districtName,
-        children: newWards || [],
-      };
-    });
-
-    filteredLocationAddress.push({
-      value: item?.provinceId,
-      title: item?.provinceName,
-      children: newDistricts || [],
-    });
+  const options = address?.predictions?.map((item) => {
+    return {
+      value: item?.place_id,
+      label: item?.description,
+    };
   });
-
+  const options1 = address1?.predictions?.map((item) => {
+    return {
+      value: item?.place_id,
+      label: item?.description,
+    };
+  });
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
@@ -140,13 +146,11 @@ const page = () => {
       try {
         const resSubject = await getSubject();
         const resClasses = await getClass();
-        const resDistrict = await getDistrict();
         const resSalary = await getSalary();
         const resTimeSlote = await getTimeSlot();
         const resSchool = await getSchool();
         setSubject(resSubject);
         setClasslevels(resClasses);
-        setDistrict(resDistrict);
         setSalary(resSalary);
         setTimeSlot(resTimeSlote);
         setSchool(resSchool);
@@ -157,7 +161,7 @@ const page = () => {
   }, []);
   const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
-    const fileavata = values?.certificate?.map((item) => {
+    const fileavata = values?.certificate?.map((item: any) => {
       return item?.originFileObj;
     });
     const file = values?.certificate?.map((item: any) => {
@@ -170,10 +174,16 @@ const page = () => {
     for (let i = 0; i < fileavata.length; i++) {
       formData.append('avatar', fileavata[i]);
     }
-    formData.append('name', values.name);
-    formData.append('Citizen_card', values.Citizen_card);
-    formData.append('DistrictID', values.DistrictID);
-    formData.append('address', values.address);
+    const addressTeacher: any =
+      district?.result?.formatted_address + '' + district?.result?.name;
+    const addressTeacher1: any = district1?.result?.formatted_address;
+    const latitude: any = district1?.result?.geometry?.location?.lat;
+    const longitude: any = district1?.result?.geometry?.location?.lng;
+    formData.append('citizen_card', values.Citizen_card);
+    formData.append('DistrictID', addressTeacher1);
+    formData.append('address', addressTeacher);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
     formData.append('class_id', values.class_id);
     formData.append('current_role', values.current_role);
     formData.append('date_of_birth', values.date_of_birth);
@@ -184,14 +194,13 @@ const page = () => {
     formData.append('gender', values.gender);
     formData.append('password', values.password);
     formData.append('phone', values.phone);
+    formData.append('name', values.name);
     formData.append('salary_id', values.salary_id);
     formData.append('school_id', values.school_id);
     formData.append('subject', values.subject);
     formData.append('time_tutor_id', values.time_tutor_id);
     formData.append('role', '3');
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+
     await RegisterUser(formData);
     toast.success('Đăng kí thành công !', {
       duration: 3000,
@@ -265,18 +274,15 @@ const page = () => {
               rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
               className={'w-full'}
             >
-              <TreeSelect
-                key={Math.random()}
-                value={filteredLocationAddress}
+              <Select
+                className={'w-[400px]'}
                 showSearch
-                treeNodeFilterProp="title"
-                style={{ width: '100%' }}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                placeholder="Khu vực dạy"
-                allowClear
-                multiple
-                treeDefaultExpandAll
-                treeData={filteredLocationAddress}
+                placeholder="Nhập địa chỉ ở của bạn"
+                optionFilterProp="children"
+                onChange={onChangeAddress}
+                onSearch={onSearchAddress}
+                filterOption={filterOption}
+                options={options}
               />
             </Form.Item>
             <Form.Item<FieldType>
@@ -286,7 +292,7 @@ const page = () => {
                 { required: true, message: 'Hãy chọn giới tính của bạn!' },
               ]}
             >
-              <Radio.Group onChange={onChange} value={value}>
+              <Radio.Group onChange={onChangeGender} value={value}>
                 <Radio value={'Nam'}>Nam</Radio>
                 <Radio value={'Nữ'}>Nữ</Radio>
               </Radio.Group>
@@ -328,7 +334,7 @@ const page = () => {
                 customRequest={(info: any) => {
                   setFileList([info?.file]);
                 }}
-                showUploadList={false}
+                showUploadList={true}
               >
                 <Button icon={<UploadOutlined />}>Upload</Button>
               </Upload>
@@ -474,23 +480,18 @@ const page = () => {
             </Form.Item>
             <Form.Item<FieldType>
               name="DistrictID"
-              rules={[
-                { required: true, message: 'Hãy điền khu vực dạy của bạn!' },
-              ]}
+              rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
               className={'w-full'}
             >
-              <TreeSelect
-                key={Math.random()}
-                value={filteredLocationAddress}
+              <Select
+                className={'w-[400px]'}
                 showSearch
-                style={{ width: '100%' }}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                placeholder="Khu vực dạy"
-                treeCheckable={false}
-                allowClear
-                multiple
-                treeDefaultExpandAll
-                treeData={filteredLocationAddress}
+                placeholder="Nhập khu vực dậy của bạn"
+                optionFilterProp="children"
+                onChange={onChangeDistrict}
+                onSearch={onSearchDistrict}
+                filterOption={filterOption}
+                options={options1}
               />
             </Form.Item>
             <Form.Item<FieldType>
@@ -521,20 +522,28 @@ const page = () => {
               <Input className={'w-full'} placeholder="Mô tả về bạn" />
             </Form.Item>
           </div>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(
+                        'Bạn cần chấp nhận điều khoản để tiếp tục.',
+                      ),
+              },
+            ]}
+          >
+            <Checkbox>Tôi đồng ý với các điều khoản và điều kiện</Checkbox>
+          </Form.Item>
           <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
               Submit
             </Button>
           </Form.Item>
         </Form>
-        <span>
-          {' '}
-          Bạn xem điều khoản sau{' '}
-          <button onClick={openModal}>Xem tại đây</button>
-        </span>
-        <MyModalRules visible={isOpen} onClose={closeModal}>
-          <div>Trường</div>
-        </MyModalRules>
       </div>
       <div
         className={
