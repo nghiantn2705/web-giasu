@@ -55,6 +55,7 @@ const Header = (props: any) => {
     rsrouter.push('/');
     window.location.reload();
   };
+  console.log(props.userInfo);
   return (
     <header
       className={

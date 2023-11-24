@@ -55,4 +55,5 @@ export interface ITeachers {
   ];
   current_role: string;
   Certificate: string[];
+  coin: string;
 }
