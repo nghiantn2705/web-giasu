@@ -156,7 +156,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                   </td>
                   <td className="px-6 py-4">
                     {infoUser?.role == 'user' ? (
-                      items?.confirmTeacher !== 0 ? (
+                      items?.confirmUser !== 0 ? (
                         'Đã xác nhận'
                       ) : (
                         <FormAcceptConnectUser user={items} />

@@ -18,6 +18,7 @@ import { getTeacherByid } from '@/services/teacher';
 import RentTeacher from '@/components/Teacher/RentTeacher';
 import ModalFeeback from '@/components/ModalTutor/LoginModal';
 import { Dialog, Transition } from '@headlessui/react';
+import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
@@ -293,7 +294,7 @@ export default function Home() {
                   'mt-5 col-span-8 text-center sm:col-span-8 md:col-span-8 lg:col-span-8 xl:col-span-2'
                 }
               >
-                <RentTeacher id={Number(params)} teacher={teacher} />
+                <FormRentProcedure id={Number(params)} teacher={teacher} />
               </div>
             </div>
             <div className="w-[90%] mt-20 border border-gray-300 p-8 mx-auto pt-10">

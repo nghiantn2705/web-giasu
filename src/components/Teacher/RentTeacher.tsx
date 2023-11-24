@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 'use client';
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import { FastField, Form, Formik } from 'formik';
 import { useStore } from '@/hook/use-store';
@@ -10,8 +10,8 @@ import toast from 'react-hot-toast';
 import { getSubjectAndClass } from '@/services/get';
 import { postJob } from '@/services/job';
 import { useParams } from 'next/navigation';
-import { Dialog, Transition } from '@headlessui/react';
 import { ISubjectAndClass } from '@/types/ISubjectAndClass';
+import Paypal from '../Profile/Paypal';
 
 interface IProps {
   id: number;
@@ -22,11 +22,8 @@ export default function RentTeacher(props: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
   const [subjectAndClass, setSubjectAndClass] = useState<ISubjectAndClass>();
-  const [isOpen2, setIsOpen2] = useState(false);
-  console.log(subjectAndClass?.class_id);
-  function closeModal2() {
-    setIsOpen2(false);
-  }
+  console.log(user);
+
   useEffect(() => {
     (async () => {
       try {
@@ -42,8 +39,11 @@ export default function RentTeacher(props: IProps) {
     setIsOpen(false);
   };
   const openModal = () => {
-    if (!user) {
-      setIsOpen2(true);
+    if (user.coin < '50000') {
+      toast.error('Vui lòng Nạp tiền !', {
+        duration: 3000,
+      });
+      <Paypal />;
     } else {
       setIsOpen(true);
     }
@@ -54,7 +54,7 @@ export default function RentTeacher(props: IProps) {
         <button
           onClick={openModal}
           className={
-            'mt-16 text-center bg-blue-tw1 hover:bg-blue-tw w-[90%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
+            'mt-16 mx bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
           }
         >
           Thuê
@@ -62,63 +62,15 @@ export default function RentTeacher(props: IProps) {
       ) : (
         ''
       )}
-      <Transition appear show={isOpen2} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal2}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  ></Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-xl text-gray-500 text-center">
-                      Vui lòng đăng nhập để Thuê
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    {/* <button
-                                    type="button"
-                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    onClick={closeModal}
-                                  >
-                                    Got it, thanks!
-                                  </button> */}
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
           <ModalTitle>Thuê gia sư</ModalTitle>
           <Formik
             className={''}
             onSubmit={async (values) => {
+              values.class = values.class.join(',');
+              values.subject = values.subject.join(',');
               const res = await postJob({ ...values });
               toast.success('Vui lòng đợi gia sư đồng ý !', {
                 duration: 3000,
