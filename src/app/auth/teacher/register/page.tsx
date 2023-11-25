@@ -35,6 +35,8 @@ import {
 import moment from 'moment';
 import { FieldType } from '@/types/Field';
 import { IAddress, IDistrict } from '@/types/ILocation';
+import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
+import FormLoginProcedure from '@/components/ModailProcedure/FormLoginProcedure';
 const page = () => {
   const router = useRouter();
   const [value, setValue] = useState('');
@@ -536,9 +538,15 @@ const page = () => {
               },
             ]}
           >
-            <Checkbox>Tôi đồng ý với các điều khoản và điều kiện</Checkbox>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
+            <div>
+              <Checkbox>
+                Tôi đồng ý với các điều khoản và điều kiện{' '}
+                <span>
+                  {' '}
+                  <FormLoginProcedure />
+                </span>
+              </Checkbox>
+            </div>{' '}
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
               Submit
             </Button>
