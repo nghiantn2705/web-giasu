@@ -69,3 +69,10 @@ export const getAdreessId = (query: IFetchQuery = {}) => {
     },
   );
 };
+export const getDirections = (query: IFetchQuery = {}) => {
+  return apiRequest.get<any>(`${process.env.NEXT_PUBLIC_GOONG_API}/Direction`, {
+    api_key: process.env.NEXT_PUBLIC_GOONG_API_KEY,
+    origin: query.origin,
+    destination: query.destination,
+  });
+};

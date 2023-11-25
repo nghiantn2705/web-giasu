@@ -4,7 +4,7 @@
 'use client';
 import MyDialog from '@/components/Teacher/RentTeacher';
 import { Image } from 'antd';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { SetStateAction, useEffect, useState, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -15,10 +15,9 @@ import { IFeedback } from '@/types/IFeedback';
 import Loading from '@/components/Layout/Loading';
 import { getFeedback, postFeedback, getStart } from '@/services/feedback';
 import { getTeacherByid } from '@/services/teacher';
-import RentTeacher from '@/components/Teacher/RentTeacher';
-import ModalFeeback from '@/components/ModalTutor/LoginModal';
 import { Dialog, Transition } from '@headlessui/react';
 import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
+import { getDirections } from '@/services/get';
 
 export default function Home() {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
@@ -28,24 +27,44 @@ export default function Home() {
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
-  console.log(teacher);
+  const [directions, setDirections] = useState();
   let [isOpen, setIsOpen] = useState(false);
-  console.log(feedbackData);
   function closeModal() {
     setIsOpen(false);
   }
+
+  // if (teacher) {
+  //   const values = {
+  //     origin: [userInfo?.latitude, userInfo?.longitude],
+  //     destination: [teacher?.latitude, teacher?.longitude],
+  //   };
+  //   values.origin = values.origin.join(',');
+  //   values.destination = values.destination.join(',');
+  //   console.log({ ...values });
+  // }
 
   useEffect(() => {
     (async () => {
       const resTeacher = await getTeacherByid({ id: params });
       const resFeedback = await getFeedback({ id: params });
       const resRating = await getStart({ id: params });
+
       setTeachers(resTeacher);
       setFeedbackData(resFeedback);
       setStarData(resRating);
+      if (teacher) {
+        const values = {
+          origin: [userInfo?.latitude, userInfo?.longitude],
+          destination: [teacher?.latitude, teacher?.longitude],
+        };
+        values.origin = values.origin.join(',');
+        values.destination = values.destination.join(',');
+        const resDirections = await getDirections({ ...values });
+        setDirections(resDirections);
+      }
     })();
   }, []);
-  console.log(teacher);
+
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -200,29 +219,6 @@ export default function Home() {
                               <p>{subject.name}</p>
                             </div>
                           ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={'py-4 border-b'}>
-                    <div className={'text-xl font-bold'}>
-                      <p>Thông tin cá nhân:</p>
-                    </div>
-                    <div className={'pt-2 grid gap-30 grid-cols-10'}>
-                      <div className={'col-span-5'}>
-                        <div className={'pt-2 text-zinc-950 '}>
-                          <label className={'font-bold'}>
-                            Số điện thoại :{' '}
-                          </label>
-
-                          <label>{teacher?.phone}</label>
-                        </div>
-                      </div>
-                      <div className={'col-span-5'}>
-                        <div className="pt-2  text-zinc-950 ">
-                          <label className="font-bold">Khu vực : </label>
-
-                          <label className=""> {teacher?.address}</label>
                         </div>
                       </div>
                     </div>

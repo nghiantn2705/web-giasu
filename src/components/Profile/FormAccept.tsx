@@ -6,6 +6,8 @@ import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
 import { putJob } from '@/services/job';
+import { useStore } from '@/hook/use-store';
+import { ITeachers } from '@/types/ITeachers';
 interface IJob {
   user: {
     id: number;
@@ -22,12 +24,19 @@ interface IJob {
 
 export default function FormAccept({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user);
+  const [userInfo] = useStore<ITeachers>('userInfo');
+  console.log(userInfo);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
-    setIsOpen(true);
+    if (parseInt(userInfo.coin) < 50000) {
+      toast.error('Vui lòng Nạp tiền !', {
+        duration: 3000,
+      });
+    } else {
+      setIsOpen(true);
+    }
   };
   const reloadPageAfterDelay = () => {
     setTimeout(() => {
@@ -39,10 +48,10 @@ export default function FormAccept({ user }: IJob) {
       <button
         onClick={openModal}
         className={
-          'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
+          'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Xác nhận
+        Xác nhận thuê
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>

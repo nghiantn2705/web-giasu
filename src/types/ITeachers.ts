@@ -6,6 +6,8 @@ export interface ITeachers {
   email: string;
   avatar: string;
   phone: string;
+  latitude: string;
+  longitude: string;
   address: string;
   school_id: number;
   Citizen_card: number;
