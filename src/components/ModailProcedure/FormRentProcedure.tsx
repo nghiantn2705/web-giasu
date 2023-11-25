@@ -35,7 +35,7 @@ export default function FormRentProcedure(props: IProps) {
         <button
           onClick={openModal}
           className={
-            'mt-16 text-center bg-blue-tw1 hover:bg-blue-tw w-[90%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
+            'text-center bg-blue-tw1 hover:bg-blue-tw h-12 w-full rounded-md text-lg leading-normal tracking-normal text-white  uppercase'
           }
         >
           Thuê

@@ -5,6 +5,8 @@ export interface ITeachersDetail {
   address: string;
   avatar: string;
   description: string;
+  latitude: string;
+  longitude: string;
   education_level: string;
   email: string;
   id: number;

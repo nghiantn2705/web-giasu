@@ -5,25 +5,14 @@ import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import { IUserInfo } from '@/types/IUserInfo';
 import { getConnect } from '@/services/connect';
-import FormAcceptConnect from './FormAcceptConnect';
-import FormAcceptConnectUser from './FormAcceptConnectUser';
 import FormCeonnectProcedure from '../ModailProcedure/FormCeonnectProcedure';
 import FormCeonnectUserProcedure from '../ModailProcedure/FormCeonnecUsertProcedure';
+import { IConnect } from '@/types/IConect';
 
 interface IProps {
   infoUser: IUserInfo;
 }
-interface IConnect {
-  id: number;
-  idJob: number;
-  idUser: string;
-  idTeacher: string;
-  noteUser: string;
-  noteTeacher: string;
-  confirmUser: number;
-  confirmTeacher: number;
-  status: number;
-}
+
 export default function ConnectHistory({ infoUser }: IProps) {
   const [job, setConnect] = useState<IConnect[]>();
 
@@ -38,7 +27,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
   return (
     <div
       className={
-        'relative w-full overflow-x-auto px-4 border-l-2 border-4 border-indigo-200 border-b-indigo-500'
+        'bg-white shadow rounded-lg p-6 relative w-full overflow-x-auto px-4 border-l-2  '
       }
     >
       <div>

@@ -22,7 +22,7 @@ const Teacher = ({ teachers }: IProps) => {
       setStarData(resRating);
     })();
   }, []);
-
+  console.log(teachers);
   return (
     <>
       {teachers ? (
@@ -82,7 +82,7 @@ const Teacher = ({ teachers }: IProps) => {
                     ))}
                   </ul>
 
-                  <ul className="pt-3 px-3 flex justify-between items-center list-none">
+                  <ul className="pt-3 px-3 flex justify-between gap-8 list-none">
                     <li>
                       <span className="text-slate-400">Khu vực</span>
                       <p className="text-sm font-medium">{items?.district}</p>

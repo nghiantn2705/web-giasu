@@ -39,7 +39,11 @@ export default function PaypalHistory({ infoUser }: IProps) {
   }, [infoUser?.id]);
   // console.log(historyPaypal);
   return (
-    <div className={'relative w-full overflow-x-auto px-4 border-l-2'}>
+    <div
+      className={
+        'bg-white shadow rounded-lg p-6 relative w-full overflow-x-auto border-l-2'
+      }
+    >
       <h3
         className={
           'text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
