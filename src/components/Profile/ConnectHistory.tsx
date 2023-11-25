@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import { IUserInfo } from '@/types/IUserInfo';
 import { getConnect } from '@/services/connect';
-import FormAcceptConnect from './FormAcceptConnect';
-import FormAcceptConnectUser from './FormAcceptConnectUser';
+import FormCeonnectProcedure from '../ModailProcedure/FormCeonnectProcedure';
+import FormCeonnectUserProcedure from '../ModailProcedure/FormCeonnecUsertProcedure';
 import { IConnect } from '@/types/IConect';
 
 interface IProps {
@@ -139,7 +139,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       items?.confirmTeacher !== 0 ? (
                         'Đã xác nhận'
                       ) : (
-                        <FormAcceptConnect user={items} />
+                        <FormCeonnectProcedure user={items} />
                       )
                     ) : (
                       <span>{items?.noteTeacher}</span>
@@ -150,7 +150,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       items?.confirmUser !== 0 ? (
                         'Đã xác nhận'
                       ) : (
-                        <FormAcceptConnectUser user={items} />
+                        <FormCeonnectUserProcedure user={items} />
                       )
                     ) : (
                       <span>{items?.noteUser}</span>
