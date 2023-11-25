@@ -4,6 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
 import { Image } from 'antd';
+import { Field, Form, Formik } from 'formik';
+import { editPassword, SendMail } from '@/services/post';
+import toast from 'react-hot-toast';
+import { userInfo } from 'os';
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -96,6 +100,97 @@ const InfoUser = ({ infoUser }: IProps) => {
             >
               Cập nhật thông tin cá nhân
             </Link>
+          </div>
+          <div className={'bg-white p-3 '}>
+            <div
+              className={
+                'flex items-center space-x-2 font-semibold text-gray-900 leading-8'
+              }
+            >
+              <span className={'text-blue-tw2'}>
+                <svg
+                  className="h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </span>
+              <span className="tracking-wide ">Đổi mật khẩu</span>
+            </div>
+            <div className="text-gray-700">
+              <Formik
+                initialValues={{ id: infoUser?.id }}
+                onSubmit={async (values) => {
+                  try {
+                    const res = await editPassword({
+                      ...values,
+                    });
+                    toast.success('Đổi mật khẩu thành công !', {
+                      duration: 3000,
+                      position: 'top-right',
+                    });
+                  } catch (ex) {
+                    toast.error('Vui lòng kiểm tra password !', {
+                      duration: 3000,
+                      position: 'top-right',
+                    });
+                  }
+                }}
+              >
+                <Form className={'flex flex-col gap-5 justify-between mt-4'}>
+                  <div className={'relative col-span-6 mt-2'}>
+                    <Field
+                      type={'passwordlast'}
+                      name={'passwordlast'}
+                      id="passwordlast"
+                      placeholder={'Tên đăng nhập hoặc email'}
+                      className={
+                        'basis-full peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none'
+                      }
+                    />
+                    <label
+                      htmlFor="passwordpasswordlast"
+                      className="w-full pointer-events-none absolute -top-1 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-1 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                    >
+                      Mật khẩu cũ của bạn
+                    </label>
+                  </div>
+                  <div className={'relative col-span-6 mt-2'}>
+                    <Field
+                      type={'password'}
+                      name={'password'}
+                      id="password"
+                      placeholder={'Tên đăng nhập hoặc email'}
+                      className={
+                        'basis-full peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none'
+                      }
+                    />
+                    <label
+                      htmlFor="password"
+                      className="w-full pointer-events-none absolute -top-1 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-1 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                    >
+                      Mật khẩu mới
+                    </label>
+                  </div>
+                  <button
+                    type={'submit'}
+                    className={
+                      'col-span-2 border py-2 bg-blue-tw text-white hover:bg-blue-tw1 w-fit px-4'
+                    }
+                  >
+                    Đổi mật khẩu
+                  </button>
+                </Form>
+              </Formik>
+            </div>
           </div>
           {infoUser?.role == 'teacher' ? (
             <div className={'bg-white p-3 shadow-sm rounded-sm'}>

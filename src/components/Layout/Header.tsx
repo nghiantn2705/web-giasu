@@ -39,14 +39,10 @@ const navLink = [
   },
 ];
 const Header = (props: any) => {
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavLinkOpen, setIsNavLinkOpen] = useState(false);
   const router = usePathname();
   const rsrouter = useRouter();
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
   const toggleNavLink = () => {
     setIsNavLinkOpen(!isNavLinkOpen);
   };

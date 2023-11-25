@@ -40,7 +40,7 @@ const Teacher = ({ teachers }: IProps) => {
                 }
               >
                 <div className={'relative'}>
-                  <a href={`/detail/${items?.id}`}>
+                  <Link href={`/detail/${items?.id}`}>
                     <picture className={'flex justify-center'}>
                       <img
                         src={`${items?.avatar}`}
@@ -50,7 +50,7 @@ const Teacher = ({ teachers }: IProps) => {
                         className={'w-auto h-[200px] object-cover'}
                       />
                     </picture>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className={'py-3'}>

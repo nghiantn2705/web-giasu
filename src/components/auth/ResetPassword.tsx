@@ -61,7 +61,7 @@ const ResetPassword = () => {
               </p>
             </div>
             <Formik
-              initialValues={{ email: '', password: '' }}
+              initialValues={{ email: '' }}
               onSubmit={async (values) => {
                 try {
                   const tokenData = await SendMail({
@@ -97,7 +97,7 @@ const ResetPassword = () => {
                     }
                   />
                   <label
-                    htmlFor="password"
+                    htmlFor="email"
                     className="w-full pointer-events-none absolute -top-1 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-1 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
                   >
                     Nhập email của bạn
@@ -114,13 +114,13 @@ const ResetPassword = () => {
               </Form>
             </Formik>
             <Formik
-              initialValues={{ email: '', password: '' }}
-              onSubmit={async () => {
+              initialValues={{ password: '' }}
+              onSubmit={async (values) => {
                 try {
-                  const data = await resetPassword({
-                    token,
-                  });
-                  console.log(data);
+                  const resValues = { ...values, token };
+                  console.log(resValues);
+                  const data = await resetPassword({ ...resValues });
+
                   toast.success('Đổi mật khẩu thành công !', {
                     duration: 3000,
                     position: 'top-right',

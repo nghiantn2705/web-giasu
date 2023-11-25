@@ -1,18 +1,14 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
-import {
-  AiOutlineArrowLeft,
-  AiOutlineArrowRight,
-  AiOutlineStar,
-} from 'react-icons/ai';
-import { BsFillHeartFill } from 'react-icons/bs';
+import { Navigation, Pagination } from 'swiper/modules';
+import { AiOutlineStar } from 'react-icons/ai';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import Link from 'next/link';
 
 interface IProps {
   teachers: ITeachers[];
@@ -99,14 +95,14 @@ const SortRate = ({ teachers }: IProps) => {
 
                 <div className={'px-3 py-2'}>
                   <div className={'text-center '}>
-                    <a
+                    <Link
                       href={`/detail/${items?.id}`}
                       className={
                         ' hover:text-blue-tw font-medium ease-in-out duration-500'
                       }
                     >
                       {items?.name}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

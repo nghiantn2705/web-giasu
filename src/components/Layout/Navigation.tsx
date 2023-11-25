@@ -8,18 +8,17 @@ import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
 import { useRouter } from 'next/navigation';
 import { getClass, getDistrict, getSubject } from '@/services/get';
+import districtsData from '../../district.json';
 
+const districtsInHanoi = districtsData;
 const Navigation = () => {
-  const [districts, setDistricts] = useState<IDisctrict[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [classes, setClass] = useState<IClass[]>();
-  const router = useRouter();
+  console.log(classes);
   useEffect(() => {
     (async () => {
-      const resDistricts = await getDistrict();
       const resSubject = await getSubject();
       const resClass = await getClass();
-      setDistricts(resDistricts);
       setSubject(resSubject);
       setClass(resClass);
     })();
@@ -48,7 +47,10 @@ const Navigation = () => {
                   className={'bg-gray-200 items-center flex gap-2 px-2'}
                 >
                   <BiSolidRightArrow />
-                  <Link className={'hover:text-amber-700 py-2'} href={'/'}>
+                  <Link
+                    className={'hover:text-amber-700 py-2'}
+                    href={`/timkiemgiasu?subject=${items.id}`}
+                  >
                     Gia Sư {items?.name}
                   </Link>
                 </li>
@@ -62,31 +64,25 @@ const Navigation = () => {
               'text-xl text-center py-2 bg-blue-tw rounded-t-md text-white '
             }
           >
-            <p>Môn Học</p>
+            <p>Khu vực</p>
           </div>
           <ul className={'flex flex-col gap-2'}>
-            <li className={'bg-gray-200 items-center flex gap-2 px-2'}>
-              <BiSolidRightArrow />
-              <Link className={'hover:text-amber-700 py-2'} href={'/'}>
-                Gia Sư Lớp 1
-              </Link>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 2</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 3</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 4</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 5</span>
-            </li>
+            {classes?.map((items: IClass, index: number) => {
+              return (
+                <li
+                  key={index}
+                  className={'bg-gray-200 items-center flex gap-2 px-2'}
+                >
+                  <BiSolidRightArrow />
+                  <Link
+                    className={'hover:text-amber-700 py-2'}
+                    href={`/timkiemgiasu?subject=${items.id}`}
+                  >
+                    Gia Sư {items?.class}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div>
@@ -95,64 +91,25 @@ const Navigation = () => {
               'text-xl text-center py-2 bg-blue-tw rounded-t-md text-white '
             }
           >
-            <p>Môn Học</p>
+            <p>Khu vực</p>
           </div>
           <ul className={'flex flex-col gap-2'}>
-            <li className={'bg-gray-200 items-center flex gap-2 px-2'}>
-              <BiSolidRightArrow />
-              <Link className={'hover:text-amber-700 py-2'} href={'/'}>
-                Gia Sư Lớp 1
-              </Link>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 2</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 3</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 4</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 5</span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div
-            className={
-              'text-xl text-center py-2 bg-blue-tw rounded-t-md text-white '
-            }
-          >
-            <p>Môn Học</p>
-          </div>
-          <ul className={'flex flex-col gap-2'}>
-            <li className={'bg-gray-200 items-center flex gap-2 px-2'}>
-              <BiSolidRightArrow />
-              <Link className={'hover:text-amber-700 py-2'} href={'/'}>
-                Gia Sư Lớp 1
-              </Link>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 2</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 3</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 4</span>
-            </li>
-            <li className={'bg-gray-200 items-center flex gap-2 p-2'}>
-              <BiSolidRightArrow />
-              <span>Gia Sư Lớp 5</span>
-            </li>
+            {districtsInHanoi?.map((items: ISubject, index: number) => {
+              return (
+                <li
+                  key={index}
+                  className={'bg-gray-200 items-center flex gap-2 px-2'}
+                >
+                  <BiSolidRightArrow />
+                  <Link
+                    className={'hover:text-amber-700 py-2'}
+                    href={`/timkiemgiasu?DistrictID=${items.name}`}
+                  >
+                    {items?.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

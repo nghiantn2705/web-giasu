@@ -14,7 +14,8 @@ export default function App(props: any) {
       const teachers = await getFilter(props?.searchParams);
       setTeacher(teachers);
     })();
-  }, []);
+  }, [props?.searchParams]);
+
   return (
     <>
       <Home>
