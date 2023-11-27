@@ -22,6 +22,7 @@ import { getAdreess, getAdreessId } from '@/services/get';
 import moment from 'moment';
 import { FieldType } from '@/types/Field';
 import { IAddress, IDistrict } from '@/types/ILocation';
+import FormLoginProcedure from '@/components/ModailProcedure/FormLoginProcedure';
 const page = () => {
   const router = useRouter();
   const [value, setValue] = useState('');
@@ -217,7 +218,13 @@ const page = () => {
               },
             ]}
           >
-            <Checkbox>Tôi đồng ý với các điều khoản và điều kiện</Checkbox>
+            <div className={'flex'}>
+              <Checkbox>Tôi đồng ý với các điều khoản và điều kiện </Checkbox>
+              <span>
+                {' '}
+                <FormLoginProcedure />
+              </span>
+            </div>{' '}
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>

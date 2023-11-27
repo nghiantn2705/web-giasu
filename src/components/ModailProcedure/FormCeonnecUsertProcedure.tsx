@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
-
-import FormAcceptConnect from '../Profile/FormAcceptConnect';
 import FormAcceptConnectUser from '../Profile/FormAcceptConnectUser';
 interface IJob {
   user: {
@@ -33,12 +31,11 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
       <button
         onClick={openModal}
         className={
-          'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
+          'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
         }
       >
-        Xác nhận thuê
+        Xác nhận
       </button>
-
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[800px]'}>
           <ModalTitle>Điều khoản xác nhận dạy gia sư</ModalTitle>

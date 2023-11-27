@@ -38,10 +38,10 @@ export default function FormAcceptConnectUser({ user }: IJob) {
       <button
         onClick={openModal}
         className={
-          'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
+          'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Xác nhận
+        Xác nhận thuê
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>

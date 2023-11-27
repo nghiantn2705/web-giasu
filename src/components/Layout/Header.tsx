@@ -201,7 +201,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiHistory />
-                  Lịch sử nạp tiền
+                  Lịch sử giao dịch
                 </Link>
 
                 <Paypal />

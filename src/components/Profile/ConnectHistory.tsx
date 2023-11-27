@@ -9,6 +9,9 @@ import FormCeonnectProcedure from '../ModailProcedure/FormCeonnectProcedure';
 import FormCeonnectUserProcedure from '../ModailProcedure/FormCeonnecUsertProcedure';
 import { IConnect } from '@/types/IConect';
 
+import ModailDetail from './ModailDetail';
+import ModailDetailUser from './ModailDetailUser';
+
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -16,14 +19,12 @@ interface IProps {
 export default function ConnectHistory({ infoUser }: IProps) {
   const [job, setConnect] = useState<IConnect[]>();
 
-  console.log(job);
   useEffect(() => {
     (async () => {
       const res = await getConnect({ id: infoUser?.id });
       setConnect(res);
     })();
   }, [setConnect, infoUser?.id]);
-  console.log(job);
   return (
     <div
       className={
@@ -57,6 +58,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
               ) : (
                 <th className={'px-6 py-4'}>Lý do</th>
               )}
+              <th className={'px-6 py-4'}>Thông tin</th>
               <th className={'px-6 py-4'}>Trạng thái</th>
             </tr>
           </thead>
@@ -75,8 +77,8 @@ export default function ConnectHistory({ infoUser }: IProps) {
                   >
                     <div className={'text-base font-semibold'}>
                       {infoUser.role == 'teacher'
-                        ? `${items?.idUser}`
-                        : `${items?.idTeacher}`}
+                        ? `${items?.userName}`
+                        : `${items?.teacherName}`}
                     </div>
                   </th>
 
@@ -154,6 +156,13 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       )
                     ) : (
                       <span>{items?.noteUser}</span>
+                    )}
+                  </td>
+                  <td className={'px-10 py-4'}>
+                    {infoUser?.role == 'user' ? (
+                      <ModailDetailUser user={items} />
+                    ) : (
+                      <ModailDetail user={items} />
                     )}
                   </td>
                   <td className={'px-6 py-4'}>

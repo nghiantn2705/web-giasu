@@ -8,4 +8,6 @@ export interface IConnect {
   confirmUser: number;
   confirmTeacher: number;
   status: number;
+  userName: string;
+  teacherName: string;
 }

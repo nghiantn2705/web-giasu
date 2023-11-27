@@ -19,10 +19,11 @@ interface IJob {
   teacherImage: string;
   status: number;
   description: string;
+  userName: string;
+  teacherName: string;
 }
 export default function RentalHistory({ infoUser }: IProps) {
   const [job, setJob] = useState<IJob[]>();
-  console.log(job);
   useEffect(() => {
     (async () => {
       const res = await getJob({ id: infoUser?.id });
@@ -84,8 +85,8 @@ export default function RentalHistory({ infoUser }: IProps) {
                   /> */}
                   <div className={'text-base font-semibold'}>
                     {infoUser.role == 'teacher'
-                      ? `${items?.idUser}`
-                      : `${items?.idTeacher}`}
+                      ? `${items?.userName}`
+                      : `${items?.teacherName}`}
                   </div>
                 </th>
                 <td className={'px-6 py-4'}>

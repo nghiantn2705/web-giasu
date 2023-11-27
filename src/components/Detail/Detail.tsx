@@ -18,7 +18,7 @@ import { getTeacherByid } from '@/services/teacher';
 import { Dialog, Transition } from '@headlessui/react';
 import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 import { getDirections } from '@/services/get';
-
+import { format } from 'date-fns';
 interface IProps {
   teacher: ITeachers;
 }
@@ -31,12 +31,12 @@ export default function Detail({ teacher }: IProps) {
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
   const [directions, setDirections] = useState<any>();
+
   let [isOpen, setIsOpen] = useState(false);
-  console.log(feedbackData);
   function closeModal() {
     setIsOpen(false);
   }
-  console.log(userInfo);
+
   const values = {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],
@@ -46,7 +46,6 @@ export default function Detail({ teacher }: IProps) {
 
   useEffect(() => {
     (async () => {
-      const resTeacher = await getTeacherByid({ id: params });
       const resFeedback = await getFeedback({ id: params });
       const resRating = await getStart({ id: params });
       setFeedbackData(resFeedback);
@@ -54,7 +53,7 @@ export default function Detail({ teacher }: IProps) {
       const resDirections = await getDirections({ ...values });
       setDirections(resDirections);
     })();
-  }, [userInfo]);
+  }, [params, userInfo]);
 
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
@@ -260,10 +259,10 @@ export default function Detail({ teacher }: IProps) {
 
                           <label className=""> {teacher?.district}</label>
                         </div>
-                        <div className="pt-2  text-zinc-950 ">
+                        {/* <div className="pt-2  text-zinc-950 ">
                           <label className="font-bold"> Thời gian dạy: </label>
                           <label className="">{teacher?.time_tutor_id}</label>
-                        </div>
+                        </div> */}
                         <div className={'pt-2  text-zinc-950 '}>
                           <label className={'font-bold'}>
                             Mức lương mong muốn :
@@ -408,21 +407,22 @@ export default function Detail({ teacher }: IProps) {
                       </button>
                     </form>
                   </div>
-                  <div className="col-span-2 text-left">
+                  <div className=" col-span-2 text-left">
                     <div className="text-left pt-2">
                       {feedbackData?.map((item: IFeedback, index) => (
                         <div key={index}>
                           <div className="grid grid-cols-10 gap-5">
                             <span className="text-base text-red-400 font-bold col-span-5">
-                              {item.idSender}
+                              {item?.idSender}
                             </span>
+
                             <div className="col-span-5 text-right">
                               {[1, 2, 3, 4, 5].map((star, index) => (
                                 <FontAwesomeIcon
                                   key={index}
                                   icon={faStar}
                                   className={`text-${
-                                    star <= parseInt(item.point)
+                                    star <= parseInt(item?.point)
                                       ? 'amber-300'
                                       : 'gray-200'
                                   } cursor-pointer`}
@@ -431,9 +431,21 @@ export default function Detail({ teacher }: IProps) {
                             </div>
                           </div>
                           <div className="">
-                            <label className="font-bold">Nội dung :</label>
+                            <label className="font-bold">Nội dung : </label>
                             <span className="text-base ">
-                              {item.description}
+                              {item?.description}
+                            </span>
+                            <br />
+                            <span className="text-base ">
+                              <label className="font-bold">Ngày giờ : </label>
+                              <span>
+                                {item
+                                  ? format(
+                                      new Date(item.updated_at),
+                                      'dd/MM/yyyy HH:mm:ss',
+                                    )
+                                  : ''}
+                              </span>
                             </span>
                           </div>
                           <hr />
