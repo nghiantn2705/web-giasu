@@ -538,15 +538,17 @@ const page = () => {
               },
             ]}
           >
-            <div className={'flex'}>
-              <Checkbox>Tôi đồng ý với các điều khoản và điều kiện </Checkbox>
-              <span>
-                {' '}
-                <FormLoginProcedure />
-              </span>
-            </div>{' '}
+            <Checkbox>Tôi đồng ý với các điều khoản và điều kiện </Checkbox>
+          </Form.Item>
+          <div>
+            <span>
+              {' '}
+              <FormLoginProcedure />
+            </span>
+          </div>{' '}
+          <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
-              Submit
+              Đăng kí
             </Button>
           </Form.Item>
         </Form>

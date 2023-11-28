@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client';
 
 import React from 'react';
@@ -5,9 +6,8 @@ import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
 import { Image } from 'antd';
 import { Field, Form, Formik } from 'formik';
-import { editPassword, SendMail } from '@/services/post';
+import { editPassword } from '@/services/post';
 import toast from 'react-hot-toast';
-import { userInfo } from 'os';
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -205,7 +205,7 @@ const InfoUser = ({ infoUser }: IProps) => {
                       <span>Ảnh chứng chỉ</span>
                       {/* eslint-disable-next-line jsx-a11y/alt-text */}
                       <div className={'flex gap-4'}>
-                        {certificateImages.map(
+                        {certificateImages?.map(
                           (item: string, index: number) => {
                             return (
                               // eslint-disable-next-line jsx-a11y/alt-text
