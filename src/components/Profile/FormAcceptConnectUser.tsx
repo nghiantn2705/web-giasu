@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-
-import { Form, Formik, Field } from 'formik';
+import * as Yup from 'yup';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import toast from 'react-hot-toast';
 import { putConnec } from '@/services/connect';
@@ -16,6 +16,7 @@ interface IJob {
     confirmUser: number;
     confirmTeacher: number;
     status: number;
+    teacherName: string;
   };
 }
 
@@ -33,6 +34,10 @@ export default function FormAcceptConnectUser({ user }: IJob) {
       window.location.reload();
     }, 3000);
   };
+  const validationSchema = Yup.object({
+    confirmUser: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
+    noteUser: Yup.string().required('Vui lòng nhập chú thích'),
+  });
   return (
     <div>
       <button
@@ -74,12 +79,13 @@ export default function FormAcceptConnectUser({ user }: IJob) {
               confirmUser: '',
               noteUser: '',
             }}
+            validationSchema={validationSchema}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
                 <label className={'grid grid-cols-2'}>
                   <span>Gia sư:</span>
-                  <span>{user?.idTeacher}</span>
+                  <span>{user?.teacherName}</span>
                 </label>
 
                 <div className={'flex gap-3'}>
@@ -92,6 +98,16 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                     Từ chối
                   </label>
                 </div>
+                <ErrorMessage
+                  name="confirmUser"
+                  component="div"
+                  className="text-red-500"
+                />
+                <ErrorMessage
+                  name="noteUser"
+                  component="div"
+                  className="text-red-500"
+                />
                 <label className={'relative'}>
                   <Field
                     name="noteUser"
@@ -100,7 +116,6 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
                     }
                     rows={'4'}
-                    required={true}
                   />
                   <span
                     className={
@@ -121,7 +136,6 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

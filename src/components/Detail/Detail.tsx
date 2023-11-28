@@ -72,12 +72,24 @@ export default function Detail({ teacher }: IProps) {
   };
   const submitFeedback = async (e: any) => {
     e.preventDefault();
+
     if (!userInfo) {
       toast.error('Vui lòng đăng nhập !', {
         position: 'top-right',
         duration: 3000,
       });
-    } else {
+      return;
+    }
+
+    if (!description1 || !point1) {
+      toast.error('Vui lòng nhập đầy đủ thông tin phản hồi!', {
+        position: 'top-right',
+        duration: 3000,
+      });
+      return;
+    }
+
+    try {
       const value = {
         description: description1,
         point: point1,
@@ -95,6 +107,12 @@ export default function Detail({ teacher }: IProps) {
         },
       });
       reloadPageAfterDelay();
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      toast.error('Có lỗi xảy ra khi gửi ý kiến. Vui lòng thử lại sau.', {
+        duration: 3000,
+        position: 'top-right',
+      });
     }
   };
 

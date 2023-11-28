@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-
-import { Form, Formik, Field } from 'formik';
+import * as Yup from 'yup';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
@@ -43,6 +43,10 @@ export default function FormAccept({ user }: IJob) {
       window.location.reload();
     }, 3000);
   };
+  const validationSchema = Yup.object({
+    status: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
+    description: Yup.string().required('Vui lòng nhập chú thích'),
+  });
   return (
     <div>
       <button
@@ -84,6 +88,7 @@ export default function FormAccept({ user }: IJob) {
               status: '',
               description: '',
             }}
+            validationSchema={validationSchema}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
@@ -117,6 +122,16 @@ export default function FormAccept({ user }: IJob) {
                     Từ chối
                   </label>
                 </div>
+                <ErrorMessage
+                  name="status"
+                  component="div"
+                  className="text-red-500"
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="text-red-500"
+                />
                 <label className={'relative'}>
                   <Field
                     name="description"
@@ -125,7 +140,6 @@ export default function FormAccept({ user }: IJob) {
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
                     }
                     rows={'4'}
-                    required={true}
                   />
                   <span
                     className={
