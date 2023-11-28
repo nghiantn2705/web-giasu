@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Form,
@@ -10,61 +10,55 @@ import {
   Radio,
   RadioChangeEvent,
   DatePicker,
-  TreeSelect,
+  Select,
+  Checkbox,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import toast from 'react-hot-toast';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { IDisctrict } from '@/types/IDistrict';
-import { getDistrict } from '@/services/get';
+import { getAdreess, getAdreessId } from '@/services/get';
 import moment from 'moment';
 import { FieldType } from '@/types/Field';
+import { IAddress, IDistrict } from '@/types/ILocation';
+import FormLoginProcedure from '@/components/ModailProcedure/FormLoginProcedure';
 const page = () => {
   const router = useRouter();
   const [value, setValue] = useState('');
-  const [district, setDistrict] = useState<IDisctrict[]>();
+  const [address, setAddress] = useState<IAddress>();
+  const [district, setDistrict] = useState<IDistrict>();
+  let timeoutId: any;
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
+
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  const filteredLocationAddress: any = [];
-
-  district?.forEach((item) => {
-    const newDistricts = item.district?.map((district) => {
-      const newWards = district?.ward?.map((ward) => ({
-        value: ward?.wardId,
-        title: ward?.name,
-      }));
-
-      return {
-        value: district?.districtId,
-        title: district?.districtName,
-        children: newWards || [],
-      };
-    });
-
-    filteredLocationAddress.push({
-      value: item?.provinceId,
-      title: item?.provinceName,
-      children: newDistricts || [],
-    });
+  const onSearchAddress = (value: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+      const res = await getAdreess(value);
+      setAddress(res);
+    }, 500);
+  };
+  const onChangeAddress = async (value: any) => {
+    const res = await getAdreessId(value);
+    setDistrict(res);
+  };
+  const options = address?.predictions?.map((item) => {
+    return {
+      value: item?.place_id,
+      label: item?.description,
+    };
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const resDistrict = await getDistrict();
-        setDistrict(resDistrict);
-      } catch (ex: any) {
-        console.log(ex.message);
-      }
-    })();
-  }, []);
   const onFinish = async (values: any) => {
     console.log(values);
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
@@ -75,8 +69,14 @@ const page = () => {
     for (let i = 0; i < fileavata.length; i++) {
       formData.append('avatar', fileavata[i]);
     }
+    const addressUser: any =
+      district?.result?.formatted_address + '' + district?.result?.name;
+    const latitude: any = district?.result?.geometry?.location?.lat;
+    const longitude: any = district?.result?.geometry?.location?.lng;
     formData.append('name', values.name);
-    formData.append('address', values.address);
+    formData.append('address', addressUser);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
     formData.append('date_of_birth', values.date_of_birth);
     formData.append('email', values.email);
     formData.append('gender', values.gender);
@@ -96,8 +96,8 @@ const page = () => {
     router.push('/auth/user');
   };
   return (
-    <div className={'grid grid-cols-12 min-h-fit'}>
-      <div className={'col-span-7 pt-5 pb-16  px-20'}>
+    <div className={'container drop-shadow border py-5 grid grid-cols-12'}>
+      <div className={'col-span-7 pt-5 px-20'}>
         <div className={'flex flex-col items-center mb-5'}>
           <Image src={'/logo.png'} alt={''} width={100} height={100} />
           <h1 className={'text-2xl text-blue-tw'}>Chào mừng bạn đến với Gs7</h1>
@@ -153,18 +153,15 @@ const page = () => {
             rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
             className={'w-full'}
           >
-            <TreeSelect
-              key={Math.random()}
-              value={filteredLocationAddress}
+            <Select
+              className={'w-[400px]'}
               showSearch
-              treeNodeFilterProp="title"
-              style={{ width: '100%' }}
-              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-              placeholder="Khu vực dạy"
-              allowClear
-              multiple
-              treeDefaultExpandAll
-              treeData={filteredLocationAddress}
+              placeholder="Nhập địa chỉ ở của bạn"
+              optionFilterProp="children"
+              onChange={onChangeAddress}
+              onSearch={onSearchAddress}
+              filterOption={filterOption}
+              options={options}
             />
           </Form.Item>
           <Form.Item<FieldType>
@@ -207,6 +204,28 @@ const page = () => {
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Form.Item>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(
+                        'Bạn cần chấp nhận điều khoản để tiếp tục.',
+                      ),
+              },
+            ]}
+          >
+            <Checkbox>Tôi đồng ý với các điều khoản và điều kiện </Checkbox>
+          </Form.Item>
+          <div>
+            <span>
+              {' '}
+              <FormLoginProcedure />
+            </span>
+          </div>
           <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
             <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
               Đăng kí

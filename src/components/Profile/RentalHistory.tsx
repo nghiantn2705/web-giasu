@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import { IUserInfo } from '@/types/IUserInfo';
-import FormAccept from '@/components/Profile/FormAccept';
 import { getJob } from '@/services/job';
+import FormConfirmProcedure from '../ModailProcedure/FormConfirmProcedure';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -19,10 +19,11 @@ interface IJob {
   teacherImage: string;
   status: number;
   description: string;
+  userName: string;
+  teacherName: string;
 }
 export default function RentalHistory({ infoUser }: IProps) {
   const [job, setJob] = useState<IJob[]>();
-  console.log(job);
   useEffect(() => {
     (async () => {
       const res = await getJob({ id: infoUser?.id });
@@ -31,7 +32,11 @@ export default function RentalHistory({ infoUser }: IProps) {
   }, [setJob, infoUser?.id]);
   console.log(job);
   return (
-    <div className={'relative w-full overflow-x-auto px-4 border-l-2'}>
+    <div
+      className={
+        'bg-white shadow rounded-lg p-6 relative w-full overflow-x-auto px-4 border-l-2 h-full'
+      }
+    >
       <h3
         className={
           'text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
@@ -80,8 +85,8 @@ export default function RentalHistory({ infoUser }: IProps) {
                   /> */}
                   <div className={'text-base font-semibold'}>
                     {infoUser.role == 'teacher'
-                      ? `${items?.idUser}`
-                      : `${items?.idTeacher}`}
+                      ? `${items?.userName}`
+                      : `${items?.teacherName}`}
                   </div>
                 </th>
                 <td className={'px-6 py-4'}>
@@ -130,7 +135,8 @@ export default function RentalHistory({ infoUser }: IProps) {
                     items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (
-                      <FormAccept user={items} />
+                      // <FormConfirmProcedure/>
+                      <FormConfirmProcedure user={items} />
                     )
                   ) : (
                     <span>{items?.description}</span>

@@ -1,27 +1,25 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { IDisctrict } from '@/types/IDistrict';
 import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsBook, BsSearch } from 'react-icons/bs';
-import { getDistrict, getSubject, getClass } from '@/services/get';
+import { getSubject, getClass } from '@/services/get';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
 import queryString from 'query-string';
 import { Formik, Form, Field } from 'formik';
+import districtsData from '../../district.json';
 
+const districtsInHanoi = districtsData;
 const SelectFilter = () => {
-  const [districts, setDistricts] = useState<IDisctrict[]>();
   const [subject, setSubject] = useState<ISubject[]>();
   const [classes, setClass] = useState<IClass[]>();
   const router = useRouter();
   useEffect(() => {
     (async () => {
-      const resDistricts = await getDistrict();
       const resSubject = await getSubject();
       const resClass = await getClass();
-      setDistricts(resDistricts);
       setSubject(resSubject);
       setClass(resClass);
     })();
@@ -33,7 +31,7 @@ const SelectFilter = () => {
         onSubmit={(values) => {
           router.push(`/timkiemgiasu?${queryString.stringify(values)}`);
         }}
-        initialValues={{ DistrictID: '' }}
+        initialValues={{ subject: '' }}
       >
         <Form className={'grid grid-cols-3 border p-2 shadow rounded-md'}>
           <div className={'flex flex-col gap-5'}>
@@ -47,14 +45,14 @@ const SelectFilter = () => {
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'DistrictID'}
               >
-                <option>Khu vực</option>
-                {districts?.map((items: IDisctrict) => {
-                  return (
-                    <option key={items?.id} value={items?.id}>
-                      {items?.name}
-                    </option>
-                  );
-                })}
+                <option value={''}>Tất cả</option>
+                {districtsInHanoi.map((district) => (
+                  <option
+                    key={district.id}
+                    value={district.name}
+                    label={district.name}
+                  />
+                ))}
               </Field>
             </div>
           </div>
@@ -70,7 +68,7 @@ const SelectFilter = () => {
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'subject'}
               >
-                <option value={''}>Lớp</option>
+                <option value={''}>Tất cả</option>
                 {subject?.map((items: ISubject) => {
                   return (
                     <option key={items?.id} value={items?.id}>
@@ -93,7 +91,7 @@ const SelectFilter = () => {
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
                 name={'class'}
               >
-                <option value={''}>Lớp học</option>
+                <option value={''}>Tất cả</option>
                 {classes?.map((items: IClass) => {
                   return (
                     <option key={items?.id} value={items?.id}>

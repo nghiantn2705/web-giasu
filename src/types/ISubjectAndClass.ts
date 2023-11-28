@@ -1,8 +1,4 @@
-export interface ITeacherFilter {
-  id: number;
-  name: string;
-  avatar: string;
-  address: string;
+export interface ISubjectAndClass {
   class_id: [
     {
       id: number;
@@ -15,5 +11,4 @@ export interface ITeacherFilter {
       name: string;
     },
   ];
-  district: string;
 }

@@ -14,6 +14,7 @@ import { BiLogIn, BiHistory, BiMoney } from 'react-icons/bi';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { deleteCookie } from 'cookies-next';
+import Paypal from '@/components/Profile/Paypal';
 
 const navLink = [
   {
@@ -38,14 +39,10 @@ const navLink = [
   },
 ];
 const Header = (props: any) => {
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavLinkOpen, setIsNavLinkOpen] = useState(false);
   const router = usePathname();
   const rsrouter = useRouter();
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
   const toggleNavLink = () => {
     setIsNavLinkOpen(!isNavLinkOpen);
   };
@@ -54,6 +51,13 @@ const Header = (props: any) => {
     deleteCookie('refresh_token');
     rsrouter.push('/');
     window.location.reload();
+  };
+  const formatNumber = (value: any) => {
+    if (!value) return value;
+
+    const number = parseInt(value.replace(/\./g, ''), 10); // Loại bỏ dấu chấm và chuyển đổi thành số nguyên
+    const formattedValue = new Intl.NumberFormat('de-DE').format(number); // Định dạng số theo chuẩn 'de-DE' (có dấu chấm phân cách hàng nghìn)
+    return formattedValue;
   };
   return (
     <header
@@ -160,7 +164,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiMoney />
-                  Số dư :
+                  Số dư : {formatNumber(props?.userInfo?.coin)} vnđ
                 </span>
                 <a
                   href={`/profile`}
@@ -180,6 +184,27 @@ const Header = (props: any) => {
                   <BiHistory />
                   Lịch sử thuê
                 </a>
+                <Link
+                  href={'/profile/history-connect'}
+                  className={
+                    'flex items-center gap-2 hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                  }
+                >
+                  <BiHistory />
+                  Lịch sử xác nhận dạy
+                </Link>
+
+                <Link
+                  href={'/profile/history-paypal'}
+                  className={
+                    'flex items-center gap-2 hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+                  }
+                >
+                  <BiHistory />
+                  Lịch sử giao dịch
+                </Link>
+
+                <Paypal />
                 <button
                   onClick={Signout}
                   type={'button'}

@@ -4,16 +4,16 @@ const Loading = () => {
   return (
     <div
       className={
-        ' mt-10 w-full h-full flex items-center justify-center z-0 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-white before:opacity-60 before:-z-10'
+        ' mt-10 w-full h-full flex items-center justify-center z-0 before:absolute before:top-0 before:bottom-0 before:left-0 before:right-0 before:w-full before:h-full before:bg-white before:opacity-60 before:-z-10'
       }
     >
-      <div className={'relative w-20 h-20 inline-block'}>
+      <div className={'relative w-10 h-10 inline-block'}>
         {[...Array(12)].map((x, i) => {
           return (
             <span
               key={i}
               className={classNames(
-                'block animate-lds-spinner origin-[40px_40px] after:absolute after:top-[3px] after:left-[37px] after:w-1 after:h-[18px] after:rounded-[20%] after:bg-red-400',
+                'block animate-lds-spinner origin-[40px_40px] after:absolute after:top-[3px] after:left-[37px] after:w-1 after:h-[18px] after:rounded-[20%] after:bg-blue-tw1',
                 {
                   'rotate-0 animation-delay-plus-1100': i === 0,
                   'rotate-[30deg] animation-delay-plus-1000': i === 1,

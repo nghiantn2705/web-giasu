@@ -1,42 +1,36 @@
 'use client';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
-import { putJob } from '@/services/job';
-import { useStore } from '@/hook/use-store';
-import { ITeachers } from '@/types/ITeachers';
+import { putConnec } from '@/services/connect';
+
 interface IJob {
   user: {
     id: number;
+    idJob: number;
     idUser: string;
     idTeacher: string;
-    idSubject: string;
-    subject: string[];
-    class: string[];
-    teacherImage: string;
+    noteUser: string;
+    noteTeacher: string;
+    confirmUser: number;
+    confirmTeacher: number;
     status: number;
-    description: string;
+    userName: string;
   };
 }
 
-export default function FormAccept({ user }: IJob) {
+export default function FormAcceptConnect({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
-  const [userInfo] = useStore<ITeachers>('userInfo');
-  console.log(userInfo);
+  console.log(user);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
-    if (parseInt(userInfo.coin) < 50000) {
-      toast.error('Vui lòng Nạp tiền !', {
-        duration: 3000,
-      });
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(true);
   };
   const reloadPageAfterDelay = () => {
     setTimeout(() => {
@@ -44,8 +38,8 @@ export default function FormAccept({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    status: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
-    description: Yup.string().required('Vui lòng nhập chú thích'),
+    confirmTeacher: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
+    noteTeacher: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
     <div>
@@ -63,30 +57,34 @@ export default function FormAccept({ user }: IJob) {
           <ModalTitle>Xác nhận thuê</ModalTitle>
           <Formik
             className={''}
-            onSubmit={(values) => {
-              console.log(values);
-              (async () => {
-                try {
-                  await putJob({ ...values });
-                  toast.success('Xác nhận thành công !', {
-                    duration: 3000,
-                    position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
-                  });
-                  reloadPageAfterDelay();
-                } catch (ex: any) {
-                  console.log(ex);
-                }
-              })();
+            onSubmit={async (values) => {
+              // if (!values.confirmTeacher || !values.noteTeacher) {
+              //   toast.error('Vui lòng nhập đầy đủ thông tin phản hồi!', {
+              //     position: 'top-right',
+              //     duration: 3000,
+              //   });
+              //   return;
+              // }
+              try {
+                await putConnec({ ...values });
+                toast.success('Xác nhận thành công !', {
+                  duration: 3000,
+                  position: 'top-right',
+                  icon: '✅',
+                  iconTheme: {
+                    primary: '#000',
+                    secondary: '#fff',
+                  },
+                });
+                reloadPageAfterDelay();
+              } catch (ex: any) {
+                console.log(ex);
+              }
             }}
             initialValues={{
               id: user?.id,
-              status: '',
-              description: '',
+              confirmTeacher: '',
+              noteTeacher: '',
             }}
             validationSchema={validationSchema}
           >
@@ -94,53 +92,42 @@ export default function FormAccept({ user }: IJob) {
               <div className={'flex flex-col gap-5 p-5'}>
                 <label className={'grid grid-cols-2'}>
                   <span>Người thuê</span>
-                  <span>{user?.idUser}</span>
+                  <span>{user?.userName}</span>
                 </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Môn học:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.subject?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Lớp:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.class?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
+
                 <div className={'flex gap-3'}>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="1" />
+                    <Field type="radio" name="confirmTeacher" value="1" />
                     Đồng ý
                   </label>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="2" />
+                    <Field type="radio" name="confirmTeacher" value="2" />
                     Từ chối
                   </label>
                 </div>
+
                 <ErrorMessage
-                  name="status"
+                  name="confirmTeacher"
                   component="div"
                   className="text-red-500"
                 />
                 <ErrorMessage
-                  name="description"
+                  name="noteTeacher"
                   component="div"
                   className="text-red-500"
                 />
+
                 <label className={'relative'}>
                   <Field
-                    name="description"
+                    name="noteTeacher"
                     as={'textarea'}
                     className={
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
                     }
                     rows={'4'}
+                    // required={true}
                   />
+
                   <span
                     className={
                       'absolute left-0 top-2 px-2 text-lg peer-focus:text-black pointer-events-none duration-200 peer-focus:text-base peer-focus:-translate-y-5 bg-white ml-2 peer-valid:text-base peer-valid:-translate-y-5'
@@ -150,6 +137,7 @@ export default function FormAccept({ user }: IJob) {
                   </span>
                 </label>
               </div>
+
               <div
                 className={
                   'flex gap-1 border-t border-t-gray-300 justify-end p-2'
@@ -160,7 +148,6 @@ export default function FormAccept({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

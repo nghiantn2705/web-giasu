@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
@@ -32,7 +33,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                 console.log(values);
                 (async () => {
                   try {
-                    // await updateProfile({ ...values });
+                    await updateProfile({ ...values });
                     toast.success('Cập nhật thành công !', {
                       duration: 3000,
                       position: 'top-right',
@@ -42,7 +43,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                         secondary: '#fff',
                       },
                     });
-                    router.push('/auth/user');
+                    router.push('/profile');
                   } catch (ex: any) {
                     console.log(ex);
                   }
@@ -151,6 +152,7 @@ const EditProfile = ({ editProfile }: IProps) => {
 
                 <p className={'text-center text-sm mt-3'}>
                   <button
+                    type={'submit'}
                     className={
                       'px-6 py-2 leading-5 text-black transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 '
                     }

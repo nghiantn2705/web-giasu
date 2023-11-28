@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { Header } from '@/components';
-import Footer from '@/components/Layout/Footer';
 import { useStore } from '@/hook/use-store';
 import { getTokenRefresh } from '@/services';
 import { getCookie, setCookie } from 'cookies-next';

@@ -34,3 +34,17 @@ export const putJob = (body: IFetchBody) => {
     body,
   );
 };
+export const getJobDetail = (query: IFetchQuery = {}) => {
+  return apiRequest.get<
+    {
+      nameUser: string;
+      nameTeacher: string;
+      emaaiUser: string;
+      emailTeacher: string;
+      phoneUser: string;
+      phoneTeacher: string;
+      addressUser: string;
+      addressTeacher: string;
+    }[]
+  >(`${process.env.NEXT_PUBLIC_API_URL}/job/detail/${query?.id}`, query);
+};

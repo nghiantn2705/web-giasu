@@ -6,10 +6,11 @@ import Link from 'next/link';
 import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
-import { auth } from '@/services';
+import { auth, authGoogle } from '@/services';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { setCookie } from 'cookies-next';
+import { FaGoogle } from 'react-icons/fa';
 
 const SignInUser = () => {
   const router = useRouter();
@@ -18,7 +19,11 @@ const SignInUser = () => {
     if (userInfo) {
       router.push('/giasu');
     }
-  }, []);
+  }, [router, userInfo]);
+  const onClick = async () => {
+    const res = await authGoogle(3);
+    console.log(res);
+  };
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -99,29 +104,43 @@ const SignInUser = () => {
               }}
             >
               <Form className={' flex flex-col gap-3'}>
-                <div>
+                <div className={'relative mt-6'}>
                   <Field
                     type={'email'}
                     name={'email'}
+                    id="email"
                     placeholder={'Tên đăng nhập hoặc email'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none'
                     }
                   />
+                  <label
+                    htmlFor="email"
+                    className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                  >
+                    Email
+                  </label>
                 </div>
-                <div>
+                <div className={'relative mt-6'}>
                   <Field
+                    id="password"
                     type={'password'}
                     name={'password'}
                     placeholder={'Nhập mật khẩu'}
                     className={
-                      'w-full px-4 py-2 text-lg text-center border border-black rounded-xl'
+                      'peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none'
                     }
                   />
+                  <label
+                    htmlFor="password"
+                    className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                  >
+                    Mật khẩu
+                  </label>
                 </div>
 
                 <Link
-                  href={'/'}
+                  href={'/auth/reset-password'}
                   className={
                     'text-right text-sm text-gray-600 hover:text-black'
                   }
@@ -131,7 +150,7 @@ const SignInUser = () => {
                 <button
                   type={'submit'}
                   className={
-                    'border py-2 bg-blue-tw text-white rounded-xl hover:bg-blue-tw1 '
+                    'border py-2 bg-blue-tw text-white hover:bg-blue-tw1 '
                   }
                 >
                   Đăng nhập
@@ -149,6 +168,14 @@ const SignInUser = () => {
                 Đăng ký
               </Link>
             </p>
+
+            <button
+              onClick={onClick}
+              className="mt-4 mx-auto flex gap-3 items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <FaGoogle />
+              <span>Continue with Google</span>
+            </button>
           </div>
         </div>
       </div>
