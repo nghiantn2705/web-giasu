@@ -22,6 +22,7 @@ export default function FormRentProcedure(props: IProps) {
   const openModal = () => {
     if (!user) {
       toast.error('Vui lòng đăng nhập !', {
+        position: 'top-right',
         duration: 3000,
       });
     } else {

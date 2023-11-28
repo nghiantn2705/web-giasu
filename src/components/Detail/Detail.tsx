@@ -19,6 +19,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 import { getDirections } from '@/services/get';
 import { format } from 'date-fns';
+import moment from 'moment';
+import toast from 'react-hot-toast';
 interface IProps {
   teacher: ITeachers;
 }
@@ -63,20 +65,37 @@ export default function Detail({ teacher }: IProps) {
   const handleRatingChange = (selectedRating: SetStateAction<number>) => {
     setPoint(selectedRating);
   };
-
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const submitFeedback = async (e: any) => {
     e.preventDefault();
     if (!userInfo) {
-      setIsOpen(true);
+      toast.error('Vui lòng đăng nhập !', {
+        position: 'top-right',
+        duration: 3000,
+      });
+    } else {
+      const value = {
+        description: description1,
+        point: point1,
+        idSender: userInfo?.id,
+        idTeacher: params,
+      };
+      await postFeedback({ ...value });
+      toast.success('Gửi ý kiến thành công !', {
+        duration: 3000,
+        position: 'top-right',
+        icon: '✅',
+        iconTheme: {
+          primary: '#000',
+          secondary: '#fff',
+        },
+      });
+      reloadPageAfterDelay();
     }
-
-    const value = {
-      description: description1,
-      point: point1,
-      idSender: userInfo?.id,
-      idTeacher: params,
-    };
-    await postFeedback({ ...value });
   };
 
   return (
@@ -118,7 +137,7 @@ export default function Detail({ teacher }: IProps) {
                   <p className={'py-2 text-center text-xs text-stone-400'}>
                     NGÀY THAM GIA:
                     <label className={'text-stone-950 font-bold'}>
-                      24/1/2021
+                      {moment(teacher?.created_at).format('DD/MM/YYYY')}
                     </label>
                   </p>
                   <FormRentProcedure id={Number(params)} teacher={teacher} />
@@ -157,7 +176,9 @@ export default function Detail({ teacher }: IProps) {
                       <p className={'text-sm font-bold text-stone-400 '}>
                         SỐ NGƯỜI ĐÃ THUÊ
                       </p>
-                      <span className={'text-blue-tw2'}>566 người</span>
+                      <span className={'text-blue-tw2'}>
+                        {teacher?.renter} người
+                      </span>
                     </div>
                     <div className={'basis-1/2'}>
                       <div
