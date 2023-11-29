@@ -2,9 +2,7 @@
 
 import React, { useEffect } from 'react';
 
-import Link from 'next/link';
 import { IUserInfo } from '@/types/IUserInfo';
-import Paypal from '@/components/Profile/Paypal';
 
 interface IProps {
   infoUser: IUserInfo;

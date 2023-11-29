@@ -3,6 +3,8 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import imageAsset from '/public/lienhe.jpg';
+import { postContact } from '@/services/contac';
+import toast from 'react-hot-toast';
 const page = () => {
   return (
     <div>
@@ -43,9 +45,26 @@ const page = () => {
               }
             >
               <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ name: '', phone: '', note: '' }}
                 onSubmit={async (values) => {
                   console.log(values);
+                  (async () => {
+                    try {
+                      await postContact({ ...values });
+                      toast.success('Gửi liên hệ thành công  !', {
+                        duration: 3000,
+                        position: 'top-right',
+                        icon: '✅',
+                        iconTheme: {
+                          primary: '#000',
+                          secondary: '#fff',
+                        },
+                      });
+                      // router.push('/profile');
+                    } catch (ex: any) {
+                      console.log(ex);
+                    }
+                  })();
                 }}
               >
                 <Form className={'grid gap-4 grid-cols-2'}>
@@ -53,7 +72,7 @@ const page = () => {
                     {/* <p className={'pl-2 text-lg text-gray-800'}>Họ tên</p> */}
                     <Field
                       type={'text'}
-                      name={'Tên'}
+                      name={'name'}
                       placeholder={'Nhập họ tên'}
                       className={
                         'w-full  px-4 py-2 border focus:outline-none border-transparent bg-white text-gray-700 text-base rounded-md'
@@ -63,9 +82,9 @@ const page = () => {
                   <div className={'col-span-1'}>
                     {/* <p className={'pl-2 text-sm text-gray-800'}>Họ tên</p> */}
                     <Field
-                      type={'email'}
-                      name={'email'}
-                      placeholder={'Email của bạn'}
+                      type={'number'}
+                      name={'phone'}
+                      placeholder={'Số điện thoại của bạn'}
                       className={
                         'w-full  px-4 py-2 border  focus:outline-none border-transparent bg-white text-gray-700 text-base rounded-md '
                       }
@@ -75,7 +94,7 @@ const page = () => {
                     <Field
                       type={'text'}
                       as={'textarea'}
-                      name={'description'}
+                      name={'note'}
                       placeholder={'Lời nhắn'}
                       className={
                         'col-span-2 w-full h-[90px] px-4 py-2 border  focus:outline-none border-transparent bg-white text-gray-700 text-base rounded-md '

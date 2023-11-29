@@ -35,7 +35,6 @@ import {
 import moment from 'moment';
 import { FieldType } from '@/types/Field';
 import { IAddress, IDistrict } from '@/types/ILocation';
-import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 import FormLoginProcedure from '@/components/ModailProcedure/FormLoginProcedure';
 const page = () => {
   const router = useRouter();

@@ -1,16 +1,56 @@
 /* eslint-disable no-unused-vars */
-import { Field, Form, Formik } from 'formik';
-import React from 'react';
+import { Field, FieldProps, Form, Formik } from 'formik';
+import React, { FunctionComponent, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { updateProfile } from '@/services/put';
+import Select, { Option, ReactSelectProps } from 'react-select';
+import { getAdreessId } from '@/services/get';
+import { IDistrict } from '@/types/ILocation';
 interface IProps {
   editProfile: IUserInfo;
 }
+const SelectField: FunctionComponent<ReactSelectProps & FieldProps> = ({
+  options,
+  field,
+  form,
+}) => (
+  <Select
+    options={options}
+    name={field.name}
+    value={
+      options
+        ? options.find((option: { value: any }) => option.value === field.value)
+        : ''
+    }
+    onChange={(option: Option | null) => {
+      // Ensure that the option is not null before accessing its value
+      if (option) {
+        form.setFieldValue(field.name, option.value);
+      }
+    }}
+    onBlur={field.onBlur}
+  />
+);
 
 const EditProfile = ({ editProfile }: IProps) => {
+  console.log(editProfile);
+  const [district, setDistrict] = useState<IDistrict>();
   const router = useRouter();
+  const options = editProfile?.address?.map(
+    (item: { place_id: any; description: any }) => {
+      return {
+        value: item?.place_id,
+        label: item?.description,
+      };
+    },
+  );
+  const onChangeAddress = async (value: any) => {
+    const res = await getAdreessId(value);
+    setDistrict(res);
+  };
+
   return (
     <>
       {editProfile ? (
@@ -22,6 +62,7 @@ const EditProfile = ({ editProfile }: IProps) => {
           >
             <Formik
               initialValues={{
+                role: editProfile.role,
                 id: editProfile.id,
                 name: editProfile.name,
                 email: editProfile.email,
@@ -55,10 +96,31 @@ const EditProfile = ({ editProfile }: IProps) => {
                   <div>
                     <label
                       className={'text-black dark:text-gray-200'}
+                      htmlFor={'address'}
+                    >
+                      dịa chỉ
+                    </label>
+
+                    <SelectField
+                      options={options}
+                      field={{ name: 'address', value: '', onBlur: () => {} }}
+                      form={{
+                        onchange: () => {
+                          onChangeAddress;
+                        },
+                        setFieldValue: () => {},
+                        setFieldTouched: () => {},
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className={'text-black dark:text-gray-200'}
                       htmlFor={'name'}
                     >
                       Tên
                     </label>
+
                     <Field
                       type={'text'}
                       name={'name'}

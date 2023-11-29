@@ -82,7 +82,7 @@ const Main = () => {
             </h3>
             <p>Trải nghiệm dịch vụ chất lượng và chuyên nghiệp!</p>
             <p>
-              Thật tốn thời gian khi gặp phải gia sư không phù hợp. GrowGreen
+              Thật tốn thời gian khi gặp phải gia sư không phù hợp. GS7
               luôn làm việc chuyên nghiệp và trách nhiệm, bắt đầu từ việc tuyển
               chọn đến đào tạo gia sư. Đảm bảo gia sư luôn đạt tiêu chuẩn về
               kiến thức và kỹ năng giảng dạy.
