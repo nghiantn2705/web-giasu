@@ -136,6 +136,7 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
+                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

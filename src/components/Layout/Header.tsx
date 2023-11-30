@@ -191,7 +191,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiHistory />
-                  Lịch sử xác nhận dạy
+                  Xác nhận dạy
                 </Link>
 
                 <Link

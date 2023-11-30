@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import { FastField, Form, Formik } from 'formik';
+import { FastField, Field, Form, Formik } from 'formik';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
@@ -102,7 +102,7 @@ export default function RentTeacher(props: IProps) {
                     as="select"
                     name="class"
                     multiple
-                    className={'w-full p-2 border border-gray-300 rounded-md'}
+                    className="w-full p-2 border border-gray-300 rounded-md appearance-none"
                   >
                     {subjectAndClass?.class_id?.map((i) => (
                       <option key={i?.id} value={`${i?.id}`}>

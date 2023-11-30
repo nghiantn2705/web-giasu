@@ -451,9 +451,39 @@ export default function Detail({ teacher }: IProps) {
                       {feedbackData?.map((item: IFeedback, index) => (
                         <div key={index}>
                           <div className="grid grid-cols-10 gap-5">
-                            <span className="text-base text-red-400 font-bold col-span-5">
-                              {item?.idSender}
-                            </span>
+                            <div className={'col-span-5'}>
+                              <span className="text-base text-red-400 font-bold ">
+                                {item?.idSender}
+                              </span>
+                              <div className={'text-xs text-stone-400'}>
+                                <div>
+                                  <label className="font-bold text-black">
+                                    Ngày :{' '}
+                                  </label>
+                                  <span>
+                                    {item
+                                      ? format(
+                                          new Date(item.updated_at),
+                                          'dd/MM/yyyy',
+                                        )
+                                      : ''}
+                                  </span>
+                                </div>
+                                <div>
+                                  <label className="font-bold text-black pt-2">
+                                    Giờ :{' '}
+                                  </label>
+                                  <span>
+                                    {item
+                                      ? format(
+                                          new Date(item.updated_at),
+                                          'HH:mm:ss',
+                                        )
+                                      : ''}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
 
                             <div className="col-span-5 text-right">
                               {[1, 2, 3, 4, 5].map((star, index) => (
@@ -475,17 +505,6 @@ export default function Detail({ teacher }: IProps) {
                               {item?.description}
                             </span>
                             <br />
-                            <span className="text-base ">
-                              <label className="font-bold">Ngày giờ : </label>
-                              <span>
-                                {item
-                                  ? format(
-                                      new Date(item.updated_at),
-                                      'dd/MM/yyyy HH:mm:ss',
-                                    )
-                                  : ''}
-                              </span>
-                            </span>
                           </div>
                           <hr />
                         </div>

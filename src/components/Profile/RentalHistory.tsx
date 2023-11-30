@@ -31,6 +31,7 @@ export default function RentalHistory({ infoUser }: IProps) {
     })();
   }, [setJob, infoUser?.id]);
   console.log(job);
+  const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
     <div
       className={
@@ -62,7 +63,7 @@ export default function RentalHistory({ infoUser }: IProps) {
           </tr>
         </thead>
         <tbody>
-          {job?.map((items: IJob) => {
+          {sortedJobs?.map((items: IJob) => {
             return (
               <tr
                 className={'bg-white border-b hover:bg-gray-50 '}

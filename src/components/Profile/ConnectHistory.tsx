@@ -25,6 +25,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
       setConnect(res);
     })();
   }, [setConnect, infoUser?.id]);
+  const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
     <div
       className={
@@ -38,7 +39,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
           }
         >
           {' '}
-          Lịch sử xác nhận dạy
+          Xác nhận dạy
         </h3>
         <table className={'w-full text-sm text-left text-gray-500 0'}>
           <thead
@@ -63,7 +64,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
             </tr>
           </thead>
           <tbody>
-            {job?.map((items: IConnect) => {
+            {sortedJobs?.map((items: IConnect) => {
               return (
                 <tr
                   className={'bg-white border-b hover:bg-gray-50 '}

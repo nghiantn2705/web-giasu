@@ -3,11 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import Link from 'next/link';
-import { IDisctrict } from '@/types/IDistrict';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
-import { useRouter } from 'next/navigation';
-import { getClass, getDistrict, getSubject } from '@/services/get';
+import { getClass, getSubject } from '@/services/get';
 import districtsData from '../../district.json';
 
 const districtsInHanoi = districtsData;
@@ -64,7 +62,7 @@ const Navigation = () => {
               'text-xl text-center py-2 bg-blue-tw rounded-t-md text-white '
             }
           >
-            <p>Khu vực</p>
+            <p>Lớp</p>
           </div>
           <ul className={'flex flex-col gap-2'}>
             {classes?.map((items: IClass, index: number) => {
@@ -76,7 +74,7 @@ const Navigation = () => {
                   <BiSolidRightArrow />
                   <Link
                     className={'hover:text-amber-700 py-2'}
-                    href={`/timkiemgiasu?subject=${items.id}`}
+                    href={`/timkiemgiasu?class=${items.id}`}
                   >
                     Gia Sư {items?.class}
                   </Link>

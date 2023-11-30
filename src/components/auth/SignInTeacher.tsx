@@ -94,8 +94,14 @@ const SignInTeacher = () => {
                       position: 'top-right',
                     });
                   }
-                } catch (ex) {
-                  console.log(ex);
+                } catch (ex: any) {
+                  console.log(errorMessage);
+                  const errorMessage =
+                    ex.message || 'Đã xảy ra lỗi khi đăng nhập';
+                  toast.error(errorMessage, {
+                    duration: 3000,
+                    position: 'top-right',
+                  });
                 }
               }}
             >
