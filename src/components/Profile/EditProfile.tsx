@@ -1,54 +1,111 @@
 /* eslint-disable no-unused-vars */
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { Field, FieldProps, Formik } from 'formik';
 import React, { FunctionComponent, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { updateProfile } from '@/services/put';
-import Select, { Option, ReactSelectProps } from 'react-select';
-import { getAdreessId } from '@/services/get';
-import { IDistrict } from '@/types/ILocation';
+// import Select, { Option, ReactSelectProps } from 'react-select';
+import { getAdreess, getAdreessId } from '@/services/get';
+import { IAddress, IDistrict } from '@/types/ILocation';
+import { UploadOutlined } from '@ant-design/icons';
+import {
+  Button,
+  Form,
+  Input,
+  Upload,
+  Radio,
+  RadioChangeEvent,
+  DatePicker,
+  Select,
+  Checkbox,
+} from 'antd';
+import { FieldType } from '@/types/Field';
+import FormLoginProcedure from '../ModailProcedure/FormLoginProcedure';
+import moment from 'moment';
 interface IProps {
   editProfile: IUserInfo;
 }
-const SelectField: FunctionComponent<ReactSelectProps & FieldProps> = ({
-  options,
-  field,
-  form,
-}) => (
-  <Select
-    options={options}
-    name={field.name}
-    value={
-      options
-        ? options.find((option: { value: any }) => option.value === field.value)
-        : ''
-    }
-    onChange={(option: Option | null) => {
-      // Ensure that the option is not null before accessing its value
-      if (option) {
-        form.setFieldValue(field.name, option.value);
-      }
-    }}
-    onBlur={field.onBlur}
-  />
-);
-
 const EditProfile = ({ editProfile }: IProps) => {
+  let timeoutId: any;
   console.log(editProfile);
+  const [address, setAddress] = useState<IAddress>();
+  const [value, setValue] = useState('');
   const [district, setDistrict] = useState<IDistrict>();
   const router = useRouter();
-  const options = editProfile?.address?.map(
-    (item: { place_id: any; description: any }) => {
-      return {
-        value: item?.place_id,
-        label: item?.description,
-      };
-    },
-  );
+  // const options = editProfile?.address?.map(
+  //   (item: { place_id: any; description: any }) => {
+  //     return {
+  //       value: item?.place_id,
+  //       label: item?.description,
+  //     };
+  //   },
+  // );
+  const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
+  };
   const onChangeAddress = async (value: any) => {
     const res = await getAdreessId(value);
     setDistrict(res);
+  };
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+  const onSearchAddress = (value: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+      const res = await getAdreess(value);
+      setAddress(res);
+    }, 500);
+  };
+  const options = address?.predictions?.map((item) => {
+    return {
+      value: item?.place_id,
+      label: item?.description,
+    };
+  });
+  const onFinish = async (values: any) => {
+    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
+    console.log(editProfile);
+    console.log(values);
+    const fileavata = values?.avatar?.map((item: any) => {
+      return item?.originFileObj;
+    });
+    const formData = new FormData();
+    for (let i = 0; i < fileavata.length; i++) {
+      formData.append('avatar', fileavata[i]);
+    }
+    const addressUser: any =
+      district?.result?.formatted_address + '' + district?.result?.name;
+    const latitude: any = district?.result?.geometry?.location?.lat;
+    const longitude: any = district?.result?.geometry?.location?.lng;
+    const id: any = editProfile.id;
+    formData.append('id', id);
+    formData.append('name', values.name);
+    formData.append('address', addressUser);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('date_of_birth', values.date_of_birth);
+    formData.append('email', values.email);
+    formData.append('gender', values.gender);
+    formData.append('password', values.password);
+    formData.append('phone', values.phone);
+    formData.append('role', '2');
+    await updateProfile(id, { ...values });
+    toast.success('Đăng kí thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    router.push('/auth/user');
   };
 
   return (
@@ -60,170 +117,111 @@ const EditProfile = ({ editProfile }: IProps) => {
               'container m-auto shadow-xl border border-t-4 border-t-green-400 rounded-md py-8'
             }
           >
-            <Formik
-              initialValues={{
-                role: editProfile.role,
-                id: editProfile.id,
-                name: editProfile.name,
-                email: editProfile.email,
-                phone: editProfile.phone,
-                // avatar: editProfile.avatar,
-                address: editProfile.address,
-              }}
-              onSubmit={async (values) => {
-                console.log(values);
-                (async () => {
-                  try {
-                    await updateProfile({ ...values });
-                    toast.success('Cập nhật thành công !', {
-                      duration: 3000,
-                      position: 'top-right',
-                      icon: '✅',
-                      iconTheme: {
-                        primary: '#000',
-                        secondary: '#fff',
-                      },
-                    });
-                    router.push('/profile');
-                  } catch (ex: any) {
-                    console.log(ex);
-                  }
-                })();
-              }}
+            <Form
+              layout="vertical"
+              className={'w-full'}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+              encType={'multipart/form-data'}
             >
-              <Form>
-                <div className={'grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2'}>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'address'}
-                    >
-                      dịa chỉ
-                    </label>
-
-                    <SelectField
-                      options={options}
-                      field={{ name: 'address', value: '', onBlur: () => {} }}
-                      form={{
-                        onchange: () => {
-                          onChangeAddress;
-                        },
-                        setFieldValue: () => {},
-                        setFieldTouched: () => {},
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'name'}
-                    >
-                      Tên
-                    </label>
-
-                    <Field
-                      type={'text'}
-                      name={'name'}
-                      placeholder={'Họ và tên'}
-                      className={
-                        'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'name'}
-                    >
-                      Email
-                    </label>
-                    <Field
-                      type={'email'}
-                      name={'email'}
-                      placeholder={'Tên đăng nhập hoặc email'}
-                      className={
-                        'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'name'}
-                    >
-                      Số điện thoại
-                    </label>
-                    <Field
-                      type={'text'}
-                      name={'phone'}
-                      placeholder={'Số điện thoại'}
-                      className={
-                        'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'name'}
-                    >
-                      Địa chỉ
-                    </label>
-                    <Field
-                      type={'text'}
-                      name={'address'}
-                      placeholder={'Nhập nơi thường trú'}
-                      className={
-                        'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className={'text-black dark:text-gray-200'}
-                      htmlFor={'name'}
-                    >
-                      Ảnh đại diện
-                    </label>
-                    <Field
-                      type={'file'}
-                      name={'avatar'}
-                      placeholder={'Ảnh đại điện'}
-                      className={
-                        'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                      }
-                    />
-                  </div>
-                  {/* <div>
-              <label
-                className={'text-black dark:text-gray-200'}
-                htmlFor={'name'}
+              <Form.Item<FieldType>
+                name="name"
+                rules={[{ required: true, message: 'Họ và tên!' }]}
+                className={'w-full'}
               >
-                Ngày sinh
-              </label>
-              <Field
-                type={'date'}
-                name={'phone'}
-                placeholder={'Ngày sinh'}
-                className={
-                  'block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-                }
-              />
-            </div> */}
-                </div>
+                <Input
+                  className={'w-full'}
+                  placeholder="Họ và Tên"
+                  defaultValue={editProfile.name}
+                />
+              </Form.Item>
 
-                <p className={'text-center text-sm mt-3'}>
-                  <button
-                    type={'submit'}
-                    className={
-                      'px-6 py-2 leading-5 text-black transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 '
-                    }
-                  >
-                    Lưu thông tin
-                  </button>
-                </p>
-              </Form>
-            </Formik>
+              <Form.Item<FieldType>
+                name="email"
+                rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
+                className={'w-full'}
+              >
+                <Input
+                  className={'w-full'}
+                  placeholder="Email"
+                  defaultValue={editProfile.email}
+                />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                name="phone"
+                rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
+                className={'w-full'}
+              >
+                <Input
+                  className={'w-full'}
+                  pattern="^[0-9]*$"
+                  maxLength={10}
+                  placeholder="Số điện thoại"
+                  defaultValue={editProfile.phone}
+                />
+              </Form.Item>
+              <Form.Item<FieldType>
+                name="address"
+                rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
+                className={'w-full'}
+              >
+                <Select
+                  className={'w-[400px]'}
+                  showSearch
+                  placeholder="Nhập địa chỉ ở của bạn"
+                  optionFilterProp="children"
+                  defaultValue={editProfile.address}
+                  onChange={onChangeAddress}
+                  onSearch={onSearchAddress}
+                  filterOption={filterOption}
+                  options={options}
+                />
+              </Form.Item>
+              {/* <Form.Item<FieldType>
+                name="date_of_birth"
+                rules={[
+                  { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" className={'w-full'} />
+              </Form.Item> */}
+              <Form.Item<FieldType>
+                label="Ảnh đại diện"
+                name="avatar"
+                getValueFromEvent={(event) => {
+                  return event?.fileList;
+                }}
+                valuePropName="fileList"
+              >
+                <Upload
+                  maxCount={1}
+                  beforeUpload={(file) => {
+                    return new Promise((resolve, rejects) => {
+                      if (file.size > 900000) {
+                        rejects('Ảnh quá dung lượng');
+                      } else {
+                        resolve('Thành công');
+                      }
+                    });
+                  }}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload>
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className={'bg-blue-tw'}
+                >
+                  Đăng kí
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </main>
       ) : (
