@@ -43,6 +43,7 @@ export default function Detail({ teacher }: IProps) {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],
   };
+  console.log(values);
   values.origin = values.origin.join(',');
   values.destination = values.destination.join(',');
 
@@ -52,11 +53,17 @@ export default function Detail({ teacher }: IProps) {
       const resRating = await getStart({ id: params });
       setFeedbackData(resFeedback);
       setStarData(resRating);
-      const resDirections = await getDirections({ ...values });
-      setDirections(resDirections);
     })();
-  }, [params, userInfo]);
+  }, [params]);
 
+  useEffect(() => {
+    (async () => {
+      if (userInfo) {
+        const resDirections = await getDirections({ ...values });
+        setDirections(resDirections);
+      }
+    })();
+  }, [userInfo]);
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -447,41 +454,37 @@ export default function Detail({ teacher }: IProps) {
                     </form>
                   </div>
                   <div className=" col-span-2 text-left">
-                    <div className="text-left pt-2">
+                    <div className="text-left pt-2 flex flex-col gap-4">
                       {feedbackData?.map((item: IFeedback, index) => (
-                        <div key={index}>
-                          <div className="grid grid-cols-10 gap-5">
+                        <div
+                          key={index}
+                          className={'py-2 border-b border-gray-200'}
+                        >
+                          <div className="grid grid-cols-10 gap-5 ">
                             <div className={'col-span-5'}>
-                              <span className="text-base text-red-400 font-bold ">
+                              <span className="text-base text-blue-tw2 font-bold ">
                                 {item?.idSender}
                               </span>
-                              <div className={'text-xs text-stone-400'}>
-                                <div>
-                                  <label className="font-bold text-black">
-                                    Ngày :{' '}
-                                  </label>
-                                  <span>
-                                    {item
-                                      ? format(
-                                          new Date(item.updated_at),
-                                          'dd/MM/yyyy',
-                                        )
-                                      : ''}
-                                  </span>
-                                </div>
-                                <div>
-                                  <label className="font-bold text-black pt-2">
-                                    Giờ :{' '}
-                                  </label>
-                                  <span>
-                                    {item
-                                      ? format(
-                                          new Date(item.updated_at),
-                                          'HH:mm:ss',
-                                        )
-                                      : ''}
-                                  </span>
-                                </div>
+                              <div
+                                className={'text-xs text-stone-400 flex gap-4'}
+                              >
+                                <span>
+                                  {item
+                                    ? format(
+                                        new Date(item.updated_at),
+                                        'HH:mm:ss',
+                                      )
+                                    : ''}
+                                </span>
+
+                                <span>
+                                  {item
+                                    ? format(
+                                        new Date(item.updated_at),
+                                        'dd/MM/yyyy',
+                                      )
+                                    : ''}
+                                </span>
                               </div>
                             </div>
 
@@ -500,13 +503,10 @@ export default function Detail({ teacher }: IProps) {
                             </div>
                           </div>
                           <div className="">
-                            <label className="font-bold">Nội dung : </label>
                             <span className="text-base ">
                               {item?.description}
                             </span>
-                            <br />
                           </div>
-                          <hr />
                         </div>
                       ))}
                     </div>
