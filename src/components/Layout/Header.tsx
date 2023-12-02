@@ -80,9 +80,6 @@ const Header = (props: any) => {
           </div>
         </Link>
 
-        {/* <button className={' lg:hidden'} onClick={toggleMenu}>
-          <FiMenu className={'text-2xl'} />
-        </button> */}
         <button className={' lg:hidden'} onClick={toggleNavLink}>
           <FiMenu className={'text-2xl'} />
         </button>
@@ -164,7 +161,11 @@ const Header = (props: any) => {
                   }
                 >
                   <BiMoney />
-                  Số dư : {formatNumber(props?.userInfo?.coin)} vnđ
+                  Số dư :{' '}
+                  {props?.userInfo.coin
+                    ? formatNumber(props?.userInfo?.coin)
+                    : 0}{' '}
+                  vnđ
                 </span>
                 <a
                   href={`/profile`}
