@@ -306,13 +306,13 @@ const page = () => {
             >
               <DatePicker format="YYYY-MM-DD" className={'w-full'} />
             </Form.Item>
-            <Form.Item<FieldType>
+            {/* <Form.Item<FieldType>
               name="Citizen_card"
               rules={[{ required: true, message: 'Hãy sô căn cước công dân!' }]}
               className={'w-full'}
             >
               <Input className={'w-full'} placeholder="Số căn cước công dân" />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item<FieldType>
               label="Ảnh đại diện"
               name="avatar"
