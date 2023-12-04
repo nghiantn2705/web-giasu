@@ -9,7 +9,10 @@ export interface IUserInfo {
     name: string;
   };
   description: string;
+  salary_id: string;
+  current_role: string;
   education_level: string;
+  exp: string;
   email: string;
   id: number;
   name: string;
@@ -18,6 +21,7 @@ export interface IUserInfo {
   salary: string;
   school: string;
   subject: {
+    map(arg0: (item: { name: any; }) => any): import("react").SetStateAction<string[]> | null | undefined;
     id: number;
     name: string;
   };

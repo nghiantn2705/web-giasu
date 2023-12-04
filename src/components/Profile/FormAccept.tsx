@@ -30,7 +30,7 @@ export default function FormAccept({ user }: IJob) {
     setIsOpen(false);
   };
   const openModal = () => {
-    if (parseInt(userInfo.coin) < 50000) {
+    if (parseInt(userInfo.coin) < 50000 || userInfo.coin == null) {
       toast.error('Vui lòng Nạp tiền !', {
         duration: 3000,
       });

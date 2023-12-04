@@ -19,6 +19,7 @@ import {
   DatePicker,
   Select,
   Checkbox,
+  message,
 } from 'antd';
 import { FieldType } from '@/types/Field';
 import FormLoginProcedure from '../ModailProcedure/FormLoginProcedure';
@@ -28,19 +29,21 @@ interface IProps {
 }
 const EditProfile = ({ editProfile }: IProps) => {
   let timeoutId: any;
-  console.log(editProfile);
   const [address, setAddress] = useState<IAddress>();
   const [value, setValue] = useState('');
   const [district, setDistrict] = useState<IDistrict>();
+  const [fileList, setFileList] = useState([]);
   const router = useRouter();
-  // const options = editProfile?.address?.map(
-  //   (item: { place_id: any; description: any }) => {
-  //     return {
-  //       value: item?.place_id,
-  //       label: item?.description,
-  //     };
-  //   },
-  // );
+  const [formValues, setFormValues] = useState({
+    name: editProfile.name,
+    email: editProfile.email,
+    phone: editProfile.phone,
+    address: editProfile.address,
+  });
+  // const handleFileChange = ({ fileList }) => {
+  //   setFileList(fileList);
+  // };
+  console.log(editProfile);
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
@@ -56,11 +59,12 @@ const EditProfile = ({ editProfile }: IProps) => {
     console.log('Failed:', errorInfo);
   };
   const onSearchAddress = (value: any) => {
+    console.log(value);
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
       const res = await getAdreess(value);
       setAddress(res);
-    }, 500);
+    }, 1000);
   };
   const options = address?.predictions?.map((item) => {
     return {
@@ -70,42 +74,58 @@ const EditProfile = ({ editProfile }: IProps) => {
   });
   const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
-    console.log(editProfile);
-    console.log(values);
-    const fileavata = values?.avatar?.map((item: any) => {
-      return item?.originFileObj;
-    });
+
+    // const fileavata = values?.avatar?.map((item: any) => {
+    //   return item?.originFileObj;
+    // });
     const formData = new FormData();
-    for (let i = 0; i < fileavata.length; i++) {
-      formData.append('avatar', fileavata[i]);
-    }
-    const addressUser: any =
-      district?.result?.formatted_address + '' + district?.result?.name;
-    const latitude: any = district?.result?.geometry?.location?.lat;
-    const longitude: any = district?.result?.geometry?.location?.lng;
-    const id: any = editProfile.id;
-    formData.append('id', id);
-    formData.append('name', values.name);
-    formData.append('address', addressUser);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
-    formData.append('date_of_birth', values.date_of_birth);
-    formData.append('email', values.email);
-    formData.append('gender', values.gender);
-    formData.append('password', values.password);
-    formData.append('phone', values.phone);
-    formData.append('role', '2');
-    await updateProfile(id, { ...values });
-    toast.success('Đăng kí thành công !', {
-      duration: 3000,
-      position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
+    const fileavata = values?.avatar?.map((item: any) => {
+      return item;
     });
-    router.push('/auth/user');
+
+    // for (let i = 0; i < fileavata.length; i++) {
+    //   formData.append('avatar', fileavata[i]);
+    // }
+    const address: any = district?.result?.formatted_address;
+    const latitude: any = district?.result?.geometry?.location?.lat;
+    console.log(latitude);
+    const longitude: any = district?.result?.geometry?.location?.lng;
+    console.log(latitude);
+    const id: any = editProfile.id;
+    const userData = {
+      name: values.name,
+      address: address,
+      latitude: latitude,
+      longitude: longitude,
+      email: values.email,
+      phone: values.phone,
+      role: 'user',
+      // avatar: fileavata.map(
+      //   (item: { originFileObj: any }) => item.originFileObj,
+      // ),
+    };
+    // for (const key in userData) {
+    //   formData.append(key, userData[key]);
+    // }
+    console.log(address);
+    if (address === undefined) {
+      toast.error('Vui lòng nhập lại địa chỉ !', {
+        position: 'top-right',
+        duration: 3000,
+      });
+    } else {
+      await updateProfile(id, userData);
+      toast.success('Cập nhập thành công !', {
+        duration: 3000,
+        position: 'top-right',
+        icon: '✅',
+        iconTheme: {
+          primary: '#000',
+          secondary: '#fff',
+        },
+      });
+      router.push('/profile');
+    }
   };
 
   return (
@@ -124,6 +144,13 @@ const EditProfile = ({ editProfile }: IProps) => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
               encType={'multipart/form-data'}
+              initialValues={{
+                file: null,
+                name: editProfile.name,
+                email: editProfile.email,
+                phone: editProfile.phone,
+                address: editProfile.address,
+              }}
             >
               <Form.Item<FieldType>
                 name="name"
@@ -133,7 +160,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                 <Input
                   className={'w-full'}
                   placeholder="Họ và Tên"
-                  defaultValue={editProfile.name}
+                  value={editProfile.name}
                 />
               </Form.Item>
 
@@ -145,7 +172,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                 <Input
                   className={'w-full'}
                   placeholder="Email"
-                  defaultValue={editProfile.email}
+                  value={editProfile.email}
                 />
               </Form.Item>
 
@@ -159,7 +186,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                   pattern="^[0-9]*$"
                   maxLength={10}
                   placeholder="Số điện thoại"
-                  defaultValue={editProfile.phone}
+                  value={editProfile.phone}
                 />
               </Form.Item>
               <Form.Item<FieldType>
@@ -168,11 +195,11 @@ const EditProfile = ({ editProfile }: IProps) => {
                 className={'w-full'}
               >
                 <Select
+                  value={editProfile.address}
                   className={'w-[400px]'}
                   showSearch
                   placeholder="Nhập địa chỉ ở của bạn"
                   optionFilterProp="children"
-                  defaultValue={editProfile.address}
                   onChange={onChangeAddress}
                   onSearch={onSearchAddress}
                   filterOption={filterOption}
@@ -187,6 +214,26 @@ const EditProfile = ({ editProfile }: IProps) => {
               >
                 <DatePicker format="YYYY-MM-DD" className={'w-full'} />
               </Form.Item> */}
+              {/* <Form.Item
+                label="Tệp tin"
+                name="file"
+                valuePropName="fileList"
+                getValueFromEvent={handleFileChange}
+              >
+                <Upload
+                  fileList={fileList}
+                  beforeUpload={(file) => {
+                    // Kiểm tra và giới hạn kích thước tệp tin
+                    const isLt2M = file.size / 1024 / 1024 < 2;
+                    if (!isLt2M) {
+                      message.error('Tệp tin không được lớn hơn 2MB!');
+                    }
+                    return isLt2M;
+                  }}
+                >
+                  <Button icon={<UploadOutlined />}>Chọn tệp tin</Button>
+                </Upload>
+              </Form.Item> */}
               <Form.Item<FieldType>
                 label="Ảnh đại diện"
                 name="avatar"
@@ -197,15 +244,15 @@ const EditProfile = ({ editProfile }: IProps) => {
               >
                 <Upload
                   maxCount={1}
-                  beforeUpload={(file) => {
-                    return new Promise((resolve, rejects) => {
-                      if (file.size > 900000) {
-                        rejects('Ảnh quá dung lượng');
-                      } else {
-                        resolve('Thành công');
-                      }
-                    });
-                  }}
+                  // beforeUpload={(file) => {
+                  //   return new Promise((resolve, rejects) => {
+                  //     if (file.size > 900000) {
+                  //       rejects('Ảnh quá dung lượng');
+                  //     } else {
+                  //       resolve('Thành công');
+                  //     }
+                  //   });
+                  // }}
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
@@ -218,7 +265,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                   htmlType="submit"
                   className={'bg-blue-tw'}
                 >
-                  Đăng kí
+                  Cập nhật
                 </Button>
               </Form.Item>
             </Form>

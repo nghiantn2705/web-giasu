@@ -38,7 +38,7 @@ export default function RentTeacher(props: IProps) {
     setIsOpen(false);
   };
   const openModal = () => {
-    if (parseInt(user.coin) < 50000) {
+    if (parseInt(user.coin) < 50000 || user.coin == null) {
       toast.error('Vui lòng Nạp tiền !', {
         duration: 3000,
       });

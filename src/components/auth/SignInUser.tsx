@@ -21,8 +21,9 @@ const SignInUser = () => {
     }
   }, [router, userInfo]);
   const onClick = async () => {
-    const res = await authGoogle(3);
+    const res = await authGoogle();
     console.log(res);
+    window.location.assign(res.url);
   };
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>

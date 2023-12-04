@@ -7,6 +7,8 @@ import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
 import { putConnec } from '@/services/connect';
+import { useStore } from '@/hook/use-store';
+import { ITeachers } from '@/types/ITeachers';
 
 interface IJob {
   user: {
@@ -24,13 +26,20 @@ interface IJob {
 }
 
 export default function FormAcceptConnect({ user }: IJob) {
+  const [userInfo] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
   console.log(user);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
-    setIsOpen(true);
+    if (parseInt(userInfo.coin) < 50000 || userInfo.coin == null) {
+      toast.error('Vui lòng Nạp tiền !', {
+        duration: 3000,
+      });
+    } else {
+      setIsOpen(true);
+    }
   };
   const reloadPageAfterDelay = () => {
     setTimeout(() => {
