@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
 'use client';
 import React, { useEffect, useState } from 'react';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { getStart } from '@/services/feedback';
 import { useParams } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ITeacherFilter } from '@/types/ITeacherFilter';
 
 interface IProps {

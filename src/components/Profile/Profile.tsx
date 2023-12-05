@@ -3,70 +3,62 @@
 import React, { useEffect } from 'react';
 
 import { IUserInfo } from '@/types/IUserInfo';
+import Link from 'next/link';
+import { BiHistory } from 'react-icons/bi';
+import { FiSettings } from 'react-icons/fi';
 
 interface IProps {
   infoUser: IUserInfo;
   children: React.ReactNode;
 }
-const Profile = ({ infoUser, children }: IProps) => {
+const Profile = ({ children }: IProps) => {
   useEffect(() => {}, []);
   return (
     <>
-      {infoUser ? (
-        <div className={'bg-gray-100 min-h-fit'}>
-          <div className={'container mx-auto py-8'}>
-            <div className={'grid grid-cols-4 sm:grid-cols-12 gap-6 px-4'}>
-              <div className={'col-span-4 sm:col-span-3 '}>
-                <div
-                  className={
-                    'bg-white shadow rounded-lg p-6 flex flex-col items-center'
-                  }
-                >
-                  <img
-                    src={infoUser?.avatar}
-                    height={200}
-                    width={200}
-                    alt={''}
-                    className={'w-3/4 h-auto mx-auto'}
-                  />
-                  <h1
-                    className={'text-gray-900 font-bold text-xl leading-8 my-1'}
-                  >
-                    {infoUser?.name}
-                  </h1>
-                  <span
-                    className={'text-gray-600 font-lg text-semibold leading-6'}
-                  >
-                    {infoUser?.description}
-                  </span>
+      <div className={'bg-gray-100 min-h-fit flex'}>
+        <div
+          className={'bg-white w-80 px-4 py-8 border-r-2 flex flex-col gap-4 '}
+        >
+          <a
+            href={`/profile`}
+            className={
+              'flex items-center gap-2 border bg-white drop-shadow-md hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+            }
+          >
+            <FiSettings />
+            Chỉnh sửa thông tin
+          </a>
+          <a
+            href={`/profile/history`}
+            className={
+              'flex items-center gap-2 border bg-white drop-shadow-md hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+            }
+          >
+            <BiHistory />
+            Lịch sử thuê
+          </a>
+          <Link
+            href={'/profile/history-connect'}
+            className={
+              'flex items-center gap-2 border bg-white drop-shadow-md hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+            }
+          >
+            <BiHistory />
+            Xác nhận dạy
+          </Link>
 
-                  <ul
-                    className={
-                      'bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm'
-                    }
-                  >
-                    <li className={'flex items-center gap-3 py-3'}>
-                      <span>Trạng thái</span>
-                      <span className={'ml-auto'}>
-                        <span
-                          className={
-                            'bg-green-500 py-1 px-2 rounded text-white text-sm'
-                          }
-                        >
-                          Đang sẵn sàng
-                        </span>
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className={'col-span-4 sm:col-span-9'}>{children}</div>
-            </div>
-          </div>
+          <Link
+            href={'/profile/history-paypal'}
+            className={
+              'flex items-center gap-2 border bg-white drop-shadow-md hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+            }
+          >
+            <BiHistory />
+            Lịch sử giao dịch
+          </Link>
         </div>
-      ) : (
-        ''
-      )}
+        <div className={'container'}>{children}</div>
+      </div>
     </>
   );
 };

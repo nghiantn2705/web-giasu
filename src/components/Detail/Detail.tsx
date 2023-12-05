@@ -165,7 +165,7 @@ export default function Detail({ teacher }: IProps) {
                       {moment(teacher?.created_at).format('DD/MM/YYYY')}
                     </label>
                   </p>
-                  <FormRentProcedure id={Number(params)} teacher={teacher} />
+                  <FormRentProcedure teacher={teacher} />
                   <div>
                     <p className={'pt-5 text-center  text-xl font-serif'}>
                       Ảnh chứng chỉ

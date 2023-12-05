@@ -6,14 +6,9 @@ import RentTeacher from '../Teacher/RentTeacher';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
-interface IProps {
-  id: number;
-  teacher: any;
-}
 
-export default function FormRentProcedure(props: IProps) {
+export default function FormRentProcedure() {
   const [user] = useStore<ITeachers>('userInfo');
-  const [teacher, setTeachers] = useState<ITeachers>();
   const [isOpen, setIsOpen] = useState(false);
   const { id: params } = useParams();
   const closeModal = () => {
@@ -65,7 +60,7 @@ export default function FormRentProcedure(props: IProps) {
             </p>
           </div>
           <div className={'text-center'}>
-            <RentTeacher id={Number(params)} teacher={teacher} />
+            <RentTeacher id={Number(params)} />
           </div>
         </div>
       </MyModal>
