@@ -24,7 +24,6 @@ export default function FormRentProcedure() {
       setIsOpen(true);
     }
   };
-
   return (
     <div>
       {user?.role !== 'teacher' ? (

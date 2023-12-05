@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import EditProfile from './../../../../components/Profile/EditProfile';
+import EditProfile from '../../../../components/Profile/EditProfile/EditProfile';
 import { IUserInfo } from '@/types/IUserInfo';
 import { useStore } from '@/hook/use-store';
 import Error404 from '@/components/Layout/Error404';

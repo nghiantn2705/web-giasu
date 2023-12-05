@@ -6,7 +6,7 @@ import Profile from '@/components/Profile/Profile';
 import { useStore } from '@/hook/use-store';
 import { IUserInfo } from '@/types/IUserInfo';
 import Error404 from '@/components/Layout/Error404';
-import ConnectHistory from '@/components/Profile/ConnectHistory';
+import ConnectHistory from '@/components/History/ConnectHistory';
 
 const Page = () => {
   const [data] = useStore<IUserInfo>('userInfo');

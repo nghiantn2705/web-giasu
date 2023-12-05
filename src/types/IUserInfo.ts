@@ -21,7 +21,6 @@ export interface IUserInfo {
   salary: string;
   school: string;
   subject: {
-    map(arg0: (item: { name: any; }) => any): import("react").SetStateAction<string[]> | null | undefined;
     id: number;
     name: string;
   };

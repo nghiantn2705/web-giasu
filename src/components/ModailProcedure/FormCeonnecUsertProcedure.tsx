@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
-import FormAcceptConnectUser from '../Profile/FormAcceptConnectUser';
+import FormAcceptConnectUser from '../FormConfirmation/FormAcceptConnectUser';
 interface IJob {
   user: {
     id: number;

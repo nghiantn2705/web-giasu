@@ -14,7 +14,7 @@ import { BiLogIn, BiHistory, BiMoney } from 'react-icons/bi';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { deleteCookie } from 'cookies-next';
-import Paypal from '@/components/Profile/Paypal';
+import Paypal from '@/components/paypal/Paypal';
 
 const navLink = [
   {
