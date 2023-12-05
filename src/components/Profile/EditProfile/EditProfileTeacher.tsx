@@ -6,7 +6,15 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { updateProfile } from '@/services/put';
 // import Select, { Option, ReactSelectProps } from 'react-select';
-import { getAdreess, getAdreessId, getClass, getSalary, getSchool, getSubject, getTimeSlot } from '@/services/get';
+import {
+  getAdreess,
+  getAdreessId,
+  getClass,
+  getSalary,
+  getSchool,
+  getSubject,
+  getTimeSlot,
+} from '@/services/get';
 import { IAddress, IDistrict } from '@/types/ILocation';
 import { UploadOutlined } from '@ant-design/icons';
 import {
@@ -22,7 +30,7 @@ import {
   message,
 } from 'antd';
 import { FieldType } from '@/types/Field';
-import FormLoginProcedure from '../ModailProcedure/FormLoginProcedure';
+import FormLoginProcedure from '../../ModailProcedure/FormLoginProcedure';
 import moment from 'moment';
 import { ISubject } from '@/types/ISubject';
 import { ITimeSlot } from '@/types/ITimeSlot';

@@ -29,7 +29,6 @@ export default function FormRentProcedure(props: IProps) {
       setIsOpen(true);
     }
   };
-
   return (
     <div>
       {user?.role !== 'teacher' ? (

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 
-import FormAcceptConnect from '../Profile/FormAcceptConnect';
+import FormAcceptConnect from '../FormConfirmation/FormAcceptConnect';
 interface IJob {
   user: {
     id: number;

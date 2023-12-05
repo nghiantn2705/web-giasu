@@ -4,7 +4,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { updateProfile } from '@/services/put';
+import { updateProfile, updateProfile2 } from '@/services/put';
 // import Select, { Option, ReactSelectProps } from 'react-select';
 import { getAdreess, getAdreessId } from '@/services/get';
 import { IAddress, IDistrict } from '@/types/ILocation';
@@ -22,7 +22,7 @@ import {
   message,
 } from 'antd';
 import { FieldType } from '@/types/Field';
-import FormLoginProcedure from '../ModailProcedure/FormLoginProcedure';
+import FormLoginProcedure from '../../ModailProcedure/FormLoginProcedure';
 import moment from 'moment';
 interface IProps {
   editProfile: IUserInfo;
@@ -75,22 +75,16 @@ const EditProfile = ({ editProfile }: IProps) => {
   const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
 
-    // const fileavata = values?.avatar?.map((item: any) => {
-    //   return item?.originFileObj;
-    // });
+    const fileavata = values?.avatar?.map((item: any) => item?.originFileObj);
     const formData = new FormData();
-    const fileavata = values?.avatar?.map((item: any) => {
-      return item;
-    });
 
-    // for (let i = 0; i < fileavata.length; i++) {
-    //   formData.append('avatar', fileavata[i]);
-    // }
+    for (let i = 0; i < fileavata.length; i++) {
+      formData.append('avatar', fileavata[i]);
+    }
+
     const address: any = district?.result?.formatted_address;
     const latitude: any = district?.result?.geometry?.location?.lat;
-    console.log(latitude);
     const longitude: any = district?.result?.geometry?.location?.lng;
-    console.log(latitude);
     const id: any = editProfile.id;
     const userData = {
       name: values.name,
@@ -100,14 +94,17 @@ const EditProfile = ({ editProfile }: IProps) => {
       email: values.email,
       phone: values.phone,
       role: 'user',
-      // avatar: fileavata.map(
-      //   (item: { originFileObj: any }) => item.originFileObj,
-      // ),
+      avatar: fileavata,
     };
-    // for (const key in userData) {
-    //   formData.append(key, userData[key]);
-    // }
-    console.log(address);
+    // formData.append('name', values.name);
+    // formData.append('address', address);
+    // formData.append('latitude', latitude);
+    // formData.append('longitude', longitude);
+    // formData.append('date_of_birth', values.date_of_birth);
+    // formData.append('email', values.email);
+    // formData.append('phone', values.phone);
+    // formData.append('role', 'user');
+
     if (address === undefined) {
       toast.error('Vui lòng nhập lại địa chỉ !', {
         position: 'top-right',
@@ -244,15 +241,15 @@ const EditProfile = ({ editProfile }: IProps) => {
               >
                 <Upload
                   maxCount={1}
-                  // beforeUpload={(file) => {
-                  //   return new Promise((resolve, rejects) => {
-                  //     if (file.size > 900000) {
-                  //       rejects('Ảnh quá dung lượng');
-                  //     } else {
-                  //       resolve('Thành công');
-                  //     }
-                  //   });
-                  // }}
+                  beforeUpload={(file) => {
+                    return new Promise((resolve, rejects) => {
+                      if (file.size > 900000) {
+                        rejects('Ảnh quá dung lượng');
+                      } else {
+                        resolve('Thành công');
+                      }
+                    });
+                  }}
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>

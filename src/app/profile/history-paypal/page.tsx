@@ -8,7 +8,7 @@ import { IUserInfo } from '@/types/IUserInfo';
 
 import Error404 from '@/components/Layout/Error404';
 
-import PaypalHistory from '@/components/Profile/PaypalHistory';
+import PaypalHistory from '@/components/History/PaypalHistory';
 
 const Page = () => {
   const [data] = useStore<IUserInfo>('userInfo');

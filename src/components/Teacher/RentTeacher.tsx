@@ -79,6 +79,7 @@ export default function RentTeacher(props: IProps) {
                   secondary: '#fff',
                 },
               });
+
               console.log(res);
             }}
             initialValues={{
