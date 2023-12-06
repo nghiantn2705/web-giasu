@@ -3,8 +3,9 @@
 
 import React from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
-import EditProfile from '@/components/Profile/EditProfile/EditProfile';
-import EditProfileTeacher from '@/components/Profile/EditProfile/EditProfileTeacher';
+import EditProfile from './(EditProfile)/EditProfile';
+import EditProfileTeacher from './(EditProfile)/EditProfileTeacher';
+import ModoalEditProfileTeacher from './(EditProfile)/ModailEditProfileTeacher';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -36,7 +37,7 @@ const InfoUser = ({ infoUser }: IProps) => {
           <span className={'max-w-[280px]'}>{infoUser?.school}</span>
         </li>
         <li className="flex justify-end gap-2 relative px-4 pb-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-          {infoUser.role == 2 ? (
+          {infoUser.role == 'user' ? (
             <EditProfile editProfile={infoUser} />
           ) : (
             <EditProfileTeacher editProfile={infoUser} />

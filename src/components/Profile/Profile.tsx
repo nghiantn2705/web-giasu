@@ -7,7 +7,8 @@ import Link from 'next/link';
 import { BiHistory } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'antd';
-import EditPassword from '@/components/Profile/EditProfile/EditPassword';
+import EditPassword from './(EditProfile)/EditPassword';
+
 
 interface IProps {
   infoUser: IUserInfo;

@@ -8,6 +8,7 @@ import { updateProfile } from '@/services/put';
 import { getAdreess, getAdreessId } from '@/services/get';
 import { IAddress, IDistrict } from '@/types/ILocation';
 import { UploadOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 import {
   Button,
   Form,
@@ -27,19 +28,13 @@ interface IProps {
   editProfile: IUserInfo;
 }
 const EditProfile = ({ editProfile }: IProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   let timeoutId: any;
   const [address, setAddress] = useState<IAddress>();
   const [value, setValue] = useState('');
   const [district, setDistrict] = useState<IDistrict>();
   const [fileList, setFileList] = useState([]);
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
   const [formValues, setFormValues] = useState({
     name: editProfile.name,
     email: editProfile.email,
@@ -79,60 +74,63 @@ const EditProfile = ({ editProfile }: IProps) => {
     };
   });
   const onFinish = async (values: any) => {
-    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
+    values['date_of_birth'] = dayjs(values.date_of_birth).format('YYYY-MM-DD');
 
     const fileavata = values?.avatar?.map((item: any) => {
       return item?.originFileObj;
     });
     const formData = new FormData();
 
-    for (let i = 0; i < fileavata.length; i++) {
-      formData.append('avatar', fileavata[i]);
+    if (Array.isArray(fileavata) && fileavata.length > 0) {
+      for (let i = 0; i < fileavata.length; i++) {
+        formData.append('avatar', fileavata[i]);
+      }
     }
-
     const address: any = district?.result?.formatted_address;
     const latitude: any = district?.result?.geometry?.location?.lat;
     const longitude: any = district?.result?.geometry?.location?.lng;
     const id: any = editProfile.id;
-    // const userData = {
-    //   name: values.name,
-    //   address: address,
-    //   latitude: latitude,
-    //   longitude: longitude,
-    //   email: values.email,
-    //   phone: values.phone,
-    //   role: 'user',
-    //   avatar: fileavata,
-    // };
+    const currentAddress = editProfile.address;
+    const currentLatitude = editProfile.latitude;
+    const currentLongitude = editProfile.longitude;
+    if (address == undefined) {
+      formData.append('address', currentAddress);
+      formData.append('latitude', currentLatitude);
+      formData.append('longitude', currentLongitude);
+    } else {
+      formData.append('address', address);
+      formData.append('latitude', latitude);
+      formData.append('longitude', longitude);
+    }
     formData.append('name', values.name);
-    formData.append('address', address);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
+
     formData.append('date_of_birth', values.date_of_birth);
     formData.append('email', values.email);
     formData.append('phone', values.phone);
-    formData.append('role', 'user');
+    formData.append('gender', values.gender);
+    formData.append('role', '2');
 
-    if (address === undefined) {
-      toast.error('Vui lòng nhập lại địa chỉ !', {
-        position: 'top-right',
-        duration: 3000,
-      });
-    } else {
-      await updateProfile(id, formData);
-      toast.success('Cập nhập thành công !', {
-        duration: 3000,
-        position: 'top-right',
-        icon: '✅',
-        iconTheme: {
-          primary: '#000',
-          secondary: '#fff',
-        },
-      });
-      router.push('/profile');
-    }
+    await updateProfile(id, formData);
+    toast.success('Cập nhập thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    router.push('/profile');
+    closeModal();
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
   return (
     <div>
       <button
@@ -148,7 +146,7 @@ const EditProfile = ({ editProfile }: IProps) => {
           </h3>
           <Form
             layout="vertical"
-            className={'grid grid-cols-2 gap-4'}
+            className={'w-full'}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -159,16 +157,16 @@ const EditProfile = ({ editProfile }: IProps) => {
               email: editProfile.email,
               phone: editProfile.phone,
               address: editProfile.address,
+              date_of_birth: moment(editProfile.date_of_birth),
+              gender: editProfile.gender,
             }}
           >
             <Form.Item<FieldType>
               name="name"
               rules={[{ required: true, message: 'Họ và tên!' }]}
-              className={'m-0 h-fit'}
+              className={'w-full'}
             >
-              <label htmlFor={'username'}>Họ và tên</label>
               <Input
-                id={'username'}
                 className={'w-full'}
                 placeholder="Họ và Tên"
                 value={editProfile.name}
@@ -178,11 +176,9 @@ const EditProfile = ({ editProfile }: IProps) => {
             <Form.Item<FieldType>
               name="email"
               rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
-              className={'m-0 h-fit'}
+              className={'w-full'}
             >
-              <label htmlFor={'email'}>Email</label>
               <Input
-                id={'email'}
                 className={'w-full'}
                 placeholder="Email"
                 value={editProfile.email}
@@ -192,11 +188,10 @@ const EditProfile = ({ editProfile }: IProps) => {
             <Form.Item<FieldType>
               name="phone"
               rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
-              className={'m-0'}
+              className={'w-full'}
             >
-              <label htmlFor={'phone'}>Số điện thoại</label>
               <Input
-                className={'w-full rounded-none'}
+                className={'w-full'}
                 pattern="^[0-9]*$"
                 maxLength={10}
                 placeholder="Số điện thoại"
@@ -206,9 +201,8 @@ const EditProfile = ({ editProfile }: IProps) => {
             <Form.Item<FieldType>
               name="address"
               rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
-              className={'m-0'}
+              className={'w-full'}
             >
-              <label htmlFor={'phone'}>Địa chỉ</label>
               <Select
                 value={editProfile.address}
                 className={'w-[400px]'}
@@ -222,7 +216,40 @@ const EditProfile = ({ editProfile }: IProps) => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              className={'m-0'}
+              name="date_of_birth"
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy nhập ngày sinh của bạn!',
+                },
+              ]}
+            >
+              <DatePicker
+                format="DD-MM-YYYY"
+                className={'w-full'}
+                value={dayjs(editProfile.date_of_birth, 'YYYY-MM-DD')}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              name="gender"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: 'Hãy chọn giới tính của bạn!',
+                },
+              ]}
+            >
+              <Radio.Group
+                onChange={onChange}
+                value={editProfile.gender}
+                //   value={value}
+              >
+                <Radio value={'Nam'}>Nam</Radio>
+                <Radio value={'Nữ'}>Nữ</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item<FieldType>
               label="Ảnh đại diện"
               name="avatar"
               getValueFromEvent={(event) => {
@@ -231,7 +258,20 @@ const EditProfile = ({ editProfile }: IProps) => {
               valuePropName="fileList"
             >
               <Upload
+                fileList={
+                  editProfile.avatar
+                    ? [
+                        {
+                          uid: '-1',
+                          name: 'Image',
+                          status: 'done',
+                          url: editProfile.avatar,
+                        },
+                      ]
+                    : []
+                }
                 maxCount={1}
+                disabled
                 beforeUpload={(file) => {
                   return new Promise((resolve, rejects) => {
                     if (file.size > 900000) {
@@ -247,12 +287,8 @@ const EditProfile = ({ editProfile }: IProps) => {
               </Upload>
             </Form.Item>
 
-            <Form.Item className={'col-span-2'}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className={'bg-blue-tw self-end'}
-              >
+            <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
+              <Button type="primary" htmlType="submit" className={'bg-blue-tw'}>
                 Cập nhật
               </Button>
             </Form.Item>

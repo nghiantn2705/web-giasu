@@ -70,7 +70,7 @@ const SignInTeacher = () => {
                   const data = await auth({
                     ...values,
                   });
-                  if (data?.user && data?.user?.role == 3) {
+                  if (data?.user && data?.user?.role == 'teacher') {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
@@ -95,12 +95,6 @@ const SignInTeacher = () => {
                     });
                   }
                 } catch (ex: any) {
-                  const errorMessage =
-                    ex.message || 'Đã xảy ra lỗi khi đăng nhập';
-                  toast.error(errorMessage, {
-                    duration: 3000,
-                    position: 'top-right',
-                  });
                   console.log(ex);
                 }
               }}

@@ -284,11 +284,11 @@ export default function Detail({ teacher }: IProps) {
                             {' '}
                             Trình độ học vấn:{' '}
                           </label>{' '}
-                          <label className="">
+                          {/* <label className="">
                             {teacher?.education_level?.map((items) => {
                               return items?.name;
                             })}
-                          </label>
+                          </label> */}
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
