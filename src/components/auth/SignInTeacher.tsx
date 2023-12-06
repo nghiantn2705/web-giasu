@@ -101,6 +101,7 @@ const SignInTeacher = () => {
                     duration: 3000,
                     position: 'top-right',
                   });
+                  console.log(ex);
                 }
               }}
             >
