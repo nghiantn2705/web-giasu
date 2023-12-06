@@ -15,7 +15,16 @@ import {
 } from '@/services/get';
 import { IAddress, IDistrict } from '@/types/ILocation';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Upload, RadioChangeEvent, Select } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  Upload,
+  RadioChangeEvent,
+  Select,
+  Radio,
+  DatePicker,
+} from 'antd';
 import { FieldType } from '@/types/Field';
 import FormLoginProcedure from '../../ModailProcedure/FormLoginProcedure';
 import moment from 'moment';
@@ -25,10 +34,12 @@ import { IClass } from '@/types/IClass';
 import { ISalary } from '@/types/ISalary';
 import { ISchool } from '@/types/ISchool';
 import MyModalTransition from '@/components/Headless/ModalTransition';
+import dayjs from 'dayjs';
 interface IProps {
   editProfile: IUserInfo;
 }
 const EditProfileTeacher = ({ editProfile }: IProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   let timeoutId: any;
   const [address, setAddress] = useState<IAddress>();
   const [value, setValue] = useState('');
@@ -45,13 +56,10 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const [district1, setDistrict1] = useState<IDistrict>();
   const [address1, setAddress1] = useState<IAddress>();
   const [school, setSchool] = useState<ISchool[]>();
-  const [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
+
+  // const handleFileChange = ({ fileList }) => {
+  //   setFileList(fileList);
+  // };
   useEffect(() => {
     (async () => {
       try {
@@ -70,7 +78,8 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       }
     })();
   }, []);
-
+  console.log(selectedItems);
+  console.log(editProfile);
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
@@ -158,66 +167,93 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
 
-    // const fileavata = values?.avatar?.map((item: any) => {
-    //   return item?.originFileObj;
-    // });
-    const formData = new FormData();
     const fileavata = values?.avatar?.map((item: any) => {
-      return item;
+      return item?.originFileObj;
     });
+    const formData = new FormData();
+    const selectedSubjectIds = (values.subject ?? []).map(
+      (selectedSubject: any) =>
+        subject?.find((s) => s.name === selectedSubject)?.id,
+    );
+    const selectedClassIds = (values.classlevels ?? []).map(
+      (className: any) => classlevels?.find((s) => s.class === className)?.id,
+    );
+    const selectedSalaryIds = (values.salary ?? []).map(
+      (salaryName: any) => salary?.find((s) => s.name === salaryName)?.id,
+    );
+    const selectedSchoolIds = (values.school ?? []).map(
+      (schoolName: any) => school?.find((s) => s.name === schoolName)?.id,
+    );
 
-    for (let i = 0; i < fileavata.length; i++) {
-      formData.append('avatar', fileavata[i]);
+    if (Array.isArray(fileavata) && fileavata.length > 0) {
+      for (let i = 0; i < fileavata.length; i++) {
+        formData.append('avatar', fileavata[i]);
+      }
     }
-    const address: any = district?.result?.name;
+
+    const address: any = district1?.result?.formatted_address;
     const address1: any = district1?.result?.formatted_address;
     const latitude: any = district1?.result?.geometry?.location?.lat;
     const longitude: any = district1?.result?.geometry?.location?.lng;
+    const currentAddress = editProfile.address;
+    const currentDistrict = editProfile.District;
+    const currentLatitude = editProfile.latitude;
+    const currentLongitude = editProfile.longitude;
     const id: any = editProfile.id;
-    const userData = {
-      name: values.name,
-      address: address,
-      latitude: latitude,
-      longitude: longitude,
-      email: values.email,
-      phone: values.phone,
-      education_level: values.education_level,
-      subject: values.subject,
-      class_id: values.class_id,
-      salary_id: values.salary_id,
-      DistrictID: values.address1,
-      school_id: values.school_id,
-      exp: values.exp,
-      description: values.description,
-      role: 'teacher',
-      avatar: fileavata.map(
-        (item: { originFileObj: any }) => item.originFileObj,
-      ),
-    };
-    // for (const key in userData) {
-    //   formData.append(key, userData[key]);
-    // }
-    console.log(userData);
-    if (address === undefined) {
-      toast.error('Vui lòng nhập lại địa chỉ !', {
-        position: 'top-right',
-        duration: 3000,
-      });
+    // const userData = {
+    //   name: values.name,
+    //   address: address,
+    //   latitude: latitude,
+    //   longitude: longitude,
+    //   email: values.email,
+    //   phone: values.phone,
+    //   role: 'user',
+    //   avatar: fileavata,
+    // };
+    if (address == undefined || address1 == undefined) {
+      formData.append('address', currentAddress);
+      formData.append('DistrictID', currentDistrict);
+      formData.append('latitude', currentLatitude);
+      formData.append('longitude', currentLongitude);
     } else {
-      await updateProfile(id, userData);
-      toast.success('Sửa thành công !', {
-        duration: 3000,
-        position: 'top-right',
-        icon: '✅',
-        iconTheme: {
-          primary: '#000',
-          secondary: '#fff',
-        },
-      });
-      router.push('/profile');
+      formData.append('DistrictID', address1);
+      formData.append('address', address);
+      formData.append('latitude', latitude);
+      formData.append('longitude', longitude);
     }
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('date_of_birth', values.date_of_birth);
+    formData.append('subject', values.subject);
+    formData.append('class_id', values.class_id);
+    formData.append('salary_id', values.salary_id);
+    formData.append('school_id', values.school_id);
+    formData.append('exp', values.exp);
+    formData.append('description', values.description);
+    formData.append('gender', values.gender);
+    formData.append('phone', values.phone);
+    formData.append('role', '3');
+
+    await updateProfile(id, formData);
+    toast.success('Cập nhập thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    router.push('/profile');
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
   return (
     <>
       {editProfile ? (
@@ -246,8 +282,16 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   email: editProfile.email,
                   phone: editProfile.phone,
                   address: editProfile.address,
-                  school: editProfile.school,
+                  DistrictID: editProfile.District,
+                  school_id: editProfile.school,
                   description: editProfile.description,
+                  gender: editProfile.gender,
+                  subject: editProfile.subject,
+                  class_id: editProfile.class,
+                  education_level: editProfile.education_level,
+                  salary_id: editProfile.salary,
+                  exp: editProfile.exp,
+                  date_of_birth: moment(editProfile.date_of_birth),
                 }}
               >
                 <div className={'grid grid-cols-2 gap-4'}>
@@ -310,6 +354,39 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     />
                   </Form.Item>
                   <Form.Item<FieldType>
+                    name="gender"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Hãy chọn giới tính của bạn!',
+                      },
+                    ]}
+                  >
+                    <Radio.Group
+                      onChange={onChangeGender}
+                      value={editProfile.gender}
+                    >
+                      <Radio value={'Nam'}>Nam</Radio>
+                      <Radio value={'Nữ'}>Nữ</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item<FieldType>
+                    name="date_of_birth"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Hãy nhập ngày sinh của bạn!',
+                      },
+                    ]}
+                  >
+                    <DatePicker
+                      format="DD-MM-YYYY"
+                      className={'w-full'}
+                      value={dayjs(editProfile.date_of_birth, 'YYYY-MM-DD')}
+                    />
+                  </Form.Item>
+                  <Form.Item<FieldType>
                     label="Ảnh đại diện"
                     name="avatar"
                     getValueFromEvent={(event) => {
@@ -318,7 +395,20 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     valuePropName="fileList"
                   >
                     <Upload
+                      fileList={
+                        editProfile.avatar
+                          ? [
+                              {
+                                uid: '-1',
+                                name: 'Image',
+                                status: 'done',
+                                url: editProfile.avatar,
+                              },
+                            ]
+                          : []
+                      }
                       maxCount={1}
+                      disabled
                       beforeUpload={(file) => {
                         return new Promise((resolve, rejects) => {
                           if (file.size > 900000) {
@@ -328,12 +418,31 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                           }
                         });
                       }}
-                      customRequest={(info) => {
-                        setFileList([info?.file]);
-                      }}
-                      showUploadList={true}
+                      showUploadList={false}
                     >
                       <Button icon={<UploadOutlined />}>Upload</Button>
+                    </Upload>
+                  </Form.Item>
+                  <Form.Item
+                    label="Chứng chỉ"
+                    name="certificate"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                  >
+                    <Upload
+                      customRequest={dummyRequest}
+                      listType="picture"
+                      maxCount={4}
+                      fileList={fileList}
+                      multiple
+                    >
+                      {fileList.length === 4 ? (
+                        ''
+                      ) : (
+                        <Button icon={<UploadOutlined />}>
+                          Click to Upload
+                        </Button>
+                      )}
                     </Upload>
                   </Form.Item>
                   <Form.Item<FieldType>
@@ -351,7 +460,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       placeholder="Nhập trình độ học vấn"
                       optionFilterProp="children"
                       filterOption={filterOption}
-                      defaultValue={editProfile.education_level}
+                      value={editProfile.education_level}
                       options={[
                         {
                           value: 'Đại học',
@@ -374,11 +483,13 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   <Form.Item<FieldType>
                     name="subject"
                     rules={[
-                      { required: true, message: 'Hãy chọn môn học bạn dạy!' },
+                      {
+                        required: true,
+                        message: 'Hãy chọn môn học bạn dạy!',
+                      },
                     ]}
                   >
                     <Select
-                      defaultValue={editProfile?.subject}
                       mode="multiple"
                       placeholder="Môn học"
                       value={selectedItems}
@@ -387,14 +498,32 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       options={filteredOptions}
                     />
                   </Form.Item>
+                  {/* <Form.Item<FieldType>
+                  name="time_tutor_id"
+                  rules={[
+                    { required: true, message: 'Hãy chọn môn học bạn dạy!' },
+                  ]}
+                >
+                  <Select
+                      defaultValue={editProfile?.subject}
+                    mode="multiple"
+                    placeholder="Ca học"
+                    value={selectedTimeSlot}
+                    onChange={setSelectedTimeSlot}
+                    style={{ width: '100%' }}
+                    options={filteredTimeSlot}
+                  />
+                </Form.Item> */}
                   <Form.Item<FieldType>
                     name="class_id"
                     rules={[
-                      { required: true, message: 'Hãy chọn lớp học bạn dạy!' },
+                      {
+                        required: true,
+                        message: 'Hãy chọn lớp học bạn dạy!',
+                      },
                     ]}
                   >
                     <Select
-                      defaultValue={editProfile?.class}
                       mode="multiple"
                       placeholder="Lớp học"
                       value={selectedClasses}
@@ -403,6 +532,39 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       options={filteredClasses}
                     />
                   </Form.Item>
+
+                  {/* <Form.Item<FieldType>
+                  name="current_role"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                    },
+                  ]}
+                  className={'w-full'}
+                >
+                  <Select
+                    defaultValue={editProfile?.current_role}
+                    showSearch
+                    placeholder="Hiện tại đang là"
+                    optionFilterProp="children"
+                    filterOption={filterOption}
+                    options={[
+                      {
+                        value: 'Sinh Viên',
+                        label: 'Sinh Viên',
+                      },
+                      {
+                        value: 'Giảng Viên',
+                        label: 'Giảng Viên',
+                      },
+                      {
+                        value: 'Giáo viên',
+                        label: 'Giáo viên',
+                      },
+                    ]}
+                  />
+                </Form.Item> */}
                   <Form.Item<FieldType>
                     name="salary_id"
                     rules={[
@@ -414,7 +576,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
-                      defaultValue={editProfile.salary}
+                      value={editProfile.salary}
                       showSearch
                       placeholder="Mức lương của bạn"
                       optionFilterProp="children"
@@ -429,7 +591,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
-                      defaultValue={editProfile.District}
+                      value={editProfile.District}
                       className={'w-[400px]'}
                       showSearch
                       placeholder="Nhập khu vực dậy của bạn"
@@ -447,7 +609,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                   >
                     <Select
-                      defaultValue={editProfile.school}
+                      value={editProfile.school}
                       showSearch
                       placeholder="Trường đang và đã học"
                       optionFilterProp="children"
@@ -490,7 +652,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     htmlType="submit"
                     className={'bg-blue-tw'}
                   >
-                    Đăng kí
+                    Cập nhật
                   </Button>
                 </Form.Item>
               </Form>

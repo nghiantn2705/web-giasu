@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable no-undef */
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import { FastField, Form, Formik } from 'formik';
+import { Form, Button, Select, message } from 'antd';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import toast from 'react-hot-toast';
@@ -19,36 +20,56 @@ interface IProps {
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
-  const { id: params } = useParams();
+  const { id } = useParams();
   const [subjectAndClass, setSubjectAndClass] = useState<ISubjectAndClass>();
-  console.log(user);
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       try {
-        const resSubjectAndClass = await getSubjectAndClass({ id: params });
+        const resSubjectAndClass = await getSubjectAndClass({ id });
         setSubjectAndClass(resSubjectAndClass);
-      } catch (ex: any) {
-        console.log(ex.message);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          'Failed to fetch subjects and classes. Please try again later.',
+        );
       }
-    })();
-  }, [params]);
+    };
+
+    fetchData();
+  }, [id]);
 
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const openModal = () => {
     if (parseInt(user.coin) < 50000 || user.coin == null) {
-      toast.error('Vui lòng Nạp tiền !', {
-        duration: 3000,
-      });
+      toast.error('Vui lòng Nạp tiền !', { duration: 3000 });
     } else {
       setIsOpen(true);
     }
   };
+
+  const onFinish = async (values: any) => {
+    values.idUser = user?.id;
+    values.idTeacher = props?.id;
+    values.class = values.class.join(',');
+    values.subject = values.subject.join(',');
+
+    try {
+      const response = await postJob({ ...values });
+      message.success('Vui lòng đợi gia sư đồng ý!');
+      console.log(response);
+    } catch (error) {
+      message.error('Có lỗi xảy ra. Vui lòng thử lại sau.');
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-      {user?.role !== 'teacher' ? (
+      {user?.role !== 3 ? (
         <button
           onClick={openModal}
           className={
@@ -64,24 +85,10 @@ export default function RentTeacher(props: IProps) {
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[600px]'}>
           <ModalTitle>Thuê gia sư</ModalTitle>
-          <Formik
-            className={''}
-            onSubmit={async (values) => {
-              values.class = values.class.join(',');
-              values.subject = values.subject.join(',');
-              const res = await postJob({ ...values });
-              toast.success('Vui lòng đợi gia sư đồng ý !', {
-                duration: 3000,
-                position: 'top-right',
-                icon: '✅',
-                iconTheme: {
-                  primary: '#000',
-                  secondary: '#fff',
-                },
-              });
-
-              console.log(res);
-            }}
+          <Form
+            className={'flex flex-col gap-5 pt-5 font-medium'}
+            name="jobForm"
+            onFinish={onFinish}
             initialValues={{
               idUser: user?.id,
               idTeacher: props?.id,
@@ -89,73 +96,48 @@ export default function RentTeacher(props: IProps) {
               subject: [],
             }}
           >
-            <Form className={'flex flex-col gap-5 pt-5 font-medium'}>
-              <div className={'flex flex-col gap-5 px-5'}>
-                <label className={'grid grid-cols-2'}>
-                  <span>Người thuê</span>
-                  <span>{user?.name}</span>
-                </label>
-                <div className={'grid grid-cols-2 gap-5'}>
-                  <label className={'h-fit my-auto content-center'}>
-                    Môn học{' '}
-                  </label>
-                  <FastField
-                    as="select"
-                    name="class"
-                    multiple
-                    className="w-full p-2 border border-gray-300 rounded-md appearance-none"
-                  >
+            <div className={'flex flex-col gap-5 px-5'}>
+              <Form.Item label="Người thuê">
+                <span>{user?.name}</span>
+              </Form.Item>
+              <div>
+                <Form.Item label="Lớp học" name="class">
+                  <Select mode="multiple" allowClear className={'form-input'}>
                     {subjectAndClass?.class_id?.map((i) => (
-                      <option key={i?.id} value={`${i?.id}`}>
+                      <Select.Option key={i?.id} value={`${i?.id}`}>
                         {i?.class}
-                      </option>
+                      </Select.Option>
                     ))}
-                  </FastField>
-                </div>
-                <div className={'grid grid-cols-2 gap-5'}>
-                  <label className={'h-fit my-auto content-center'}>
-                    Môn học{' '}
-                  </label>
-                  <FastField
-                    as="select"
-                    name="subject"
-                    multiple
-                    className={'w-full p-2 border border-gray-300 rounded-md'}
-                  >
+                  </Select>
+                </Form.Item>
+              </div>
+              <div>
+                <Form.Item label="Môn học" name="subject">
+                  <Select mode="multiple" allowClear className={'form-input'}>
                     {subjectAndClass?.subject?.map((item) => (
-                      <option key={item?.id} value={`${item?.id}`}>
+                      <Select.Option key={item?.id} value={`${item?.id}`}>
                         {item?.name}
-                      </option>
+                      </Select.Option>
                     ))}
-                  </FastField>
-                </div>
+                  </Select>
+                </Form.Item>
               </div>
-              <div
-                className={
-                  'flex gap-1 border-t border-t-gray-300 justify-end p-2'
-                }
+              <Form.Item
+                wrapperCol={{ offset: 8, span: 16 }}
+                className={'text-right '}
               >
-                <button
-                  type="submit"
+                <Button
+                  type="primary"
+                  htmlType="submit"
                   className={
-                    'rounded-md border border-transparent bg-red-400 text-sx font-medium text-slate-100 hover:bg-red-600 px-2'
+                    ' bg-blue-tw text-sx font-medium text-slate-100 hover:bg-red-600 '
                   }
-                  onClick={closeModal}
                 >
-                  Đăng kí
-                </button>
-                <button
-                  type="button"
-                  className={
-                    'rounded-md border border-gray-500 px-2 py-2 text-gray-500 text-sx font-medium hover:bg-red-600'
-                  }
-                  onClick={closeModal}
-                >
-                  Đóng
-                </button>
-              </div>
-            </Form>
-          </Formik>
+                  Thuê
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>
         </div>
       </MyModal>
     </div>
