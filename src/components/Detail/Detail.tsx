@@ -33,7 +33,7 @@ export default function Detail({ teacher }: IProps) {
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
   const [directions, setDirections] = useState<any>();
-
+  console.log(teacher);
   let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
@@ -170,7 +170,7 @@ export default function Detail({ teacher }: IProps) {
                     <p className={'pt-5 text-center  text-xl font-serif'}>
                       Ảnh chứng chỉ
                     </p>
-                    <div className={'text-center flex gap-2'}>
+                    <div className={'text-center flex gap-2 mt-2'}>
                       {teacher?.Certificate?.map(
                         (item: string, index: number) => {
                           return (
@@ -285,8 +285,10 @@ export default function Detail({ teacher }: IProps) {
                             Trình độ học vấn:{' '}
                           </label>{' '}
                           <label className="">
-                            {teacher?.education_level}
-                          </label>{' '}
+                            {teacher?.education_level?.map((items) => {
+                              return items?.name;
+                            })}
+                          </label>
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
@@ -305,10 +307,6 @@ export default function Detail({ teacher }: IProps) {
 
                           <label className=""> {teacher?.district}</label>
                         </div>
-                        {/* <div className="pt-2  text-zinc-950 ">
-                          <label className="font-bold"> Thời gian dạy: </label>
-                          <label className="">{teacher?.time_tutor_id}</label>
-                        </div> */}
                         <div className={'pt-2  text-zinc-950 '}>
                           <label className={'font-bold'}>
                             Mức lương mong muốn :

@@ -2,14 +2,10 @@
 'use client';
 
 import React from 'react';
-
 import { IUserInfo } from '@/types/IUserInfo';
-import { Image } from 'antd';
-import { FaUserEdit } from 'react-icons/fa';
+import EditProfile from '@/components/Profile/EditProfile/EditProfile';
+import EditProfileTeacher from '@/components/Profile/EditProfile/EditProfileTeacher';
 
-import ActionSetting from '@/components/Profile/(setting)/ActionSetting';
-import InfoProfile from '@/components/Profile/(ProfileUser)/InfoProfile';
-import ConnectH from '@/components/Profile/(Connect)/ConnectH';
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -18,47 +14,35 @@ const InfoUser = ({ infoUser }: IProps) => {
   const certificateImages = JSON.parse(revert);
   return (
     <>
-      <div className={'grid grid-cols-3 gap-4'}>
-        {infoUser?.role == 'teacher' ? (
-          <div
-            className={
-              'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-            }
-          >
-            <h3 className={'text-lg font-bold'}>Cài đặt hiển thị</h3>
-            <ActionSetting />
-          </div>
-        ) : (
-          ''
-        )}
-        <div
-          className={
-            'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-          }
-        >
-          <div className={'flex justify-between items-center'}>
-            <h3 className={'text-lg font-bold'}>Thông tin người dùng</h3>
-            <FaUserEdit />
-          </div>
-          <InfoProfile infoUser={infoUser} />
-        </div>
-        <div
-          className={
-            'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-          }
-        >
-          <div className={'flex justify-between items-center'}>
-            <h3 className={'text-lg font-bold'}>
-              {' '}
-              {infoUser?.role == 'user'
-                ? 'Gia sư bạn đã thuê'
-                : 'Những người đã thuê bạn'}
-            </h3>
-            <span className={'text-sm'}>Xem thêm</span>
-          </div>
-          <ConnectH />
-        </div>
-      </div>
+      <ul className="flex flex-col gap-2 justify-between pl-0 mb-0 rounded-lg h-full">
+        <li className="flex gap-2 relative px-4 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-base text-inherit">
+          <strong className="text-slate-700">Họ và tên:</strong>
+          {infoUser?.name}
+        </li>
+        <li className="flex gap-2  relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+          <strong className="text-slate-700">Số điện thoại:</strong>
+          {infoUser?.phone}
+        </li>
+        <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+          <strong className="text-slate-700">Email:</strong>
+          {infoUser?.email}
+        </li>
+        <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+          <strong className="text-slate-700">Địa chỉ:</strong>
+          <span className={'max-w-[280px]'}>{infoUser?.address}</span>
+        </li>
+        <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+          <strong className="text-slate-700">Trường :</strong>
+          <span className={'max-w-[280px]'}>{infoUser?.school}</span>
+        </li>
+        <li className="flex justify-end gap-2 relative px-4 pb-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+          {infoUser.role == 2 ? (
+            <EditProfile editProfile={infoUser} />
+          ) : (
+            <EditProfileTeacher editProfile={infoUser} />
+          )}
+        </li>
+      </ul>
     </>
   );
 };
