@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Field, FieldProps, Formik } from 'formik';
+
 import React, { FunctionComponent, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { updateProfile, updateProfile2 } from '@/services/put';
-// import Select, { Option, ReactSelectProps } from 'react-select';
+import { updateProfile } from '@/services/put';
 import { getAdreess, getAdreessId } from '@/services/get';
 import { IAddress, IDistrict } from '@/types/ILocation';
 import { UploadOutlined } from '@ant-design/icons';
@@ -22,8 +21,8 @@ import {
   message,
 } from 'antd';
 import { FieldType } from '@/types/Field';
-import FormLoginProcedure from '../../ModailProcedure/FormLoginProcedure';
 import moment from 'moment';
+import MyModalTransition from '@/components/Headless/ModalTransition';
 interface IProps {
   editProfile: IUserInfo;
 }
@@ -34,6 +33,13 @@ const EditProfile = ({ editProfile }: IProps) => {
   const [district, setDistrict] = useState<IDistrict>();
   const [fileList, setFileList] = useState([]);
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const [formValues, setFormValues] = useState({
     name: editProfile.name,
     email: editProfile.email,
@@ -126,152 +132,132 @@ const EditProfile = ({ editProfile }: IProps) => {
   };
 
   return (
-    <>
-      {editProfile ? (
-        <main className={'pt-8 min-h-[100vh-116px]'}>
-          <div
-            className={
-              'container m-auto shadow-xl border border-t-4 border-t-green-400 rounded-md py-8'
-            }
+    <div>
+      <button
+        onClick={openModal}
+        className={' mx-auto text-right hover:text-blue-tw text-sm '}
+      >
+        Xem thêm
+      </button>
+      <MyModalTransition visible={isOpen} onClose={closeModal}>
+        <div className={'px-8 py-4 h-full'}>
+          <h3 className={'text-lg font-bold mb-4'}>
+            Chỉnh sửa thông tin người dùng
+          </h3>
+          <Form
+            layout="vertical"
+            className={'grid grid-cols-2 gap-4'}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            encType={'multipart/form-data'}
+            initialValues={{
+              file: null,
+              name: editProfile.name,
+              email: editProfile.email,
+              phone: editProfile.phone,
+              address: editProfile.address,
+            }}
           >
-            <Form
-              layout="vertical"
-              className={'w-full'}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-              encType={'multipart/form-data'}
-              initialValues={{
-                file: null,
-                name: editProfile.name,
-                email: editProfile.email,
-                phone: editProfile.phone,
-                address: editProfile.address,
-              }}
+            <Form.Item<FieldType>
+              name="name"
+              rules={[{ required: true, message: 'Họ và tên!' }]}
+              className={'m-0 h-fit'}
             >
-              <Form.Item<FieldType>
-                name="name"
-                rules={[{ required: true, message: 'Họ và tên!' }]}
+              <label htmlFor={'username'}>Họ và tên</label>
+              <Input
+                id={'username'}
                 className={'w-full'}
-              >
-                <Input
-                  className={'w-full'}
-                  placeholder="Họ và Tên"
-                  value={editProfile.name}
-                />
-              </Form.Item>
+                placeholder="Họ và Tên"
+                value={editProfile.name}
+              />
+            </Form.Item>
 
-              <Form.Item<FieldType>
-                name="email"
-                rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
+            <Form.Item<FieldType>
+              name="email"
+              rules={[{ required: true, message: 'Hãy điền email của bạn!' }]}
+              className={'m-0 h-fit'}
+            >
+              <label htmlFor={'email'}>Email</label>
+              <Input
+                id={'email'}
                 className={'w-full'}
-              >
-                <Input
-                  className={'w-full'}
-                  placeholder="Email"
-                  value={editProfile.email}
-                />
-              </Form.Item>
+                placeholder="Email"
+                value={editProfile.email}
+              />
+            </Form.Item>
 
-              <Form.Item<FieldType>
-                name="phone"
-                rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
-                className={'w-full'}
-              >
-                <Input
-                  className={'w-full'}
-                  pattern="^[0-9]*$"
-                  maxLength={10}
-                  placeholder="Số điện thoại"
-                  value={editProfile.phone}
-                />
-              </Form.Item>
-              <Form.Item<FieldType>
-                name="address"
-                rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
-                className={'w-full'}
-              >
-                <Select
-                  value={editProfile.address}
-                  className={'w-[400px]'}
-                  showSearch
-                  placeholder="Nhập địa chỉ ở của bạn"
-                  optionFilterProp="children"
-                  onChange={onChangeAddress}
-                  onSearch={onSearchAddress}
-                  filterOption={filterOption}
-                  options={options}
-                />
-              </Form.Item>
-              {/* <Form.Item<FieldType>
-                name="date_of_birth"
-                rules={[
-                  { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
-                ]}
-              >
-                <DatePicker format="YYYY-MM-DD" className={'w-full'} />
-              </Form.Item> */}
-              {/* <Form.Item
-                label="Tệp tin"
-                name="file"
-                valuePropName="fileList"
-                getValueFromEvent={handleFileChange}
-              >
-                <Upload
-                  fileList={fileList}
-                  beforeUpload={(file) => {
-                    // Kiểm tra và giới hạn kích thước tệp tin
-                    const isLt2M = file.size / 1024 / 1024 < 2;
-                    if (!isLt2M) {
-                      message.error('Tệp tin không được lớn hơn 2MB!');
+            <Form.Item<FieldType>
+              name="phone"
+              rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
+              className={'m-0'}
+            >
+              <label htmlFor={'phone'}>Số điện thoại</label>
+              <Input
+                className={'w-full rounded-none'}
+                pattern="^[0-9]*$"
+                maxLength={10}
+                placeholder="Số điện thoại"
+                value={editProfile.phone}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              name="address"
+              rules={[{ required: true, message: 'Hãy điền nơi ở của bạn!' }]}
+              className={'m-0'}
+            >
+              <label htmlFor={'phone'}>Địa chỉ</label>
+              <Select
+                value={editProfile.address}
+                className={'w-[400px]'}
+                showSearch
+                placeholder="Nhập địa chỉ ở của bạn"
+                optionFilterProp="children"
+                onChange={onChangeAddress}
+                onSearch={onSearchAddress}
+                filterOption={filterOption}
+                options={options}
+              />
+            </Form.Item>
+            <Form.Item<FieldType>
+              className={'m-0'}
+              label="Ảnh đại diện"
+              name="avatar"
+              getValueFromEvent={(event) => {
+                return event?.fileList;
+              }}
+              valuePropName="fileList"
+            >
+              <Upload
+                maxCount={1}
+                beforeUpload={(file) => {
+                  return new Promise((resolve, rejects) => {
+                    if (file.size > 900000) {
+                      rejects('Ảnh quá dung lượng');
+                    } else {
+                      resolve('Thành công');
                     }
-                    return isLt2M;
-                  }}
-                >
-                  <Button icon={<UploadOutlined />}>Chọn tệp tin</Button>
-                </Upload>
-              </Form.Item> */}
-              <Form.Item<FieldType>
-                label="Ảnh đại diện"
-                name="avatar"
-                getValueFromEvent={(event) => {
-                  return event?.fileList;
+                  });
                 }}
-                valuePropName="fileList"
+                showUploadList={false}
               >
-                <Upload
-                  maxCount={1}
-                  beforeUpload={(file) => {
-                    return new Promise((resolve, rejects) => {
-                      if (file.size > 900000) {
-                        rejects('Ảnh quá dung lượng');
-                      } else {
-                        resolve('Thành công');
-                      }
-                    });
-                  }}
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload>
-              </Form.Item>
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
+            </Form.Item>
 
-              <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className={'bg-blue-tw'}
-                >
-                  Cập nhật
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        </main>
-      ) : (
-        ''
-      )}
-    </>
+            <Form.Item className={'col-span-2'}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className={'bg-blue-tw self-end'}
+              >
+                Cập nhật
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </MyModalTransition>
+    </div>
   );
 };
 

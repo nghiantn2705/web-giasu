@@ -1,6 +1,6 @@
 export interface ITeachers {
   id: number;
-  role: string;
+  role: number;
   gender: string;
   date_of_birth: string;
   email: string;
@@ -11,7 +11,12 @@ export interface ITeachers {
   address: string;
   school_id: number;
   Citizen_card: number;
-  education_level: string;
+  education_level: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   class_id: [
     {
       id: number;

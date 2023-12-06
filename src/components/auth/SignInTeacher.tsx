@@ -19,9 +19,9 @@ const SignInTeacher = () => {
     if (userInfo) {
       router.push('/giasu');
     }
-  }, []);
+  }, [router, userInfo]);
   const onClick = async () => {
-    const res = await authGoogle(3);
+    const res = await authGoogle();
     console.log(res);
   };
   return (
@@ -70,7 +70,7 @@ const SignInTeacher = () => {
                   const data = await auth({
                     ...values,
                   });
-                  if (data?.user && data?.user?.role == 'teacher') {
+                  if (data?.user && data?.user?.role == 3) {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
@@ -95,7 +95,6 @@ const SignInTeacher = () => {
                     });
                   }
                 } catch (ex: any) {
-                  console.log(errorMessage);
                   const errorMessage =
                     ex.message || 'Đã xảy ra lỗi khi đăng nhập';
                   toast.error(errorMessage, {
