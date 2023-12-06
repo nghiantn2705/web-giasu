@@ -25,7 +25,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       <label htmlFor={idToggle} className="cursor-pointer">
         <div
           className={`w-10 h-6 bg-gray-300 rounded-full p-1 duration-300 ease-in-out flex items-center ${
-            isChecked ? 'bg-blue-tw2' : ''
+            isChecked ? 'bg-[#144272]' : ''
           }`}
         >
           <div

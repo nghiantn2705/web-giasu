@@ -6,13 +6,13 @@ import { IUserInfo } from '@/types/IUserInfo';
 import Link from 'next/link';
 import { BiHistory } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
+import { Image } from 'antd';
 
 interface IProps {
   infoUser: IUserInfo;
   children: React.ReactNode;
 }
-const Profile = ({ children }: IProps) => {
-  useEffect(() => {}, []);
+const Profile = ({ children, infoUser }: IProps) => {
   return (
     <>
       <div className={'bg-gray-100 min-h-fit flex'}>
@@ -57,7 +57,35 @@ const Profile = ({ children }: IProps) => {
             Lịch sử giao dịch
           </Link>
         </div>
-        <div className={'container'}>{children}</div>
+        <div className={'container'}>
+          <div className={'w-full py-8 flex flex-col gap-8'}>
+            <div
+              className={
+                'max-w-3xl flex gap-4 border px-4 py-6 rounded-2xl bg-white bg-clip-border'
+              }
+            >
+              <Image
+                className={'border rounded-xl drop-shadow-md'}
+                src={infoUser?.avatar}
+                width={80}
+                height={80}
+                alt={''}
+              />
+              <div className={'flex flex-col justify-between'}>
+                <h2 className={'text-2xl font-extrabold text-slate-800'}>
+                  {infoUser?.name}
+                </h2>
+                <span className={'italic text-sm text-slate-500'}>
+                  {infoUser?.role == 'user' ? 'Người thuê gia sư' : 'Gia sư'}
+                </span>
+                <span className={'italic text-sm text-green-500'}>
+                  Đang hiện hồ sơ
+                </span>
+              </div>
+            </div>
+            {children}
+          </div>
+        </div>
       </div>
     </>
   );

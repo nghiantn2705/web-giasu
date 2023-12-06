@@ -9,6 +9,7 @@ import { FaUserEdit } from 'react-icons/fa';
 
 import ActionSetting from '@/components/Profile/(setting)/ActionSetting';
 import InfoProfile from '@/components/Profile/(ProfileUser)/InfoProfile';
+import ConnectH from '@/components/Profile/(Connect)/ConnectH';
 interface IProps {
   infoUser: IUserInfo;
 }
@@ -17,32 +18,8 @@ const InfoUser = ({ infoUser }: IProps) => {
   const certificateImages = JSON.parse(revert);
   return (
     <>
-      <div className={'w-full py-8 flex flex-col gap-8'}>
-        <div
-          className={
-            'max-w-3xl flex gap-4 border px-4 py-6 rounded-2xl bg-white bg-clip-border'
-          }
-        >
-          <Image
-            className={'border rounded-xl drop-shadow-md'}
-            src={infoUser?.avatar}
-            width={80}
-            height={80}
-            alt={''}
-          />
-          <div className={'flex flex-col justify-between'}>
-            <h2 className={'text-2xl font-extrabold text-slate-800'}>
-              {infoUser?.name}
-            </h2>
-            <span className={'italic text-sm text-slate-500'}>
-              {infoUser?.role == 'user' ? 'Người thuê gia sư' : 'Gia sư'}
-            </span>
-            <span className={'italic text-sm text-green-500'}>
-              Đang hiện hồ sơ
-            </span>
-          </div>
-        </div>
-        <div className={'grid grid-cols-3 gap-4'}>
+      <div className={'grid grid-cols-3 gap-4'}>
+        {infoUser?.role == 'teacher' ? (
           <div
             className={
               'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
@@ -51,24 +28,35 @@ const InfoUser = ({ infoUser }: IProps) => {
             <h3 className={'text-lg font-bold'}>Cài đặt hiển thị</h3>
             <ActionSetting />
           </div>
-          <div
-            className={
-              'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-            }
-          >
-            <div className={'flex justify-between items-center'}>
-              <h3 className={'text-lg font-bold'}>Thông tin người dùng</h3>
-              <FaUserEdit />
-            </div>
-            <InfoProfile infoUser={infoUser} />
+        ) : (
+          ''
+        )}
+        <div
+          className={
+            'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
+          }
+        >
+          <div className={'flex justify-between items-center'}>
+            <h3 className={'text-lg font-bold'}>Thông tin người dùng</h3>
+            <FaUserEdit />
           </div>
-          <div
-            className={
-              'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-            }
-          >
-            <h3 className={'text-lg font-bold'}>Những người đã thuê</h3>
+          <InfoProfile infoUser={infoUser} />
+        </div>
+        <div
+          className={
+            'flex flex-col gap-4 border py-2 px-4 rounded-xl drop-shadow-md bg-white'
+          }
+        >
+          <div className={'flex justify-between items-center'}>
+            <h3 className={'text-lg font-bold'}>
+              {' '}
+              {infoUser?.role == 'user'
+                ? 'Gia sư bạn đã thuê'
+                : 'Những người đã thuê bạn'}
+            </h3>
+            <span className={'text-sm'}>Xem thêm</span>
           </div>
+          <ConnectH />
         </div>
       </div>
     </>
