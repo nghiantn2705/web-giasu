@@ -15,6 +15,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { deleteCookie } from 'cookies-next';
 import Paypal from '@/components/paypal/Paypal';
+import { MyModal } from '@/components';
+import { Field, Form, Formik } from 'formik';
 
 const navLink = [
   {
@@ -40,6 +42,13 @@ const navLink = [
 ];
 const Header = (props: any) => {
   const [isNavLinkOpen, setIsNavLinkOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const router = usePathname();
   const rsrouter = useRouter();
 
@@ -221,33 +230,54 @@ const Header = (props: any) => {
           </div>
         ) : (
           <div className={'relative group'}>
-            <div
+            <button
               className={'border px-4 py-2 rounded-md bg-blue-tw text-white '}
+              onClick={openModal}
             >
               Đăng nhập
-            </div>
-            <div
-              className={
-                'absolute top-[55px] -right-2 p-3 border shadow-md w-[280px] bg-white rounded-b-lg transition-all grid grid-cols-2 gap-3 invisible group-hover:visible'
-              }
-            >
-              <Link
-                href={`/auth/user`}
-                className={
-                  'text-center rounded-lg cursor-pointer px-3 py-2 border bg-blue-tw text-white'
-                }
-              >
-                Phụ Huynh
-              </Link>
-              <Link
-                href={`/auth/teacher`}
-                className={
-                  'text-center rounded-lg cursor-pointer px-3 py-2 bg-blue-tw text-white'
-                }
-              >
-                Gia sư
-              </Link>
-            </div>
+            </button>
+            <MyModal visible={isOpen} onClose={closeModal}>
+              <div className={'py-8 px-4 w-80'}>
+                <Formik
+                  initialValues={{
+                    picked: '',
+                  }}
+                  onSubmit={(values) => {
+                    console.log(values);
+                    rsrouter.push(values?.picked);
+                    setIsOpen(false);
+                  }}
+                >
+                  <Form className={'flex flex-col gap-4'}>
+                    <div id="my-radio-group">Đăng nhập với tài khoản?</div>
+                    <div
+                      role="group"
+                      className={'flex gap-4 self-center'}
+                      aria-labelledby="my-radio-group"
+                    >
+                      <label className={'flex gap-4'}>
+                        <Field type="radio" name="picked" value="/auth/user" />
+                        Phụ huynh
+                      </label>
+                      <label className={'flex gap-4'}>
+                        <Field
+                          type="radio"
+                          name="picked"
+                          value="/auth/teacher"
+                        />
+                        Gia sư
+                      </label>
+                    </div>
+                    <button
+                      type="submit"
+                      className={'border py-2 px-4 rounded-md w-fit self-end'}
+                    >
+                      Tiếp tục
+                    </button>
+                  </Form>
+                </Formik>
+              </div>
+            </MyModal>
           </div>
         )}
       </div>
