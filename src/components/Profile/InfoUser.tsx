@@ -3,8 +3,8 @@
 
 import React from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
-import EditProfile from '@/components/Profile/EditProfile/EditProfile';
-import EditProfileTeacher from '@/components/Profile/EditProfile/EditProfileTeacher';
+import EditProfile from '@/components/Profile/(EditProfile)/EditProfile';
+import EditProfileTeacher from '@/components/Profile/(EditProfile)/EditProfileTeacher';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -33,7 +33,11 @@ const InfoUser = ({ infoUser }: IProps) => {
         </li>
         <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
           <strong className="text-slate-700">Trường :</strong>
-          <span className={'max-w-[280px]'}>{infoUser?.school}</span>
+          <span className={'max-w-[280px]'}>
+            {infoUser?.school.map((item) => {
+              return item?.name;
+            })}
+          </span>
         </li>
         <li className="flex justify-end gap-2 relative px-4 pb-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
           {infoUser.role == 2 ? (

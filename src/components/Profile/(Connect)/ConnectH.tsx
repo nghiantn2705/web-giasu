@@ -1,75 +1,101 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { IUserInfo } from '@/types/IUserInfo';
+import { getConnectSuccess } from '@/services/connect';
+import { IConnect } from '@/types/IConect';
+import { format } from 'date-fns';
+interface IProps {
+  infoUser: IUserInfo;
+}
+const ConnectH = ({ infoUser }: IProps) => {
+  const [data, setData] = useState<IConnect[]>([]);
 
-const ConnectH = () => {
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getConnectSuccess(infoUser.id);
+        setData(res);
+      } catch (ex: any) {
+        console.log(ex);
+      }
+    })();
+  }, [infoUser.id]);
   return (
     <>
-      <div className={''}>
-        <ul className="flex flex-col gap-3 pl-0 mb-0 rounded-lg">
-          <li className="relative flex items-center px-0 py-2 bg-white border-0 rounded-t-lg text-inherit">
-            <div className="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-              <img
-                src="https://demos.creative-tim.com/soft-ui-dashboard-tailwind/assets/img/kal-visuals-square.jpg"
-                alt="kal"
-                className="w-full shadow-soft-2xl rounded-xl"
-              />
-            </div>
-            <div className="flex flex-col items-start justify-center">
-              <h6 className="mb-0 leading-normal text-sm">Sophie B.</h6>
-              <p className="mb-0 leading-tight text-xs">
-                Hi! I need more information..
-              </p>
-            </div>
-            <a
-              className="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-              href="javascript:;"
-            >
-              Reply
-            </a>
-          </li>
-          <li className="relative flex items-center px-0 py-2 bg-white border-0 border-t-0 text-inherit">
-            <div className="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-              <img
-                src="https://demos.creative-tim.com/soft-ui-dashboard-tailwind/assets/img/marie.jpg"
-                alt="kal"
-                className="w-full shadow-soft-2xl rounded-xl"
-              />
-            </div>
-            <div className="flex flex-col items-start justify-center">
-              <h6 className="mb-0 leading-normal text-sm">Anne Marie</h6>
-              <p className="mb-0 leading-tight text-xs">
-                Awesome work, can you..
-              </p>
-            </div>
-            <a
-              className="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-              href="javascript:;"
-            >
-              Reply
-            </a>
-          </li>
-          <li className="relative flex items-center px-0 py-2 bg-white border-0 border-t-0 text-inherit">
-            <div className="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-              <img
-                src="https://demos.creative-tim.com/soft-ui-dashboard-tailwind/assets/img/ivana-square.jpg"
-                alt="kal"
-                className="w-full shadow-soft-2xl rounded-xl"
-              />
-            </div>
-            <div className="flex flex-col items-start justify-center">
-              <h6 className="mb-0 leading-normal text-sm">Ivanna</h6>
-              <p className="mb-0 leading-tight text-xs">About files I can..</p>
-            </div>
-            <a
-              className="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-              href="javascript:"
-            >
-              Reply
-            </a>
-          </li>
-        </ul>
-      </div>
+      {infoUser.role == 3 ? (
+        <div className={''}>
+          <ul className={'flex flex-col gap-3 pl-0 mb-0 rounded-lg'}>
+            {data?.map((item, index: number) => {
+              return (
+                <li
+                  key={index}
+                  className={
+                    'relative flex justify-between px-0 py-2 bg-white border-0 rounded-t-lg text-inherit'
+                  }
+                >
+                  <div className={'flex'}>
+                    <picture
+                      className={
+                        'inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl'
+                      }
+                    >
+                      <img
+                        src={item?.userAvatar}
+                        alt="kal"
+                        className={
+                          'w-full drop-shadow-sm border p-1 rounded-xl'
+                        }
+                      />
+                    </picture>
+
+                    <div className={'flex flex-col items-start'}>
+                      <h6 className={'mb-0 leading-normal text-base'}>
+                        {item?.userName}
+                      </h6>
+                      <p className="flex gap-2 mb-0 leading-tight text-xs">
+                        {format(new Date(item?.created_at), 'HH:mm:ss')}
+                        <span>
+                          {format(new Date(item?.created_at), 'dd/MM/yyyy')}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      ' flex items-center text-sm before:h-2 before:w-2 before:rounded-full before:bg-green-500 before:mr-2'
+                    }
+                  >
+                    Hoàn thành
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : (
+        <div className={''}>
+          <ul className="flex flex-col gap-3 pl-0 mb-0 rounded-lg">
+            <li className="relative flex items-center px-0 py-2 bg-white border-0 rounded-t-lg text-inherit">
+              <div className="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
+                <picture>
+                  <img
+                    src="https://demos.creative-tim.com/soft-ui-dashboard-tailwind/assets/img/kal-visuals-square.jpg"
+                    alt="kal"
+                    className="w-full shadow-soft-2xl rounded-xl"
+                  />
+                </picture>
+              </div>
+              <div className="flex flex-col items-start justify-center">
+                <h6 className="mb-0 leading-normal text-sm">Sophie B.</h6>
+                <p className="mb-0 leading-tight text-xs">
+                  Hi! I need more information..
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      )}
     </>
   );
 };

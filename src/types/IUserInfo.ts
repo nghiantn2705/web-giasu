@@ -4,10 +4,12 @@ export interface IUserInfo {
   address: string;
   avatar: string;
   citizen_card: string;
-  class: {
-    id: number;
-    name: string;
-  };
+  class: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   description: string;
   salary_id: string;
   current_role: string;
@@ -19,17 +21,27 @@ export interface IUserInfo {
   phone: string;
   role: number;
   salary: string;
-  school: string;
-  subject: {
-    id: number;
-    name: string;
-  };
-  time_tutor: {
-    id: number;
-    name: string;
-  };
+  school: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  subject: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  time_tutor: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   date_of_birth: Date;
   gender: string;
   latitude: string;
   longitude: string;
+  status: number;
 }

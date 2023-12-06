@@ -21,37 +21,33 @@ import { getDirections } from '@/services/get';
 import { format } from 'date-fns';
 import moment from 'moment';
 import toast from 'react-hot-toast';
+import FeedBack from '@/components/FeedBack/FeedBack';
 interface IProps {
   teacher: ITeachers;
 }
 
 export default function Detail({ teacher }: IProps) {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
-  const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
+
   const [starData, setStarData] = useState<{ avg: string }>();
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
   const { id: params } = useParams();
   const [directions, setDirections] = useState<any>();
-  console.log(teacher);
   let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
   }
-
   const values = {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],
   };
-  console.log(values);
   values.origin = values.origin.join(',');
   values.destination = values.destination.join(',');
 
   useEffect(() => {
     (async () => {
-      const resFeedback = await getFeedback({ id: params });
       const resRating = await getStart({ id: params });
-      setFeedbackData(resFeedback);
       setStarData(resRating);
     })();
   }, [params]);
@@ -451,64 +447,7 @@ export default function Detail({ teacher }: IProps) {
                       </button>
                     </form>
                   </div>
-                  <div className=" col-span-2 text-left">
-                    <div className="text-left pt-2 flex flex-col gap-4">
-                      {feedbackData?.map((item: IFeedback, index) => (
-                        <div
-                          key={index}
-                          className={'py-2 border-b border-gray-200'}
-                        >
-                          <div className="grid grid-cols-10 gap-5 ">
-                            <div className={'col-span-5'}>
-                              <span className="text-base text-blue-tw2 font-bold ">
-                                {item?.idSender}
-                              </span>
-                              <div
-                                className={'text-xs text-stone-400 flex gap-4'}
-                              >
-                                <span>
-                                  {item
-                                    ? format(
-                                        new Date(item.updated_at),
-                                        'HH:mm:ss',
-                                      )
-                                    : ''}
-                                </span>
-
-                                <span>
-                                  {item
-                                    ? format(
-                                        new Date(item.updated_at),
-                                        'dd/MM/yyyy',
-                                      )
-                                    : ''}
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="col-span-5 text-right">
-                              {[1, 2, 3, 4, 5].map((star, index) => (
-                                <FontAwesomeIcon
-                                  key={index}
-                                  icon={faStar}
-                                  className={`text-${
-                                    star <= parseInt(item?.point)
-                                      ? 'amber-300'
-                                      : 'gray-200'
-                                  } cursor-pointer`}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                          <div className="">
-                            <span className="text-base ">
-                              {item?.description}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <FeedBack idParams={Number(params)} />
                 </div>
               </div>
             </div>

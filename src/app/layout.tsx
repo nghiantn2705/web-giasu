@@ -6,6 +6,8 @@ import { GlobalContextProvider } from '@/contexts';
 import Layout from '@/components/Layout/Layout';
 import { Toaster } from 'react-hot-toast';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const roboto = Roboto({ weight: ['500', '400', '700'], subsets: ['latin'] });
 export const metadata: Metadata = {
@@ -34,6 +36,7 @@ export default function RootLayout(props: Props) {
       <body className={roboto.className}>
         <GlobalContextProvider store={[]}>
           <Toaster />
+          <ToastContainer />
           <Layout>
             <div className={'mt-[70px] min-h-content'}>{props.children}</div>
           </Layout>

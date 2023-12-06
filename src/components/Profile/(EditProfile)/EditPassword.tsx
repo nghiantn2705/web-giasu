@@ -11,7 +11,6 @@ import { ITeachersDetail } from '@/types/ITeachersDetail';
 const InfoUser = () => {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
-  console.log(userInfo);
   const closeModal = () => {
     setIsOpen(false);
   };

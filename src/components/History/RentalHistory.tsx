@@ -16,7 +16,8 @@ interface IJob {
   idSubject: string;
   subject: string[];
   class: string[];
-  teacherImage: string;
+  teacherAvatar: string;
+  userAvatar: string;
   status: number;
   description: string;
   userName: string;
@@ -55,7 +56,7 @@ export default function RentalHistory({ infoUser }: IProps) {
             <th className={'px-6 py-4'}>Môn</th>
             <th className={'px-6 py-4'}>Lớp</th>
             <th className={'px-6 py-4'}>Trạng thái</th>
-            {infoUser?.role == 'teacher' ? (
+            {infoUser?.role == 3 ? (
               <th className={'px-6 py-4'}>Action</th>
             ) : (
               <th className={'px-6 py-4'}>Mô tả</th>
@@ -73,19 +74,21 @@ export default function RentalHistory({ infoUser }: IProps) {
                   scope="row"
                   className={'px-6 py-4 gap-4 text-gray-900 whitespace-nowrap '}
                 >
-                  {/* <Image
-                    src={`${
-                      infoUser?.role == 'teacher'
-                        ? items?.teacherImage
-                        : items?.userImage
-                    }`}
-                    width={40}
-                    height={40}
-                    alt={''}
-                    className={'rounded-full'}
-                  /> */}
+                  <picture>
+                    <img
+                      src={`${
+                        infoUser?.role == 3
+                          ? items?.teacherAvatar
+                          : items?.userAvatar
+                      }`}
+                      width={40}
+                      height={40}
+                      alt={''}
+                      className={'rounded-full'}
+                    />
+                  </picture>
                   <div className={'text-base font-semibold'}>
-                    {infoUser.role == 'teacher'
+                    {infoUser.role == 3
                       ? `${items?.userName}`
                       : `${items?.teacherName}`}
                   </div>
@@ -132,7 +135,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  {infoUser?.role == 'teacher' ? (
+                  {infoUser?.role == 3 ? (
                     items?.status !== 0 ? (
                       'Đã xác nhận'
                     ) : (

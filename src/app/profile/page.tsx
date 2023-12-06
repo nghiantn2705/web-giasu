@@ -7,6 +7,7 @@ import { FaUserEdit } from 'react-icons/fa';
 import ActionSetting from '@/components/Profile/(setting)/ActionSetting';
 import ConnectH from '@/components/Profile/(Connect)/ConnectH';
 import InfoUser from '@/components/Profile/InfoUser';
+import FeedBack from '@/components/FeedBack/FeedBack';
 
 const App = () => {
   const [data] = useStore<IUserInfo>('userInfo');
@@ -23,7 +24,7 @@ const App = () => {
                 }
               >
                 <h3 className={'text-lg font-bold'}>Cài đặt hiển thị</h3>
-                <ActionSetting />
+                <ActionSetting infoUser={data} />
               </div>
             ) : (
               ''
@@ -49,11 +50,26 @@ const App = () => {
                   {' '}
                   {data?.role == 2
                     ? 'Gia sư bạn đã thuê'
-                    : 'Những người đã thuê bạn'}
+                    : 'Những người đã kết nối thành công'}
                 </h3>
-                <span className={'text-sm'}>Xem thêm</span>
+                <span className={'text-sm'}>Chi tiết</span>
               </div>
-              {/*<ConnectH />*/}
+              <ConnectH infoUser={data} />
+            </div>
+            <div
+              className={
+                'col-span-3 flex flex-col border py-2 px-4 rounded-xl drop-shadow-md bg-white'
+              }
+            >
+              <div className={'flex justify-between items-center'}>
+                <h3 className={'text-lg font-bold'}>
+                  {' '}
+                  {data?.role == 2
+                    ? 'Những đánh giá của bạn'
+                    : 'Những đánh giá của người dùng'}
+                </h3>
+              </div>
+              <FeedBack idParams={data?.id} />
             </div>
           </div>
         </Profile>

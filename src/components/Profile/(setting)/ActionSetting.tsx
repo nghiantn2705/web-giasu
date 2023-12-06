@@ -2,36 +2,24 @@
 
 import { useState } from 'react';
 import ToggleSwitch from '@/components/ToggleSwitch/ToggleSwitch';
+import SelectCertificate from '@/components/ToggleSwitch/Target/SelectCertificate';
+import { IUserInfo } from '@/types/IUserInfo';
 
-export default function ActionSetting() {
-  const [isChecked1, setIsChecked1] = useState(false);
-  const [isChecked2, setIsChecked2] = useState(false);
+import TargetCv from '@/components/ToggleSwitch/Target/TargetCV';
+import TargetImage from '@/components/ToggleSwitch/Target/TargetImage';
+interface IProps {
+  infoUser: IUserInfo;
+}
 
-  const handleToggle1 = () => {
-    setIsChecked1(!isChecked1);
-  };
-
-  const handleToggle2 = () => {
-    setIsChecked2(!isChecked2);
-  };
+export default function ActionSetting({ infoUser }: IProps) {
   return (
     <div>
       <div className={'flex flex-col gap-3'}>
         <h3>Tài khoản</h3>
-        <ToggleSwitch
-          idToggle={'1'}
-          isChecked={isChecked1}
-          onToggle={handleToggle1}
-        >
-          Trạng thái hồ sơ
-        </ToggleSwitch>
-        <ToggleSwitch
-          idToggle={'2'}
-          isChecked={isChecked2}
-          onToggle={handleToggle2}
-        >
-          Hiện ảnh chứng chỉ
-        </ToggleSwitch>
+        <TargetCv infoUser={infoUser} />
+        <TargetImage infoUser={infoUser} />
+        <h3>Hiển thị ảnh chứng chỉ</h3>
+        <SelectCertificate />
       </div>
     </div>
   );

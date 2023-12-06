@@ -49,17 +49,16 @@ export default function ConnectHistory({ infoUser }: IProps) {
               <th className={'px-6 py-4'}>Tên</th>
               <th className={'px-6 py-4'}>Trạng thái gia sư</th>
               <th className={'px-6 py-4'}>Trạng thái người dùng</th>
-              {infoUser?.role == 'teacher' ? (
+              {infoUser?.role == 3 ? (
                 <th className={'px-6 py-4'}>Action</th>
               ) : (
                 <th className={'px-6 py-4'}>Lý do</th>
               )}
-              {infoUser?.role == 'user' ? (
+              {infoUser?.role == 2 ? (
                 <th className={'px-6 py-4'}>Action</th>
               ) : (
                 <th className={'px-6 py-4'}>Lý do</th>
               )}
-              <th className={'px-6 py-4'}>Thông tin</th>
               <th className={'px-6 py-4'}>Trạng thái</th>
             </tr>
           </thead>
@@ -77,14 +76,14 @@ export default function ConnectHistory({ infoUser }: IProps) {
                     }
                   >
                     <div className={'text-base font-semibold'}>
-                      {infoUser.role == 'teacher'
+                      {infoUser.role == 3
                         ? `${items?.userName}`
                         : `${items?.teacherName}`}
                     </div>
                   </th>
 
                   <td className={'px-10 py-4'}>
-                    {items?.confirmTeacher == 0 ? (
+                    {items?.confirm_teacher == 0 ? (
                       <div
                         className={
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-orange-500 before:mr-2'
@@ -92,7 +91,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       >
                         Chờ xác nhận
                       </div>
-                    ) : items?.confirmTeacher == 1 ? (
+                    ) : items?.confirm_teacher == 1 ? (
                       <div
                         className={
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
@@ -111,7 +110,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                     )}
                   </td>
                   <td className={'px-10 py-4'}>
-                    {items?.confirmUser == 0 ? (
+                    {items?.confirm_user == 0 ? (
                       <div
                         className={
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-orange-500 before:mr-2'
@@ -119,7 +118,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       >
                         Chờ xác nhận
                       </div>
-                    ) : items?.confirmUser == 1 ? (
+                    ) : items?.confirm_user == 1 ? (
                       <div
                         className={
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
@@ -138,34 +137,34 @@ export default function ConnectHistory({ infoUser }: IProps) {
                     )}
                   </td>
                   <td className="px-6 py-4">
-                    {infoUser?.role == 'teacher' ? (
-                      items?.confirmTeacher !== 0 ? (
+                    {infoUser?.role == 3 ? (
+                      items?.confirm_teacher !== 0 ? (
                         'Đã xác nhận'
                       ) : (
                         <FormCeonnectProcedure user={items} />
                       )
                     ) : (
-                      <span>{items?.noteTeacher}</span>
+                      <span>{items?.note_teacher}</span>
                     )}
                   </td>
                   <td className="px-6 py-4">
-                    {infoUser?.role == 'user' ? (
-                      items?.confirmUser !== 0 ? (
+                    {infoUser?.role == 2 ? (
+                      items?.confirm_user !== 0 ? (
                         'Đã xác nhận'
                       ) : (
                         <FormCeonnectUserProcedure user={items} />
                       )
                     ) : (
-                      <span>{items?.noteUser}</span>
+                      <span>{items?.note_user}</span>
                     )}
                   </td>
-                  <td className={'px-10 py-4'}>
-                    {infoUser?.role == 'user' ? (
-                      <ModailDetailUser user={items} />
-                    ) : (
-                      <ModailDetail user={items} />
-                    )}
-                  </td>
+                  {/*<td className={'px-10 py-4'}>*/}
+                  {/*  {infoUser?.role == 2 ? (*/}
+                  {/*    <ModailDetailUser user={items} />*/}
+                  {/*  ) : (*/}
+                  {/*    <ModailDetail user={items} />*/}
+                  {/*  )}*/}
+                  {/*</td>*/}
                   <td className={'px-6 py-4'}>
                     {items?.status == 0 ? (
                       <div

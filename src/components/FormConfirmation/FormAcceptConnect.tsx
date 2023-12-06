@@ -6,9 +6,10 @@ import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import toast from 'react-hot-toast';
-import { putConnec } from '@/services/connect';
+
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
+import { putConnect } from '@/services/connect';
 
 interface IJob {
   user: {
@@ -28,7 +29,7 @@ interface IJob {
 export default function FormAcceptConnect({ user }: IJob) {
   const [userInfo] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -47,8 +48,8 @@ export default function FormAcceptConnect({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    confirmTeacher: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
-    noteTeacher: Yup.string().required('Vui lòng nhập chú thích'),
+    confirm_teacher: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
+    note_teacher: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
     <div>
@@ -67,15 +68,8 @@ export default function FormAcceptConnect({ user }: IJob) {
           <Formik
             className={''}
             onSubmit={async (values) => {
-              // if (!values.confirmTeacher || !values.noteTeacher) {
-              //   toast.error('Vui lòng nhập đầy đủ thông tin phản hồi!', {
-              //     position: 'top-right',
-              //     duration: 3000,
-              //   });
-              //   return;
-              // }
               try {
-                await putConnec({ ...values });
+                await putConnect({ ...values });
                 toast.success('Xác nhận thành công !', {
                   duration: 3000,
                   position: 'top-right',
@@ -85,6 +79,7 @@ export default function FormAcceptConnect({ user }: IJob) {
                     secondary: '#fff',
                   },
                 });
+                setIsOpen(false);
                 reloadPageAfterDelay();
               } catch (ex: any) {
                 console.log(ex);
@@ -92,8 +87,6 @@ export default function FormAcceptConnect({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
-              confirmTeacher: '',
-              noteTeacher: '',
             }}
             validationSchema={validationSchema}
           >
@@ -106,29 +99,29 @@ export default function FormAcceptConnect({ user }: IJob) {
 
                 <div className={'flex gap-3'}>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirmTeacher" value="1" />
+                    <Field type="radio" name="confirm_teacher" value="1" />
                     Đồng ý
                   </label>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirmTeacher" value="2" />
+                    <Field type="radio" name="confirm_teacher" value="2" />
                     Từ chối
                   </label>
                 </div>
 
                 <ErrorMessage
-                  name="confirmTeacher"
+                  name="confirm_teacher"
                   component="div"
                   className="text-red-500"
                 />
                 <ErrorMessage
-                  name="noteTeacher"
+                  name="note_teacher"
                   component="div"
                   className="text-red-500"
                 />
 
                 <label className={'relative'}>
                   <Field
-                    name="noteTeacher"
+                    name="note_teacher"
                     as={'textarea'}
                     className={
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
@@ -157,7 +150,6 @@ export default function FormAcceptConnect({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

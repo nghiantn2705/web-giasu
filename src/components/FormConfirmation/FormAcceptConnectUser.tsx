@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import toast from 'react-hot-toast';
-import { putConnec } from '@/services/connect';
+import { putConnect } from '@/services/connect';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 interface IJob {
@@ -67,7 +67,7 @@ export default function FormAcceptConnectUser({ user }: IJob) {
               console.log(values);
               (async () => {
                 try {
-                  await putConnec({ ...values });
+                  await putConnect({ ...values });
                   toast.success('Xác nhận thành công !', {
                     duration: 3000,
                     position: 'top-right',
