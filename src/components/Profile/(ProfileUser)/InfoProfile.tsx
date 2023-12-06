@@ -1,10 +1,15 @@
 'use client';
 
 import { IUserInfo } from '@/types/IUserInfo';
+import ModoalEditProfile from '../(EditProfile)/ModoalEditProfile';
+import { useStore } from '@/hook/use-store';
+import ModoalEditProfileTeacher from '../(EditProfile)/ModailEditProfileTeacher';
+import Error404 from '@/components/Layout/Error404';
 interface IProps {
   infoUser: IUserInfo;
 }
 export default function InfoProfile({ infoUser }: IProps) {
+  const [data] = useStore<IUserInfo>('userInfo');
   return (
     <div>
       <div className="flex-auto">
@@ -26,7 +31,14 @@ export default function InfoProfile({ infoUser }: IProps) {
             <span className={'max-w-[280px]'}>{infoUser?.address}</span>
           </li>
           <li className="flex justify-center gap-2 relative px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-            <span className={'max-w-[280px]'}>Xem thêm</span>
+            <span className={'max-w-[280px]'}>
+              {/* {data ? <ModoalEditProfile editProfile={data} /> : <Error404 />} */}
+              {data?.role == 'user' ? (
+                <ModoalEditProfile editProfile={data} />
+              ) : (
+                <ModoalEditProfileTeacher editProfile={data} />
+              )}
+            </span>
           </li>
         </ul>
       </div>

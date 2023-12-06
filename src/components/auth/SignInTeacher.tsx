@@ -95,13 +95,11 @@ const SignInTeacher = () => {
                     });
                   }
                 } catch (ex: any) {
-                  console.log(errorMessage);
-                  const errorMessage =
-                    ex.message || 'Đã xảy ra lỗi khi đăng nhập';
-                  toast.error(errorMessage, {
+                  toast.error('Email hoặc password không tồn tại !', {
                     duration: 3000,
                     position: 'top-right',
                   });
+                  console.log(ex);
                 }
               }}
             >

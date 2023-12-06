@@ -75,7 +75,9 @@ const EditProfile = ({ editProfile }: IProps) => {
   const onFinish = async (values: any) => {
     values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
 
-    const fileavata = values?.avatar?.map((item: any) => item?.originFileObj);
+    const fileavata = values?.avatar?.map((item: any) => {
+      return item?.originFileObj;
+    });
     const formData = new FormData();
 
     for (let i = 0; i < fileavata.length; i++) {
@@ -86,24 +88,24 @@ const EditProfile = ({ editProfile }: IProps) => {
     const latitude: any = district?.result?.geometry?.location?.lat;
     const longitude: any = district?.result?.geometry?.location?.lng;
     const id: any = editProfile.id;
-    const userData = {
-      name: values.name,
-      address: address,
-      latitude: latitude,
-      longitude: longitude,
-      email: values.email,
-      phone: values.phone,
-      role: 'user',
-      avatar: fileavata,
-    };
-    // formData.append('name', values.name);
-    // formData.append('address', address);
-    // formData.append('latitude', latitude);
-    // formData.append('longitude', longitude);
-    // formData.append('date_of_birth', values.date_of_birth);
-    // formData.append('email', values.email);
-    // formData.append('phone', values.phone);
-    // formData.append('role', 'user');
+    // const userData = {
+    //   name: values.name,
+    //   address: address,
+    //   latitude: latitude,
+    //   longitude: longitude,
+    //   email: values.email,
+    //   phone: values.phone,
+    //   role: 'user',
+    //   avatar: fileavata,
+    // };
+    formData.append('name', values.name);
+    formData.append('address', address);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('date_of_birth', values.date_of_birth);
+    formData.append('email', values.email);
+    formData.append('phone', values.phone);
+    formData.append('role', 'user');
 
     if (address === undefined) {
       toast.error('Vui lòng nhập lại địa chỉ !', {
@@ -111,7 +113,7 @@ const EditProfile = ({ editProfile }: IProps) => {
         duration: 3000,
       });
     } else {
-      await updateProfile(id, userData);
+      await updateProfile(id, formData);
       toast.success('Cập nhập thành công !', {
         duration: 3000,
         position: 'top-right',

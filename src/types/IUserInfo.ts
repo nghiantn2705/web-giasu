@@ -28,4 +28,8 @@ export interface IUserInfo {
     id: number;
     name: string;
   };
+  date_of_birth: Date;
+  gender: string;
+  latitude: string;
+  longitude: string;
 }

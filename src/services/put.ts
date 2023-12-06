@@ -1,28 +1,19 @@
 import { IFetchBody, IFetchQuery, apiRequest } from '@/services/base';
 import { ITeachers } from '@/types/ITeachers';
 import axios from 'axios';
-export const updateProfile = async (id: number, data: any) => {
+export const updateProfile = (id: number, data: FormData) => {
   const token =
     typeof window === 'object' && window.localStorage.getItem('access_token');
 
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: token ? 'Bearer ' + token : '',
-        },
-        method: 'PUT',
+  return apiRequest.post<ITeachers[]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
+    data,
+    {
+      headers: {
+        Authorization: token ? 'Bearer ' + token : '',
       },
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    throw error;
-  }
+    },
+  );
 };
 
 export const updateProfile2 = (body: IFetchBody) => {
