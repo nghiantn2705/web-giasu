@@ -36,3 +36,10 @@ export const putStatusCV = (body: IFetchBody) => {
     body,
   );
 };
+
+export const certificatePublic = (body: IFetchBody) => {
+  return apiRequest.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/certificate-public/${body?.id}`,
+    body,
+  );
+};

@@ -44,4 +44,5 @@ export interface IUserInfo {
   latitude: string;
   longitude: string;
   status: number;
+  Certificate_public: string;
 }

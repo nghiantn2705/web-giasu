@@ -17,7 +17,7 @@ const FeedBack = ({ idParams }: IProps) => {
       setFeedbackData(resFeedback);
     })();
   }, [idParams]);
-  console.log(feedbackData);
+
   return (
     <>
       <div className=" col-span-2 text-left">

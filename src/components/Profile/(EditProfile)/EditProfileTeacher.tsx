@@ -78,8 +78,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       }
     })();
   }, []);
-  console.log(selectedItems);
-  console.log(editProfile);
+
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };

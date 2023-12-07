@@ -11,7 +11,7 @@ export const ModalTitle = ({ children }: IModaltitle) => {
     <Dialog.Title
       as={'h3'}
       className={
-        'text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
+        'text-base font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
       }
     >
       {children}

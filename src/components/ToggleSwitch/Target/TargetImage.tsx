@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ToggleSwitch from '@/components/ToggleSwitch/ToggleSwitch';
 import { IUserInfo } from '@/types/IUserInfo';
-import { putStatusCV } from '@/services/put';
 import { toast } from 'react-toastify';
 interface IProps {
   infoUser: IUserInfo;

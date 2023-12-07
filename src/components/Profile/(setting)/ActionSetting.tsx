@@ -19,7 +19,7 @@ export default function ActionSetting({ infoUser }: IProps) {
         <TargetCv infoUser={infoUser} />
         <TargetImage infoUser={infoUser} />
         <h3>Hiển thị ảnh chứng chỉ</h3>
-        <SelectCertificate />
+        <SelectCertificate infoUser={infoUser} />
       </div>
     </div>
   );
