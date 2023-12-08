@@ -60,4 +60,5 @@ export interface ITeachers {
   coin: string;
   renter: number;
   created_at: Date;
+  Certificate_public: string[];
 }
