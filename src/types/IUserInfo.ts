@@ -11,7 +11,7 @@ export interface IUserInfo {
     },
   ];
   description: string;
-  salary_id: string;
+  // salary_id: string;
   current_role: string;
   education_level: string;
   exp: string;
@@ -20,7 +20,7 @@ export interface IUserInfo {
   name: string;
   phone: string;
   role: number;
-  salary: string;
+  // salary: string;
   school: [
     {
       id: number;
@@ -28,6 +28,18 @@ export interface IUserInfo {
     },
   ];
   school_id: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  salary_id: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+  salary: [
     {
       id: number;
       name: string;
