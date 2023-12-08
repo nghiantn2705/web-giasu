@@ -23,10 +23,10 @@ function TargetImage({ infoUser }: IProps) {
     const valuesOn = { status_certificate: 1, id: infoUser?.id };
     const valuesOff = { status_certificate: 0, id: infoUser?.id };
     try {
-      if (infoUser.status == 1) {
+      if (infoUser.status_certificate == 1) {
         const res = await putStatusCertificate(valuesOff);
         setIsChecked(false);
-        toast.success('Tắt hiện ảnh chứng chỉ thành công!', {
+        toast.success('tắt hiện ảnh chứng chỉ thành công!', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -40,7 +40,7 @@ function TargetImage({ infoUser }: IProps) {
           window.location.reload();
         }, 3000);
       }
-      if (infoUser.status == 3) {
+      if (infoUser.status_certificate == 0) {
         const res = await putStatusCertificate(valuesOn);
         setIsChecked(true);
         toast.success('Bật hiện ảnh chứng chỉ thành công!', {

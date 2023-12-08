@@ -61,4 +61,5 @@ export interface ITeachers {
   renter: number;
   created_at: Date;
   Certificate_public: string[];
+  status_public: number;
 }

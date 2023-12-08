@@ -28,7 +28,7 @@ interface IProps {
 
 export default function Detail({ teacher }: IProps) {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
-
+  console.log(teacher);
   const [starData, setStarData] = useState<{ avg: string }>();
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
@@ -162,25 +162,27 @@ export default function Detail({ teacher }: IProps) {
                     </label>
                   </p>
                   <FormRentProcedure teacher={teacher} />
-                  <div>
-                    <p className={'pt-5 text-center  text-xl font-serif'}>
-                      Ảnh chứng chỉ
-                    </p>
-                    <div className={'text-center flex gap-2 mt-2'}>
-                      {teacher?.Certificate_public?.map(
-                        (item: string, index: number) => {
-                          return (
-                            // eslint-disable-next-line jsx-a11y/alt-text
-                            <Image
-                              height={80}
-                              width={80}
-                              key={index}
-                              src={`${item}`}
-                            />
-                          );
-                        },
-                      )}
-                    </div>
+
+                  <div className={'text-center flex gap-2 mt-2'}>
+                    {teacher?.status_public == 1
+                      ? teacher?.Certificate_public?.map(
+                          (item: string, index: number) => {
+                            return (
+                              <div key={index}>
+                                <p
+                                  className={
+                                    'pt-5 text-center  text-xl font-serif'
+                                  }
+                                >
+                                  Ảnh chứng chỉ
+                                </p>
+                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                                <Image height={80} width={80} src={`${item}`} />
+                              </div>
+                            );
+                          },
+                        )
+                      : ''}
                   </div>
                 </div>
               </div>

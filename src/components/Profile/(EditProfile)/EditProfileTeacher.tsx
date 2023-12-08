@@ -40,6 +40,7 @@ interface IProps {
   editProfile: IUserInfo;
 }
 const EditProfileTeacher = ({ editProfile }: IProps) => {
+  console.log(editProfile);
   const [isOpen, setIsOpen] = useState(false);
   let timeoutId: any;
   const [address, setAddress] = useState<IAddress>();
@@ -259,24 +260,22 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                 encType={'multipart/form-data'}
                 initialValues={{
                   file: null,
-                  name: editProfile.name,
-                  email: editProfile.email,
-                  phone: editProfile.phone,
-                  address: editProfile.address,
-                  DistrictID: editProfile.District,
-                  school_id: editProfile.school,
-                  description: editProfile.description,
-                  gender: editProfile.gender,
-                  subject: editProfile.subject
-                    ? editProfile.subject.map((subject) => subject.name)
-                    : [],
-                  class_id: editProfile.class
-                    ? editProfile.class.map((classItem) => classItem.name)
-                    : [],
-                  education_level: editProfile.education_level,
-                  salary_id: editProfile.salary,
-                  exp: editProfile.exp,
-                  date_of_birth: moment(editProfile.date_of_birth),
+                  name: editProfile?.name,
+                  email: editProfile?.email,
+                  phone: editProfile?.phone,
+                  address: editProfile?.address,
+                  DistrictID: editProfile?.District,
+                  school_id: editProfile?.school,
+                  description: editProfile?.description,
+                  gender: editProfile?.gender,
+                  subject: editProfile?.subject?.map((subject) => subject.id),
+                  class_id: editProfile?.class?.map(
+                    (classItem) => classItem.id,
+                  ),
+                  education_level: editProfile?.education_level,
+                  salary_id: editProfile?.salary,
+                  exp: editProfile?.exp,
+                  date_of_birth: moment(editProfile?.date_of_birth),
                 }}
               >
                 <div className={'grid grid-cols-2 gap-4'}>
@@ -285,11 +284,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     rules={[{ required: true, message: 'Họ và tên!' }]}
                     className={'w-full'}
                   >
-                    <Input
-                      className={'w-full'}
-                      placeholder="Họ và Tên"
-                      value={editProfile.name}
-                    />
+                    <Input className={'w-full'} placeholder="Họ và Tên" />
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="phone"
@@ -301,7 +296,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       pattern="^[0-9]*$"
                       maxLength={10}
                       placeholder="Số điện thoại"
-                      value={editProfile.phone}
                     />
                   </Form.Item>
 
@@ -312,11 +306,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Input
-                      className={'w-full'}
-                      placeholder="Email"
-                      value={editProfile.email}
-                    />
+                    <Input className={'w-full'} placeholder="Email" />
                   </Form.Item>
 
                   <Form.Item<FieldType>
@@ -327,7 +317,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
-                      value={editProfile.address}
                       className={'w-[400px]'}
                       showSearch
                       placeholder="Nhập địa chỉ ở của bạn"
@@ -348,10 +337,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       },
                     ]}
                   >
-                    <Radio.Group
-                      onChange={onChangeGender}
-                      value={editProfile.gender}
-                    >
+                    <Radio.Group onChange={onChangeGender}>
                       <Radio value={'Nam'}>Nam</Radio>
                       <Radio value={'Nữ'}>Nữ</Radio>
                     </Radio.Group>
@@ -365,11 +351,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       },
                     ]}
                   >
-                    <DatePicker
-                      format="DD-MM-YYYY"
-                      className={'w-full'}
-                      value={dayjs(editProfile.date_of_birth, 'YYYY-MM-DD')}
-                    />
+                    <DatePicker format="DD-MM-YYYY" className={'w-full'} />
                   </Form.Item>
                   <Form.Item<FieldType>
                     label="Ảnh đại diện"
@@ -445,7 +427,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       placeholder="Nhập trình độ học vấn"
                       optionFilterProp="children"
                       filterOption={filterOption}
-                      value={editProfile.education_level}
                       options={[
                         {
                           value: 'Đại học',
@@ -477,7 +458,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     <Select
                       mode="multiple"
                       placeholder="Môn học"
-                      value={selectedItems}
                       onChange={setSelectedItems}
                       style={{ width: '100%' }}
                       options={filteredOptions}
@@ -511,7 +491,9 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     <Select
                       mode="multiple"
                       placeholder="Lớp học"
-                      value={selectedClasses}
+                      value={editProfile?.subject?.map((item) => {
+                        item.id;
+                      })}
                       onChange={setSelectedClasses}
                       style={{ width: '100%' }}
                       options={filteredClasses}
@@ -561,7 +543,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
-                      value={editProfile.salary}
                       showSearch
                       placeholder="Mức lương của bạn"
                       optionFilterProp="children"
@@ -576,7 +557,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
-                      value={editProfile.District}
                       className={'w-[400px]'}
                       showSearch
                       placeholder="Nhập khu vực dậy của bạn"
@@ -594,7 +574,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                   >
                     <Select
-                      value={editProfile.school}
                       showSearch
                       placeholder="Trường đang và đã học"
                       optionFilterProp="children"
@@ -611,11 +590,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Input
-                      className={'w-full'}
-                      placeholder="Kinh nghiệm"
-                      value={editProfile.exp}
-                    />
+                    <Input className={'w-full'} placeholder="Kinh nghiệm" />
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="description"
@@ -624,11 +599,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Input
-                      className={'w-full'}
-                      placeholder="Mô tả về bạn"
-                      value={editProfile.description}
-                    />
+                    <Input className={'w-full'} placeholder="Mô tả về bạn" />
                   </Form.Item>
                 </div>
                 <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
