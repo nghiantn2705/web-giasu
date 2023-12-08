@@ -1,27 +1,14 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { BiSolidRightArrow } from 'react-icons/bi';
+import React from 'react';
 import Link from 'next/link';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
-import { getClass, getSubject } from '@/services/get';
 import districtsData from '../../district.json';
-
+interface INavigation {
+  classes: IClass[];
+  subject: ISubject[];
+}
 const districtsInHanoi = districtsData;
-const Navigation = () => {
-  const [subject, setSubject] = useState<ISubject[]>();
-  const [classes, setClass] = useState<IClass[]>();
-  console.log(classes);
-  useEffect(() => {
-    (async () => {
-      const resSubject = await getSubject();
-      const resClass = await getClass();
-      setSubject(resSubject);
-      setClass(resClass);
-    })();
-  }, []);
-
+export default function Navigation({ classes, subject }: INavigation) {
   return (
     <div className={'relative pb-4 gap-3 pr-2 flex flex-col  shadow-x-md'}>
       <div
@@ -44,7 +31,14 @@ const Navigation = () => {
                   key={index}
                   className={'bg-gray-200 items-center flex gap-2 px-2'}
                 >
-                  <BiSolidRightArrow />
+                  <svg
+                    className={'w-4 h-4'}
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="m10 8-7 6V2l7 6z" />
+                  </svg>
                   <Link
                     className={'hover:text-amber-700 py-2'}
                     href={`/timkiemgiasu?subject=${items.id}`}
@@ -71,7 +65,14 @@ const Navigation = () => {
                   key={index}
                   className={'bg-gray-200 items-center flex gap-2 px-2'}
                 >
-                  <BiSolidRightArrow />
+                  <svg
+                    className={'w-4 h-4'}
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="m10 8-7 6V2l7 6z" />
+                  </svg>
                   <Link
                     className={'hover:text-amber-700 py-2'}
                     href={`/timkiemgiasu?class=${items.id}`}
@@ -98,7 +99,14 @@ const Navigation = () => {
                   key={index}
                   className={'bg-gray-200 items-center flex gap-2 px-2'}
                 >
-                  <BiSolidRightArrow />
+                  <svg
+                    className={'w-4 h-4'}
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="m10 8-7 6V2l7 6z" />
+                  </svg>
                   <Link
                     className={'hover:text-amber-700 py-2'}
                     href={`/timkiemgiasu?DistrictID=${items.name}`}
@@ -113,6 +121,4 @@ const Navigation = () => {
       </div>
     </div>
   );
-};
-
-export default Navigation;
+}

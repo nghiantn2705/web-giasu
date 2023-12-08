@@ -27,7 +27,7 @@ function TargetImage({ infoUser }: IProps) {
     if (infoUser.status == 1) {
       // const res = await putStatusCV(valuesOff);
       setIsChecked(false);
-      toast.success('Tắt hồ sơ thành công!', {
+      toast.success('Tắt hiện ảnh chứng chỉ thành công!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -44,7 +44,7 @@ function TargetImage({ infoUser }: IProps) {
     if (infoUser.status == 3) {
       // const res = await putStatusCV(valuesOn);
       setIsChecked(true);
-      toast.success('Bật hồ sơ thành công!', {
+      toast.success('Bật hiện ảnh chứng chỉ thành công!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,

@@ -52,8 +52,8 @@ export default function RentTeacher(props: IProps) {
   };
 
   const onFinish = async (values: any) => {
-    values.idUser = user?.id;
-    values.idTeacher = props?.id;
+    values.id_user = user?.id;
+    values.id_teacher = props?.id;
     values.class = values.class.join(',');
     values.subject = values.subject.join(',');
 
@@ -90,10 +90,8 @@ export default function RentTeacher(props: IProps) {
             name="jobForm"
             onFinish={onFinish}
             initialValues={{
-              idUser: user?.id,
-              idTeacher: props?.id,
-              class: [],
-              subject: [],
+              id_user: user?.id,
+              id_teacher: props?.id,
             }}
           >
             <div className={'flex flex-col gap-5 px-5'}>

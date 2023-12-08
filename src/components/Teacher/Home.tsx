@@ -4,11 +4,15 @@ import Banner from '@/components/Layout/Banner';
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { Navigation } from '@/components';
+import { ISubject } from '@/types/ISubject';
+import { IClass } from '@/types/IClass';
 
 interface IHome {
   children: ReactNode;
+  classes: IClass[];
+  subject: ISubject[];
 }
-export default function Home({ children }: IHome) {
+export default function Home({ children, classes, subject }: IHome) {
   return (
     <div
       className={
@@ -16,7 +20,7 @@ export default function Home({ children }: IHome) {
       }
     >
       <div className={'hidden pt-4 lg:block lg:col-span-3 xl:col-span-2'}>
-        <Navigation />
+        <Navigation subject={subject} classes={classes} />
       </div>
       <div
         className={

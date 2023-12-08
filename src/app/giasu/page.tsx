@@ -6,6 +6,7 @@ import Footer from '@/components/Layout/Footer';
 import SortRate from '@/components/Teacher/SortRate';
 
 import { getFilter } from '@/services/fillter';
+import { getClass, getSubject } from '@/services/get';
 
 export const metadata: Metadata = {
   title: 'Thuê Gia Sư',
@@ -13,10 +14,11 @@ export const metadata: Metadata = {
 };
 export default async function App(props: any) {
   const teachers = await getFilter(props?.searchParams);
-
+  const subject = await getSubject();
+  const classes = await getClass();
   return (
     <>
-      <Home>
+      <Home subject={subject} classes={classes}>
         <SortRate teachers={teachers} />
         <div className={'relative py-5'}>
           <div
