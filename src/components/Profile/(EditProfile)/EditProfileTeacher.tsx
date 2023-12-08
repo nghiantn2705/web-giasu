@@ -35,6 +35,7 @@ import { ISalary } from '@/types/ISalary';
 import { ISchool } from '@/types/ISchool';
 import MyModalTransition from '@/components/Headless/ModalTransition';
 import dayjs from 'dayjs';
+import { log } from 'console';
 interface IProps {
   editProfile: IUserInfo;
 }
@@ -170,19 +171,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       return item?.originFileObj;
     });
     const formData = new FormData();
-    const selectedSubjectIds = (values.subject ?? []).map(
-      (selectedSubject: any) =>
-        subject?.find((s) => s.name === selectedSubject)?.id,
-    );
-    const selectedClassIds = (values.classlevels ?? []).map(
-      (className: any) => classlevels?.find((s) => s.class === className)?.id,
-    );
-    const selectedSalaryIds = (values.salary ?? []).map(
-      (salaryName: any) => salary?.find((s) => s.name === salaryName)?.id,
-    );
-    const selectedSchoolIds = (values.school ?? []).map(
-      (schoolName: any) => school?.find((s) => s.name === schoolName)?.id,
-    );
 
     if (Array.isArray(fileavata) && fileavata.length > 0) {
       for (let i = 0; i < fileavata.length; i++) {
@@ -190,7 +178,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       }
     }
 
-    const address: any = district1?.result?.formatted_address;
+    const address: any = district?.result?.formatted_address;
     const address1: any = district1?.result?.formatted_address;
     const latitude: any = district1?.result?.geometry?.location?.lat;
     const longitude: any = district1?.result?.geometry?.location?.lng;
@@ -199,51 +187,45 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     const currentLatitude = editProfile.latitude;
     const currentLongitude = editProfile.longitude;
     const id: any = editProfile.id;
-    // const userData = {
-    //   name: values.name,
-    //   address: address,
-    //   latitude: latitude,
-    //   longitude: longitude,
-    //   email: values.email,
-    //   phone: values.phone,
-    //   role: 'user',
-    //   avatar: fileavata,
-    // };
-    if (address == undefined || address1 == undefined) {
-      formData.append('address', currentAddress);
+
+    if (address1 == undefined) {
       formData.append('DistrictID', currentDistrict);
       formData.append('latitude', currentLatitude);
       formData.append('longitude', currentLongitude);
     } else {
       formData.append('DistrictID', address1);
-      formData.append('address', address);
       formData.append('latitude', latitude);
       formData.append('longitude', longitude);
+    }
+    if (address == undefined) {
+      formData.append('address', currentAddress);
+    } else {
+      formData.append('address', address);
     }
     formData.append('name', values.name);
     formData.append('email', values.email);
     formData.append('date_of_birth', values.date_of_birth);
-    formData.append('subject', values.subject);
-    formData.append('class_id', values.class_id);
-    formData.append('salary_id', values.salary_id);
-    formData.append('school_id', values.school_id);
+    formData.append('subject', values.subject.id);
+    formData.append('class_id', values.class_id.id);
+    formData.append('salary_id', values.salary_id.id);
+    formData.append('school_id', values.school_id.id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
     formData.append('gender', values.gender);
     formData.append('phone', values.phone);
     formData.append('role', '3');
-
-    await updateProfile(id, formData);
-    toast.success('Cập nhập thành công !', {
-      duration: 3000,
-      position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
-    });
-    router.push('/profile');
+    console.log(values);
+    // await updateProfile(id, formData);
+    // toast.success('Cập nhập thành công !', {
+    //   duration: 3000,
+    //   position: 'top-right',
+    //   icon: '✅',
+    //   iconTheme: {
+    //     primary: '#000',
+    //     secondary: '#fff',
+    //   },
+    // });
+    // router.push('/profile');
   };
 
   const closeModal = () => {
@@ -285,8 +267,12 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   school_id: editProfile.school,
                   description: editProfile.description,
                   gender: editProfile.gender,
-                  subject: editProfile.subject,
-                  class_id: editProfile.class,
+                  subject: editProfile.subject
+                    ? editProfile.subject.map((subject) => subject.name)
+                    : [],
+                  class_id: editProfile.class
+                    ? editProfile.class.map((classItem) => classItem.name)
+                    : [],
                   education_level: editProfile.education_level,
                   salary_id: editProfile.salary,
                   exp: editProfile.exp,
@@ -422,7 +408,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
                   </Form.Item>
-                  <Form.Item
+                  {/* <Form.Item
                     label="Chứng chỉ"
                     name="certificate"
                     valuePropName="fileList"
@@ -443,7 +429,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                         </Button>
                       )}
                     </Upload>
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item<FieldType>
                     name="education_level"
                     rules={[
