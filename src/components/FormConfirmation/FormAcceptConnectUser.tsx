@@ -13,9 +13,9 @@ interface IJob {
     idJob: number;
     idUser: string;
     idTeacher: string;
-    noteUser: string;
+    note_user: string;
     noteTeacher: string;
-    confirmUser: number;
+    confirm_user: number;
     confirmTeacher: number;
     status: number;
     teacherName: string;
@@ -44,8 +44,8 @@ export default function FormAcceptConnectUser({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    confirmUser: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
-    noteUser: Yup.string().required('Vui lòng nhập chú thích'),
+    confirm_user: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
+    note_user: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
     <div>
@@ -85,8 +85,8 @@ export default function FormAcceptConnectUser({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
-              confirmUser: '',
-              noteUser: '',
+              confirm_user: '',
+              note_user: '',
             }}
             validationSchema={validationSchema}
           >
@@ -99,27 +99,27 @@ export default function FormAcceptConnectUser({ user }: IJob) {
 
                 <div className={'flex gap-3'}>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirmUser" value="1" />
+                    <Field type="radio" name="confirm_user" value="1" />
                     Đồng ý
                   </label>
                   <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirmUser" value="2" />
+                    <Field type="radio" name="confirm_user" value="2" />
                     Từ chối
                   </label>
                 </div>
                 <ErrorMessage
-                  name="confirmUser"
+                  name="confirm_user"
                   component="div"
                   className="text-red-500"
                 />
                 <ErrorMessage
-                  name="noteUser"
+                  name="note_user"
                   component="div"
                   className="text-red-500"
                 />
                 <label className={'relative'}>
                   <Field
-                    name="noteUser"
+                    name="note_user"
                     as={'textarea'}
                     className={
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'

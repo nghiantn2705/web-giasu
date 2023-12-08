@@ -27,6 +27,12 @@ export interface IUserInfo {
       name: string;
     },
   ];
+  school_id: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   subject: [
     {
       id: number;
