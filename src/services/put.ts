@@ -43,3 +43,10 @@ export const certificatePublic = (body: IFetchBody) => {
     body,
   );
 };
+
+export const putStatusCertificate = (body: IFetchBody) => {
+  return apiRequest.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/status-certificate/${body?.id}`,
+    body,
+  );
+};

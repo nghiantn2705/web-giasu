@@ -120,6 +120,7 @@ export default function Paypal() {
                     className={
                       'text-center py-2 px-4 mt-2 rounded-md bg-blue-tw text-white hover:bg-blue-tw1'
                     }
+                    onClick={closeModal}
                   >
                     Đóng
                   </button>

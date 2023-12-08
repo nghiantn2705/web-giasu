@@ -167,7 +167,7 @@ export default function Detail({ teacher }: IProps) {
                       Ảnh chứng chỉ
                     </p>
                     <div className={'text-center flex gap-2 mt-2'}>
-                      {teacher?.Certificate?.map(
+                      {teacher?.Certificate_public?.map(
                         (item: string, index: number) => {
                           return (
                             // eslint-disable-next-line jsx-a11y/alt-text
