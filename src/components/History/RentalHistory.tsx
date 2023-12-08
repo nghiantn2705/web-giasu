@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
 import { getJob } from '@/services/job';
 import FormConfirmProcedure from '../ModailProcedure/FormConfirmProcedure';
+import ModailDetail from '../ModoalDeital/ModailDetail';
+import ModailDetailUser from '../ModoalDeital/ModailDetailUser';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -24,6 +26,7 @@ interface IJob {
   teacherName: string;
 }
 export default function RentalHistory({ infoUser }: IProps) {
+  console.log(infoUser);
   const [job, setJob] = useState<IJob[]>();
   useEffect(() => {
     (async () => {
@@ -55,6 +58,7 @@ export default function RentalHistory({ infoUser }: IProps) {
             <th className={'px-6 py-4'}>Tên</th>
             <th className={'px-6 py-4'}>Môn</th>
             <th className={'px-6 py-4'}>Lớp</th>
+            <th className={'pl-14 py-4'}>Thông tin</th>
             <th className={'px-6 py-4'}>Trạng thái</th>
             {infoUser?.role == 3 ? (
               <th className={'px-6 py-4'}>Action</th>
@@ -72,16 +76,18 @@ export default function RentalHistory({ infoUser }: IProps) {
               >
                 <th
                   scope="row"
-                  className={'px-6 py-4 gap-4 text-gray-900 whitespace-nowrap '}
+                  className={
+                    'px-6 py-4 gap-4 text-gray-900 whitespace-nowrap flex'
+                  }
                 >
                   <picture>
                     <img
                       src={`${
-                        infoUser?.role == 3
+                        infoUser?.role == 2
                           ? items?.teacherAvatar
                           : items?.userAvatar
                       }`}
-                      width={40}
+                      width={60}
                       height={40}
                       alt={''}
                       className={'rounded-full'}
@@ -106,6 +112,32 @@ export default function RentalHistory({ infoUser }: IProps) {
                       return <span key={index}>{items}</span>;
                     })}
                   </div>
+                </td>
+
+                <td className={'px-6 py-4'}>
+                  {items?.status == 0 ? (
+                    <div
+                      className={
+                        'flex items-center  before:w-2.5 before:rounded-full before:bg-orange-500 before:mr-2'
+                      }
+                    >
+                      Xác nhận để xem
+                    </div>
+                  ) : (
+                    <div
+                      className={
+                        'flex items-center  before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
+                      }
+                    >
+                      <td className={'px-10 py-4'}>
+                        {infoUser?.role == 3 ? (
+                          <ModailDetailUser user={items} />
+                        ) : (
+                          <ModailDetail user={items} />
+                        )}
+                      </td>
+                    </div>
+                  )}
                 </td>
                 <td className={'px-6 py-4'}>
                   {items?.status == 0 ? (

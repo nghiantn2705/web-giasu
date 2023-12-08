@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getStart } from '@/services/feedback';
 import { useParams } from 'next/navigation';
 import { ITeacherFilter } from '@/types/ITeacherFilter';
+import { AiOutlineStar } from 'react-icons/ai';
 
 interface IProps {
   teachers: ITeacherFilter[];
@@ -15,12 +16,12 @@ const Teacher = ({ teachers }: IProps) => {
   const { id: params } = useParams();
   useEffect(() => {
     (async () => {
-      const resRating = await getStart({ params });
+      const resRating = await getStart({ id: teachers?.[0]?.id });
 
       setStarData(resRating);
     })();
   }, []);
-  console.log(teachers);
+  console.log(starData);
   return (
     <>
       {teachers ? (
@@ -105,7 +106,10 @@ const Teacher = ({ teachers }: IProps) => {
                           <i className="mdi mdi-star"></i>
                         </li>
                         <li className="inline text-black dark:text-white">
-                          5.0(30)
+                          <div className={'flex'}>
+                            <AiOutlineStar className={'self-center'} />{' '}
+                            <span> {starData?.avg}</span>
+                          </div>
                         </li>
                       </ul>
                     </li>

@@ -6,13 +6,12 @@ import imageAsset from '/public/banner-login.png';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { resetPassword, SendMail } from '@/services/post';
 
 const ResetPassword = () => {
   const router = useRouter();
-  const [token, setToken] = useState('');
   const [userInfo] = useStore('userInfo');
 
   useEffect(() => {
@@ -67,7 +66,6 @@ const ResetPassword = () => {
                   const tokenData = await SendMail({
                     ...values,
                   });
-                  setToken(tokenData.token);
                   toast.success('Vui lòng vào mail của bạn để xác nhận !', {
                     duration: 3000,
                     position: 'top-right',
@@ -114,10 +112,10 @@ const ResetPassword = () => {
               </Form>
             </Formik>
             <Formik
-              initialValues={{ password: '' }}
+              initialValues={{ password: '', code: '' }}
               onSubmit={async (values) => {
                 try {
-                  const resValues = { ...values, token };
+                  const resValues = { ...values };
                   console.log(resValues);
                   const data = await resetPassword({ ...resValues });
 
@@ -139,6 +137,25 @@ const ResetPassword = () => {
               }}
             >
               <Form className={' flex flex-col gap-5 mt-5'}>
+                <div className={'relative mt-2'}>
+                  {' '}
+                  <Field
+                    type={'code'}
+                    name={'code'}
+                    id="code"
+                    placeholder={'Mã code'}
+                    className={
+                      'peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none'
+                    }
+                  />
+                  <label
+                    htmlFor="code"
+                    className="pointer-events-none absolute -top-1 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-1 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                  >
+                    Nhập mã
+                  </label>
+                </div>
+
                 <div className={'relative mt-2'}>
                   <Field
                     type={'password'}
