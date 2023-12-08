@@ -72,7 +72,7 @@ const SignInUser = () => {
                     ...values,
                   });
 
-                  if (data?.user && data?.user?.role == 'user') {
+                  if (data?.user && data?.user?.role == 2) {
                     setUserInfo(data?.user);
                     setCookie('access_token', data?.access_token);
                     setCookie('refresh_token', data?.refresh_token);
