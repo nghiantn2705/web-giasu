@@ -136,7 +136,7 @@ const SignInTeacher = () => {
                 </div>
 
                 <Link
-                  href={'/'}
+                  href={'/auth/reset-password'}
                   className={
                     'text-right text-sm text-gray-600 hover:text-black'
                   }

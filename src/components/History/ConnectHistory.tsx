@@ -158,13 +158,13 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       <span>{items?.note_user}</span>
                     )}
                   </td>
-                  {/*<td className={'px-10 py-4'}>*/}
-                  {/*  {infoUser?.role == 2 ? (*/}
-                  {/*    <ModailDetailUser user={items} />*/}
-                  {/*  ) : (*/}
-                  {/*    <ModailDetail user={items} />*/}
-                  {/*  )}*/}
-                  {/*</td>*/}
+                  {/* <td className={'px-10 py-4'}>
+                    {infoUser?.role == 2 ? (
+                      <ModailDetailUser user={items} />
+                    ) : (
+                      <ModailDetail user={items} />
+                    )}
+                  </td> */}
                   <td className={'px-6 py-4'}>
                     {items?.status == 0 ? (
                       <div

@@ -27,11 +27,11 @@ export default function ModailDetailUser({ user }: IProps) {
   console.log(detail);
   useEffect(() => {
     (async () => {
-      const resTeacher = await getJobDetail({ id: user?.idJob });
+      const resTeacher = await getJobDetail({ id: user?.id });
 
       setDetail(resTeacher);
     })();
-  }, [user?.idJob]);
+  }, [user?.id]);
 
   const closeModal = () => {
     setIsOpen(false);

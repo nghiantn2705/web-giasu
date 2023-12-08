@@ -17,7 +17,7 @@ export const SendMail = (query: IFetchQuery = {}) => {
 };
 export const resetPassword = (query: IFetchQuery = {}) => {
   return apiRequest.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password/${query.token}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password/`,
     query,
   );
 };
