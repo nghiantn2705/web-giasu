@@ -96,8 +96,8 @@ export default function Detail({ teacher }: IProps) {
       const value = {
         description: description1,
         point: point1,
-        idSender: userInfo?.id,
-        idTeacher: params,
+        id_sender: userInfo?.id,
+        id_teacher: params,
       };
       await postFeedback({ ...value });
       toast.success('Gửi ý kiến thành công !', {

@@ -271,7 +271,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                     : []
                 }
                 maxCount={1}
-                disabled
+                // disabled
                 beforeUpload={(file) => {
                   return new Promise((resolve, rejects) => {
                     if (file.size > 900000) {

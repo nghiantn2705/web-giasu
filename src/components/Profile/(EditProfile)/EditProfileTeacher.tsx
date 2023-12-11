@@ -172,10 +172,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       return item?.originFileObj;
     });
     const formData = new FormData();
-
+    const file = values?.certificate?.map((item: any) => {
+      return item?.originFileObj;
+    });
     if (Array.isArray(fileavata) && fileavata.length > 0) {
       for (let i = 0; i < fileavata.length; i++) {
         formData.append('avatar', fileavata[i]);
+      }
+    }
+    if (Array.isArray(file) && file.length > 0) {
+      for (let i = 0; i < file.length; i++) {
+        formData.append('Certificate[]', file[i]);
       }
     }
 
@@ -216,17 +223,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('phone', values.phone);
     formData.append('role', '3');
     console.log(values);
-    // await updateProfile(id, formData);
-    // toast.success('Cập nhập thành công !', {
-    //   duration: 3000,
-    //   position: 'top-right',
-    //   icon: '✅',
-    //   iconTheme: {
-    //     primary: '#000',
-    //     secondary: '#fff',
-    //   },
-    // });
-    // router.push('/profile');
+    await updateProfile(id, formData);
+    toast.success('Cập nhập thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    router.push('/profile');
   };
 
   const closeModal = () => {
@@ -247,7 +254,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
             Xem thêm
           </button>
           <MyModalTransition visible={isOpen} onClose={closeModal}>
-            <div className={'px-8 py-4 h-full'}>
+            <div className={'px-8 py-4 h-full overflow-auto'}>
               <h3 className={'text-lg font-bold mb-4'}>
                 Chỉnh sửa thông tin người dùng
               </h3>
@@ -274,7 +281,6 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   ),
                   education_level: editProfile?.education_level,
                   salary_id: editProfile?.salary,
-                  exp: editProfile?.exp,
                   date_of_birth: moment(editProfile?.date_of_birth),
                 }}
               >
@@ -375,7 +381,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                           : []
                       }
                       maxCount={1}
-                      disabled
+                      // disabled
                       beforeUpload={(file) => {
                         return new Promise((resolve, rejects) => {
                           if (file.size > 900000) {
@@ -390,7 +396,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
                   </Form.Item>
-                  {/* <Form.Item
+                  <Form.Item
                     label="Chứng chỉ"
                     name="certificate"
                     valuePropName="fileList"
@@ -411,7 +417,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                         </Button>
                       )}
                     </Upload>
-                  </Form.Item> */}
+                  </Form.Item>
                   <Form.Item<FieldType>
                     name="education_level"
                     rules={[
@@ -543,6 +549,9 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
+                      // value={editProfile?.salary?.map((item) => {
+                      //   item.id;
+                      // })}
                       showSearch
                       placeholder="Mức lương của bạn"
                       optionFilterProp="children"
