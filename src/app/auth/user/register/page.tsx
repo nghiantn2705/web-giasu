@@ -178,7 +178,7 @@ const page = () => {
             name="date_of_birth"
             rules={[{ required: true, message: 'Hãy nhập ngày sinh của bạn!' }]}
           >
-            <DatePicker format="YYYY-MM-DD" className={'w-full'} />
+            <DatePicker format="DD-MM-YYYY" className={'w-full'} />
           </Form.Item>
           <Form.Item<FieldType>
             label="Ảnh đại diện"

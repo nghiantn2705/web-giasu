@@ -130,7 +130,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                       }
                     >
                       <td className={'px-10 py-4'}>
-                        {infoUser?.role == 3 ? (
+                        {infoUser?.role == 2 ? (
                           <ModailDetailUser user={items} />
                         ) : (
                           <ModailDetail user={items} />
