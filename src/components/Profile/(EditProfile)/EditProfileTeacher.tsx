@@ -84,6 +84,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const onChangeAddress = async (value: any) => {
     const res = await getAdreessId(value);
     setDistrict(res);
@@ -233,7 +238,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
         secondary: '#fff',
       },
     });
-    router.push('/profile');
+    reloadPageAfterDelay();
   };
 
   const closeModal = () => {

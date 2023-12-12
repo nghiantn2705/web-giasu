@@ -21,7 +21,7 @@ const Teacher = ({ teachers }: IProps) => {
       setStarData(resRating);
     })();
   }, []);
-  console.log(starData);
+  console.log(teachers);
   return (
     <>
       {teachers ? (
@@ -69,6 +69,7 @@ const Teacher = ({ teachers }: IProps) => {
                       'py-3 px-3 border-y border-slate-100 grid grid-cols-2 gap-1'
                     }
                   >
+                    {/* {items?.subject} */}
                     {items?.subject?.map((item, index: number) => (
                       <li
                         key={index}

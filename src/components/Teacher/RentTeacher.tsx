@@ -59,10 +59,16 @@ export default function RentTeacher(props: IProps) {
 
     try {
       const response = await postJob({ ...values });
-      message.success('Vui lòng đợi gia sư đồng ý!');
+      toast.error('Vui lòng đợi gia sư đồng ý!', {
+        position: 'top-right',
+        duration: 3000,
+      });
       console.log(response);
     } catch (error) {
-      message.error('Có lỗi xảy ra. Vui lòng thử lại sau.');
+      toast.error('Có lỗi xảy ra. Vui lòng thử lại sau.', {
+        position: 'top-right',
+        duration: 3000,
+      });
       console.error(error);
     }
   };

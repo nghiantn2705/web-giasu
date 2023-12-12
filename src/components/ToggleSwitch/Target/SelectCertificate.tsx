@@ -21,6 +21,11 @@ const SelectCertificate = ({ infoUser }: IProps) => {
   const openModal = () => {
     setIsOpen(true);
   };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
   return (
     <div>
       <div>
@@ -42,6 +47,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                 console.log(values);
                 try {
                   const res = await certificatePublic(values);
+                  reloadPageAfterDelay();
                 } catch (ex) {
                   console.log(ex);
                 }

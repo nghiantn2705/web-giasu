@@ -9,9 +9,6 @@ import FormCeonnectProcedure from '../ModailProcedure/FormCeonnectProcedure';
 import FormCeonnectUserProcedure from '../ModailProcedure/FormCeonnecUsertProcedure';
 import { IConnect } from '@/types/IConect';
 
-import ModailDetail from '../ModoalDeital/ModailDetail';
-import ModailDetailUser from '../ModoalDeital/ModailDetailUser';
-
 interface IProps {
   infoUser: IUserInfo;
 }

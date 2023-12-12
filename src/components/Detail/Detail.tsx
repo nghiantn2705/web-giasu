@@ -282,11 +282,11 @@ export default function Detail({ teacher }: IProps) {
                             {' '}
                             Trình độ học vấn:{' '}
                           </label>{' '}
-                          {/* <label className="">
+                          <label className="">
                             {teacher?.education_level?.map((items) => {
                               return items?.name;
                             })}
-                          </label> */}
+                          </label>
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
@@ -349,13 +349,15 @@ export default function Detail({ teacher }: IProps) {
                     <form className="text-right" onSubmit={submitFeedback}>
                       <div className="grid grid-cols-10 gap-6">
                         <div className="col-span-5 flex items-center gap-4">
-                          <img
-                            src={userInfo?.avatar}
-                            width={45}
-                            height={45}
-                            className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
-                            alt=""
-                          />
+                          {userInfo && (
+                            <img
+                              src={userInfo.avatar}
+                              width={45}
+                              height={45}
+                              className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
+                              alt=""
+                            />
+                          )}
                           <span className={'text-lg'}>{userInfo?.name}</span>
                         </div>
                         <div className="col-span-5 text-right">
@@ -386,61 +388,6 @@ export default function Detail({ teacher }: IProps) {
                         placeholder="Nhập ý kiến phản hồi..."
                       />
                       <br />
-                      <Transition appear show={isOpen} as={Fragment}>
-                        <Dialog
-                          as="div"
-                          className="relative z-10"
-                          onClose={closeModal}
-                        >
-                          <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                          >
-                            <div className="fixed inset-0 bg-black/25" />
-                          </Transition.Child>
-
-                          <div className="fixed inset-0 overflow-y-auto">
-                            <div className="flex min-h-full items-center justify-center p-4 text-center">
-                              <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                              >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                  <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                  ></Dialog.Title>
-                                  <div className="mt-2">
-                                    <p className="text-xl text-gray-500 text-center">
-                                      Vui lòng đăng nhập để gửi phản hồi
-                                    </p>
-                                  </div>
-
-                                  <div className="mt-4">
-                                    {/* <button
-                                    type="button"
-                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    onClick={closeModal}
-                                  >
-                                    Got it, thanks!
-                                  </button> */}
-                                  </div>
-                                </Dialog.Panel>
-                              </Transition.Child>
-                            </div>
-                          </div>
-                        </Dialog>
-                      </Transition>
                       <button
                         className="text-right text-white bg-blue-tw1 rounded py-2 px-4"
                         type="submit"

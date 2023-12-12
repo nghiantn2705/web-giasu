@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ITeachers } from '@/types/ITeachers';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Link from 'next/link';
+import { getStart } from '@/services/feedback';
 
 interface IProps {
   teachers: ITeachers[];
@@ -16,6 +17,14 @@ interface IProps {
 const SortRate = ({ teachers }: IProps) => {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+  const [starData, setStarData] = useState<{ avg: string }>();
+  useEffect(() => {
+    (async () => {
+      const resRating = await getStart({ id: teachers?.[0]?.id });
+
+      setStarData(resRating);
+    })();
+  }, []);
 
   return (
     <div className={' py-5 rounded-xl relative'}>
@@ -87,7 +96,8 @@ const SortRate = ({ teachers }: IProps) => {
                       }
                     >
                       <p className={'self-end flex gap-1 text-white'}>
-                        <AiOutlineStar className={'self-center'} />4
+                        <AiOutlineStar className={'self-center'} />{' '}
+                        <span> {starData?.avg}</span>
                       </p>
                     </div>
                   </picture>
