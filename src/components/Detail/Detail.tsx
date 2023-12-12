@@ -161,7 +161,7 @@ export default function Detail({ teacher }: IProps) {
                       {moment(teacher?.created_at).format('DD/MM/YYYY')}
                     </label>
                   </p>
-                  <FormRentProcedure teacher={teacher} />
+                  <FormRentProcedure />
 
                   <div className={'text-center flex gap-2 mt-2'}>
                     {teacher?.status_public == 1

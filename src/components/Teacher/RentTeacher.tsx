@@ -15,7 +15,6 @@ import { ISubjectAndClass } from '@/types/ISubjectAndClass';
 
 interface IProps {
   id: number;
-  teacher: any;
 }
 export default function RentTeacher(props: IProps) {
   const [user] = useStore<ITeachers>('userInfo');

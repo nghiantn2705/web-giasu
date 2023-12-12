@@ -32,9 +32,7 @@ const page = () => {
               }
             >
               <h2
-                className={
-                  'text-3xl font-bold text-gray-800 leading-normal font-bold'
-                }
+                className={'text-3xl font-bold text-gray-800 leading-normal '}
               >
                 Bạn cần hỗ trợ ?
               </h2>
