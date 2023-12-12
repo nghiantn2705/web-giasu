@@ -15,16 +15,20 @@ interface IProps {
   teachers: ITeachers[];
 }
 const SortRate = ({ teachers }: IProps) => {
-  const navigationPrevRef = React.useRef(null);
-  const navigationNextRef = React.useRef(null);
   const [starData, setStarData] = useState<{ avg: string }>();
+  const [teacherStart, teacherStarData] = useState<any>();
+
   useEffect(() => {
     (async () => {
       const resRating = await getStart({ id: teachers?.[0]?.id });
+      const resTeacherRating = await getTeacherStart();
 
       setStarData(resRating);
+      teacherStarData(resTeacherRating);
     })();
   }, []);
+  const navigationPrevRef = React.useRef(null);
+  const navigationNextRef = React.useRef(null);
 
   return (
     <div className={' py-5 rounded-xl relative'}>
@@ -34,7 +38,7 @@ const SortRate = ({ teachers }: IProps) => {
         }
       >
         <span className={'text-2xl bg-white px-3 relative z-10 uppercase'}>
-          Gia sư nổi bật
+          Gia sư được đánh giá cao nhất
         </span>
       </div>
 

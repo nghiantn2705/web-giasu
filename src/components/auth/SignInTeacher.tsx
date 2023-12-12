@@ -95,6 +95,10 @@ const SignInTeacher = () => {
                     });
                   }
                 } catch (ex: any) {
+                  toast.error('Email hoặc password không tồn tại !', {
+                    duration: 3000,
+                    position: 'top-right',
+                  });
                   console.log(ex);
                 }
               }}

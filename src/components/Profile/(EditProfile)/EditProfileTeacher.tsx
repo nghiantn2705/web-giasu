@@ -218,16 +218,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('name', values.name);
     formData.append('email', values.email);
     formData.append('date_of_birth', values.date_of_birth);
-    formData.append('subject', values.subject.id);
-    formData.append('class_id', values.class_id.id);
-    formData.append('salary_id', values.salary_id.id);
-    formData.append('school_id', values.school_id.id);
+    formData.append('subject', values.subject);
+    formData.append('class_id', values.class_id);
+    // formData.append('salary_id', values.salary_id);
+    formData.append('school_id', values.school_id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
     formData.append('gender', values.gender);
     formData.append('phone', values.phone);
     formData.append('role', '3');
     console.log(values);
+    console.log(formData);
     await updateProfile(id, formData);
     toast.success('Cập nhập thành công !', {
       duration: 3000,
@@ -285,7 +286,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     (classItem) => classItem.id,
                   ),
                   education_level: editProfile?.education_level,
-                  salary_id: editProfile?.salary,
+                  // salary_id: editProfile?.salary?.map((salary) => salary.id),
                   date_of_birth: moment(editProfile?.date_of_birth),
                 }}
               >
@@ -401,7 +402,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
                   </Form.Item>
-                  <Form.Item
+                  {/* <Form.Item
                     label="Chứng chỉ"
                     name="certificate"
                     valuePropName="fileList"
@@ -422,7 +423,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                         </Button>
                       )}
                     </Upload>
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item<FieldType>
                     name="education_level"
                     rules={[
@@ -543,7 +544,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                   />
                 </Form.Item> */}
-                  <Form.Item<FieldType>
+                  {/* <Form.Item<FieldType>
                     name="salary_id"
                     rules={[
                       {
@@ -562,7 +563,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       optionFilterProp="children"
                       options={filteredSalary}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item<FieldType>
                     name="DistrictID"
                     rules={[
