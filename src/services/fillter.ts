@@ -7,3 +7,10 @@ export const getFilter = (query: IFetchQuery = {}) => {
     query,
   );
 };
+
+export const getTeacherStart = (query: IFetchQuery = {}) => {
+  return apiRequest.get<ITeachers[]>(
+    `${process.env.NEXT_PUBLIC_API_URL}//teacherStar`,
+    query,
+  );
+};

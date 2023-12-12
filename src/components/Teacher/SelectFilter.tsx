@@ -43,7 +43,7 @@ const SelectFilter = () => {
               <Field
                 as={'select'}
                 className={'py-3 pl-10 w-full text-lg bg-gray-100'}
-                name={'DistrictID'}
+                name={'District_ID'}
               >
                 <option value={''}>Tất cả</option>
                 {districtsInHanoi.map((district) => (
