@@ -27,3 +27,10 @@ export const editPassword = (query: IFetchQuery = {}) => {
     query,
   );
 };
+
+export const certificateAdd = (query: IFetchQuery = {}) => {
+  return apiRequest.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/upload-certificate`,
+    query,
+  );
+};

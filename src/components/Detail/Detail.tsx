@@ -11,16 +11,12 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import { ITeachersDetail } from '@/types/ITeachersDetail';
-import { IFeedback } from '@/types/IFeedback';
 import Loading from '@/components/Layout/Loading';
-import { getFeedback, postFeedback, getStart } from '@/services/feedback';
-import { getTeacherByid } from '@/services/teacher';
-import { Dialog, Transition } from '@headlessui/react';
+import { postFeedback, getStart } from '@/services/feedback';
 import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 import { getDirections } from '@/services/get';
-import { format } from 'date-fns';
 import moment from 'moment';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import FeedBack from '@/components/FeedBack/FeedBack';
 interface IProps {
   teacher: ITeachers;
@@ -28,7 +24,7 @@ interface IProps {
 
 export default function Detail({ teacher }: IProps) {
   const [userInfo] = useStore<ITeachersDetail>('userInfo');
-  console.log(teacher);
+
   const [starData, setStarData] = useState<{ avg: string }>();
   const [point1, setPoint] = useState(0);
   const [description1, setDescription] = useState('');
@@ -77,9 +73,15 @@ export default function Detail({ teacher }: IProps) {
     e.preventDefault();
 
     if (!userInfo) {
-      toast.error('Vui lòng đăng nhập !', {
+      toast.error('Vui lòng đăng nhập để bình luận!', {
         position: 'top-right',
-        duration: 3000,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
       return;
     }
@@ -87,7 +89,13 @@ export default function Detail({ teacher }: IProps) {
     if (!description1 || !point1) {
       toast.error('Vui lòng nhập đầy đủ thông tin phản hồi!', {
         position: 'top-right',
-        duration: 3000,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
       return;
     }
@@ -96,25 +104,31 @@ export default function Detail({ teacher }: IProps) {
       const value = {
         description: description1,
         point: point1,
-        idSender: userInfo?.id,
-        idTeacher: params,
+        id_sender: userInfo?.id,
+        id_teacher: params,
       };
       await postFeedback({ ...value });
-      toast.success('Gửi ý kiến thành công !', {
-        duration: 3000,
+      toast.success('Gửi ý kiến thành công!', {
         position: 'top-right',
-        icon: '✅',
-        iconTheme: {
-          primary: '#000',
-          secondary: '#fff',
-        },
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
       reloadPageAfterDelay();
     } catch (error) {
-      console.error('Error submitting feedback:', error);
-      toast.error('Có lỗi xảy ra khi gửi ý kiến. Vui lòng thử lại sau.', {
-        duration: 3000,
+      toast.error('Có lỗi xảy ra trong quá trình bình luận.Vui lòng thử lại!', {
         position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
     }
   };
@@ -143,10 +157,14 @@ export default function Detail({ teacher }: IProps) {
                     {teacher?.name}
                   </p>
                   <p className={' text-center text-xs text-stone-400'}>
-                    <label className="">
-                      (cách bạn:{' '}
-                      {directions?.routes[0]?.legs[0]?.distance?.text})
-                    </label>
+                    {directions ? (
+                      <label className="">
+                        (cách bạn:{' '}
+                        {directions?.routes[0]?.legs[0]?.distance?.text})
+                      </label>
+                    ) : (
+                      ''
+                    )}
                   </p>
                   <p
                     className={
@@ -282,11 +300,11 @@ export default function Detail({ teacher }: IProps) {
                             {' '}
                             Trình độ học vấn:{' '}
                           </label>{' '}
-                          {/* <label className="">
+                          <label className="">
                             {teacher?.education_level?.map((items) => {
                               return items?.name;
                             })}
-                          </label> */}
+                          </label>
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
@@ -349,13 +367,15 @@ export default function Detail({ teacher }: IProps) {
                     <form className="text-right" onSubmit={submitFeedback}>
                       <div className="grid grid-cols-10 gap-6">
                         <div className="col-span-5 flex items-center gap-4">
-                          <img
-                            src={userInfo?.avatar}
-                            width={45}
-                            height={45}
-                            className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
-                            alt=""
-                          />
+                          {userInfo && (
+                            <img
+                              src={userInfo.avatar}
+                              width={45}
+                              height={45}
+                              className="rounded-full border-2 border-gray-500 hover:bg-gray-200 cursor-pointer w-12 h-12 overflow-auto"
+                              alt=""
+                            />
+                          )}
                           <span className={'text-lg'}>{userInfo?.name}</span>
                         </div>
                         <div className="col-span-5 text-right">
@@ -386,61 +406,6 @@ export default function Detail({ teacher }: IProps) {
                         placeholder="Nhập ý kiến phản hồi..."
                       />
                       <br />
-                      <Transition appear show={isOpen} as={Fragment}>
-                        <Dialog
-                          as="div"
-                          className="relative z-10"
-                          onClose={closeModal}
-                        >
-                          <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                          >
-                            <div className="fixed inset-0 bg-black/25" />
-                          </Transition.Child>
-
-                          <div className="fixed inset-0 overflow-y-auto">
-                            <div className="flex min-h-full items-center justify-center p-4 text-center">
-                              <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                              >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                  <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                  ></Dialog.Title>
-                                  <div className="mt-2">
-                                    <p className="text-xl text-gray-500 text-center">
-                                      Vui lòng đăng nhập để gửi phản hồi
-                                    </p>
-                                  </div>
-
-                                  <div className="mt-4">
-                                    {/* <button
-                                    type="button"
-                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    onClick={closeModal}
-                                  >
-                                    Got it, thanks!
-                                  </button> */}
-                                  </div>
-                                </Dialog.Panel>
-                              </Transition.Child>
-                            </div>
-                          </div>
-                        </Dialog>
-                      </Transition>
                       <button
                         className="text-right text-white bg-blue-tw1 rounded py-2 px-4"
                         type="submit"

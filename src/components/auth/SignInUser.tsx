@@ -20,11 +20,6 @@ const SignInUser = () => {
       router.push('/giasu');
     }
   }, [router, userInfo]);
-  const onClick = async () => {
-    const res = await authGoogle();
-    console.log(res);
-    window.location.assign(res.url);
-  };
   return (
     <main className={'pt-8 min-h-[100vh-116px]'}>
       <div
@@ -173,14 +168,6 @@ const SignInUser = () => {
                 Đăng ký
               </Link>
             </p>
-
-            <button
-              onClick={onClick}
-              className="mt-4 mx-auto flex gap-3 items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            >
-              <FaGoogle />
-              <span>Continue with Google</span>
-            </button>
           </div>
         </div>
       </div>

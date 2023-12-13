@@ -18,6 +18,16 @@ export const getFeedback = (query: IFetchQuery = {}) => {
       : {},
   });
 };
+export const getFeedbackUser = (query: IFetchQuery = {}) => {
+  return apiRequest.get<{
+    id: number;
+    id_sender: string;
+    id_teacher: string;
+    point: string;
+    description: string;
+    updated_at: Date;
+  }>(`${process.env.NEXT_PUBLIC_API_URL}/feedback/user/${query?.id}`, query);
+};
 
 export const postFeedback = (body: IFetchBody) => {
   return apiRequest.post(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, body);

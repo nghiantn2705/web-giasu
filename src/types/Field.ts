@@ -14,7 +14,7 @@ export interface FieldType {
   current_role?: string;
   exp?: string;
   school_id?: string;
-  salary_id?: string;
+  salary_id?: string[];
   DistrictID?: string[];
   address?: string;
   education_level?: string;

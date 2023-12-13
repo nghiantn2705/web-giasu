@@ -26,7 +26,7 @@ export default function FormRentProcedure() {
   };
   return (
     <div>
-      {user?.role !== 3 ? (
+      {user?.role == 2 ? (
         <button
           onClick={openModal}
           className={

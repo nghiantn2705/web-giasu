@@ -84,6 +84,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const onChangeAddress = async (value: any) => {
     const res = await getAdreessId(value);
     setDistrict(res);
@@ -172,10 +177,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
       return item?.originFileObj;
     });
     const formData = new FormData();
-
+    const file = values?.certificate?.map((item: any) => {
+      return item?.originFileObj;
+    });
     if (Array.isArray(fileavata) && fileavata.length > 0) {
       for (let i = 0; i < fileavata.length; i++) {
         formData.append('avatar', fileavata[i]);
+      }
+    }
+    if (Array.isArray(file) && file.length > 0) {
+      for (let i = 0; i < file.length; i++) {
+        formData.append('Certificate[]', file[i]);
       }
     }
 
@@ -206,27 +218,28 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('name', values.name);
     formData.append('email', values.email);
     formData.append('date_of_birth', values.date_of_birth);
-    formData.append('subject', values.subject.id);
-    formData.append('class_id', values.class_id.id);
-    formData.append('salary_id', values.salary_id.id);
-    formData.append('school_id', values.school_id.id);
+    formData.append('subject', values.subject);
+    formData.append('class_id', values.class_id);
+    // formData.append('salary_id', values.salary_id);
+    formData.append('school_id', values.school_id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
     formData.append('gender', values.gender);
     formData.append('phone', values.phone);
     formData.append('role', '3');
     console.log(values);
-    // await updateProfile(id, formData);
-    // toast.success('Cập nhập thành công !', {
-    //   duration: 3000,
-    //   position: 'top-right',
-    //   icon: '✅',
-    //   iconTheme: {
-    //     primary: '#000',
-    //     secondary: '#fff',
-    //   },
-    // });
-    // router.push('/profile');
+    console.log(formData);
+    await updateProfile(id, formData);
+    toast.success('Cập nhập thành công !', {
+      duration: 3000,
+      position: 'top-right',
+      icon: '✅',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    reloadPageAfterDelay();
   };
 
   const closeModal = () => {
@@ -247,7 +260,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
             Xem thêm
           </button>
           <MyModalTransition visible={isOpen} onClose={closeModal}>
-            <div className={'px-8 py-4 h-full'}>
+            <div className={'px-8 py-4 h-full overflow-auto'}>
               <h3 className={'text-lg font-bold mb-4'}>
                 Chỉnh sửa thông tin người dùng
               </h3>
@@ -273,8 +286,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     (classItem) => classItem.id,
                   ),
                   education_level: editProfile?.education_level,
-                  salary_id: editProfile?.salary,
-                  exp: editProfile?.exp,
+                  // salary_id: editProfile?.salary?.map((salary) => salary.id),
                   date_of_birth: moment(editProfile?.date_of_birth),
                 }}
               >
@@ -375,7 +387,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                           : []
                       }
                       maxCount={1}
-                      disabled
+                      // disabled
                       beforeUpload={(file) => {
                         return new Promise((resolve, rejects) => {
                           if (file.size > 900000) {
@@ -532,7 +544,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                   />
                 </Form.Item> */}
-                  <Form.Item<FieldType>
+                  {/* <Form.Item<FieldType>
                     name="salary_id"
                     rules={[
                       {
@@ -543,12 +555,15 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     className={'w-full'}
                   >
                     <Select
+                      // value={editProfile?.salary?.map((item) => {
+                      //   item.id;
+                      // })}
                       showSearch
                       placeholder="Mức lương của bạn"
                       optionFilterProp="children"
                       options={filteredSalary}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item<FieldType>
                     name="DistrictID"
                     rules={[

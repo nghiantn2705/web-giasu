@@ -8,6 +8,7 @@ import { BiHistory } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'antd';
 import EditPassword from '@/components/Profile/(EditProfile)/EditPassword';
+import AddCertificate from '@/components/ToggleSwitch/Target/AddCertificate';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -107,6 +108,7 @@ const Profile = ({ children, infoUser }: IProps) => {
                         />
                       );
                     })}
+                    <AddCertificate infoUser={infoUser} />
                   </div>
                 </div>
               ) : (

@@ -73,6 +73,11 @@ const EditProfile = ({ editProfile }: IProps) => {
       label: item?.description,
     };
   });
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const onFinish = async (values: any) => {
     values['date_of_birth'] = dayjs(values.date_of_birth).format('YYYY-MM-DD');
 
@@ -120,7 +125,7 @@ const EditProfile = ({ editProfile }: IProps) => {
         secondary: '#fff',
       },
     });
-    router.push('/profile');
+    reloadPageAfterDelay();
     closeModal();
   };
 
@@ -271,7 +276,7 @@ const EditProfile = ({ editProfile }: IProps) => {
                     : []
                 }
                 maxCount={1}
-                disabled
+                // disabled
                 beforeUpload={(file) => {
                   return new Promise((resolve, rejects) => {
                     if (file.size > 900000) {
