@@ -24,8 +24,8 @@ export default function Paypal() {
   const formatNumber = (value: any) => {
     if (!value) return value;
 
-    const number = parseInt(value.replace(/\./g, ''), 10); // Loại bỏ dấu chấm và chuyển đổi thành số nguyên
-    const formattedValue = new Intl.NumberFormat('de-DE').format(number); // Định dạng số theo chuẩn 'de-DE' (có dấu chấm phân cách hàng nghìn)
+    const number = parseInt(value.replace(/\./g, ''), 10);
+    const formattedValue = new Intl.NumberFormat('de-DE').format(number);
     return formattedValue;
   };
   const parseNumber = (value: any) => {

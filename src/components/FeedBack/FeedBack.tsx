@@ -4,24 +4,29 @@ import { IFeedback } from '@/types/IFeedback';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { getFeedback } from '@/services/feedback';
+import { getFeedback, getFeedbackUser } from '@/services/feedback';
 
 interface IProps {
   idParams: number | null;
+  userInfo: any;
 }
 
-const FeedBack = ({ idParams }: IProps) => {
+const FeedBack = ({ idParams, userInfo }: IProps) => {
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
 
   useEffect(() => {
     const fetchData = async () => {
-      // Kiểm tra xem idParams có giá trị và khác null không
       if (idParams !== null && idParams !== undefined) {
         try {
-          const resFeedback = await getFeedback({ id: idParams });
-          setFeedbackData(resFeedback);
+          if (userInfo?.role == 3) {
+            const resFeedback = await getFeedback({ id: idParams });
+            setFeedbackData(resFeedback);
+          }
+          if (userInfo?.role == 2) {
+            const resFeedback = await getFeedbackUser({ id: idParams });
+            setFeedbackData(resFeedback);
+          }
         } catch (error) {
-          // Xử lý lỗi hoặc thông báo khi gọi API không thành công
           console.error('Error fetching feedback data:', error);
         }
       }

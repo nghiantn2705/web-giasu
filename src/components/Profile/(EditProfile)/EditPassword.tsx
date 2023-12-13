@@ -66,7 +66,7 @@ const InfoUser = () => {
                 <Field
                   name={'passwordlast'}
                   id="passwordlast"
-                  placeholder={'Tên đăng nhập hoặc email'}
+                  placeholder={'Nhập mật khẩu cũ'}
                   className={'border p-2 rounded-md'}
                 />
               </div>
@@ -76,7 +76,7 @@ const InfoUser = () => {
                   type={'password'}
                   name={'password'}
                   id="password"
-                  placeholder={'Tên đăng nhập hoặc email'}
+                  placeholder={'Nhập mật khẩu mới'}
                   className={'border p-2 rounded-md'}
                 />
               </div>
@@ -86,7 +86,7 @@ const InfoUser = () => {
                   type={'password'}
                   name={'password'}
                   id="password"
-                  placeholder={'Tên đăng nhập hoặc email'}
+                  placeholder={'Nhập lại mật khẩu mới'}
                   className={'border p-2 rounded-md'}
                 />
               </div>

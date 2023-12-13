@@ -9,6 +9,7 @@ export interface ITeacherFilter {
       class: string;
     },
   ];
+  // subject: string;
   subject: [
     {
       id: number;

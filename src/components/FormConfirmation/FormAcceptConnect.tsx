@@ -48,7 +48,6 @@ export default function FormAcceptConnect({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    confirm_teacher: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
     note_teacher: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
@@ -80,6 +79,7 @@ export default function FormAcceptConnect({ user }: IJob) {
                     secondary: '#fff',
                   },
                 });
+                closeModal();
                 setIsOpen(false);
                 reloadPageAfterDelay();
               } catch (ex: any) {
@@ -94,6 +94,11 @@ export default function FormAcceptConnect({ user }: IJob) {
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
+                <ErrorMessage
+                  name="note_teacher"
+                  component="div"
+                  className="text-red-500"
+                />
                 <label className={'relative'}>
                   <Field
                     name="note_teacher"
@@ -102,7 +107,7 @@ export default function FormAcceptConnect({ user }: IJob) {
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
                     }
                     rows={'4'}
-                    // required={true}
+                    required={true}
                   />
 
                   <span
@@ -125,7 +130,6 @@ export default function FormAcceptConnect({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

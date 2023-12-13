@@ -8,6 +8,7 @@ import { BiHistory } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'antd';
 import EditPassword from '@/components/Profile/(EditProfile)/EditPassword';
+import AddCertificate from '@/components/ToggleSwitch/Target/AddCertificate';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -83,9 +84,9 @@ const Profile = ({ children, infoUser }: IProps) => {
                   <span className={'italic text-sm text-slate-500'}>
                     {infoUser?.role == 2 ? 'Người thuê gia sư' : 'Gia sư'}
                   </span>
-                  <span className={'italic text-sm text-green-500'}>
+                  {/* <span className={'italic text-sm text-green-500'}>
                     Đang hiện hồ sơ
-                  </span>
+                  </span> */}
                 </div>
               </div>
               {infoUser?.role == 3 ? (
@@ -107,6 +108,7 @@ const Profile = ({ children, infoUser }: IProps) => {
                         />
                       );
                     })}
+                    <AddCertificate infoUser={infoUser} />
                   </div>
                 </div>
               ) : (

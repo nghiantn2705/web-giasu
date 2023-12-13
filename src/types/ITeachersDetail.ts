@@ -12,7 +12,7 @@ export interface ITeachersDetail {
   id: number;
   name: string;
   phone: string;
-  role: string;
+  role: number;
   salary_id: string;
   status: boolean;
   time_tutor_id: string;

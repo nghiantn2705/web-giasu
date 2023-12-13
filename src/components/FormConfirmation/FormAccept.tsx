@@ -44,7 +44,6 @@ export default function FormAccept({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    status: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
     description: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
@@ -78,6 +77,7 @@ export default function FormAccept({ user }: IJob) {
                       secondary: '#fff',
                     },
                   });
+                  closeModal();
                   reloadPageAfterDelay();
                 } catch (ex: any) {
                   console.log(ex);
@@ -93,11 +93,6 @@ export default function FormAccept({ user }: IJob) {
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
-                <ErrorMessage
-                  name="status"
-                  component="div"
-                  className="text-red-500"
-                />
                 <ErrorMessage
                   name="description"
                   component="div"
@@ -131,7 +126,6 @@ export default function FormAccept({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

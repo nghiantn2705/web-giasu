@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { getStart } from '@/services/feedback';
 import { getTeacherStart } from '@/services/fillter';
 
@@ -18,15 +17,15 @@ interface IProps {
 }
 const SortRate = ({ teachers }: IProps) => {
   const [starData, setStarData] = useState<{ avg: string }>();
-  const [teacherStart, teacherStarData] = useState<any>();
+  // const [teacherStart, teacherStarData] = useState<any>();
 
   useEffect(() => {
     (async () => {
       const resRating = await getStart({ id: teachers?.[0]?.id });
-      const resTeacherRating = await getTeacherStart();
+      // const resTeacherRating = await getTeacherStart();
 
       setStarData(resRating);
-      teacherStarData(resTeacherRating);
+      // teacherStarData(resTeacherRating);
     })();
   }, []);
   const navigationPrevRef = React.useRef(null);
@@ -43,25 +42,6 @@ const SortRate = ({ teachers }: IProps) => {
           Gia sư được đánh giá cao nhất
         </span>
       </div>
-
-      {/*<div className={'absolute right-4 top-4 flex gap-2'}>*/}
-      {/*  <button*/}
-      {/*    className={*/}
-      {/*      'border border-blue-tw rounded-md p-2 hover:bg-blue-tw1 hover:text-white'*/}
-      {/*    }*/}
-      {/*    ref={navigationPrevRef}*/}
-      {/*  >*/}
-      {/*    <AiOutlineArrowLeft className={'text-xl'} />*/}
-      {/*  </button>*/}
-      {/*  <button*/}
-      {/*    className={*/}
-      {/*      ' border border-blue-tw rounded-md p-2 hover:bg-blue-tw1 hover:text-white'*/}
-      {/*    }*/}
-      {/*    ref={navigationNextRef}*/}
-      {/*  >*/}
-      {/*    <AiOutlineArrowRight className={'text-xl'} />*/}
-      {/*  </button>*/}
-      {/*</div>*/}
 
       <Swiper
         navigation={{
@@ -102,7 +82,8 @@ const SortRate = ({ teachers }: IProps) => {
                       }
                     >
                       <p className={'self-end flex gap-1 text-white'}>
-                        <AiOutlineStar className={'self-center'} /> <span> {starData?.avg}</span>
+                        <AiOutlineStar className={'self-center'} />{' '}
+                        <span> {starData?.avg}</span>
                       </p>
                     </div>
                   </picture>

@@ -84,6 +84,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const onChangeAddress = async (value: any) => {
     const res = await getAdreessId(value);
     setDistrict(res);
@@ -234,7 +239,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
         secondary: '#fff',
       },
     });
-    router.push('/profile');
+    reloadPageAfterDelay();
   };
 
   const closeModal = () => {
@@ -273,7 +278,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   phone: editProfile?.phone,
                   address: editProfile?.address,
                   DistrictID: editProfile?.District,
-                  school_id: editProfile?.school,
+                  school_id: editProfile?.school?.map((school) => school.id),
                   description: editProfile?.description,
                   gender: editProfile?.gender,
                   subject: editProfile?.subject?.map((subject) => subject.id),
@@ -600,7 +605,44 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Input className={'w-full'} placeholder="Kinh nghiệm" />
+                    <Select
+                      showSearch
+                      placeholder="Nhập kinh nghiệm của bạn"
+                      optionFilterProp="children"
+                      filterOption={filterOption}
+                      options={[
+                        {
+                          value: 'Dưới 1 năm',
+                          label: 'Dưới 1 năm',
+                          key: 1,
+                        },
+                        {
+                          value: 'Từ 1 - 2 năm',
+                          label: 'Từ 1 - 2 năm',
+                          key: 2,
+                        },
+                        {
+                          value: 'Từ 2 - 4 năm',
+                          label: 'Từ 2 - 4 năm',
+                          key: 3,
+                        },
+                        {
+                          value: 'Từ 4 - 6 năm',
+                          label: 'Từ 4 - 6 năm',
+                          key: 4,
+                        },
+                        {
+                          value: 'Từ 6 - 8 năm',
+                          label: 'Từ 6 - 8 năm',
+                          key: 5,
+                        },
+                        {
+                          value: 'Trên 10 năm',
+                          label: 'Trên 10 năm',
+                          key: 6,
+                        },
+                      ]}
+                    />
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="description"
@@ -609,7 +651,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Input className={'w-full'} placeholder="Mô tả về bạn" />
+                    <Input
+                      className={'w-full'}
+                      placeholder="Mô tả về bạn"
+                      value={editProfile?.description}
+                    />
                   </Form.Item>
                 </div>
                 <Form.Item wrapperCol={{ offset: 11, span: 18 }}>

@@ -69,7 +69,7 @@ const App = () => {
                     : 'Những đánh giá của người dùng'}
                 </h3>
               </div>
-              <FeedBack idParams={data?.id} />
+              <FeedBack idParams={data?.id} userInfo={data} />
             </div>
           </div>
         </Profile>

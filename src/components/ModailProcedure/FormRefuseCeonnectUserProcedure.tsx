@@ -46,7 +46,7 @@ export default function FormRefuseCeonnectUserProcedure({ user }: IJob) {
               </span>{' '}
               Gia sư và người thuê xác nhận ĐÃ KẾT NỐI được với nhau thì hệ
               thống sẽ hoàn lại <span className={'text-red-600'}>50% </span>
-              số tiền nạp vàoban đầu cho cả phía gia sư và người thuê.
+              số tiền nạp vào ban đầu cho cả phía gia sư và người thuê.
             </p>
             <p className={' text-base'}>
               <span className={'text-red-600 text-lg font-bold'}>
