@@ -17,15 +17,15 @@ interface IProps {
 }
 const SortRate = ({ teachers }: IProps) => {
   const [starData, setStarData] = useState<{ avg: string }>();
-  const [teacherStart, teacherStarData] = useState<any>();
+  // const [teacherStart, teacherStarData] = useState<any>();
 
   useEffect(() => {
     (async () => {
       const resRating = await getStart({ id: teachers?.[0]?.id });
-      const resTeacherRating = await getTeacherStart();
+      // const resTeacherRating = await getTeacherStart();
 
       setStarData(resRating);
-      teacherStarData(resTeacherRating);
+      // teacherStarData(resTeacherRating);
     })();
   }, []);
   const navigationPrevRef = React.useRef(null);
