@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
-import { Form, Formik } from 'formik';
-import { putConnect } from '@/services/connect';
-import toast from 'react-hot-toast';
+import FormAcceptConnect from '../FormConfirmation/FormAcceptConnect';
 interface IJob {
   user: {
     id: number;
@@ -19,7 +17,7 @@ interface IJob {
   };
 }
 
-export default function FormCeonnectProcedure({ user }: IJob) {
+export default function FormRefuseConnectProcedure({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
@@ -27,12 +25,6 @@ export default function FormCeonnectProcedure({ user }: IJob) {
   const openModal = () => {
     setIsOpen(true);
   };
-  const reloadPageAfterDelay = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-  };
-
   return (
     <div>
       <button
@@ -41,7 +33,7 @@ export default function FormCeonnectProcedure({ user }: IJob) {
           'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
         }
       >
-        Xác nhận
+        Từ chối
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
@@ -93,46 +85,7 @@ export default function FormCeonnectProcedure({ user }: IJob) {
             </p>
           </div>
           <div className={'text-center'}>
-            <Formik
-              className={''}
-              onSubmit={async (values) => {
-                values.confirm_teacher = 1;
-                try {
-                  await putConnect({ ...values });
-                  toast.success('Xác nhận thành công !', {
-                    duration: 3000,
-                    position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
-                  });
-                  setIsOpen(false);
-                  reloadPageAfterDelay();
-                } catch (ex: any) {
-                  console.log(ex);
-                }
-              }}
-              initialValues={{
-                id: user?.id,
-                confirm_teacher: 1,
-              }}
-            >
-              <Form className={'min-w-[500px]'}>
-                <div className={'flex gap-1 justify-end p-2'}>
-                  <button
-                    type="submit"
-                    className={
-                      'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white'
-                    }
-                    onClick={closeModal}
-                  >
-                    Đồng ý
-                  </button>
-                </div>
-              </Form>
-            </Formik>
+            <FormAcceptConnect user={user} />
           </div>
         </div>
       </MyModal>

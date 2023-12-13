@@ -32,13 +32,53 @@ const InfoUser = ({ infoUser }: IProps) => {
           <span className={'max-w-[280px]'}>{infoUser?.address}</span>
         </li>
         <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
-          <strong className="text-slate-700">Trường :</strong>
+          <strong className="text-slate-700">Ngày sinh:</strong>
           <span className={'max-w-[280px]'}>
-            {infoUser?.school.map((item) => {
-              return item?.name;
-            })}
+            {infoUser?.date_of_birth &&
+              new Date(infoUser.date_of_birth).toLocaleDateString()}
           </span>
         </li>
+
+        {infoUser?.role == 3 && (
+          <>
+            <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+              <strong className="text-slate-700">Trường học:</strong>
+              <span className={'max-w-[280px]'}>
+                {infoUser?.school.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    {index > 0 && ', '}
+                    {item.name}
+                  </React.Fragment>
+                ))}
+              </span>
+            </li>
+
+            <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+              <strong className="text-slate-700">Môn dạy:</strong>
+              <span className={'max-w-[280px]'}>
+                {infoUser?.subject.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    {index > 0 && ', '}
+                    {item.name}
+                  </React.Fragment>
+                ))}
+              </span>
+            </li>
+
+            <li className="flex gap-2 relative px-4 pl-0 leading-normal bg-white border-0 border-t-0 text-base text-inherit">
+              <strong className="text-slate-700">Lớp dạy:</strong>
+              <span className={'max-w-[280px]'}>
+                {infoUser?.class.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    {index > 0 && ', '}
+                    {item.name}
+                  </React.Fragment>
+                ))}
+              </span>
+            </li>
+          </>
+        )}
+
         <li className="flex justify-end gap-2 relative px-4 pb-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
           {infoUser.role == 2 ? (
             <EditProfile editProfile={infoUser} />

@@ -7,6 +7,7 @@ import { getJob } from '@/services/job';
 import FormConfirmProcedure from '../ModailProcedure/FormConfirmProcedure';
 import ModailDetail from '../ModoalDeital/ModailDetail';
 import ModailDetailUser from '../ModoalDeital/ModailDetailUser';
+import FormRefuseProcedure from '../ModailProcedure/FormRefuseProcedure';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -58,12 +59,14 @@ export default function RentalHistory({ infoUser }: IProps) {
             <th className={'px-6 py-4'}>Tên</th>
             <th className={'px-6 py-4'}>Môn</th>
             <th className={'px-6 py-4'}>Lớp</th>
-            <th className={'pl-14 py-4'}>Thông tin</th>
+            {infoUser?.role == 3 && (
+              <th className={'px-14 py-4 '}>Thông tin</th>
+            )}
             <th className={'px-6 py-4'}>Trạng thái</th>
             {infoUser?.role == 3 ? (
-              <th className={'px-6 py-4'}>Action</th>
+              <th className={'px-6 py-4 text-center'}>Action</th>
             ) : (
-              <th className={'px-6 py-4'}>Mô tả</th>
+              <th className={'px-6 py-4 text-center'}>Mô tả</th>
             )}
           </tr>
         </thead>
@@ -113,32 +116,40 @@ export default function RentalHistory({ infoUser }: IProps) {
                     })}
                   </div>
                 </td>
-
-                <td className={'px-6 py-4'}>
-                  {items?.status == 0 ? (
-                    <div
-                      className={
-                        'flex items-center  before:w-2.5 before:rounded-full before:bg-orange-500 before:mr-2'
-                      }
-                    >
-                      Xác nhận để xem
-                    </div>
-                  ) : (
-                    <div
-                      className={
-                        'flex items-center  before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
-                      }
-                    >
-                      <td className={'px-10 py-4'}>
-                        {infoUser?.role == 2 ? (
-                          <ModailDetailUser user={items} />
-                        ) : (
+                {infoUser?.role == 3 && (
+                  <td className={'px-6 py-4 text-center'}>
+                    {items?.status === 0 ? (
+                      <div
+                        className={
+                          'flex items-center before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
+                        }
+                      >
+                        Xác nhận để xem
+                      </div>
+                    ) : items?.status === 1 ? (
+                      <div
+                        className={
+                          'px-10 flex before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
+                        }
+                      >
+                        {infoUser?.role == 3 ? (
                           <ModailDetail user={items} />
+                        ) : (
+                          <ModailDetailUser user={items} />
                         )}
-                      </td>
-                    </div>
-                  )}
-                </td>
+                      </div>
+                    ) : (
+                      <div
+                        className={
+                          'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:mr-2'
+                        }
+                      >
+                        Xác nhận để xem
+                      </div>
+                    )}
+                  </td>
+                )}
+
                 <td className={'px-6 py-4'}>
                   {items?.status == 0 ? (
                     <div
@@ -166,14 +177,20 @@ export default function RentalHistory({ infoUser }: IProps) {
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4">
+                <td className="py-4 text-center">
                   {infoUser?.role == 3 ? (
-                    items?.status !== 0 ? (
+                    items?.status === 0 ? (
+                      <>
+                        <div className="inline-grid grid-cols-2 gap-2">
+                          <FormConfirmProcedure user={items} />
+                          <FormRefuseProcedure user={items} />
+                        </div>
+                      </>
+                    ) : items?.status === 1 ? (
                       'Đã xác nhận'
-                    ) : (
-                      // <FormConfirmProcedure/>
-                      <FormConfirmProcedure user={items} />
-                    )
+                    ) : items?.status === 2 ? (
+                      'Đã từ chối'
+                    ) : null
                   ) : (
                     <span>{items?.description}</span>
                   )}

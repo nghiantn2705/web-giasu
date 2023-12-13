@@ -44,7 +44,6 @@ export default function FormAcceptConnectUser({ user }: IJob) {
     }, 3000);
   };
   const validationSchema = Yup.object({
-    confirm_user: Yup.string().required('Vui lòng chọn Đồng ý hoặc Từ chối'),
     note_user: Yup.string().required('Vui lòng nhập chú thích'),
   });
   return (
@@ -55,20 +54,21 @@ export default function FormAcceptConnectUser({ user }: IJob) {
           'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Xác nhận thuê
+        Từ chối thuê
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={''}>
-          <ModalTitle>Xác nhận thuê</ModalTitle>
+          <ModalTitle>Lý do từ chối</ModalTitle>
           <Formik
             className={''}
             onSubmit={(values) => {
+              values.confirm_user = 2;
               console.log(values);
               (async () => {
                 try {
                   await putConnect({ ...values });
-                  toast.success('Xác nhận thành công !', {
+                  toast.success('Từ chối thành công !', {
                     duration: 3000,
                     position: 'top-right',
                     icon: '✅',
@@ -77,6 +77,7 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                       secondary: '#fff',
                     },
                   });
+                  closeModal();
                   reloadPageAfterDelay();
                 } catch (ex: any) {
                   console.log(ex);
@@ -85,33 +86,13 @@ export default function FormAcceptConnectUser({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
-              confirm_user: '',
+              confirm_user: 2,
               note_user: '',
             }}
             validationSchema={validationSchema}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
-                <label className={'grid grid-cols-2'}>
-                  <span>Gia sư:</span>
-                  <span>{user?.teacherName}</span>
-                </label>
-
-                <div className={'flex gap-3'}>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirm_user" value="1" />
-                    Đồng ý
-                  </label>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirm_user" value="2" />
-                    Từ chối
-                  </label>
-                </div>
-                <ErrorMessage
-                  name="confirm_user"
-                  component="div"
-                  className="text-red-500"
-                />
                 <ErrorMessage
                   name="note_user"
                   component="div"
@@ -125,6 +106,7 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                       'p-3 rounded-md w-full outline-none border-2 border-gray-500 hover:border-black duration-200 peer focus:black bg-white'
                     }
                     rows={'4'}
+                    required={true}
                   />
                   <span
                     className={
@@ -145,7 +127,6 @@ export default function FormAcceptConnectUser({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
-                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>

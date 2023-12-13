@@ -130,6 +130,7 @@ export default function RentTeacher(props: IProps) {
                   className={
                     ' bg-blue-tw text-sx font-medium text-slate-100 hover:bg-red-600 '
                   }
+                  onClick={closeModal}
                 >
                   Thuê
                 </Button>

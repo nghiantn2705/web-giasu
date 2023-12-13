@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
 import FormAcceptConnectUser from '../FormConfirmation/FormAcceptConnectUser';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { putConnect } from '@/services/connect';
+import toast from 'react-hot-toast';
 interface IJob {
   user: {
     id: number;
@@ -24,6 +27,11 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
   };
   const openModal = () => {
     setIsOpen(true);
+  };
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
 
   return (
@@ -85,7 +93,50 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
             </p>
           </div>
           <div className={'text-center'}>
-            <FormAcceptConnectUser user={user} />
+            {/* <FormAcceptConnectUser user={user} /> */}
+            <Formik
+              className={''}
+              onSubmit={(values) => {
+                values.confirm_user = 1;
+                console.log(values);
+                (async () => {
+                  try {
+                    await putConnect({ ...values });
+                    toast.success('Xác nhận thành công !', {
+                      duration: 3000,
+                      position: 'top-right',
+                      icon: '✅',
+                      iconTheme: {
+                        primary: '#000',
+                        secondary: '#fff',
+                      },
+                    });
+                    reloadPageAfterDelay();
+                  } catch (ex: any) {
+                    console.log(ex);
+                  }
+                })();
+              }}
+              initialValues={{
+                id: user?.id,
+                confirm_user: 1,
+                note_user: '',
+              }}
+            >
+              <Form className={'min-w-[500px]'}>
+                <div className={'flex gap-1  justify-end p-2'}>
+                  <button
+                    type="submit"
+                    className={
+                      'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white'
+                    }
+                    onClick={closeModal}
+                  >
+                    Đồng ý
+                  </button>
+                </div>
+              </Form>
+            </Formik>
           </div>
         </div>
       </MyModal>

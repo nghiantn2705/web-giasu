@@ -8,9 +8,8 @@ import { getConnect } from '@/services/connect';
 import FormCeonnectProcedure from '../ModailProcedure/FormCeonnectProcedure';
 import FormCeonnectUserProcedure from '../ModailProcedure/FormCeonnecUsertProcedure';
 import { IConnect } from '@/types/IConect';
-
-import ModailDetail from '../ModoalDeital/ModailDetail';
-import ModailDetailUser from '../ModoalDeital/ModailDetailUser';
+import FormRefuseConnectProcedure from '../ModailProcedure/FormRefuseConnectProcedure';
+import FormRefuseCeonnectUserProcedure from '../ModailProcedure/FormRefuseCeonnectUserProcedure';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -50,14 +49,14 @@ export default function ConnectHistory({ infoUser }: IProps) {
               <th className={'px-6 py-4'}>Trạng thái gia sư</th>
               <th className={'px-6 py-4'}>Trạng thái người dùng</th>
               {infoUser?.role == 3 ? (
-                <th className={'px-6 py-4'}>Action</th>
+                <th className={'px-6 py-4 text-center'}>Action</th>
               ) : (
-                <th className={'px-6 py-4'}>Lý do</th>
+                <th className={'px-6 py-4 text-center'}>Lý do</th>
               )}
               {infoUser?.role == 2 ? (
-                <th className={'px-6 py-4'}>Action</th>
+                <th className={'px-6 py-4 text-center'}>Action</th>
               ) : (
-                <th className={'px-6 py-4'}>Lý do</th>
+                <th className={'px-6 py-4 text-center'}>Lý do</th>
               )}
               <th className={'px-6 py-4'}>Trạng thái</th>
             </tr>
@@ -136,18 +135,43 @@ export default function ConnectHistory({ infoUser }: IProps) {
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="py-4 text-center">
                     {infoUser?.role == 3 ? (
-                      items?.confirm_teacher !== 0 ? (
+                      items?.confirm_teacher === 0 ? (
+                        <>
+                          <div className="inline-grid grid-cols-2 gap-2">
+                            <FormCeonnectProcedure user={items} />
+                            <FormRefuseConnectProcedure user={items} />
+                          </div>
+                        </>
+                      ) : items?.confirm_teacher === 1 ? (
                         'Đã xác nhận'
-                      ) : (
-                        <FormCeonnectProcedure user={items} />
-                      )
+                      ) : items?.confirm_teacher === 2 ? (
+                        'Đã từ chối'
+                      ) : null
                     ) : (
                       <span>{items?.note_teacher}</span>
                     )}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="py-4 text-center">
+                    {infoUser?.role == 2 ? (
+                      items?.confirm_user === 0 ? (
+                        <>
+                          <div className="inline-grid grid-cols-2 gap-2">
+                            <FormCeonnectUserProcedure user={items} />
+                            <FormRefuseCeonnectUserProcedure user={items} />
+                          </div>
+                        </>
+                      ) : items?.confirm_user === 1 ? (
+                        'Đã xác nhận'
+                      ) : items?.confirm_user === 2 ? (
+                        'Đã từ chối'
+                      ) : null
+                    ) : (
+                      <span>{items?.note_user}</span>
+                    )}
+                  </td>
+                  {/* <td className="px-6 py-4">
                     {infoUser?.role == 2 ? (
                       items?.confirm_user !== 0 ? (
                         'Đã xác nhận'
@@ -157,7 +181,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                     ) : (
                       <span>{items?.note_user}</span>
                     )}
-                  </td>
+                  </td> */}
                   {/* <td className={'px-10 py-4'}>
                     {infoUser?.role == 2 ? (
                       <ModailDetailUser user={items} />

@@ -55,15 +55,16 @@ export default function FormAccept({ user }: IJob) {
           'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Xác nhận thuê
+        Xác nhận từ chối
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={''}>
-          <ModalTitle>Xác nhận thuê</ModalTitle>
+          <ModalTitle>Nhập lý do từ chối</ModalTitle>
           <Formik
             className={''}
             onSubmit={(values) => {
+              values.status = 2;
               console.log(values);
               (async () => {
                 try {
@@ -85,43 +86,13 @@ export default function FormAccept({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
-              status: '',
+              status: 2,
               description: '',
             }}
             validationSchema={validationSchema}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
-                <label className={'grid grid-cols-2'}>
-                  <span>Người thuê</span>
-                  <span>{user?.idUser}</span>
-                </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Môn học:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.subject?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
-                <label className={'grid grid-cols-2'}>
-                  <span>Lớp:</span>
-                  <div className={'flex gap-2'}>
-                    {user?.class?.map((items: string, index: number) => {
-                      return <span key={index}>{items}</span>;
-                    })}
-                  </div>
-                </label>
-                <div className={'flex gap-3'}>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="1" />
-                    Đồng ý
-                  </label>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="status" value="2" />
-                    Từ chối
-                  </label>
-                </div>
                 <ErrorMessage
                   name="status"
                   component="div"

@@ -20,18 +20,13 @@ interface IJob {
   };
 }
 
-export default function FormConfirmProcedure({ user }: IJob) {
+export default function FormRefuseProcedure({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
     setIsOpen(true);
-  };
-  const reloadPageAfterDelay = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
   };
   return (
     <div>
@@ -41,30 +36,25 @@ export default function FormConfirmProcedure({ user }: IJob) {
           'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
         }
       >
-        Xác nhận
+        Từ chối
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[800px]'}>
           <ModalTitle>Điều khoản thuê gia sư</ModalTitle>
           <div className={'text-xl px-10 py-5 font-bold'}>
-            <p className={' px-5 py-5'}>
-              {' '}
-              • Gia sư bắt buộc phải có số dư trong tài khoản ít nhất{' '}
-              <span className={'text-red-600'}> 50.000đ </span> thì mới có thể
-              thực hiện việc xác nhận dạy.
-            </p>
-            <p className={' px-5 py-5'}>
-              • Trường hợp tài khoản không đủ số dư, gia sư cần tiến hành bước
-              nạp tiền để tiếp tục việc xác nhận dạy
+            <p className={' px-5 pt-5'}>
+              • Nếu gia sư không xác nhận thì sẽ đồng nghĩa với việc không có
+              thông tin liên hệ của người thuê.
             </p>
           </div>
           <div className={'text-center'}>
-            <Formik
+            <FormAccept user={user} />
+            {/* <Formik
               className={''}
               onSubmit={(values) => {
                 // Đặt giá trị status là 1 trước khi gửi lên server
-                values.status = 1;
+                values.status = 2;
 
                 console.log(values);
                 (async () => {
@@ -87,12 +77,16 @@ export default function FormConfirmProcedure({ user }: IJob) {
               }}
               initialValues={{
                 id: user?.id,
-                status: 1,
+                status: 2,
                 description: '',
               }}
             >
               <Form className={'min-w-[500px]'}>
-                <div className={'flex gap-1  justify-end p-2'}>
+                <div
+                  className={
+                    'flex gap-1 border-t border-t-gray-300 justify-end p-2'
+                  }
+                >
                   <button
                     type="submit"
                     className={
@@ -100,11 +94,11 @@ export default function FormConfirmProcedure({ user }: IJob) {
                     }
                     onClick={closeModal}
                   >
-                    Đồng ý
+                    <FormAccept user={user} />
                   </button>
                 </div>
               </Form>
-            </Formik>
+            </Formik> */}
           </div>
         </div>
       </MyModal>

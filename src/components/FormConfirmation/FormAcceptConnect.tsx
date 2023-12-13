@@ -59,18 +59,19 @@ export default function FormAcceptConnect({ user }: IJob) {
           'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Xác nhận thuê
+        Từ chối thuê
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={''}>
-          <ModalTitle>Xác nhận thuê</ModalTitle>
+          <ModalTitle>Lý do từ chối</ModalTitle>
           <Formik
             className={''}
             onSubmit={async (values) => {
+              values.confirm_teacher = 2;
               try {
                 await putConnect({ ...values });
-                toast.success('Xác nhận thành công !', {
+                toast.success('Từ chối thành công !', {
                   duration: 3000,
                   position: 'top-right',
                   icon: '✅',
@@ -87,38 +88,12 @@ export default function FormAcceptConnect({ user }: IJob) {
             }}
             initialValues={{
               id: user?.id,
+              confirm_teacher: 2,
             }}
             validationSchema={validationSchema}
           >
             <Form className={'min-w-[500px]'}>
               <div className={'flex flex-col gap-5 p-5'}>
-                <label className={'grid grid-cols-2'}>
-                  <span>Người thuê</span>
-                  <span>{user?.userName}</span>
-                </label>
-
-                <div className={'flex gap-3'}>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirm_teacher" value="1" />
-                    Đồng ý
-                  </label>
-                  <label className={'flex gap-3'}>
-                    <Field type="radio" name="confirm_teacher" value="2" />
-                    Từ chối
-                  </label>
-                </div>
-
-                <ErrorMessage
-                  name="confirm_teacher"
-                  component="div"
-                  className="text-red-500"
-                />
-                <ErrorMessage
-                  name="note_teacher"
-                  component="div"
-                  className="text-red-500"
-                />
-
                 <label className={'relative'}>
                   <Field
                     name="note_teacher"
@@ -150,6 +125,7 @@ export default function FormAcceptConnect({ user }: IJob) {
                   className={
                     'rounded-md border border-transparent bg-blue-tw1 text-sx font-medium text-slate-100 hover:bg-blue-tw px-2'
                   }
+                  onClick={closeModal}
                 >
                   Đồng ý
                 </button>
