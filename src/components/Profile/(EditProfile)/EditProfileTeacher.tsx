@@ -24,6 +24,7 @@ import {
   Select,
   Radio,
   DatePicker,
+  Slider,
 } from 'antd';
 import { FieldType } from '@/types/Field';
 import FormLoginProcedure from '../../ModailProcedure/FormLoginProcedure';
@@ -36,6 +37,7 @@ import { ISchool } from '@/types/ISchool';
 import MyModalTransition from '@/components/Headless/ModalTransition';
 import dayjs from 'dayjs';
 import { log } from 'console';
+
 interface IProps {
   editProfile: IUserInfo;
 }
@@ -58,7 +60,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
   const [district1, setDistrict1] = useState<IDistrict>();
   const [address1, setAddress1] = useState<IAddress>();
   const [school, setSchool] = useState<ISchool[]>();
-
+  const formatter = (value: any) => `${(value * 10000).toLocaleString()} đồng`;
   // const handleFileChange = ({ fileList }) => {
   //   setFileList(fileList);
   // };
@@ -81,6 +83,10 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     })();
   }, []);
 
+  const onChange2 = (value: any) => {
+    const scaledValue = value.map((v: number) => v * 10000);
+    setSalary(scaledValue);
+  };
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
@@ -221,25 +227,25 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('subject', values.subject);
     formData.append('class_id', values.class_id);
     formData.append('salary_id', values.salary_id);
-    formData.append('school_id', values.school_id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
     formData.append('gender', values.gender);
     formData.append('phone', values.phone);
+    formData.append('education_level', values.education_level);
     formData.append('role', '3');
     console.log(values);
     console.log(formData);
-    await updateProfile(id, formData);
-    toast.success('Cập nhập thành công !', {
-      duration: 3000,
-      position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
-    });
-    reloadPageAfterDelay();
+    // await updateProfile(id, formData);
+    // toast.success('Cập nhập thành công !', {
+    //   duration: 3000,
+    //   position: 'top-right',
+    //   icon: '✅',
+    //   iconTheme: {
+    //     primary: '#000',
+    //     secondary: '#fff',
+    //   },
+    // });
+    // reloadPageAfterDelay();
   };
 
   const closeModal = () => {
@@ -272,6 +278,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                 autoComplete="off"
                 encType={'multipart/form-data'}
                 initialValues={{
+                  exp: editProfile?.exp,
                   file: null,
                   name: editProfile?.name,
                   email: editProfile?.email,
@@ -286,7 +293,9 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     (classItem) => classItem.id,
                   ),
                   education_level: editProfile?.education_level,
-                  salary_id: editProfile?.salary?.map((salary) => salary.id),
+                  salary_id: editProfile?.salary?.map(
+                    (salary) => parseInt(salary) / 10000,
+                  ),
                   date_of_birth: moment(editProfile?.date_of_birth),
                 }}
               >
@@ -350,8 +359,8 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                   >
                     <Radio.Group onChange={onChangeGender}>
-                      <Radio value={'Nam'}>Nam</Radio>
-                      <Radio value={'Nữ'}>Nữ</Radio>
+                      <Radio value={'1'}>Nam</Radio>
+                      <Radio value={'2'}>Nữ</Radio>
                     </Radio.Group>
                   </Form.Item>
                   <Form.Item<FieldType>
@@ -546,6 +555,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                 </Form.Item> */}
                   <Form.Item<FieldType>
                     name="salary_id"
+                    label={'Mức lương mong muốn'}
                     rules={[
                       {
                         required: true,
@@ -554,16 +564,15 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     ]}
                     className={'w-full'}
                   >
-                    <Select
-                      // value={editProfile?.salary?.map((item) => {
-                      //   item.id;
-                      // })}
-                      showSearch
-                      placeholder="Mức lương của bạn"
-                      optionFilterProp="children"
-                      options={filteredSalary}
+                    <Slider
+                      range
+                      step={5}
+                      value={editProfile?.salary?.map((s) => Number(s))}
+                      onChange={onChange2}
+                      tooltip={{ formatter }}
                     />
                   </Form.Item>
+
                   <Form.Item<FieldType>
                     name="DistrictID"
                     rules={[

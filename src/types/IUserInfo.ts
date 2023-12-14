@@ -39,12 +39,7 @@ export interface IUserInfo {
       name: string;
     },
   ];
-  salary: [
-    {
-      id: number;
-      name: string;
-    },
-  ];
+  salary: string[];
   subject: [
     {
       id: number;
