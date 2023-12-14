@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
@@ -36,7 +36,14 @@ export default function FormAcceptConnect({ user }: IJob) {
   const openModal = () => {
     if (parseInt(userInfo.coin) < 50000 || userInfo.coin == null) {
       toast.error('Vui lòng Nạp tiền !', {
-        duration: 3000,
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
     } else {
       setIsOpen(true);
@@ -58,7 +65,7 @@ export default function FormAcceptConnect({ user }: IJob) {
           'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Từ chối thuê
+        Kết nối thất bại
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
@@ -70,14 +77,16 @@ export default function FormAcceptConnect({ user }: IJob) {
               values.confirm_teacher = 2;
               try {
                 await putConnect({ ...values });
+
                 toast.success('Từ chối thành công !', {
-                  duration: 3000,
                   position: 'top-right',
-                  icon: '✅',
-                  iconTheme: {
-                    primary: '#000',
-                    secondary: '#fff',
-                  },
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
                 });
                 closeModal();
                 setIsOpen(false);

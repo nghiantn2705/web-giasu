@@ -5,7 +5,7 @@ import {} from '@/services';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import FormAccept from '../FormConfirmation/FormAccept';
 import { putJob } from '@/services/job';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 interface IJob {
   user: {
     id: number;
@@ -63,7 +63,6 @@ export default function FormConfirmProcedure({ user }: IJob) {
             <Formik
               className={''}
               onSubmit={(values) => {
-                // Đặt giá trị status là 1 trước khi gửi lên server
                 values.status = 1;
 
                 console.log(values);
@@ -71,17 +70,27 @@ export default function FormConfirmProcedure({ user }: IJob) {
                   try {
                     await putJob({ ...values });
                     toast.success('Xác nhận thành công !', {
-                      duration: 3000,
                       position: 'top-right',
-                      icon: '✅',
-                      iconTheme: {
-                        primary: '#000',
-                        secondary: '#fff',
-                      },
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
                     });
                     reloadPageAfterDelay();
                   } catch (ex: any) {
-                    console.log(ex);
+                    toast.error(ex.message, {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    });
                   }
                 })();
               }}

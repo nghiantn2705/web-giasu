@@ -49,7 +49,7 @@ const Profile = ({ children, infoUser }: IProps) => {
             }
           >
             <BiHistory />
-            Xác nhận dạy
+            Trạng thái kết nối
           </Link>
 
           <Link

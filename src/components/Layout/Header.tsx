@@ -200,7 +200,7 @@ const Header = (props: any) => {
                   }
                 >
                   <BiHistory />
-                  Xác nhận dạy
+                  Trạng thái kết nối
                 </Link>
 
                 <Link

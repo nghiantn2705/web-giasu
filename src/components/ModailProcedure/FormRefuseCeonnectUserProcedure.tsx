@@ -34,11 +34,11 @@ export default function FormRefuseCeonnectUserProcedure({ user }: IJob) {
           'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
         }
       >
-        Từ chối
+        Chưa kết nối
       </button>
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[800px]'}>
-          <ModalTitle>Điều khoản xác nhận dạy gia sư</ModalTitle>
+          <ModalTitle>Điều khoản xác nhận kết nối gia sư</ModalTitle>
           <div className={'px-10 py-5  flex flex-col gap-4 font-medium'}>
             <p className={' text-base'}>
               <span className={'text-red-600 text-lg font-bold'}>

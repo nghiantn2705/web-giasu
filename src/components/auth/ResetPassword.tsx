@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
 
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { resetPassword, SendMail } from '@/services/post';
 
 const ResetPassword = () => {
@@ -67,18 +67,25 @@ const ResetPassword = () => {
                     ...values,
                   });
                   toast.success('Vui lòng vào mail của bạn để xác nhận !', {
-                    duration: 3000,
                     position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
                 } catch (ex) {
                   toast.error('Vui lòng kiểm tra lại gmail !', {
-                    duration: 3000,
                     position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
                 }
               }}
@@ -118,20 +125,26 @@ const ResetPassword = () => {
                   const resValues = { ...values };
                   console.log(resValues);
                   const data = await resetPassword({ ...resValues });
-
                   toast.success('Đổi mật khẩu thành công !', {
-                    duration: 3000,
                     position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
                 } catch (ex) {
                   toast.error('Sai mã xác nhận', {
-                    duration: 3000,
                     position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
                 }
               }}

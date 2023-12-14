@@ -15,7 +15,7 @@ import {
   Slider,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { ISubject } from '@/types/ISubject';
 import { IClass } from '@/types/IClass';
 import { RegisterUser } from '@/services';
@@ -147,54 +147,73 @@ const page = () => {
     })();
   }, []);
   const onFinish = async (values: any) => {
-    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
+    try {
+      values['date_of_birth'] = moment(values.date_of_birth).format(
+        'YYYY-MM-DD',
+      );
 
-    const formData = new FormData();
-    if (values.avatar) {
-      const fileavata = values?.avatar?.map((item: any) => {
-        return item?.originFileObj;
+      const formData = new FormData();
+      if (values.avatar) {
+        const fileavata = values?.avatar?.map((item: any) => {
+          return item?.originFileObj;
+        });
+        formData.append('avatar', fileavata);
+      } else {
+        formData.append('avatar', '');
+      }
+      const addressTeacher: any =
+        district?.result?.formatted_address + '' + district?.result?.name;
+      const addressTeacher1: any = district1?.result?.formatted_address;
+      const latitude: any = district1?.result?.geometry?.location?.lat;
+      const longitude: any = district1?.result?.geometry?.location?.lng;
+      formData.append('DistrictID', addressTeacher1);
+      formData.append('address', addressTeacher);
+      formData.append('latitude', latitude);
+      formData.append('longitude', longitude);
+      formData.append('class_id', values.class_id);
+      formData.append('current_role', values.current_role);
+      formData.append('date_of_birth', values.date_of_birth);
+      formData.append('description', values.description);
+      formData.append('education_level', values.education_level);
+      formData.append('email', values.email);
+      formData.append('exp', values.exp);
+      formData.append('gender', values.gender);
+      formData.append('password', values.password);
+      formData.append('phone', values.phone);
+      formData.append('name', values.name);
+      formData.append('salary_id', salary);
+      formData.append('school_id', values.school_id);
+      formData.append('subject', values.subject);
+      // formData.append('time_tutor_id', values.time_tutor_id);
+      formData.append('role', '3');
+
+      await RegisterUser(formData);
+      toast.success(
+        'Đăng kí thành công . vui lòng vào mail để kích hoạt tài khoản !',
+        {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        },
+      );
+      router.push('/auth/teacher');
+    } catch (error) {
+      toast.error('Đăng kí thất bại vui lòng thử lại', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
-      formData.append('avatar', fileavata);
-    } else {
-      formData.append('avatar', '');
     }
-    const addressTeacher: any =
-      district?.result?.formatted_address + '' + district?.result?.name;
-    const addressTeacher1: any = district1?.result?.formatted_address;
-    const latitude: any = district1?.result?.geometry?.location?.lat;
-    const longitude: any = district1?.result?.geometry?.location?.lng;
-    formData.append('DistrictID', addressTeacher1);
-    formData.append('address', addressTeacher);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
-    formData.append('class_id', values.class_id);
-    formData.append('current_role', values.current_role);
-    formData.append('date_of_birth', values.date_of_birth);
-    formData.append('description', values.description);
-    formData.append('education_level', values.education_level);
-    formData.append('email', values.email);
-    formData.append('exp', values.exp);
-    formData.append('gender', values.gender);
-    formData.append('password', values.password);
-    formData.append('phone', values.phone);
-    formData.append('name', values.name);
-    formData.append('salary_id', salary);
-    formData.append('school_id', values.school_id);
-    formData.append('subject', values.subject);
-    formData.append('time_tutor_id', values.time_tutor_id);
-    formData.append('role', '3');
-
-    await RegisterUser(formData);
-    toast.success('Đăng kí thành công !', {
-      duration: 3000,
-      position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
-    });
-    router.push('/auth/teacher');
   };
   return (
     <div className={'container grid grid-cols-12 min-h-fit'}>
@@ -283,7 +302,7 @@ const page = () => {
             >
               <Radio.Group onChange={onChangeGender} value={value}>
                 <Radio value={'1'}>Nam</Radio>
-                <Radio value={'2'}>Nữ</Radio>
+                <Radio value={'0'}>Nữ</Radio>
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
@@ -369,7 +388,7 @@ const page = () => {
                 options={filteredOptions}
               />
             </Form.Item>
-            <Form.Item<FieldType>
+            {/* <Form.Item<FieldType>
               label={'Ca mong muốn dạy'}
               name="time_tutor_id"
               rules={[
@@ -387,7 +406,7 @@ const page = () => {
                 style={{ width: '100%' }}
                 options={filteredTimeSlot}
               />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item<FieldType>
               name="class_id"
               label={'Lớp học'}

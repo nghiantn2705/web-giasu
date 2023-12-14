@@ -23,7 +23,7 @@ export interface ITeachers {
       class: string;
     },
   ];
-  salary_id: string;
+  salary_id: string[];
   description: string;
   time_tutor_id: number;
   status: number;
@@ -62,4 +62,5 @@ export interface ITeachers {
   created_at: Date;
   Certificate_public: string[];
   status_public: number;
+  exp: string;
 }

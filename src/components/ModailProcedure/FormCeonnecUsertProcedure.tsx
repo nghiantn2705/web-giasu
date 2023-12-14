@@ -5,7 +5,7 @@ import {} from '@/services';
 import FormAcceptConnectUser from '../FormConfirmation/FormAcceptConnectUser';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import { putConnect } from '@/services/connect';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 interface IJob {
   user: {
     id: number;
@@ -42,11 +42,11 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
           'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
         }
       >
-        Xác nhận
+        Đã kết nối
       </button>
       <MyModal visible={isOpen} onClose={closeModal}>
         <div className={'w-[800px]'}>
-          <ModalTitle>Điều khoản xác nhận dạy gia sư</ModalTitle>
+          <ModalTitle>Điều khoản xác nhận kết nối gia sư</ModalTitle>
           <div className={'px-10 py-5  flex flex-col gap-4 font-medium'}>
             <p className={' text-base'}>
               <span className={'text-red-600 text-lg font-bold'}>
@@ -103,16 +103,28 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
                   try {
                     await putConnect({ ...values });
                     toast.success('Xác nhận thành công !', {
-                      duration: 3000,
                       position: 'top-right',
-                      icon: '✅',
-                      iconTheme: {
-                        primary: '#000',
-                        secondary: '#fff',
-                      },
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
                     });
+
                     reloadPageAfterDelay();
                   } catch (ex: any) {
+                    toast.error(ex.message, {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    });
                     console.log(ex);
                   }
                 })();
@@ -132,7 +144,7 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
                     }
                     onClick={closeModal}
                   >
-                    Đồng ý
+                    Kết nối thành công
                   </button>
                 </div>
               </Form>

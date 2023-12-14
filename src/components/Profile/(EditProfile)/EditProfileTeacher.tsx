@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { updateProfile } from '@/services/put';
 import {
@@ -227,25 +227,28 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('subject', values.subject);
     formData.append('class_id', values.class_id);
     formData.append('salary_id', values.salary_id);
+    formData.append('school_id', values.school_id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
     formData.append('gender', values.gender);
     formData.append('phone', values.phone);
     formData.append('education_level', values.education_level);
+    formData.append('current_role', values.current_role);
     formData.append('role', '3');
     console.log(values);
     console.log(formData);
-    // await updateProfile(id, formData);
-    // toast.success('Cập nhập thành công !', {
-    //   duration: 3000,
-    //   position: 'top-right',
-    //   icon: '✅',
-    //   iconTheme: {
-    //     primary: '#000',
-    //     secondary: '#fff',
-    //   },
-    // });
-    // reloadPageAfterDelay();
+    await updateProfile(id, formData);
+    toast.success('Cập nhập thành công !', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+    reloadPageAfterDelay();
   };
 
   const closeModal = () => {
@@ -297,11 +300,13 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     (salary) => parseInt(salary) / 10000,
                   ),
                   date_of_birth: moment(editProfile?.date_of_birth),
+                  current_role: editProfile?.current_role,
                 }}
               >
                 <div className={'grid grid-cols-2 gap-4'}>
                   <Form.Item<FieldType>
                     name="name"
+                    label={'Họ và tên'}
                     rules={[{ required: true, message: 'Họ và tên!' }]}
                     className={'w-full'}
                   >
@@ -309,6 +314,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="phone"
+                    label={'Số điện thoại'}
                     rules={[{ required: true, message: 'Hãy số điện thoại!' }]}
                     className={'w-full'}
                   >
@@ -322,6 +328,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
 
                   <Form.Item<FieldType>
                     name="email"
+                    label={'Email'}
                     rules={[
                       { required: true, message: 'Hãy điền email của bạn!' },
                     ]}
@@ -332,6 +339,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
 
                   <Form.Item<FieldType>
                     name="address"
+                    label={'Địa chỉ'}
                     rules={[
                       { required: true, message: 'Hãy điền nơi ở của bạn!' },
                     ]}
@@ -350,6 +358,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="gender"
+                    label={'Giới tính'}
                     required
                     rules={[
                       {
@@ -360,11 +369,12 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   >
                     <Radio.Group onChange={onChangeGender}>
                       <Radio value={'1'}>Nam</Radio>
-                      <Radio value={'2'}>Nữ</Radio>
+                      <Radio value={'0'}>Nữ</Radio>
                     </Radio.Group>
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="date_of_birth"
+                    label={'Ngày/Tháng/Năm sinh'}
                     rules={[
                       {
                         required: true,
@@ -435,6 +445,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item> */}
                   <Form.Item<FieldType>
                     name="education_level"
+                    label={'Vị trí công việc'}
                     rules={[
                       {
                         required: true,
@@ -469,6 +480,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="subject"
+                    label={'Môn học'}
                     rules={[
                       {
                         required: true,
@@ -502,6 +514,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                 </Form.Item> */}
                   <Form.Item<FieldType>
                     name="class_id"
+                    label={'Lớp học'}
                     rules={[
                       {
                         required: true,
@@ -521,38 +534,39 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     />
                   </Form.Item>
 
-                  {/* <Form.Item<FieldType>
-                  name="current_role"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Hãy điền vị trí công việc hiện tại của bạn!',
-                    },
-                  ]}
-                  className={'w-full'}
-                >
-                  <Select
-                    defaultValue={editProfile?.current_role}
-                    showSearch
-                    placeholder="Hiện tại đang là"
-                    optionFilterProp="children"
-                    filterOption={filterOption}
-                    options={[
+                  <Form.Item<FieldType>
+                    name="current_role"
+                    label={'Vị trí công việc'}
+                    rules={[
                       {
-                        value: 'Sinh Viên',
-                        label: 'Sinh Viên',
-                      },
-                      {
-                        value: 'Giảng Viên',
-                        label: 'Giảng Viên',
-                      },
-                      {
-                        value: 'Giáo viên',
-                        label: 'Giáo viên',
+                        required: true,
+                        message: 'Hãy điền vị trí công việc hiện tại của bạn!',
                       },
                     ]}
-                  />
-                </Form.Item> */}
+                    className={'w-full'}
+                  >
+                    <Select
+                      defaultValue={editProfile?.current_role}
+                      showSearch
+                      placeholder="Hiện tại đang là"
+                      optionFilterProp="children"
+                      filterOption={filterOption}
+                      options={[
+                        {
+                          value: 'Sinh Viên',
+                          label: 'Sinh Viên',
+                        },
+                        {
+                          value: 'Giảng Viên',
+                          label: 'Giảng Viên',
+                        },
+                        {
+                          value: 'Giáo viên',
+                          label: 'Giáo viên',
+                        },
+                      ]}
+                    />
+                  </Form.Item>
                   <Form.Item<FieldType>
                     name="salary_id"
                     label={'Mức lương mong muốn'}
@@ -575,6 +589,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
 
                   <Form.Item<FieldType>
                     name="DistrictID"
+                    label={'Khu vực dậy của bạn'}
                     rules={[
                       { required: true, message: 'Hãy điền nơi ở của bạn!' },
                     ]}
@@ -593,6 +608,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="school_id"
+                    label={'Trường bạn đang học hoặc đã học'}
                     rules={[
                       { required: true, message: 'Hãy chọn trường đại học!' },
                     ]}
@@ -606,6 +622,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="exp"
+                    label={'Kinh nghiệm của bạn'}
                     rules={[
                       {
                         required: true,
@@ -655,6 +672,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="description"
+                    label={'Giới thiệu về bạn'}
                     rules={[
                       { required: true, message: 'Hãy điền mô tả về bạn!' },
                     ]}

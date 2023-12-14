@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { putConnect } from '@/services/connect';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
@@ -54,7 +54,7 @@ export default function FormAcceptConnectUser({ user }: IJob) {
           'mt-5 mb-8 mx-auto text-center bg-blue-tw1 hover:bg-blue-tw w-[50%] h-12 rounded-md text-lg leading-normal tracking-normal text-white  '
         }
       >
-        Từ chối thuê
+        Kết nối thất bại
       </button>
 
       <MyModal visible={isOpen} onClose={closeModal}>
@@ -68,19 +68,30 @@ export default function FormAcceptConnectUser({ user }: IJob) {
               (async () => {
                 try {
                   await putConnect({ ...values });
+
                   toast.success('Từ chối thành công !', {
-                    duration: 3000,
                     position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
                   closeModal();
                   reloadPageAfterDelay();
                 } catch (ex: any) {
-                  console.log(ex);
+                  toast.error(ex.message, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
                 }
               })();
             }}

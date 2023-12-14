@@ -9,7 +9,7 @@ import { postPaypal, postSavePaypal } from '@/services/paypal';
 import { IPay } from '@/types/IPay';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BiMoney } from 'react-icons/bi';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 export default function Paypal() {
   const [user] = useStore<ITeachers>('userInfo');
@@ -44,13 +44,14 @@ export default function Paypal() {
         const resMessege = await postSavePaypal({ ...deposit });
         if (resMessege) {
           toast.success('Nạp tiền thành công !', {
-            duration: 3000,
             position: 'top-right',
-            icon: '✅',
-            iconTheme: {
-              primary: '#000',
-              secondary: '#fff',
-            },
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
           });
           router.push('/profile/history-paypal');
         }

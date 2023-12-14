@@ -4,7 +4,7 @@ import { Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import imageAsset from '/public/lienhe.jpg';
 import { postContact } from '@/services/contac';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import router from 'next/router';
 import { useStore } from '@/hook/use-store';
 import { ITeachersDetail } from '@/types/ITeachersDetail';
@@ -54,9 +54,15 @@ const page = () => {
                   (async () => {
                     try {
                       if (!userInfo) {
-                        toast.error('Vui lòng đăng nhập !', {
+                        toast.error('Vui lòng đăng nhập', {
                           position: 'top-right',
-                          duration: 3000,
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: 'light',
                         });
                         return;
                       }
@@ -65,20 +71,28 @@ const page = () => {
                         values.phone == null ||
                         values.note == null
                       ) {
-                        toast.error('Vui lòng nhập đủ thông tin  !', {
-                          duration: 3000,
+                        toast.error('Vui lòng nhập đủ thông tin!', {
                           position: 'top-right',
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: 'light',
                         });
                       } else {
                         await postContact({ ...values });
+
                         toast.success('Gửi liên hệ thành công  !', {
-                          duration: 3000,
                           position: 'top-right',
-                          icon: '✅',
-                          iconTheme: {
-                            primary: '#000',
-                            secondary: '#fff',
-                          },
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: 'light',
                         });
                         router.push('/contact');
                       }

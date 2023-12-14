@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import RentTeacher from '../Teacher/RentTeacher';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 export default function FormRentProcedure() {
   const [user] = useStore<ITeachers>('userInfo');
@@ -18,7 +18,13 @@ export default function FormRentProcedure() {
     if (!user) {
       toast.error('Vui lòng đăng nhập !', {
         position: 'top-right',
-        duration: 3000,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
     } else {
       setIsOpen(true);

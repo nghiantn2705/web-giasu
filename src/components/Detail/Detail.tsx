@@ -1,4 +1,4 @@
-  /* eslint-disable no-undef */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 'use client';
@@ -34,6 +34,7 @@ export default function Detail({ teacher }: IProps) {
   function closeModal() {
     setIsOpen(false);
   }
+  console.log(teacher);
   const values = {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],
@@ -295,7 +296,7 @@ export default function Detail({ teacher }: IProps) {
                           </label>
                           <label> 2023</label>
                         </div>
-                        <div className="pt-2 text-zinc-950 ">
+                        {/* <div className="pt-2 text-zinc-950 ">
                           <label className="font-bold">
                             {' '}
                             Trình độ học vấn:{' '}
@@ -305,6 +306,14 @@ export default function Detail({ teacher }: IProps) {
                               return items?.name;
                             })}
                           </label>
+                        </div> */}
+                        <div className={'pt-2 text-zinc-950 '}>
+                          <label className={'font-bold'}>
+                            {' '}
+                            Trình độ học vấn :
+                          </label>
+
+                          <label className=""> {teacher?.exp}</label>
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
@@ -328,7 +337,16 @@ export default function Detail({ teacher }: IProps) {
                             Mức lương mong muốn :
                           </label>
 
-                          <label className=""> {teacher?.salary_id}</label>
+                          <label className="">
+                            {teacher?.salary_id
+                              ? teacher.salary_id
+                                  .map(
+                                    (salary) =>
+                                      (salary * 1).toLocaleString() + 'đ',
+                                  )
+                                  .join(' đến ')
+                              : ''}
+                          </label>
                         </div>
                         <div className="pt-2 col-span-3 text-zinc-950 ">
                           <label className="font-bold"> Kinh nghiệm : </label>

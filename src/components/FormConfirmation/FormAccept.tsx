@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import {} from '@/services';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { putJob } from '@/services/job';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
@@ -32,7 +32,14 @@ export default function FormAccept({ user }: IJob) {
   const openModal = () => {
     if (parseInt(userInfo.coin) < 50000 || userInfo.coin == null) {
       toast.error('Vui lòng Nạp tiền !', {
-        duration: 3000,
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
     } else {
       setIsOpen(true);
@@ -69,17 +76,29 @@ export default function FormAccept({ user }: IJob) {
                 try {
                   await putJob({ ...values });
                   toast.success('Xác nhận thành công !', {
-                    duration: 3000,
                     position: 'top-right',
-                    icon: '✅',
-                    iconTheme: {
-                      primary: '#000',
-                      secondary: '#fff',
-                    },
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
+
                   closeModal();
                   reloadPageAfterDelay();
                 } catch (ex: any) {
+                  toast.error(ex.message, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
                   console.log(ex);
                 }
               })();

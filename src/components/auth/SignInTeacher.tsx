@@ -8,9 +8,10 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/hook/use-store';
 import { auth, authGoogle } from '@/services';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { setCookie } from 'cookies-next';
 import { FaGoogle } from 'react-icons/fa';
+import { message } from 'antd';
 
 const SignInTeacher = () => {
   const router = useRouter();
@@ -76,27 +77,39 @@ const SignInTeacher = () => {
                       data?.access_token,
                     );
                     toast.success('Đăng nhập thành công !', {
-                      duration: 3000,
                       position: 'top-right',
-                      icon: '✅',
-                      iconTheme: {
-                        primary: '#000',
-                        secondary: '#fff',
-                      },
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
                     });
                     router.push('/');
                   } else {
                     toast.error('Vui lòng đăng nhập bằng tài khoản gia sư !', {
-                      duration: 3000,
                       position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
                     });
                   }
                 } catch (ex: any) {
-                  toast.error('Email hoặc password không tồn tại !', {
-                    duration: 3000,
+                  toast.error(ex.message, {
                     position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
                   });
-                  console.log(ex);
                 }
               }}
             >

@@ -14,7 +14,7 @@ import {
   Checkbox,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { RegisterUser } from '@/services';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -60,40 +60,58 @@ const page = () => {
   });
 
   const onFinish = async (values: any) => {
-    console.log(values);
-    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
-    const fileavata = values?.avatar?.map((item: any) => {
-      return item?.originFileObj;
-    });
-    const formData = new FormData();
-    for (let i = 0; i < fileavata.length; i++) {
-      formData.append('avatar', fileavata[i]);
+    try {
+      values['date_of_birth'] = moment(values.date_of_birth).format(
+        'YYYY-MM-DD',
+      );
+      const fileavata = values?.avatar?.map((item: any) => {
+        return item?.originFileObj;
+      });
+      const formData = new FormData();
+      for (let i = 0; i < fileavata.length; i++) {
+        formData.append('avatar', fileavata[i]);
+      }
+      const addressUser: any =
+        district?.result?.formatted_address + '' + district?.result?.name;
+      const latitude: any = district?.result?.geometry?.location?.lat;
+      const longitude: any = district?.result?.geometry?.location?.lng;
+      formData.append('name', values.name);
+      formData.append('address', addressUser);
+      formData.append('latitude', latitude);
+      formData.append('longitude', longitude);
+      formData.append('date_of_birth', values.date_of_birth);
+      formData.append('email', values.email);
+      formData.append('gender', values.gender);
+      formData.append('password', values.password);
+      formData.append('phone', values.phone);
+      formData.append('role', '2');
+      await RegisterUser(formData);
+      toast.success(
+        'Đăng kí thành công . vui lòng vào mail để kích hoạt tài khoản !',
+        {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        },
+      );
+      router.push('/auth/user');
+    } catch (error) {
+      toast.error('Đăng kí thất bại vui lòng thử lại', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
-    const addressUser: any =
-      district?.result?.formatted_address + '' + district?.result?.name;
-    const latitude: any = district?.result?.geometry?.location?.lat;
-    const longitude: any = district?.result?.geometry?.location?.lng;
-    formData.append('name', values.name);
-    formData.append('address', addressUser);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
-    formData.append('date_of_birth', values.date_of_birth);
-    formData.append('email', values.email);
-    formData.append('gender', values.gender);
-    formData.append('password', values.password);
-    formData.append('phone', values.phone);
-    formData.append('role', '2');
-    await RegisterUser(formData);
-    toast.success('Đăng kí thành công !', {
-      duration: 3000,
-      position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
-    });
-    router.push('/auth/user');
   };
   return (
     <div className={'container drop-shadow border py-5 grid grid-cols-12'}>

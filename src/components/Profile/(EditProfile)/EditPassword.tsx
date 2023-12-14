@@ -3,7 +3,7 @@
 import { Form, Formik, Field } from 'formik';
 import React, { useState } from 'react';
 import { useStore } from '@/hook/use-store';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { editPassword } from '@/services/post';
 import MyModalTransition from '@/components/Headless/ModalTransition';
 import { MdOutlinePassword } from 'react-icons/md';
@@ -39,13 +39,25 @@ const InfoUser = () => {
                   ...values,
                 });
                 toast.success('Đổi mật khẩu thành công !', {
-                  duration: 3000,
                   position: 'top-right',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
                 });
               } catch (ex) {
                 toast.error('Vui lòng kiểm tra password !', {
-                  duration: 3000,
                   position: 'top-right',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
                 });
               }
             }}

@@ -2,7 +2,7 @@
 
 import React, { FunctionComponent, useState } from 'react';
 import { IUserInfo } from '@/types/IUserInfo';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { updateProfile } from '@/services/put';
 import { getAdreess, getAdreessId } from '@/services/get';
@@ -117,13 +117,14 @@ const EditProfile = ({ editProfile }: IProps) => {
 
     await updateProfile(id, formData);
     toast.success('Cập nhập thành công !', {
-      duration: 3000,
       position: 'top-right',
-      icon: '✅',
-      iconTheme: {
-        primary: '#000',
-        secondary: '#fff',
-      },
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
     });
     reloadPageAfterDelay();
     closeModal();

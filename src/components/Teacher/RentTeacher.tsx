@@ -7,7 +7,7 @@ import MyModal, { ModalTitle } from '@/components/Headless/Modal';
 import { Form, Button, Select, message } from 'antd';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { getSubjectAndClass } from '@/services/get';
 import { postJob } from '@/services/job';
 import { useParams } from 'next/navigation';
@@ -29,9 +29,16 @@ export default function RentTeacher(props: IProps) {
         setSubjectAndClass(resSubjectAndClass);
       } catch (error) {
         console.error(error);
-        toast.error(
-          'Failed to fetch subjects and classes. Please try again later.',
-        );
+        toast.error('Có lỗi sảy ra', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       }
     };
 
@@ -44,7 +51,16 @@ export default function RentTeacher(props: IProps) {
 
   const openModal = () => {
     if (parseInt(user.coin) < 50000 || user.coin == null) {
-      toast.error('Vui lòng Nạp tiền !', { duration: 3000 });
+      toast.error('Vui lòng Nạp tiền !', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     } else {
       setIsOpen(true);
     }
@@ -58,17 +74,30 @@ export default function RentTeacher(props: IProps) {
 
     try {
       const response = await postJob({ ...values });
-      toast.error('Vui lòng đợi gia sư đồng ý!', {
+      toast.success('Vui lòng đợi gia sư đồng ý!', {
         position: 'top-right',
-        duration: 3000,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
+
       console.log(response);
-    } catch (error) {
-      toast.error('Có lỗi xảy ra. Vui lòng thử lại sau.', {
+    } catch (ex: any) {
+      toast.error(ex.message, {
         position: 'top-right',
-        duration: 3000,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       });
-      console.error(error);
+      console.error(ex);
     }
   };
 

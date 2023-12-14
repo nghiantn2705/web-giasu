@@ -10,7 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Link from 'next/link';
 import { getStart } from '@/services/feedback';
-import { getTeacherStart } from '@/services/fillter';
 
 interface IProps {
   teachers: ITeachers[];

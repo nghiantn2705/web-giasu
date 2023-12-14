@@ -38,7 +38,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
           }
         >
           {' '}
-          Xác nhận dạy
+          Trạng thái kết nối
         </h3>
         <table className={'w-full text-sm text-left text-gray-500 0'}>
           <thead
@@ -58,7 +58,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
               ) : (
                 <th className={'px-6 py-4 text-center'}>Lý do</th>
               )}
-              <th className={'px-6 py-4'}>Trạng thái</th>
+              <th className={'px-6 py-4'}>Trạng thái kết nối</th>
             </tr>
           </thead>
           <tbody>
@@ -96,7 +96,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
                         }
                       >
-                        Đồng ý
+                        Đã kết nối
                       </div>
                     ) : (
                       <div
@@ -104,7 +104,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-red-600 before:mr-2'
                         }
                       >
-                        Từ chối
+                        Chưa kết nối
                       </div>
                     )}
                   </td>
@@ -123,7 +123,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
                         }
                       >
-                        Đồng ý
+                        Đã kết nối
                       </div>
                     ) : (
                       <div
@@ -131,7 +131,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-red-600 before:mr-2'
                         }
                       >
-                        Từ chối
+                        Chưa kết nối
                       </div>
                     )}
                   </td>
@@ -204,7 +204,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-green-500 before:mr-2'
                         }
                       >
-                        Hoàn thành
+                        Hoàn thành kết nối
                       </div>
                     ) : (
                       <div
@@ -212,7 +212,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:bg-red-600 before:mr-2'
                         }
                       >
-                        Thất bại
+                        Kết nối thất bại
                       </div>
                     )}
                   </td>
