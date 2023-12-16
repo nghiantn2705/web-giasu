@@ -9,22 +9,29 @@ import { getFeedback, getFeedbackUser } from '@/services/feedback';
 interface IProps {
   idParams: number | null;
   userInfo: any;
+  pages: number;
 }
 
-const FeedBack = ({ idParams, userInfo }: IProps) => {
+const FeedBack = ({ idParams, userInfo, pages }: IProps) => {
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
-
+  console.log(feedbackData);
   useEffect(() => {
     const fetchData = async () => {
       if (idParams !== null && idParams !== undefined) {
         try {
-          if (userInfo?.role == 3) {
+          if (pages == 1) {
             const resFeedback = await getFeedback({ id: idParams });
             setFeedbackData(resFeedback);
           }
-          if (userInfo?.role == 2) {
-            const resFeedback = await getFeedbackUser({ id: idParams });
-            setFeedbackData(resFeedback);
+          if (pages == 2) {
+            if (userInfo?.role == 3) {
+              const resFeedback = await getFeedback({ id: idParams });
+              setFeedbackData(resFeedback);
+            }
+            if (userInfo?.role == 2) {
+              const resFeedback = await getFeedbackUser({ id: idParams });
+              setFeedbackData(resFeedback);
+            }
           }
         } catch (error) {
           console.error('Error fetching feedback data:', error);
@@ -40,12 +47,12 @@ const FeedBack = ({ idParams, userInfo }: IProps) => {
       {feedbackData && feedbackData.length > 0 ? (
         <div className="col-span-2 text-left">
           <div className="text-left pt-2 flex flex-col gap-4">
-            {feedbackData.map((item: IFeedback, index) => (
+            {feedbackData.map((item: any, index) => (
               <div key={index} className={'py-2 border-b border-gray-200'}>
                 <div className="grid grid-cols-10 gap-5 ">
                   <div className={'col-span-5'}>
                     <span className="text-base text-blue-tw2 font-bold ">
-                      {item?.id_sender}
+                      {userInfo.role == 3 ? item?.id_sender : item?.id_teacher}
                     </span>
                     <div className={'text-xs text-stone-400 flex gap-4'}>
                       <span>

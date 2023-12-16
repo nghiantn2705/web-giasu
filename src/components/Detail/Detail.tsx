@@ -182,26 +182,32 @@ export default function Detail({ teacher }: IProps) {
                   </p>
                   <FormRentProcedure />
 
-                  <div className={'text-center flex gap-2 mt-2'}>
-                    {teacher?.status_public == 1
-                      ? teacher?.Certificate_public?.map(
-                          (item: string, index: number) => {
-                            return (
-                              <div key={index}>
-                                <p
-                                  className={
-                                    'pt-5 text-center  text-xl font-serif'
-                                  }
-                                >
-                                  Ảnh chứng chỉ
-                                </p>
-                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                                <Image height={80} width={80} src={`${item}`} />
-                              </div>
-                            );
-                          },
-                        )
-                      : ''}
+                  <div>
+                    {teacher?.status_public == 1 ? (
+                      <div>
+                        <p className={'pt-5 text-center  text-xl font-serif'}>
+                          Ảnh chứng chỉ
+                        </p>
+                        <div className={'text-center flex gap-2 mt-2'}>
+                          {teacher?.Certificate_public?.map(
+                            (item: string, index: number) => {
+                              return (
+                                <div key={index}>
+                                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                                  <Image
+                                    height={80}
+                                    width={80}
+                                    src={`${item.path}`}
+                                  />
+                                </div>
+                              );
+                            },
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      ''
+                    )}
                   </div>
                 </div>
               </div>
@@ -432,7 +438,7 @@ export default function Detail({ teacher }: IProps) {
                       </button>
                     </form>
                   </div>
-                  <FeedBack idParams={Number(params)} />
+                  <FeedBack idParams={Number(params)} pages={1} />
                 </div>
               </div>
             </div>
