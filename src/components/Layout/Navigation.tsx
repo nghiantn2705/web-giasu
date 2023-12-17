@@ -22,7 +22,7 @@ export default function Navigation({ classes, subject }: INavigation) {
               'text-xl text-center py-2 bg-blue-tw rounded-t-md text-white '
             }
           >
-            <p>Môn Học</p>
+            <p>Môn giảng dạy</p>
           </div>
           <ul className={'flex flex-col gap-2'}>
             {subject?.map((items: ISubject, index: number) => {

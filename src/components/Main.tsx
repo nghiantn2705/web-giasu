@@ -9,14 +9,15 @@ const Main = () => {
         <div className={'container'}>
           <div className={'flex flex-col bg-white  p-7 md:w-[50%] xl:w-[35%]'}>
             <h2 className={'text-xl font-bold mb-2 text-blue-tw2 '}>
-              Kết nối gia sư GS7
+              GS7 - Kết nối tri thức, nuôi dưỡng tương lai!
             </h2>
             <p className={'text-3xl font-bold mb-6 text-blue-tw1'}>
               Mang thành công đến <br /> với con bạn
             </p>
             <p className={'mb-4 text-blue-tw1'}>
-              Bạn muốn con chăm ngoan, học giỏi? Đăng <br /> ký ngay! Đội ngũ
-              gia sư giỏi của GS7 <br /> sẽ giúp con bạn tiến bộ nhanh chóng.
+              GS7 là một trang tìm kiếm gia sư uy tín, mang trong mình một sứ
+              mệnh đó là tạo ra một môi trường học tập tích cực và hiệu quả nhất
+              cho tất cả học sinh.
             </p>
             <Link href={'./giasu'}>
               <button
@@ -37,11 +38,13 @@ const Main = () => {
         </div>
         <div className={'flex flex-col gap-4 py-4 md:pl-12 md:py-8 md:w-[60%]'}>
           <h3 className={'text-2xl font-bold text-blue-tw1'}>
-            Bạn là giáo viên, sinh viên?
+            Bạn muốn trở thành một gia sư chuyên nghiệp?
           </h3>
           <p className={'text-blue-tw1 text-xl'}>
-            Gia nhập vào đội ngũ gia sư của GS7, nhận lớp và có thêm thu nhập từ
-            những kiến thức , kỹ năng giảng dạy của bạn.
+            Với quy trình đăng ký đơn giản, GS7 là nơi lý tưởng để bạn có thể
+            bắt đầu với công việc gia sư và trở thành một phần của đội ngũ Gia
+            sư GS7. Bạn có thể thỏa thích chia sẻ đam mê giảng dạy và cùng xây
+            dựng một môi trường học tập tích cực và hiệu quả.
           </p>
           <div className={'flex gap-5  text-xl'}>
             <Link
@@ -78,14 +81,15 @@ const Main = () => {
             className={'flex flex-col gap-4 md:py-8 w-full md:w-[60%] text-xl'}
           >
             <h3 className={'text-center md:text-left text-2xl font-bold'}>
-              Bạn cần thuê gia sư?
+              Bạn đang muốn tìm kiếm gia sư chất lượng?
             </h3>
             <p>Trải nghiệm dịch vụ chất lượng và chuyên nghiệp!</p>
             <p>
-              Thật tốn thời gian khi gặp phải gia sư không phù hợp. GS7 luôn làm
-              việc chuyên nghiệp và trách nhiệm, bắt đầu từ việc tuyển chọn đến
-              đào tạo gia sư. Đảm bảo gia sư luôn đạt tiêu chuẩn về kiến thức và
-              kỹ năng giảng dạy.
+              Với mục đich kết nối học sinh với những gia sư chất lượng, GS7 là
+              một lựa chọn tuyệt vời giúp bạn có thể tìm kiếm một người gia sư
+              phù hợp với tiêu chí của bản thân. Chúng tôi cam kết sẽ tạo ra một
+              môi trường học tập hiệu quả, giúp học sinh phát triển và thành
+              công trong học tập.
             </p>
             <Link
               href={'/giasu'}
@@ -107,7 +111,7 @@ const Main = () => {
       >
         <div className={'lg:w-[25%] flex justify-center lg:pl-12 py-8 '}>
           <h2 className={'text-2xl font-bold text-blue-tw1'}>
-            Dịch vụ tại GS7
+            Sự đa dạng tại GS7
           </h2>
         </div>
         <div
@@ -116,8 +120,9 @@ const Main = () => {
           }
         >
           <h3 className={'text-xl text-blue-tw2'}>
-            Trung tâm gia sư GS7 luôn nỗ lực để cung cấp cho bạn dịch vụ gia sư
-            chất lượng nhất, bao gồm:
+            Hệ thống tìm kiếm gia sư GS7 hỗ trợ bạn tìm kiếm gia sư chất lượng
+            nhất với đa dạng các dịch vụ và môn học phục vụ nhu cầu tìm kiếm gia
+            sư của phụ huynh
           </h3>
           <div className={'flex gap-5 justify-center'}>
             <div className={'w-[20%] flex justify-center'}>
@@ -131,12 +136,12 @@ const Main = () => {
             </div>
             <div className={'pt-2'}>
               <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
-                Các môn phổ thông
+                Đa dạng môn học và lĩnh vực:
               </h3>
               <p className={'text-blue-tw2 text-xl'}>
-                Bao gồm tất cả các môn trong chương trình học phổ thông: gia sư
-                Toán, Vật Lý, Hóa Học, Sinh Học, Gia sư Văn, Lịch Sử, Địa Lý,
-                Tiếng Anh, Gia sư Tiểu Học, và nhiều môn học khác nữa.
+                Hệ thống hỗ trợ tìm kiếm gia sư dạy từ các môn cơ bản như Toán,
+                Văn, Anh, Ngoại ngữ,... Cho đến các môn về năng khiếu như Âm
+                nhạc, nghệ thuật và các môn chuyên ngành Đại học.
               </p>
             </div>
           </div>
@@ -152,12 +157,11 @@ const Main = () => {
             </div>
             <div className={'pt-2'}>
               <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
-                Các môn ngoại ngữ
+                Đa dạng tìm kiếm:
               </h3>
               <p className={'text-blue-tw2 text-xl'}>
-                Chủ yếu dành cho những người đã đi làm, bao gồm gia sư dạy giao
-                tiếp các môn: Gia sư Tiếng Anh, Tiếng Nhật, Tiếng Hàn, Tiếng
-                Pháp, Tiếng Trung, Tiếng Tây Ban Nha và các môn ngoại ngữ khác.
+                Với giao diện tìm kiếm linh hoạt, phụ huynh có thể lọc theo môn
+                học, khu vực, lớp, tùy vào yêu cầu tìm kiếm của quý phụ huynh
               </p>
             </div>
           </div>
@@ -173,12 +177,12 @@ const Main = () => {
             </div>
             <div className={'pt-2'}>
               <h3 className={'text-2xl font-bold mb-2 text-blue-tw1'}>
-                Các môn năng khiếu
+                Đa dạng hồ sơ gia sư:
               </h3>
               <p className={'text-blue-tw2 text-xl'}>
-                Chủ yếu liên quan đến các môn nghệ thuật như: Piano, Guitar,
-                Organ, Mỹ Thuật, Thanh Nhạc. Đối với những môn này, để bạn có
-                được gia sư sẽ tốn nhiều thời gian hơn.
+                Hệ thống cung cấp chi tiết về hồ sơ của các gia sư và có sự phân
+                chia rõ ràng theo từng môn học và từng khối lớp, vì vậy sẽ giúp
+                phụ huynh có sự lựa chọn đa dạng hơn
               </p>
             </div>
           </div>

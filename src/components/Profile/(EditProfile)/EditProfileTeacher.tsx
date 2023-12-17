@@ -177,7 +177,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     key: o.id,
   }));
   const onFinish = async (values: any) => {
-    values['date_of_birth'] = moment(values.date_of_birth).format('YYYY-MM-DD');
+    values['date_of_birth'] = dayjs(values.date_of_birth).format('YYYY-MM-DD');
 
     const fileavata = values?.avatar?.map((item: any) => {
       return item?.originFileObj;
@@ -382,7 +382,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                       },
                     ]}
                   >
-                    <DatePicker format="DD-MM-YYYY" className={'w-full'} />
+                    <DatePicker
+                      format="DD-MM-YYYY"
+                      className={'w-full'}
+                      value={dayjs(editProfile.date_of_birth, 'YYYY-MM-DD')}
+                    />
                   </Form.Item>
                   <Form.Item<FieldType>
                     label="Ảnh đại diện"
@@ -445,11 +449,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item> */}
                   <Form.Item<FieldType>
                     name="education_level"
-                    label={'Vị trí công việc'}
+                    label={'Trình độ học vấn'}
                     rules={[
                       {
                         required: true,
-                        message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                        message: 'Hãy điền Trình độ học vấn hiện tại của bạn!',
                       },
                     ]}
                     className={'w-full'}
@@ -480,17 +484,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   </Form.Item>
                   <Form.Item<FieldType>
                     name="subject"
-                    label={'Môn học'}
+                    label={'Môn giảng dạy'}
                     rules={[
                       {
                         required: true,
-                        message: 'Hãy chọn môn học bạn dạy!',
+                        message: 'Hãy chọn Môn giảng dạy bạn dạy!',
                       },
                     ]}
                   >
                     <Select
                       mode="multiple"
-                      placeholder="Môn học"
+                      placeholder="Môn giảng dạy"
                       onChange={setSelectedItems}
                       style={{ width: '100%' }}
                       options={filteredOptions}
@@ -499,7 +503,7 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                   {/* <Form.Item<FieldType>
                   name="time_tutor_id"
                   rules={[
-                    { required: true, message: 'Hãy chọn môn học bạn dạy!' },
+                    { required: true, message: 'Hãy chọn Môn giảng dạy bạn dạy!' },
                   ]}
                 >
                   <Select
@@ -514,17 +518,17 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                 </Form.Item> */}
                   <Form.Item<FieldType>
                     name="class_id"
-                    label={'Lớp học'}
+                    label={'Lớp giảng dạy'}
                     rules={[
                       {
                         required: true,
-                        message: 'Hãy chọn lớp học bạn dạy!',
+                        message: 'Hãy chọn Lớp giảng dạy bạn dạy!',
                       },
                     ]}
                   >
                     <Select
                       mode="multiple"
-                      placeholder="Lớp học"
+                      placeholder="Lớp giảng dạy"
                       value={editProfile?.subject?.map((item) => {
                         item.id;
                       })}
@@ -536,11 +540,11 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
 
                   <Form.Item<FieldType>
                     name="current_role"
-                    label={'Vị trí công việc'}
+                    label={'Trình độ học vấn'}
                     rules={[
                       {
                         required: true,
-                        message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                        message: 'Hãy điền Trình độ học vấn hiện tại của bạn!',
                       },
                     ]}
                     className={'w-full'}

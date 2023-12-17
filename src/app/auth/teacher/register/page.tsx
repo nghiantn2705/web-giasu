@@ -312,7 +312,7 @@ const page = () => {
                 { required: true, message: 'Hãy nhập ngày sinh của bạn!' },
               ]}
             >
-              <DatePicker format="YYYY-MM-DD" className={'w-full'} />
+              <DatePicker format="DD-MM-YYYY" className={'w-full'} />
             </Form.Item>
             <Form.Item<FieldType>
               label="Ảnh đại diện"
@@ -341,11 +341,11 @@ const page = () => {
 
             <Form.Item<FieldType>
               name="education_level"
-              label={'Vị trí công việc'}
+              label={'Trình độ học vấn'}
               rules={[
                 {
                   required: true,
-                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                  message: 'Hãy điền Trình độ học vấn hiện tại của bạn!',
                 },
               ]}
               className={'w-full'}
@@ -376,12 +376,14 @@ const page = () => {
             </Form.Item>
             <Form.Item<FieldType>
               name="subject"
-              label={'Môn học'}
-              rules={[{ required: true, message: 'Hãy chọn môn học bạn dạy!' }]}
+              label={'Môn giảng dạy'}
+              rules={[
+                { required: true, message: 'Hãy chọn Môn giảng dạy bạn dạy!' },
+              ]}
             >
               <Select
                 mode="multiple"
-                placeholder="Môn học"
+                placeholder="Môn giảng dạy"
                 value={selectedItems}
                 onChange={setSelectedItems}
                 style={{ width: '100%' }}
@@ -409,12 +411,14 @@ const page = () => {
             </Form.Item> */}
             <Form.Item<FieldType>
               name="class_id"
-              label={'Lớp học'}
-              rules={[{ required: true, message: 'Hãy chọn lớp học bạn dạy!' }]}
+              label={'Lớp giảng dạy'}
+              rules={[
+                { required: true, message: 'Hãy chọn Lớp giảng dạy bạn dạy!' },
+              ]}
             >
               <Select
                 mode="multiple"
-                placeholder="Lớp học"
+                placeholder="Lớp giảng dạy"
                 value={selectedClasses}
                 onChange={setSelectedClasses}
                 style={{ width: '100%' }}
@@ -424,18 +428,18 @@ const page = () => {
 
             <Form.Item<FieldType>
               name="current_role"
-              label={'Vị trí công việc'}
+              label={'Vai trò hiện tại'}
               rules={[
                 {
                   required: true,
-                  message: 'Hãy điền vị trí công việc hiện tại của bạn!',
+                  message: 'Hãy điền vai trò hiện tại hiện tại của bạn!',
                 },
               ]}
               className={'w-full'}
             >
               <Select
                 showSearch
-                placeholder="Hiện tại đang là"
+                placeholder="Vai trò hiện tại"
                 optionFilterProp="children"
                 filterOption={filterOption}
                 options={[

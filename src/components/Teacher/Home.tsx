@@ -61,19 +61,19 @@ export default function Home({ children, classes, subject }: IHome) {
                 >
                   <Link href={'/auth/user'}>Đăng nhập/ đăng ký</Link>
                 </li>
-                <li
+                {/* <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
                   }
                 >
                   <Link href={''}>Học phí tham khảo</Link>
-                </li>
+                </li> */}
                 <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
                   }
                 >
-                  <Link href={''}>Đăng ký tìm gia sư</Link>
+                  <Link href={'auth/user/register'}>Đăng ký tìm gia sư</Link>
                 </li>
               </ul>
             </div>
@@ -115,7 +115,9 @@ export default function Home({ children, classes, subject }: IHome) {
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
                   }
                 >
-                  <Link href={''}>Đăng ký làm gia sư</Link>
+                  <Link href={'/auth/teacher/register'}>
+                    Đăng ký làm gia sư
+                  </Link>
                 </li>
               </ul>
             </div>

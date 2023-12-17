@@ -133,7 +133,7 @@ export default function RentTeacher(props: IProps) {
                 <span>{user?.name}</span>
               </Form.Item>
               <div>
-                <Form.Item label="Lớp học" name="class">
+                <Form.Item label="Lớp giảng dạy" name="class">
                   <Select mode="multiple" allowClear className={'form-input'}>
                     {subjectAndClass?.class_id?.map((i) => (
                       <Select.Option key={i?.id} value={`${i?.id}`}>
@@ -144,7 +144,7 @@ export default function RentTeacher(props: IProps) {
                 </Form.Item>
               </div>
               <div>
-                <Form.Item label="Môn học" name="subject">
+                <Form.Item label="Môn giảng dạy" name="subject">
                   <Select mode="multiple" allowClear className={'form-input'}>
                     {subjectAndClass?.subject?.map((item) => (
                       <Select.Option key={item?.id} value={`${item?.id}`}>
