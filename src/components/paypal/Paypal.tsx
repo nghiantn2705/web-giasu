@@ -17,7 +17,7 @@ export default function Paypal() {
   const [paypal, setPaypal] = useState<IPay>();
   const searchParam = useSearchParams();
   const vnpAmount = Number(searchParam.get('vnp_Amount'));
-  const vnpOrderInfo = searchParam.get('vnp_OrderInfo');
+  const vnpTxnRef = searchParam.get('vnp_TxnRef');
   const vnpBankCode = searchParam.get('vnp_BankCode');
   const router = useRouter();
 
@@ -32,11 +32,11 @@ export default function Paypal() {
     return value.replace(/\./g, '');
   };
   useEffect(() => {
-    if (vnpAmount && vnpOrderInfo && vnpBankCode) {
+    if (vnpAmount && vnpTxnRef && vnpBankCode) {
       const deposit = {
         userId: user?.id,
         coin: vnpAmount / 100,
-        code: vnpOrderInfo,
+        code: vnpTxnRef,
         status: 'Thành công',
         bank: vnpBankCode,
       };
