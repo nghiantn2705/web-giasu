@@ -23,7 +23,7 @@ export const resetPassword = (query: IFetchQuery = {}) => {
 };
 export const editPassword = (query: IFetchQuery = {}) => {
   return apiRequest.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/users/editpassword`,
+    `${process.env.NEXT_PUBLIC_API_URL}/userss/editpassword`,
     query,
   );
 };

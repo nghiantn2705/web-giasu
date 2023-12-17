@@ -64,13 +64,14 @@ const page = () => {
       values['date_of_birth'] = moment(values.date_of_birth).format(
         'YYYY-MM-DD',
       );
-      const fileavata = values?.avatar?.map((item: any) => {
-        return item?.originFileObj;
-      });
       const formData = new FormData();
-      for (let i = 0; i < fileavata.length; i++) {
-        formData.append('avatar', fileavata[i]);
+      if (values.avatar) {
+        const fileavata = values.avatar.map((item: any) => item.originFileObj);
+        for (let i = 0; i < fileavata.length; i++) {
+          formData.append('avatar', fileavata[i]);
+        }
       }
+
       const addressUser: any =
         district?.result?.formatted_address + '' + district?.result?.name;
       const latitude: any = district?.result?.geometry?.location?.lat;
@@ -188,8 +189,8 @@ const page = () => {
             rules={[{ required: true, message: 'Hãy chọn giới tính của bạn!' }]}
           >
             <Radio.Group onChange={onChange} value={value}>
-              <Radio value={'Nam'}>Nam</Radio>
-              <Radio value={'Nữ'}>Nữ</Radio>
+              <Radio value={'1'}>Nam</Radio>
+              <Radio value={'0'}>Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item<FieldType>

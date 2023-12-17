@@ -32,11 +32,34 @@ const InfoUser = () => {
         <div className={'p-8'}>
           <h3 className={'text-lg font-bold'}>Đổi mật khẩu</h3>
           <Formik
-            initialValues={{ id: userInfo?.id }}
+            initialValues={{
+              id: userInfo?.id,
+              password: '',
+              passwordConfirmation: '',
+            }}
             onSubmit={async (values) => {
               try {
+                if (values.password !== values.passwordConfirmation) {
+                  toast.error(
+                    'Mật khẩu mới và Nhập lại mật khẩu mới không khớp',
+                    {
+                      position: 'top-right',
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    },
+                  );
+                  return;
+                }
+                // eslint-disable-next-line no-unused-vars
+                const { passwordConfirmation, ...apiValues } = values;
+
                 const res = await editPassword({
-                  ...values,
+                  ...apiValues,
                 });
                 toast.success('Đổi mật khẩu thành công !', {
                   position: 'top-right',
@@ -48,8 +71,8 @@ const InfoUser = () => {
                   progress: undefined,
                   theme: 'light',
                 });
-              } catch (ex) {
-                toast.error('Vui lòng kiểm tra password !', {
+              } catch (ex: any) {
+                toast.error(ex.message, {
                   position: 'top-right',
                   autoClose: 5000,
                   hideProgressBar: false,
@@ -96,8 +119,8 @@ const InfoUser = () => {
                 <label htmlFor={'passwordlast'}>Nhập lại mật khẩu mới</label>
                 <Field
                   type={'password'}
-                  name={'password'}
-                  id="password"
+                  name={'passwordConfirmation'}
+                  id="passwordConfirmation"
                   placeholder={'Nhập lại mật khẩu mới'}
                   className={'border p-2 rounded-md'}
                 />

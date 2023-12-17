@@ -33,7 +33,11 @@ const AddCertificate = ({ infoUser }: IProps) => {
     }
     return e && e.fileList;
   };
-
+  const reloadPageAfterDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
   const dummyRequest = ({ onSuccess }: any) => {
     setTimeout(() => {
       onSuccess('ok');
@@ -62,6 +66,8 @@ const AddCertificate = ({ infoUser }: IProps) => {
         progress: undefined,
         theme: 'light',
       });
+      closeModal();
+      reloadPageAfterDelay();
     } catch (ex: any) {
       toast.success(ex, {
         position: 'top-right',

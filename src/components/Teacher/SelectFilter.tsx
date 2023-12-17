@@ -58,7 +58,7 @@ const SelectFilter = () => {
           </div>
           <div className={'flex flex-col gap-5'}>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className={'font-bold '}>Môn học:</label>
+            <label className={'font-bold '}>Môn giảng dạy:</label>
             <div className={'relative border-r'}>
               <BsBook
                 className={'absolute text-2xl top-3 left-3 text-blue-tw'}
