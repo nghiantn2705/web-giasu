@@ -34,11 +34,6 @@ export default function FormLoginProcedure() {
                 thì mới có thể thực hiện việc xác nhận dạy.
               </p>
               <p className={' px-5 py-2'}>
-                • Gia sư bắt buộc phải có số dư trong tài khoản ít nhất{' '}
-                <span className={'text-red-500 font-bold'}>50.000đ </span>
-                thì mới có thể thực hiện việc xác nhận dạy.
-              </p>
-              <p className={' px-5 py-2'}>
                 • Nếu gia sư không xác nhận thì sẽ đồng nghĩa với việc không có
                 thông tin liên hệ của người thuê.
               </p>

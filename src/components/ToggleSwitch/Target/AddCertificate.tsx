@@ -62,6 +62,7 @@ const AddCertificate = ({ infoUser }: IProps) => {
         progress: undefined,
         theme: 'light',
       });
+      closeModal();
     } catch (ex: any) {
       toast.success(ex, {
         position: 'top-right',

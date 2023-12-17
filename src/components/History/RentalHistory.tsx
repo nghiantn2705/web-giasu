@@ -12,6 +12,7 @@ import FormRefuseProcedure from '../ModailProcedure/FormRefuseProcedure';
 interface IProps {
   infoUser: IUserInfo;
 }
+
 interface IJob {
   id: number;
   idUser: string;
@@ -26,6 +27,7 @@ interface IJob {
   userName: string;
   teacherName: string;
 }
+
 export default function RentalHistory({ infoUser }: IProps) {
   console.log(infoUser);
   const [job, setJob] = useState<IJob[]>();
@@ -144,7 +146,7 @@ export default function RentalHistory({ infoUser }: IProps) {
                           'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:mr-2'
                         }
                       >
-                        Xác nhận để xem
+                        Bạn đã từ chối
                       </div>
                     )}
                   </td>
