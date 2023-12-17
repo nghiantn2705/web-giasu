@@ -52,7 +52,7 @@ const FeedBack = ({ idParams, userInfo, pages }: IProps) => {
                 <div className="grid grid-cols-10 gap-5 ">
                   <div className={'col-span-5'}>
                     <span className="text-base text-blue-tw2 font-bold ">
-                      {/* {userInfo.role == 3 ? item?.id_sender : item?.id_teacher} */}
+                      {item?.id_sender}
                     </span>
                     <div className={'text-xs text-stone-400 flex gap-4'}>
                       <span>
