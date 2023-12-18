@@ -63,4 +63,5 @@ export interface ITeachers {
   Certificate_public: string[];
   status_public: number;
   exp: string;
+  average_point: string;
 }

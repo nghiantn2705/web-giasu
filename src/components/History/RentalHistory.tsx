@@ -61,9 +61,7 @@ export default function RentalHistory({ infoUser }: IProps) {
             <th className={'px-6 py-4'}>Tên</th>
             <th className={'px-6 py-4'}>Môn</th>
             <th className={'px-6 py-4'}>Lớp</th>
-            {infoUser?.role == 3 && (
-              <th className={'px-14 py-4 '}>Thông tin</th>
-            )}
+            <th className={'px-14 py-4 '}>Thông tin</th>
             <th className={'px-6 py-4'}>Trạng thái</th>
             {infoUser?.role == 3 ? (
               <th className={'px-6 py-4 text-center'}>Action</th>
@@ -118,39 +116,42 @@ export default function RentalHistory({ infoUser }: IProps) {
                     })}
                   </div>
                 </td>
-                {infoUser?.role == 3 && (
-                  <td className={'px-6 py-4 text-center'}>
-                    {items?.status === 0 ? (
-                      <div
-                        className={
-                          'flex items-center before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
-                        }
-                      >
-                        Xác nhận để xem
-                      </div>
-                    ) : items?.status === 1 ? (
-                      <div
-                        className={
-                          'px-10 flex before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
-                        }
-                      >
-                        {infoUser?.role == 3 ? (
-                          <ModailDetail user={items} />
-                        ) : (
-                          <ModailDetailUser user={items} />
-                        )}
-                      </div>
-                    ) : (
-                      <div
-                        className={
-                          'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:mr-2'
-                        }
-                      >
-                        Bạn đã từ chối
-                      </div>
-                    )}
-                  </td>
-                )}
+
+                <td className={'px-6 py-4 text-center'}>
+                  {items?.status === 0 ? (
+                    <div
+                      className={
+                        'flex items-center before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
+                      }
+                    >
+                      {infoUser?.role == 3
+                        ? 'Xác nhận để xem'
+                        : ' Chờ gia sư xác nhận'}
+                    </div>
+                  ) : items?.status === 1 ? (
+                    <div
+                      className={
+                        'px-10 flex before:h-2.5 before:w-2.5 before:rounded-full  before:mr-2'
+                      }
+                    >
+                      {infoUser?.role == 3 ? (
+                        <ModailDetail user={items} />
+                      ) : (
+                        <ModailDetailUser user={items} />
+                      )}
+                    </div>
+                  ) : (
+                    <div
+                      className={
+                        'flex items-center before:h-2.5 before:w-2.5 before:rounded-full before:mr-2'
+                      }
+                    >
+                      {infoUser?.role == 3
+                        ? '   Bạn đã từ chối'
+                        : 'Gia sư đã từ chối'}
+                    </div>
+                  )}
+                </td>
 
                 <td className={'px-6 py-4'}>
                   {items?.status == 0 ? (
