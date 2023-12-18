@@ -72,7 +72,9 @@ const Teacher = ({ teachers }: IProps) => {
                     <li>
                       <span className="text-slate-400">Đánh giá</span>
                       <ul className="text-sm font-medium text-amber-400 list-none flex">
-                        {[...Array(starData?.avg)].map((star, i) => (
+                        {[
+                          ...Array(parseInt(items?.average_point ?? 0, 10)),
+                        ].map((_, i) => (
                           <li key={i} className="inline">
                             <FaStar className={''} />
                           </li>

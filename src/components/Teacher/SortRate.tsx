@@ -9,24 +9,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Link from 'next/link';
-import { getStart } from '@/services/feedback';
 
 interface IProps {
   teachers: ITeachers[];
 }
 const SortRate = ({ teachers }: IProps) => {
-  const [starData, setStarData] = useState<{ avg: string }>();
-  // const [teacherStart, teacherStarData] = useState<any>();
-
-  useEffect(() => {
-    (async () => {
-      const resRating = await getStart({ id: teachers?.[0]?.id });
-      // const resTeacherRating = await getTeacherStart();
-
-      setStarData(resRating);
-      // teacherStarData(resTeacherRating);
-    })();
-  }, []);
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
 
@@ -82,7 +69,7 @@ const SortRate = ({ teachers }: IProps) => {
                     >
                       <p className={'self-end flex gap-1 text-white'}>
                         <AiOutlineStar className={'self-center'} />{' '}
-                        <span> {starData?.avg}</span>
+                        <span> {items?.average_point}</span>
                       </p>
                     </div>
                   </picture>

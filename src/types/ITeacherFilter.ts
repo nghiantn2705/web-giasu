@@ -17,4 +17,5 @@ export interface ITeacherFilter {
     },
   ];
   district: string;
+  average_point: string;
 }
