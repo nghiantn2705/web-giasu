@@ -1,5 +1,6 @@
 import { IFetchBody, IFetchQuery, apiRequest } from '@/services/base';
 import { ITeachers } from '@/types/ITeachers';
+import axios from 'axios';
 export const updateProfile = (id: number, data: FormData) => {
   const token =
     typeof window === 'object' && window.localStorage.getItem('access_token');
@@ -47,6 +48,12 @@ export const certificatePublic = (body: IFetchBody) => {
 export const putStatusCertificate = (body: IFetchBody) => {
   return apiRequest.put(
     `${process.env.NEXT_PUBLIC_API_URL}/status-certificate/${body?.id}`,
+    body,
+  );
+};
+export const deleteCertificatePublic = (body: IFetchBody) => {
+  return axios.delete(
+    `${process.env.NEXT_PUBLIC_API_URL}/delete-certificate/${body?.id}`,
     body,
   );
 };

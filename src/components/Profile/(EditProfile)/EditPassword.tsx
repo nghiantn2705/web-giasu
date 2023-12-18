@@ -71,6 +71,7 @@ const InfoUser = () => {
                   progress: undefined,
                   theme: 'light',
                 });
+                closeModal();
               } catch (ex: any) {
                 toast.error(ex.message, {
                   position: 'top-right',

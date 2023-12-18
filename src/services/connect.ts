@@ -1,10 +1,10 @@
-import { apiRequest, IFetchBody, IFetchQuery } from '@/services/base';
+import { apiRequest, IFetchBody } from '@/services/base';
 import { IConnect } from '@/types/IConect';
+import axios from 'axios';
 
-export const getConnect = (query: IFetchQuery = {}) => {
-  return apiRequest.get<IConnect[]>(
+export const getConnect = (query: any) => {
+  return axios.get<IConnect[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/connect/${query?.id}`,
-    query,
   );
 };
 export const postConnect = (body: IFetchBody) => {
