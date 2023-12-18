@@ -134,7 +134,9 @@ const Profile = ({ children, infoUser }: IProps) => {
                       'border py-2 px-4 rounded-xl drop-shadow-md bg-white'
                     }
                   >
-                    <h3 className={'text-lg font-bold'}>Kho ảnh chứng chỉ</h3>
+                    <h3 className={'text-lg font-bold'}>
+                      Ảnh chứng chỉ hiện ở trang chủ
+                    </h3>
                     <div className={'flex flex-col gap-3'}>
                       <div className={'grid grid-cols-9 gap-3 mt-4'}>
                         {imageCertificatePublic?.map(

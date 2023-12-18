@@ -51,8 +51,8 @@ export const putStatusCertificate = (body: IFetchBody) => {
     body,
   );
 };
-export const deleteCertificatePublic = (body: IFetchBody) => {
-  return axios.delete(
+export const deleteCertificatePublic = (body: any) => {
+  return apiRequest.put(
     `${process.env.NEXT_PUBLIC_API_URL}/delete-certificate/${body?.id}`,
     body,
   );

@@ -7,6 +7,7 @@ import MyModalTransition, {
 import { IUserInfo } from '@/types/IUserInfo';
 import { Field, Form, Formik } from 'formik';
 import { certificatePublic, deleteCertificatePublic } from '@/services/put';
+import { toast } from 'react-toastify';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -26,7 +27,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
   const reloadPageAfterDelay = () => {
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -50,9 +51,31 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                 console.log(values);
                 try {
                   const res = await certificatePublic(values);
+                  toast.success('Thêm ảnh chứng chỉ ở trang chủ thành công !', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
                   reloadPageAfterDelay();
                 } catch (ex) {
-                  console.log(ex);
+                  toast.error(
+                    'Thêm ảnh chứng chỉ ở trang chủ thất bại! Vui lòng thử lại.',
+                    {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    },
+                  );
                 }
               }}
             >
@@ -98,10 +121,32 @@ const SelectCertificate = ({ infoUser }: IProps) => {
               onSubmit={async (values) => {
                 console.log(values);
                 try {
-                  const res = await deleteCertificatePublic(values);
+                  const res = await deleteCertificatePublic({ ...values });
+                  toast.success('Gỡ ảnh chứng chỉ ở trang chủ thành công !', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
                   reloadPageAfterDelay();
                 } catch (ex) {
-                  console.log(ex);
+                  toast.error(
+                    'Gỡ ảnh chứng chỉ ở trang chủ lỗi! Vui lòng thử lại.',
+                    {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    },
+                  );
                 }
               }}
             >

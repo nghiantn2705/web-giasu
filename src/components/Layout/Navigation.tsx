@@ -109,7 +109,7 @@ export default function Navigation({ classes, subject }: INavigation) {
                   </svg>
                   <Link
                     className={'hover:text-amber-700 py-2'}
-                    href={`/timkiemgiasu?DistrictID=${items.name}`}
+                    href={`/timkiemgiasu?District_ID=${items.name}`}
                   >
                     {items?.name}
                   </Link>
