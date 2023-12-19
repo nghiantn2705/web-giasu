@@ -47,13 +47,13 @@ export default function Home({ children, classes, subject }: IHome) {
                   'grid  bg-center bg-cover bg-no-repeat pl-5 gap-y-2 xl:pl-0  xl:grid-cols-2 xl:w-[80%] xl:gap-y-4 xl:mx-auto'
                 }
               >
-                <li
+                {/* <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
                   }
                 >
                   <Link href={''}>Giới thiệu hoạt động</Link>
-                </li>
+                </li> */}
                 <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
@@ -96,13 +96,13 @@ export default function Home({ children, classes, subject }: IHome) {
                   'grid  bg-center bg-cover bg-no-repeat pl-5 gap-y-2 xl:pl-0  xl:grid-cols-2 xl:w-[90%] xl:gap-y-4 xl:mx-auto'
                 }
               >
-                <li
+                {/* <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
                   }
                 >
                   <Link href={''}>Những kĩ năng cần biết</Link>
-                </li>
+                </li> */}
                 <li
                   className={
                     'bg-blue-tw text-white py-2 px-4 rounded-xl font-bold uppercase text-sm hover:bg-white hover:text-blue-tw2 w-fit'
