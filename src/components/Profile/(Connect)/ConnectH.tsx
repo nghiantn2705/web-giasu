@@ -10,7 +10,6 @@ interface IProps {
 }
 const ConnectH = ({ infoUser }: IProps) => {
   const [data, setData] = useState<IConnect[]>();
-  console.log(data);
   useEffect(() => {
     (async () => {
       try {
