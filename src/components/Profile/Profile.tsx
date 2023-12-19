@@ -85,18 +85,22 @@ const Profile = ({ children, infoUser }: IProps) => {
                     {infoUser?.role == 2 ? 'Người thuê gia sư' : 'Gia sư'}
                   </span>
 
-                  {infoUser.status == 2 ? (
-                    <span className={'italic text-sm text-yellow-600'}>
-                      Vui lòng đợi admin duyệt hồ sơ{' '}
-                    </span>
-                  ) : infoUser.status == 1 ? (
-                    <span className={'italic text-sm text-green-500'}>
-                      Hồ sơ đang được bật trên trang chủ
-                    </span>
+                  {infoUser?.role == 2 ? (
+                    infoUser.status == 2 ? (
+                      <span className={'italic text-sm text-yellow-600'}>
+                        Vui lòng đợi admin duyệt hồ sơ{' '}
+                      </span>
+                    ) : infoUser.status == 1 ? (
+                      <span className={'italic text-sm text-green-500'}>
+                        Hồ sơ đang được bật trên trang chủ
+                      </span>
+                    ) : (
+                      <span className={'italic text-sm text-red-600'}>
+                        Đang tắt hồ sơ trên trang chủ
+                      </span>
+                    )
                   ) : (
-                    <span className={'italic text-sm text-red-600'}>
-                      Đang tắt hồ sơ trên trang chủ
-                    </span>
+                    ''
                   )}
                 </div>
               </div>
