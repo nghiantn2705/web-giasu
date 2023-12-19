@@ -24,7 +24,6 @@ interface IProps {
 export default function ModailDetailUser({ user }: IProps) {
   const [detail, setDetail] = useState<IJobDetail>();
   const [isOpen, setIsOpen] = useState(false);
-  console.log(detail);
   useEffect(() => {
     (async () => {
       const resTeacher = await getJobDetail({ id: user?.id });

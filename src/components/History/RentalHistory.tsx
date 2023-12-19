@@ -29,7 +29,6 @@ interface IJob {
 }
 
 export default function RentalHistory({ infoUser }: IProps) {
-  console.log(infoUser);
   const [job, setJob] = useState<IJob[]>();
   useEffect(() => {
     (async () => {
@@ -37,7 +36,6 @@ export default function RentalHistory({ infoUser }: IProps) {
       setJob(res);
     })();
   }, [setJob, infoUser?.id]);
-  console.log(job);
   const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
     <div

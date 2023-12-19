@@ -42,13 +42,25 @@ export default function PaypalHistory({ infoUser }: IProps) {
         'bg-white shadow rounded-lg p-6 relative w-full overflow-x-auto border-l-2'
       }
     >
-      <h3
-        className={
-          'text-lg font-bold uppercase leading-8 text-gray-700 border-b pt-5 pb-3 text-center border-b-gray-300'
-        }
-      >
-        Lịch sử giao dịch
-      </h3>
+      <div className={'pt-5 pb-3 grid gap-4 grid-cols-10 '}>
+        <div className={'col-span-4'}>
+          <span className={'text-base  text-gray-700'}>
+            Tổng tiền hiện có:{' '}
+          </span>
+          <span className={'font-bold text-red-400'}>
+            {formatNumber(infoUser?.coin)}
+          </span>
+        </div>
+        <div className={'col-span-6'}>
+          <h3
+            className={
+              'text-xl font-bold text-gray-700  text-gray-700  pb-3 border-b-gray-300'
+            }
+          >
+            Lịch sử giao dịch
+          </h3>
+        </div>
+      </div>
       <table className={'w-full text-sm text-left text-gray-500'}>
         <thead
           className={'text-xs text-gray-700 uppercase bg-gray-50  border-b'}

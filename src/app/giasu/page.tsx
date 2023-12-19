@@ -19,7 +19,7 @@ export default async function App(props: any) {
   return (
     <>
       <Home subject={subject} classes={classes}>
-        <SortRate teachers={teachers} />
+        <SortRate />
         <div className={'relative py-5'}>
           <div
             className={

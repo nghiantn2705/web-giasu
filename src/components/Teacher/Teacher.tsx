@@ -12,7 +12,6 @@ interface IProps {
 
 const Teacher = ({ teachers }: IProps) => {
   const [starData, setStarData] = useState<{ avg: string }>();
-  console.log(teachers);
   useEffect(() => {
     (async () => {
       const resRating = await getStart({ id: teachers?.[0]?.id });

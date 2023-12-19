@@ -34,7 +34,6 @@ export default function Detail({ teacher }: IProps) {
   function closeModal() {
     setIsOpen(false);
   }
-  console.log(teacher);
   const values = {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],

@@ -17,7 +17,6 @@ const SelectCertificate = ({ infoUser }: IProps) => {
   const imageCertificate = JSON.parse(infoUser.Certificate);
   const imageCertificatePublic = JSON.parse(infoUser?.Certificate_public);
 
-  console.log(infoUser);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -48,7 +47,6 @@ const SelectCertificate = ({ infoUser }: IProps) => {
             <Formik
               initialValues={{ id: infoUser?.id }}
               onSubmit={async (values) => {
-                console.log(values);
                 try {
                   const res = await certificatePublic(values);
                   toast.success('Thêm ảnh chứng chỉ ở trang chủ thành công !', {
@@ -119,7 +117,6 @@ const SelectCertificate = ({ infoUser }: IProps) => {
             <Formik
               initialValues={{ id: infoUser.id, delete_certificate: '' }}
               onSubmit={async (values) => {
-                console.log(values);
                 try {
                   const res = await deleteCertificatePublic({ ...values });
                   toast.success('Gỡ ảnh chứng chỉ ở trang chủ thành công !', {

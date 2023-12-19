@@ -85,7 +85,7 @@ const Profile = ({ children, infoUser }: IProps) => {
                     {infoUser?.role == 2 ? 'Người thuê gia sư' : 'Gia sư'}
                   </span>
 
-                  {infoUser?.role == 2 ? (
+                  {infoUser?.role == 3 ? (
                     infoUser.status == 2 ? (
                       <span className={'italic text-sm text-yellow-600'}>
                         Vui lòng đợi admin duyệt hồ sơ{' '}

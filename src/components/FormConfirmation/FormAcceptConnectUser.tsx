@@ -25,7 +25,6 @@ interface IJob {
 export default function FormAcceptConnectUser({ user }: IJob) {
   const [userInfo] = useStore<ITeachers>('userInfo');
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -64,7 +63,6 @@ export default function FormAcceptConnectUser({ user }: IJob) {
             className={''}
             onSubmit={(values) => {
               values.confirm_user = 2;
-              console.log(values);
               (async () => {
                 try {
                   await putConnect({ ...values });

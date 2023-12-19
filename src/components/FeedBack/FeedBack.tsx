@@ -14,7 +14,6 @@ interface IProps {
 
 const FeedBack = ({ idParams, userInfo, pages }: IProps) => {
   const [feedbackData, setFeedbackData] = useState<IFeedback[]>();
-  console.log(feedbackData);
   useEffect(() => {
     const fetchData = async () => {
       if (idParams !== null && idParams !== undefined) {

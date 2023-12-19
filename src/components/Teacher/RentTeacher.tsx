@@ -85,7 +85,6 @@ export default function RentTeacher(props: IProps) {
         theme: 'light',
       });
 
-      console.log(response);
     } catch (ex: any) {
       toast.error(ex.message, {
         position: 'top-right',

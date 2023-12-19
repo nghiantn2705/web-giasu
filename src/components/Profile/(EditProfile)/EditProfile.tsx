@@ -44,7 +44,6 @@ const EditProfile = ({ editProfile }: IProps) => {
   // const handleFileChange = ({ fileList }) => {
   //   setFileList(fileList);
   // };
-  console.log(editProfile);
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
@@ -60,7 +59,6 @@ const EditProfile = ({ editProfile }: IProps) => {
     console.log('Failed:', errorInfo);
   };
   const onSearchAddress = (value: any) => {
-    console.log(value);
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
       const res = await getAdreess(value);
