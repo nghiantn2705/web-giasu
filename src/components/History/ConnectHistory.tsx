@@ -19,12 +19,14 @@ export default function ConnectHistory({ infoUser }: IProps) {
   const [job, setConnect] = useState<IConnect[]>();
 
   useEffect(() => {
-    (async () => {
+    const fetchConnect = async () => {
       const res = await getConnect({ id: infoUser?.id });
       setConnect(res);
-    })();
-  }, [setConnect, infoUser?.id]);
-  const sortedJobs = job?.sort((a, b) => b.id - a.id);
+    };
+    fetchConnect();
+  }, [infoUser?.id]);
+  console.log(job);
+  // const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
     <div
       className={
@@ -62,7 +64,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
             </tr>
           </thead>
           <tbody>
-            {sortedJobs?.map((items: IConnect) => {
+            {job?.map((items: IConnect) => {
               return (
                 <tr
                   className={'bg-white border-b hover:bg-gray-50 '}

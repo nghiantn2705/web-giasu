@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import MyModalTransition, {
   ModalTitle,
 } from '@/components/Headless/ModalTransition';
 
 import { IUserInfo } from '@/types/IUserInfo';
 import { Field, Form, Formik } from 'formik';
-import { certificatePublic } from '@/services/put';
+import { certificatePublic, deleteCertificatePublic } from '@/services/put';
+import { toast } from 'react-toastify';
 
 interface IProps {
   infoUser: IUserInfo;
@@ -14,6 +16,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const imageCertificate = JSON.parse(infoUser.Certificate);
   const imageCertificatePublic = JSON.parse(infoUser?.Certificate_public);
+
   console.log(infoUser);
   const closeModal = () => {
     setIsOpen(false);
@@ -24,7 +27,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
   const reloadPageAfterDelay = () => {
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -33,7 +36,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
         <button
           onClick={openModal}
           className={
-            'font-medium text-blue-6000 border py-2 px-4 hover:bg-blue-tw1 hover:text-white'
+            'font-medium text-blue-6000 border py-2 px-4 rounded-lg hover:bg-blue-tw1 hover:text-white'
           }
         >
           Chọn ảnh
@@ -48,9 +51,31 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                 console.log(values);
                 try {
                   const res = await certificatePublic(values);
+                  toast.success('Thêm ảnh chứng chỉ ở trang chủ thành công !', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
                   reloadPageAfterDelay();
                 } catch (ex) {
-                  console.log(ex);
+                  toast.error(
+                    'Thêm ảnh chứng chỉ ở trang chủ thất bại! Vui lòng thử lại.',
+                    {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    },
+                  );
                 }
               }}
             >
@@ -64,6 +89,8 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                 </p>
                 <div className={'flex gap-4 border p-3'}>
                   {imageCertificate?.map((item: string, index: number) => {
+                    const isItemDisabled =
+                      imageCertificatePublic.includes(item);
                     return (
                       <div key={index} className={'flex flex-col gap-2'}>
                         <picture>
@@ -73,6 +100,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                           type="checkbox"
                           name="Certificate_public"
                           value={item}
+                          disabled={isItemDisabled}
                         />
                       </div>
                     );
@@ -89,8 +117,38 @@ const SelectCertificate = ({ infoUser }: IProps) => {
               </Form>
             </Formik>
             <Formik
-              initialValues={{ Certificate_public: '' }}
-              onSubmit={(values) => console.log(values)}
+              initialValues={{ id: infoUser.id, delete_certificate: '' }}
+              onSubmit={async (values) => {
+                console.log(values);
+                try {
+                  const res = await deleteCertificatePublic({ ...values });
+                  toast.success('Gỡ ảnh chứng chỉ ở trang chủ thành công !', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                  });
+                  reloadPageAfterDelay();
+                } catch (ex) {
+                  toast.error(
+                    'Gỡ ảnh chứng chỉ ở trang chủ lỗi! Vui lòng thử lại.',
+                    {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    },
+                  );
+                }
+              }}
             >
               <Form className={'flex flex-col gap-3'}>
                 <p
@@ -101,7 +159,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                   Ảnh chứng chỉ hiện ở trang chủ
                 </p>
                 <div
-                  className={'flex gap-4 border p-3'}
+                  className={'flex gap-4 border p-3 min-h-[127px]'}
                   role="group"
                   aria-labelledby="checkbox-group"
                 >
@@ -118,7 +176,7 @@ const SelectCertificate = ({ infoUser }: IProps) => {
                           </picture>
                           <Field
                             type="checkbox"
-                            name="Certificate_public"
+                            name="delete_certificate"
                             value={item}
                           />
                         </div>

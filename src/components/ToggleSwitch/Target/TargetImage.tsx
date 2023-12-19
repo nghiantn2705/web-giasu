@@ -14,6 +14,9 @@ function TargetImage({ infoUser }: IProps) {
       setIsChecked(false);
       setIsReadOnly(false);
     }
+    if (infoUser.status == 2) {
+      setIsReadOnly(true);
+    }
     if (infoUser.status_certificate == 1) {
       setIsChecked(true);
       setIsReadOnly(false);
@@ -26,7 +29,7 @@ function TargetImage({ infoUser }: IProps) {
       if (infoUser.status_certificate == 1) {
         const res = await putStatusCertificate(valuesOff);
         setIsChecked(false);
-        toast.success('tắt hiện ảnh chứng chỉ thành công!', {
+        toast.success('Tắt hiện ảnh chứng chỉ thành công!', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
