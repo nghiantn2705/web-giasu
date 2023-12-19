@@ -20,11 +20,15 @@ export default function ConnectHistory({ infoUser }: IProps) {
 
   useEffect(() => {
     const fetchConnect = async () => {
-      const res = await getConnect({ id: infoUser?.id });
-      setConnect(res);
+      try {
+        const res = await getConnect({ id: infoUser?.id });
+        setConnect(res);
+      } catch (ex) {
+        console.log(ex);
+      }
     };
     fetchConnect();
-  }, [infoUser?.id]);
+  }, []);
   console.log(job);
   // const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
