@@ -248,11 +248,11 @@ const EditProfile = ({ editProfile }: IProps) => {
             >
               <Radio.Group
                 onChange={onChange}
-                value={editProfile.gender}
+                value={editProfile?.gender}
                 //   value={value}
               >
-                <Radio value={'Nam'}>Nam</Radio>
-                <Radio value={'Nữ'}>Nữ</Radio>
+                <Radio value={'1'}>Nam</Radio>
+                <Radio value={'0'}>Nữ</Radio>
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
