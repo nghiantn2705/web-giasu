@@ -113,7 +113,6 @@ const SignInUser = () => {
                     progress: undefined,
                     theme: 'light',
                   });
-                  console.log(ex);
                 }
               }}
             >

@@ -44,7 +44,6 @@ const EditProfile = ({ editProfile }: IProps) => {
   // const handleFileChange = ({ fileList }) => {
   //   setFileList(fileList);
   // };
-  console.log(editProfile);
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
@@ -60,7 +59,6 @@ const EditProfile = ({ editProfile }: IProps) => {
     console.log('Failed:', errorInfo);
   };
   const onSearchAddress = (value: any) => {
-    console.log(value);
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
       const res = await getAdreess(value);
@@ -248,11 +246,11 @@ const EditProfile = ({ editProfile }: IProps) => {
             >
               <Radio.Group
                 onChange={onChange}
-                value={editProfile.gender}
+                value={editProfile?.gender}
                 //   value={value}
               >
-                <Radio value={'Nam'}>Nam</Radio>
-                <Radio value={'Nữ'}>Nữ</Radio>
+                <Radio value={'1'}>Nam</Radio>
+                <Radio value={'0'}>Nữ</Radio>
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>

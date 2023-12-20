@@ -98,7 +98,6 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
               className={''}
               onSubmit={(values) => {
                 values.confirm_user = 1;
-                console.log(values);
                 (async () => {
                   try {
                     await putConnect({ ...values });
@@ -125,7 +124,6 @@ export default function FormCeonnectUserProcedure({ user }: IJob) {
                       progress: undefined,
                       theme: 'light',
                     });
-                    console.log(ex);
                   }
                 })();
               }}

@@ -25,7 +25,7 @@ interface IJob {
 export default function FormAccept({ user }: IJob) {
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo] = useStore<ITeachers>('userInfo');
-  console.log(userInfo);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -71,7 +71,6 @@ export default function FormAccept({ user }: IJob) {
             className={''}
             onSubmit={(values) => {
               values.status = 2;
-              console.log(values);
               (async () => {
                 try {
                   await putJob({ ...values });
@@ -99,7 +98,6 @@ export default function FormAccept({ user }: IJob) {
                     progress: undefined,
                     theme: 'light',
                   });
-                  console.log(ex);
                 }
               })();
             }}

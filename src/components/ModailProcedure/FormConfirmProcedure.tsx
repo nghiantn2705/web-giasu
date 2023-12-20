@@ -64,8 +64,6 @@ export default function FormConfirmProcedure({ user }: IJob) {
               className={''}
               onSubmit={(values) => {
                 values.status = 1;
-
-                console.log(values);
                 (async () => {
                   try {
                     await putJob({ ...values });

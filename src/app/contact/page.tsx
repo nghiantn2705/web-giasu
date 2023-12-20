@@ -50,7 +50,6 @@ const page = () => {
               <Formik
                 initialValues={{ name: null, phone: null, note: null }}
                 onSubmit={async (values) => {
-                  console.log(values);
                   (async () => {
                     try {
                       if (!userInfo) {
@@ -97,7 +96,16 @@ const page = () => {
                         router.push('/contact');
                       }
                     } catch (ex: any) {
-                      console.log(ex);
+                      toast.error(ex.message, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                      });
                     }
                   })();
                 }}

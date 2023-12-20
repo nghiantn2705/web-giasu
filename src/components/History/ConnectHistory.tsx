@@ -30,7 +30,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
     fetchConnect();
   }, []);
   console.log(job);
-  // const sortedJobs = job?.sort((a, b) => b.id - a.id);
+  const sortedJobs = job?.sort((a, b) => b.id - a.id);
   return (
     <div
       className={
@@ -68,7 +68,7 @@ export default function ConnectHistory({ infoUser }: IProps) {
             </tr>
           </thead>
           <tbody>
-            {job?.map((items: IConnect) => {
+            {sortedJobs?.map((items: IConnect) => {
               return (
                 <tr
                   className={'bg-white border-b hover:bg-gray-50 '}
