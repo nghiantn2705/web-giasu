@@ -23,7 +23,7 @@ export interface ITeachers {
       class: string;
     },
   ];
-  salary_id: string[];
+  salary_id: number[];
   description: string;
   time_tutor_id: number;
   status: number;

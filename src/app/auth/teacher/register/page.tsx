@@ -157,10 +157,12 @@ const page = () => {
         const fileavata = values?.avatar?.map((item: any) => {
           return item?.originFileObj;
         });
-        formData.append('avatar', fileavata);
+        console.log(fileavata);
+        formData.append('avatar', fileavata[0]);
       } else {
         formData.append('avatar', '');
       }
+
       const addressTeacher: any =
         district?.result?.formatted_address + '' + district?.result?.name;
       const addressTeacher1: any = district1?.result?.formatted_address;
