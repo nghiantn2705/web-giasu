@@ -32,8 +32,12 @@ export default function RentalHistory({ infoUser }: IProps) {
   const [job, setJob] = useState<IJob[]>();
   useEffect(() => {
     (async () => {
-      const res = await getJob({ id: infoUser?.id });
-      setJob(res);
+      try {
+        const res = await getJob({ id: infoUser?.id });
+        setJob(res);
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, [setJob, infoUser?.id]);
   const sortedJobs = job?.sort((a, b) => b.id - a.id);

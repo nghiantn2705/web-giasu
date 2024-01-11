@@ -24,7 +24,6 @@ export default function PaypalHistory({ infoUser }: IProps) {
   useEffect(() => {
     const fetchHistoryPaypal = async () => {
       const resHistoryPaypal = await GetHistoryPaypal({ id: infoUser?.id });
-      // Sắp xếp mảng theo thời gian giảm dần (mới nhất đầu tiên)
       const sortedHistoryPaypal = resHistoryPaypal.sort((a, b) => {
         return (
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()

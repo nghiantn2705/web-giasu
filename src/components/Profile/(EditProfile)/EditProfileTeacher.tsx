@@ -226,7 +226,10 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
     formData.append('date_of_birth', values.date_of_birth);
     formData.append('subject', values.subject);
     formData.append('class_id', values.class_id);
-    formData.append('salary_id', values.salary_id);
+    formData.append(
+      'salary_id',
+      values.salary_id.map((salary: number) => salary * 10000),
+    );
     formData.append('school_id', values.school_id);
     formData.append('exp', values.exp);
     formData.append('description', values.description);
@@ -689,7 +692,10 @@ const EditProfileTeacher = ({ editProfile }: IProps) => {
                     />
                   </Form.Item>
                 </div>
-                <Form.Item wrapperCol={{ offset: 11, span: 18 }}>
+                <Form.Item
+                  wrapperCol={{ offset: 11, span: 18 }}
+                  className={'pb-20'}
+                >
                   <Button
                     type="primary"
                     htmlType="submit"

@@ -55,7 +55,8 @@ export default function Detail({ teacher }: IProps) {
         setDirections(resDirections);
       }
     })();
-  }, [userInfo]);
+  }, []);
+  console.log(teacher);
   const handleFeedbackChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -318,18 +319,18 @@ export default function Detail({ teacher }: IProps) {
                             Trình độ học vấn :
                           </label>
 
-                          <label className=""> {teacher?.exp}</label>
+                          <label className="">{teacher?.current_role} </label>
                         </div>
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
 
                           <label className=""> {teacher?.school_id}</label>
                         </div>
-                        <div className={'pt-2  text-zinc-950 '}>
+                        {/* <div className={'pt-2  text-zinc-950 '}>
                           <label className={'font-bold'}> Hiện tại là :</label>
 
                           <label className=""> {teacher?.current_role}</label>
-                        </div>
+                        </div> */}
                       </div>
                       <div className={'col-span-5'}>
                         <div className="pt-2  text-zinc-950 ">
@@ -347,7 +348,12 @@ export default function Detail({ teacher }: IProps) {
                               ? teacher.salary_id
                                   .map(
                                     (salary) =>
-                                      (salary * 1).toLocaleString() + 'đ',
+                                      (salary * 1)
+                                        .toLocaleString('en-US', {
+                                          minimumFractionDigits: 0,
+                                          maximumFractionDigits: 0,
+                                        })
+                                        .replace(/,/g, '.') + 'đ',
                                   )
                                   .join(' đến ')
                               : ''}
@@ -356,7 +362,7 @@ export default function Detail({ teacher }: IProps) {
                         <div className="pt-2 col-span-3 text-zinc-950 ">
                           <label className="font-bold"> Kinh nghiệm : </label>
 
-                          <label className=""> {teacher?.description}</label>
+                          <label className=""> {teacher?.exp}</label>
                         </div>
                       </div>
                     </div>

@@ -88,19 +88,16 @@ const SignInUser = () => {
 
                     router.push('/giasu');
                   } else {
-                    toast.error(
-                      'Vui lòng đăng nhập bằng tài khoản phụ huynh !',
-                      {
-                        position: 'top-right',
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'light',
-                      },
-                    );
+                    toast.error('Vui lòng đăng nhập bằng tài khoản gia sư !', {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    });
                   }
                 } catch (ex: any) {
                   toast.error(ex.message, {

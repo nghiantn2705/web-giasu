@@ -61,4 +61,5 @@ export interface IUserInfo {
   add_certificate: string;
   status_certificate: number;
   coin: string;
+  certificate: string[];
 }
