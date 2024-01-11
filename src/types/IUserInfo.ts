@@ -58,6 +58,7 @@ export interface IUserInfo {
   longitude: string;
   status: number;
   Certificate_public: string;
+  add_certificate: string;
   status_certificate: number;
   coin: string;
 }

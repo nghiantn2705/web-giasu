@@ -8,15 +8,14 @@ import { BiHistory } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'antd';
 import EditPassword from '@/components/Profile/(EditProfile)/EditPassword';
-import AddCertificate from '@/components/ToggleSwitch/Target/AddCertificate';
 
 interface IProps {
   infoUser: IUserInfo;
   children: React.ReactNode;
 }
+
 const Profile = ({ children, infoUser }: IProps) => {
-  const imageCertificate = JSON.parse(infoUser.Certificate);
-  const imageCertificatePublic = JSON.parse(infoUser?.Certificate_public);
+  console.log(infoUser);
   return (
     <>
       <div className={'bg-gray-100 min-h-fit flex'}>
@@ -33,6 +32,19 @@ const Profile = ({ children, infoUser }: IProps) => {
             Chỉnh sửa thông tin
           </a>
           <EditPassword />
+          {infoUser?.role == 3 ? (
+            <a
+              href={`/profile/certificate`}
+              className={
+                'flex items-center gap-2 border bg-white drop-shadow-md hover:bg-gray-200 rounded-lg cursor-pointer px-3 py-2'
+              }
+            >
+              <FiSettings />
+              Ảnh chứng chỉ
+            </a>
+          ) : (
+            ''
+          )}
           <a
             href={`/profile/history`}
             className={
@@ -104,65 +116,6 @@ const Profile = ({ children, infoUser }: IProps) => {
                   )}
                 </div>
               </div>
-              {infoUser?.role == 3 ? (
-                <div className={'w-full grid grid-cols-2 gap-4 py-2'}>
-                  <div
-                    className={
-                      'border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-                    }
-                  >
-                    <h3 className={'text-lg font-bold'}>Kho ảnh chứng chỉ</h3>
-                    <div className={'flex flex-col gap-3'}>
-                      <div className={'grid grid-cols-9 gap-3 mt-4'}>
-                        {imageCertificate?.map(
-                          (items: string, index: number) => {
-                            return (
-                              <Image
-                                key={index}
-                                src={items}
-                                height={50}
-                                width={50}
-                                alt={'chứng chỉ'}
-                              />
-                            );
-                          },
-                        )}
-                      </div>
-                      <div className={'self-end'}>
-                        <AddCertificate infoUser={infoUser} />
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      'border py-2 px-4 rounded-xl drop-shadow-md bg-white'
-                    }
-                  >
-                    <h3 className={'text-lg font-bold'}>
-                      Ảnh chứng chỉ hiện ở trang chủ
-                    </h3>
-                    <div className={'flex flex-col gap-3'}>
-                      <div className={'grid grid-cols-9 gap-3 mt-4'}>
-                        {imageCertificatePublic?.map(
-                          (items: string, index: number) => {
-                            return (
-                              <Image
-                                key={index}
-                                src={items}
-                                height={50}
-                                width={50}
-                                alt={'chứng chỉ'}
-                              />
-                            );
-                          },
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                ''
-              )}
             </div>
             {children}
           </div>
