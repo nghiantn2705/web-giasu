@@ -264,7 +264,7 @@ export default function Detail({ teacher }: IProps) {
                     <div className={' grid gap-2 grid-cols-2'}>
                       <div>
                         <p className="text-xl font-bold">Nhận dạy:</p>
-                        <div className="grid gap-2 grid-cols-8 py-3">
+                        <div className="flex gap-2 py-3">
                           {teacher?.class_id.map((item, index: number) => (
                             <div
                               key={index}
@@ -319,9 +319,13 @@ export default function Detail({ teacher }: IProps) {
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
 
-                          <label className="">
+                          <label className="flex flex-col w-fit">
                             {teacher?.school_id.map((items) => {
-                              return items.name;
+                              return (
+                                <span key={items.id} className={'w-fit'}>
+                                  {items.name}
+                                </span>
+                              );
                             })}
                           </label>
                         </div>

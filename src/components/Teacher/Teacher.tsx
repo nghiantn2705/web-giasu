@@ -62,24 +62,28 @@ const Teacher = ({ teachers }: IProps) => {
                     ))}
                   </ul>
 
-                  <ul className="pt-3 px-3 flex justify-between gap-8 list-none">
+                  <ul className="pt-3 px-3 flex justify-between gap-2 list-none">
                     <li>
                       <span className="text-slate-400">Khu vực</span>
                       <p className="text-sm font-medium">{items?.district}</p>
                     </li>
 
-                    <li>
-                      <span className="text-slate-400">Đánh giá</span>
-                      <ul className="text-sm font-medium text-amber-400 list-none flex">
-                        {[
-                          ...Array(parseInt(items?.average_point ?? 0, 10)),
-                        ].map((_, i) => (
-                          <li key={i} className="inline">
-                            <FaStar className={''} />
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
+                    {items?.average_point ? (
+                      <li>
+                        <span className="text-slate-400">Đánh giá</span>
+                        <ul className="text-sm font-medium text-amber-400 list-none flex">
+                          {[
+                            ...Array(parseInt(items?.average_point ?? 0, 10)),
+                          ].map((_, i) => (
+                            <li key={i} className="inline">
+                              <FaStar className={''} />
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ) : (
+                      ''
+                    )}
                   </ul>
                 </div>
               </div>
