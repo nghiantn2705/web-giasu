@@ -502,6 +502,7 @@ const page = () => {
             >
               <Select
                 showSearch
+                mode="multiple"
                 placeholder="Trường đang và đã học"
                 optionFilterProp="children"
                 options={filteredSchool}

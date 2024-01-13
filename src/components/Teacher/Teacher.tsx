@@ -18,7 +18,7 @@ const Teacher = ({ teachers }: IProps) => {
       setStarData(resRating);
     })();
   }, []);
-
+  console.log(teachers);
   return (
     <>
       {teachers ? (

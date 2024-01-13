@@ -9,7 +9,12 @@ export interface ITeachers {
   latitude: string;
   longitude: string;
   address: string;
-  school_id: number;
+  school_id: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
   Citizen_card: number;
   education_level: [
     {
@@ -60,7 +65,7 @@ export interface ITeachers {
   coin: string;
   renter: number;
   created_at: Date;
-  Certificate_public: string[];
+  Certificate_public: [{ id: number; path: string }];
   status_public: number;
   exp: string;
   average_point: string;

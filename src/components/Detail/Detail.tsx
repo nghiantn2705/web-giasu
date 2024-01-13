@@ -2,22 +2,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 'use client';
-import MyDialog from '@/components/Teacher/RentTeacher';
 import { Image } from 'antd';
 import { useParams } from 'next/navigation';
-import { SetStateAction, useEffect, useState, Fragment } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from '@/hook/use-store';
 import { ITeachers } from '@/types/ITeachers';
 import { ITeachersDetail } from '@/types/ITeachersDetail';
 import Loading from '@/components/Layout/Loading';
-import { postFeedback, getStart } from '@/services/feedback';
+import { getStart, postFeedback } from '@/services/feedback';
 import FormRentProcedure from '@/components/ModailProcedure/FormRentProcedure';
 import { getDirections } from '@/services/get';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import FeedBack from '@/components/FeedBack/FeedBack';
+
 interface IProps {
   teacher: ITeachers;
 }
@@ -31,9 +31,11 @@ export default function Detail({ teacher }: IProps) {
   const { id: params } = useParams();
   const [directions, setDirections] = useState<any>();
   let [isOpen, setIsOpen] = useState(false);
+
   function closeModal() {
     setIsOpen(false);
   }
+
   const values = {
     origin: [userInfo?.latitude, userInfo?.longitude],
     destination: [teacher?.latitude, teacher?.longitude],
@@ -190,7 +192,7 @@ export default function Detail({ teacher }: IProps) {
                         </p>
                         <div className={'text-center flex gap-2 mt-2'}>
                           {teacher?.Certificate_public?.map(
-                            (item: string, index: number) => {
+                            (item: any, index: number) => {
                               return (
                                 <div key={index}>
                                   {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -295,13 +297,6 @@ export default function Detail({ teacher }: IProps) {
 
                     <div className={'pt-2 grid gap-30 grid-cols-10'}>
                       <div className={'col-span-5'}>
-                        <div className={'pt-2 text-zinc-950 '}>
-                          <label className={'font-bold'}>
-                            {' '}
-                            Năm tốt nghiệp :
-                          </label>
-                          <label> 2023</label>
-                        </div>
                         {/* <div className="pt-2 text-zinc-950 ">
                           <label className="font-bold">
                             {' '}
@@ -324,7 +319,11 @@ export default function Detail({ teacher }: IProps) {
                         <div className={'pt-2 text-zinc-950 '}>
                           <label className={'font-bold'}> Trường học :</label>
 
-                          <label className=""> {teacher?.school_id}</label>
+                          <label className="">
+                            {teacher?.school_id.map((items) => {
+                              return items.name;
+                            })}
+                          </label>
                         </div>
                         {/* <div className={'pt-2  text-zinc-950 '}>
                           <label className={'font-bold'}> Hiện tại là :</label>
