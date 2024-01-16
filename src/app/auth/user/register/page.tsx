@@ -23,6 +23,7 @@ import moment from 'moment';
 import { FieldType } from '@/types/Field';
 import { IAddress, IDistrict } from '@/types/ILocation';
 import FormLoginProcedure from '@/components/ModailProcedure/FormLoginProcedure';
+import { format } from 'date-fns';
 const page = () => {
   const router = useRouter();
   const [value, setValue] = useState('');
@@ -61,9 +62,7 @@ const page = () => {
 
   const onFinish = async (values: any) => {
     try {
-      values['date_of_birth'] = moment(values.date_of_birth).format(
-        'YYYY-MM-DD',
-      );
+      const date = format(new Date(values.date_of_birth), 'yyyy-MM-dd');
       const formData = new FormData();
       if (values.avatar) {
         const fileavata = values.avatar.map((item: any) => item.originFileObj);
@@ -80,7 +79,7 @@ const page = () => {
       formData.append('address', addressUser);
       formData.append('latitude', latitude);
       formData.append('longitude', longitude);
-      formData.append('date_of_birth', values.date_of_birth);
+      formData.append('date_of_birth', date);
       formData.append('email', values.email);
       formData.append('gender', values.gender);
       formData.append('password', values.password);
